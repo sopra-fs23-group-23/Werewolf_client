@@ -1,5 +1,5 @@
-# SoPra FS23 - Client Template with build pack
-
+# SoPra  FS23 - Client Template with build pack
+ 
 ## Getting started
 
 Read and go through these Tutorials. It will make your life easier:)
