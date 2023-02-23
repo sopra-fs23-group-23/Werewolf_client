@@ -43,7 +43,7 @@ const Login = props => {
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({username, name});
-      const response = await api.post('/users', requestBody);
+      const response = await api.post('/login', requestBody);
 
       // Get the returned user and update a new object.
       const user = new User(response.data);
@@ -58,7 +58,23 @@ const Login = props => {
     }
   };
 
-  const doRegister = async () => {}
+  const doRegister = async () => {
+    try {
+      const requestBody = JSON.stringify({username, name});
+      const response = await api.post('/users', requestBody);
+
+      // Get the returned user and update a new object.
+      const user = new User(response.data);
+
+      // Store the token into the local storage.
+      localStorage.setItem('token', user.token);
+
+      // Login successfully worked --> navigate to the route /game in the GameRouter
+      history.push(`/game`);
+    } catch (error) {
+      alert(`Something went wrong during the login: \n${handleError(error)}`);
+    }
+  };
   return (
     <BaseContainer>
       <div className="login container">
