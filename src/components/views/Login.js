@@ -58,6 +58,7 @@ const Login = props => {
     }
   };
 
+  const doRegister = async () => {}
   return (
     <BaseContainer>
       <div className="login container">
@@ -80,7 +81,15 @@ const Login = props => {
             >
               Login
             </Button>
+            <Button
+              disabled={!username || !name}
+              width="100%"
+              onClick={() => doRegister()}
+            >
+              Register
+            </Button>
           </div>
+          
         </div>
       </div>
     </BaseContainer>
