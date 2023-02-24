@@ -13,7 +13,7 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
-const FormField = props => {
+const FormFieldLogin = props => {
   return (
     <div className="login field">
       <label className="login label">
@@ -21,7 +21,7 @@ const FormField = props => {
       </label>
       <input
         className="login input"
-        placeholder="enter here.."
+        placeholder="enter username.."
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
       />
@@ -29,7 +29,31 @@ const FormField = props => {
   );
 };
 
-FormField.propTypes = {
+const FormFieldPassword = props => {
+
+  return (
+    <div className="login field">
+      <label className="login label">
+        {props.label}
+      </label>
+      <input
+        type="password"
+        className="login input"
+        placeholder="enter password.."
+        value={props.value}
+        onChange={e => props.onChange(e.target.value)}
+      />
+    </div>
+  );
+};
+
+FormFieldLogin.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func
+};
+
+FormFieldPassword.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func
@@ -79,12 +103,12 @@ const Login = props => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-          <FormField
+          <FormFieldLogin
             label="Username"
             value={username}
             onChange={un => setUsername(un)}
           />
-          <FormField
+          <FormFieldPassword
             label="Password"
             value={password}
             onChange={n => setPassword(n)}
