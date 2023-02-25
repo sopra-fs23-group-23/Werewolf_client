@@ -6,6 +6,7 @@ import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
+import { resolve } from 'path';
 
 const Player = ({user}) => (
   <div className="player container">
@@ -32,7 +33,29 @@ const Game = () => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    changeStatus();
     history.push('/login');
+  }
+
+  async function changeStatus() {
+    try {
+      const response = await api.put(`/users/${localStorage.getItem("id")}`);
+      
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    
+      console.log('request to:', response.request.responseURL);
+      console.log('status code:', response.status);
+      console.log('status text:', response.statusText);
+      console.log('requested data:', response.data);
+
+      // See here to get more data.
+      console.log(response);
+
+    }catch (error) {
+      console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+      console.error("Details:", error);
+      alert("Something went wrong while fetching the users! See the console for details.");
+    }
   }
 
   // the effect hook can be used to react to change in your component.
