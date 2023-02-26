@@ -6,7 +6,6 @@ import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
-import { resolve } from 'path';
 
 const Player = ({user}) => (
   <div className="player container">
@@ -39,6 +38,8 @@ const Game = () => {
 
   async function changeStatus() {
     try {
+      const id = localStorage.getItem("id");
+      console.log({id});
       const response = await api.put(`/users/${localStorage.getItem("id")}`);
       
       await new Promise(resolve => setTimeout(resolve, 1000));
