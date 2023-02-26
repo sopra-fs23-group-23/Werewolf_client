@@ -10,8 +10,6 @@ import "styles/views/Game.scss";
 const Player = ({user}) => (
   <div className="player container">
     <div className="player username">username: {user.username}</div>
-    <div className="player id">id: {user.id}</div>
-    <div className="player date">creation date: {user.creationDate}</div>
   </div>
 );
 
@@ -33,6 +31,7 @@ const Game = () => {
   const logout = () => {
     localStorage.removeItem('token');
     changeStatus();
+    localStorage.removeItem("id");
     history.push('/login');
   }
 
