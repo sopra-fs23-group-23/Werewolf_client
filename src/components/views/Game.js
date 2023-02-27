@@ -28,9 +28,8 @@ const Game = () => {
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [users, setUsers] = useState(null);
 
-  function profileView() {
-    console.log(localStorage("status"));
-    if (localStorage.getItem("status") === 0){
+  const profileView = () => {
+    if (localStorage.getItem("status") === "ONLINE"){
       history.push("/profile");
     }else{
       alert("You're not logged in!");
@@ -40,32 +39,31 @@ const Game = () => {
   }
 
   const logout = () => {
-    localStorage.removeItem('token');
     changeStatus();
-    localStorage.removeItem("id");
+    localStorage.clear();
     history.push('/login');
   }
 
-  async function changeStatus() {
+  const changeStatus = async () =>{
     try {
-      const response = await api.put(`/users/${localStorage.getItem("id")}`);
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    const response = await api.put(`/users/${localStorage.getItem("id")}`);
     
-      console.log('request to:', response.request.responseURL);
-      console.log('status code:', response.status);
-      console.log('status text:', response.statusText);
-      console.log('requested data:', response.data);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  
+    console.log('request to:', response.request.responseURL);
+    console.log('status code:', response.status);
+    console.log('status text:', response.statusText);
+    console.log('requested data:', response.data);
 
-      // See here to get more data.
-      console.log(response);
+    // See here to get more data.
+    console.log(response);
 
-    }catch (error) {
-      console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
-      console.error("Details:", error);
-      alert("Something went wrong while fetching the users! See the console for details.");
-    }
+  }catch (error) {
+    console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+    console.error("Details:", error);
+    alert("Something went wrong while fetching the users! See the console for details.");
   }
+}
 
   // the effect hook can be used to react to change in your component.
   // in this case, the effect hook is only run once, the first time the component is mounted
@@ -111,7 +109,7 @@ const Game = () => {
       <div className="game">
         <ul className="game user-list">
           {users.map(user => (
-            <Player user={user} key={user.id}/>
+            <Player onClick={profileView} user={user} key={user.id}/>
           ))}
         </ul>
         <Button
