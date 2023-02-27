@@ -28,6 +28,17 @@ const Game = () => {
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [users, setUsers] = useState(null);
 
+  function profileView() {
+    console.log(localStorage("status"));
+    if (localStorage.getItem("status") === 0){
+      history.push("/profile");
+    }else{
+      alert("You're not logged in!");
+      localStorage.clear();
+      history.push("/login");
+    }
+  }
+
   const logout = () => {
     localStorage.removeItem('token');
     changeStatus();
@@ -37,8 +48,6 @@ const Game = () => {
 
   async function changeStatus() {
     try {
-      const id = localStorage.getItem("id");
-      console.log({id});
       const response = await api.put(`/users/${localStorage.getItem("id")}`);
       
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -118,7 +127,7 @@ const Game = () => {
   return (
     <BaseContainer className="game container">
       <h2>Happy Coding!</h2>
-      <p className="game paragraph">
+      <p className="game paragraph" >
         Get all users from secure endpoint:
       </p>
       {content}
