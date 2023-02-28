@@ -1,3 +1,4 @@
+import React from 'react'
 import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {Spinner} from 'components/ui/Spinner';
@@ -6,6 +7,7 @@ import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
+import { Link } from "react-router-dom";
 
 const Player = ({user}) => (
   <div className="player container">
@@ -17,9 +19,18 @@ Player.propTypes = {
   user: PropTypes.object
 };
 
+var ConditionalLink = localStorage.getItem("status") === "ONLINE" ? Link : React.DOM.div;
+
 const Game = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
+
+  // var i;
+
+  // console.log("local storage");
+  // for (i = 0; i < localStorage.length; i++)   {
+  //     console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+  // }
 
   // define a state variable (using the state hook).
   // if this variable changes, the component will re-render, but the variable will
@@ -109,7 +120,9 @@ const Game = () => {
       <div className="game">
         <ul className="game user-list">
           {users.map(user => (
-            <Player onClick={profileView} user={user} key={user.id}/>
+            <ConditionalLink to="/profile">
+              <Player onClick={profileView} user={user} key={user.id}/>
+            </ConditionalLink>
           ))}
         </ul>
         <Button
