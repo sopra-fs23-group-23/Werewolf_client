@@ -5,45 +5,40 @@ import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import "styles/views/Profile.scss";
+import "styles/views/Game.scss";
 
 const Profile = () => {
+
+    // const updateProfile = async () => {
+    //     try {
+    //     const requestBody = JSON.stringify({username, birthDate});
+    //     const response = await api.put(`/users/${localStorage.getItem("id")}`, requestBody);
+
+    //     } catch (error) {
+    //     alert(`Something went wrong during the update: \n${handleError(error)}`);
+    //     }
+    // };
 
     const [user, setUser] = useState(null);
 
     const history = useHistory();
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-        async function fetchData() {
+        async function fetchProfile() {
             try {
 
-                const response = await api.get(`/users/${localStorage.getItem("id")}`);
+                const response = await api.get(`/users/${user.id}`);
+                // Get the returned user and update the state.
+                const user = response.data[0];
 
-                // delays continuous execution of an async operation for 1 second.
-                // This is just a fake async call, so that the spinner can be displayed
-                // feel free to remove it :)
-                await new Promise(resolve => setTimeout(resolve, 1000));
-
-                // Get the returned users and update the state.
-                setUser(response.data);
-
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-                console.log('request to:', response.request.responseURL);
-                console.log('status code:', response.status);
-                console.log('status text:', response.statusText);
-                console.log('requested data:', response.data);
-
-                // See here to get more data.
-                console.log(response);
             } catch (error) {
-                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+                console.error(`Something went wrong while fetching the requested user: \n${handleError(error)}`);
                 console.error("Details:", error);
-                alert("Something went wrong while fetching the user! See the console for details.");
+                alert("Something went wrong while fetching the requested user! See the console for details.");
             }
         }
 
-        fetchData();
+        fetchProfile();
     }, []);
 
     let content = <Spinner />;
@@ -59,16 +54,19 @@ const Profile = () => {
                 </div>
                 <Button
                     width="100%"
-                    onClick={() => logout()}
+                    onClick={() => history.push("/game")}
                 >
-                    Logout
+                    Back to Overview
                 </Button>
             </div>
         );
-        return (
-            <h1>test</h1>
-        );
     }
+    return (
+        <BaseContainer className="game container">
+            <h1>Profile Page</h1>
+            {content}
+        </BaseContainer>
+    );
 }
 
 export default Profile;

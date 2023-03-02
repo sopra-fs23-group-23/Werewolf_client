@@ -25,12 +25,12 @@ const Game = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
 
-  // var i;
+  var i;
 
-  // console.log("local storage");
-  // for (i = 0; i < localStorage.length; i++)   {
-  //     console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
-  // }
+  console.log("local storage");
+  for (i = 0; i < localStorage.length; i++)   {
+      console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+  }
 
   // define a state variable (using the state hook).
   // if this variable changes, the component will re-render, but the variable will
@@ -41,7 +41,7 @@ const Game = () => {
 
   const profileView = () => {
     if (localStorage.getItem("status") === "ONLINE"){
-      history.push("/profile");
+      history.push('/profile');
     }else{
       alert("You're not logged in!");
       localStorage.clear();
@@ -57,7 +57,7 @@ const Game = () => {
 
   const changeStatus = async () =>{
     try {
-    const response = await api.put(`/users/${localStorage.getItem("id")}`);
+    const response = await api.put(`/users/logout/${localStorage.getItem("id")}`);
     
     await new Promise(resolve => setTimeout(resolve, 1000));
   
@@ -120,7 +120,7 @@ const Game = () => {
       <div className="game">
         <ul className="game user-list">
           {users.map(user => (
-            <ConditionalLink to="/profile">
+            <ConditionalLink to={`/game/profile/${user.id}`}>
               <Player onClick={profileView} user={user} key={user.id}/>
             </ConditionalLink>
           ))}
