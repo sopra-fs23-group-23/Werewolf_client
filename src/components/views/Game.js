@@ -19,7 +19,7 @@ Player.propTypes = {
   user: PropTypes.object
 };
 
-var ConditionalLink = localStorage.getItem("status") === "ONLINE" ? Link : React.DOM.div;
+// var ConditionalLink = localStorage.getItem("status") === "ONLINE" ? Link : React.DOM.div;
 
 const Game = () => {
   // use react-router-dom's hook to access the history
@@ -38,16 +38,6 @@ const Game = () => {
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [users, setUsers] = useState(null);
-
-  const profileView = () => {
-    if (localStorage.getItem("status") === "ONLINE"){
-      history.push('/profile');
-    }else{
-      alert("You're not logged in!");
-      localStorage.clear();
-      history.push("/login");
-    }
-  }
 
   const logout = () => {
     changeStatus();
@@ -94,13 +84,6 @@ const Game = () => {
         // Get the returned users and update the state.
         setUsers(response.data);
 
-        // This is just some data for you to see what is available.
-        // Feel free to remove it.
-        console.log('request to:', response.request.responseURL);
-        console.log('status code:', response.status);
-        console.log('status text:', response.statusText);
-        console.log('requested data:', response.data);
-
         // See here to get more data.
         console.log(response);
       } catch (error) {
@@ -120,9 +103,9 @@ const Game = () => {
       <div className="game">
         <ul className="game user-list">
           {users.map(user => (
-            <ConditionalLink to={`/game/profile/${user.id}`}>
-              <Player onClick={profileView} user={user} key={user.id}/>
-            </ConditionalLink>
+            <Link to={{pathname: `/game/profile/${user.id}`, state: user.id}}>
+              <Player user={user} key={user.id}/>
+            </Link>
           ))}
         </ul>
         <Button
@@ -134,7 +117,6 @@ const Game = () => {
       </div>
     );
   }
-
   return (
     <BaseContainer className="game container">
       <h2>Happy Coding!</h2>

@@ -77,6 +77,13 @@ const Login = props => {
       localStorage.setItem("id", user.id);
       localStorage.setItem("status", user.status);
 
+      // log
+      var i;
+      console.log("local storage");
+      for (i = 0; i < localStorage.length; i++)   {
+          console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+      }
+
       // Login successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);
     } catch (error) {
@@ -96,6 +103,13 @@ const Login = props => {
       localStorage.setItem('token', user.token);
       localStorage.setItem("id", user.id);
       localStorage.setItem("status", user.status);
+
+      // log
+      var i;
+      console.log("local storage");
+      for (i = 0; i < localStorage.length; i++)   {
+          console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+      }
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);

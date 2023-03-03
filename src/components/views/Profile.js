@@ -4,7 +4,7 @@ import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 
 const Profile = () => {
@@ -26,10 +26,16 @@ const Profile = () => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchProfile() {
             try {
+                let currentUrl = new URL(window.location);
+                console.log(currentUrl);
+                // do some redux stuff here
 
-                const response = await api.get(`/users/${user.id}`);
+                const response = await api.get(`/users/${currentUrl.searchParams.get('id')}`);
                 // Get the returned user and update the state.
-                const user = response.data[0];
+
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                setUser(response.data);
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the requested user: \n${handleError(error)}`);
