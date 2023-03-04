@@ -10,16 +10,6 @@ import "styles/views/Game.scss";
 
 const Profile = () => {
 
-    // const updateProfile = async () => {
-    //     try {
-    //     const requestBody = JSON.stringify({username, birthDate});
-    //     const response = await api.put(`/users/${localStorage.getItem("id")}`, requestBody);
-
-    //     } catch (error) {
-    //     alert(`Something went wrong during the update: \n${handleError(error)}`);
-    //     }
-    // };
-
     const [user, setUser] = useState(null);
     const { id } = useParams();
     const history = useHistory();
