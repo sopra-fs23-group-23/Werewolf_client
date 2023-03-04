@@ -3,7 +3,7 @@ import { api, handleError } from 'helpers/api';
 import { Button } from 'components/ui/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
-
+import "styles/views/Profile.scss";
 
 
 const FormFieldUsername = props => {
@@ -32,6 +32,7 @@ const FormFieldUsername = props => {
         <input
           className="login input"
           type="date"
+          pattern='ddmmyyyy'
           placeholder="enter birthday.."
           value={props.value}
           onChange={e => props.onChange(e.target.value)}
@@ -62,7 +63,7 @@ const Edit = () => {
 
     return (
         <BaseContainer>
-        <div className="login container">
+        <div className="profile container">
           <div className="login form">
           <h1>Edit Profile</h1>
             <FormFieldUsername
@@ -81,6 +82,12 @@ const Edit = () => {
                     onClick={() => updateProfile()}
                     >
                     Save
+                </Button>
+                <Button
+                    width="100%"
+                    onClick={() => history.push(`/game/profile/${id}`)}
+                    >
+                    Back
                 </Button>
             </div>
             

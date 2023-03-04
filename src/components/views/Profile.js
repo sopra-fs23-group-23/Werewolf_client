@@ -5,7 +5,7 @@ import { Button } from 'components/ui/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 //import PropTypes from "prop-types";
-import "styles/views/Game.scss";
+import "styles/views/Profile.scss";
 
 
 const Profile = () => {
@@ -39,9 +39,11 @@ const Profile = () => {
 
     if (user) {
         content = (
-            <div className="game">
+            <div className="profile">
                 <div className="player container">
-                    <div className="player username">username: {user.username}</div>
+                    <div className="player username">{user.username}</div>
+                </div>
+                <div className="player container">
                     <div className="player status">status: {user.status}</div>
                     <div className="player creationDate">creation date: {user.creationDate}</div>
                     <div className="player birthday">birthday: {user.birthday}</div>
@@ -50,10 +52,10 @@ const Profile = () => {
         );
     }
     return (
-        <BaseContainer className="game container">
+        <BaseContainer className="profile container">
             <h1>Profile Page</h1>
             {content}
-            <div className='button-container'>
+            <div className='login button-container'>
                 <Button 
                     width="100%"
                     onClick={() => history.push(`/game/profile/${id}/edit`)}
@@ -64,10 +66,9 @@ const Profile = () => {
                     width="100%"
                     onClick={() => history.push("/game")}
                 >
-                    Back to Overview
+                    Back
                 </Button>
             </div>
-            
         </BaseContainer>
     );
 }
