@@ -2,6 +2,7 @@ import {Redirect, Route} from "react-router-dom";
 import Game from "components/views/Game";
 import PropTypes from 'prop-types';
 import Profile from "components/views/Profile";
+import Edit from "components/views/Edit";
 
 const GameRouter = props => {
   /**
@@ -17,6 +18,9 @@ const GameRouter = props => {
       </Route>
       <Route exact path={`${props.base}/profile/:id`}>
         <Profile/>
+      </Route>
+      <Route exact path={`${props.base}/profile/:id/edit`}>
+        <Edit/>
       </Route>
     </div>
   );

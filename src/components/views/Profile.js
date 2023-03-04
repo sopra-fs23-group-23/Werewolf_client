@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { api, handleError } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 //import PropTypes from "prop-types";
 import "styles/views/Game.scss";
+
 
 const Profile = () => {
 
@@ -20,17 +21,14 @@ const Profile = () => {
     // };
 
     const [user, setUser] = useState(null);
-
+    const { id } = useParams();
     const history = useHistory();
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchProfile() {
             try {
-                let currentUrl = new URL(window.location);
-                console.log(currentUrl);
-                // do some redux stuff here
 
-                const response = await api.get(`/users/${currentUrl.searchParams.get('id')}`);
+                const response = await api.get(`/users/${id}`);
                 // Get the returned user and update the state.
 
                 await new Promise(resolve => setTimeout(resolve, 1000));
@@ -45,7 +43,7 @@ const Profile = () => {
         }
 
         fetchProfile();
-    }, []);
+    }, [id]);
 
     let content = <Spinner />;
 
@@ -58,12 +56,6 @@ const Profile = () => {
                     <div className="player creationDate">creation date: {user.creationDate}</div>
                     <div className="player birthday">birthday: {user.birthday}</div>
                 </div>
-                <Button
-                    width="100%"
-                    onClick={() => history.push("/game")}
-                >
-                    Back to Overview
-                </Button>
             </div>
         );
     }
@@ -71,6 +63,21 @@ const Profile = () => {
         <BaseContainer className="game container">
             <h1>Profile Page</h1>
             {content}
+            <div className='button-container'>
+                <Button 
+                    width="100%"
+                    onClick={() => history.push(`/game/profile/${id}/edit`)}
+                >
+                Edit
+                </Button>
+                <Button
+                    width="100%"
+                    onClick={() => history.push("/game")}
+                >
+                    Back to Overview
+                </Button>
+            </div>
+            
         </BaseContainer>
     );
 }
