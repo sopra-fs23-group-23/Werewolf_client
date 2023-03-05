@@ -73,16 +73,12 @@ const Login = props => {
       const user = new User(response.data);
 
       // Store the token into the local storage.
-      localStorage.setItem('token', user.token);
+      localStorage.setItem("token", user.token);
       localStorage.setItem("id", user.id);
       localStorage.setItem("status", user.status);
 
       // log
-      var i;
-      console.log("local storage");
-      for (i = 0; i < localStorage.length; i++)   {
-          console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
-      }
+      console.log('response login:',response);
 
       // Login successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);
@@ -105,11 +101,7 @@ const Login = props => {
       localStorage.setItem("status", user.status);
 
       // log
-      var i;
-      console.log("local storage");
-      for (i = 0; i < localStorage.length; i++)   {
-          console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
-      }
+      console.log('response register:', response);
 
       // Registration successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);

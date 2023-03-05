@@ -25,13 +25,6 @@ const Game = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
 
-  var i;
-
-  console.log("local storage");
-  for (i = 0; i < localStorage.length; i++)   {
-      console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
-  }
-
   // define a state variable (using the state hook).
   // if this variable changes, the component will re-render, but the variable will
   // keep its value throughout render cycles.
@@ -39,25 +32,16 @@ const Game = () => {
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [users, setUsers] = useState(null);
 
-  const logout = () => {
-    changeStatus();
-    localStorage.clear();
-    history.push('/login');
-  }
-
-  const changeStatus = async () =>{
+  const logout = async () =>{
     try {
     const response = await api.put(`/users/logout/${localStorage.getItem("id")}`);
     
     await new Promise(resolve => setTimeout(resolve, 1000));
-  
-    console.log('request to:', response.request.responseURL);
-    console.log('status code:', response.status);
-    console.log('status text:', response.statusText);
-    console.log('requested data:', response.data);
 
     // See here to get more data.
-    console.log(response);
+    console.log('logout: ',response);
+    localStorage.clear();
+    history.push('/login');
 
   }catch (error) {
     console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);

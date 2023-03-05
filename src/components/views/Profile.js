@@ -4,7 +4,6 @@ import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
-//import PropTypes from "prop-types";
 import "styles/views/Profile.scss";
 
 
@@ -24,6 +23,7 @@ const Profile = () => {
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 setUser(response.data);
+                console.log(response);
 
             } catch (error) {
                 console.error(`Something went wrong while fetching the requested user: \n${handleError(error)}`);

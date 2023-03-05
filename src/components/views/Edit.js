@@ -8,7 +8,7 @@ import "styles/views/Profile.scss";
 
 const FormFieldUsername = props => {
     return (
-      <div className="login field">
+      <div className="profile field">
         <label className="login label">
           {props.label}
         </label>
@@ -25,7 +25,7 @@ const FormFieldUsername = props => {
   const FormFieldBirthday = props => {
   
     return (
-      <div className="login field">
+      <div className="profile field">
         <label className="login label">
           {props.label}
         </label>
@@ -51,9 +51,10 @@ const Edit = () => {
     const updateProfile = async () => {
         try {
         const requestBody = JSON.stringify({username, birthday});
-        await api.put(`/users/${id}`, requestBody);
+        const response = await api.put(`/users/${id}`, requestBody);
 
         await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log(response);
         history.push(`/game/profile/${id}`);
 
         } catch (error) {
@@ -64,7 +65,6 @@ const Edit = () => {
     return (
         <BaseContainer>
         <div className="profile container">
-          <div className="login form">
           <h1>Edit Profile</h1>
             <FormFieldUsername
               label="username"
@@ -92,7 +92,6 @@ const Edit = () => {
             </div>
             
           </div>
-        </div>
       </BaseContainer>
     );
 }

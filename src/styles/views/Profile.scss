@@ -19,6 +19,12 @@
     background: transparentize(white, 0.85);
     color: $textColor;
   }
+  &.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
   &.container {
     background: $background;
     padding: 1.5em;
@@ -38,7 +44,7 @@
     margin: 0.5em 0;
   }
   h1 {
-    margin-bottom: 0;
+    margin-bottom: 12px;
   }
   .infobox {
     display: flex;
