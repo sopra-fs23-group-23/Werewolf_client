@@ -1,99 +1,89 @@
-import { useState } from 'react';
-import { api, handleError } from 'helpers/api';
-import { Button } from 'components/ui/Button';
-import { useHistory, useParams } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {api} from 'helpers/api';
+import {Spinner} from 'components/ui/Spinner';
+import {Button} from 'components/ui/Button';
+import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Profile.scss";
-
-
-const FormFieldUsername = props => {
-    return (
-      <div className="profile field">
-        <label className="login label">
-          {props.label}
-        </label>
-        <input
-          className="login input"
-          placeholder="enter username.."
-          value={props.value}
-          onChange={e => props.onChange(e.target.value)}
-        />
-      </div>
-    );
-  };
-  
-  const FormFieldBirthday = props => {
-  
-    return (
-      <div className="profile field">
-        <label className="login label">
-          {props.label}
-        </label>
-        <input
-          className="login input"
-          type="date"
-          pattern='ddmmyyyy'
-          placeholder="enter birthday.."
-          value={props.value}
-          onChange={e => props.onChange(e.target.value)}
-        />
-      </div>
-    );
-  };
+import "styles/views/Game.scss";
+import "styles/views/Edit.scss";
+import { useParams } from 'react-router-dom'
+import FormField from 'components/ui/FormField';
 
 const Edit = () => {
-    const [birthday, setBirthday] = useState(null);
-    const [username, setUsername] = useState(null);
+  const history = useHistory();
+  const [username, setUsername] = useState('');
+  const [birthday, setBirthDate] = useState('');
+  const { id } = useParams();
 
-    const { id } = useParams();
-    const history = useHistory();
-
-    const updateProfile = async () => {
-        try {
-        const requestBody = JSON.stringify({username, birthday});
-        const response = await api.put(`/users/${id}`, requestBody);
-
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log(response);
-        history.push(`/game/profile/${id}`);
-
-        } catch (error) {
-        alert(`Something went wrong during the update: \n${handleError(error)}`);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await api.get('/users/' + id);
+        // check if is current logged in user
+        if(response.data.id !== parseInt(localStorage.getItem('uid'))) {
+          alert("Cannot enter edit page for other user.");
+          history.push('/game/dashboard');
         }
-    };
+        // format date such that it fits in the value attribute of the date input
+        const birthday = response.data.birthday;
+        let formattedBirthday = new Date(response.data.birthday).toISOString().substring(0, 10);
+        if(!birthday) {
+          formattedBirthday = '';
+        }
+        setUsername(response.data.username);
+        setBirthDate(formattedBirthday);
+      } catch (error) {
+        alert("Could not fetch user with ID " + id + ".");
+        history.push('/game/dashboard');
+      }
+    }
+    fetchData();
+  }, [history, id]);
 
-    return (
-        <BaseContainer>
-        <div className="profile container">
-          <h1>Edit Profile</h1>
-            <FormFieldUsername
-              label="username"
-              value={username}
-              onChange={un => setUsername(un)}
-            />
-            <FormFieldBirthday
-              label="birthday"
-              value={birthday}
-              onChange={n => setBirthday(n)}
-            />
-            <div className="login button-container">
-                <Button
-                    width="100%"
-                    onClick={() => updateProfile()}
-                    >
-                    Save
-                </Button>
-                <Button
-                    width="100%"
-                    onClick={() => history.push(`/game/profile/${id}`)}
-                    >
-                    Back
-                </Button>
-            </div>
-            
-          </div>
-      </BaseContainer>
+  function updateUser() {
+    async function putData() {
+      try {
+        await api.put('/users/' + id, {
+          username,
+          birthday
+        });
+        history.push('/game/user/' + id);
+      } catch (error) {
+        alert(error.response.data?.message || "Update failed.")
+      }
+    }
+    putData();
+  }
+
+  let content = <Spinner/>;
+
+  if (username) {
+    content = (
+      <div className='edit information'>
+        <FormField
+            label="Username"
+            value={username}
+            onChange={un => setUsername(un)}
+          />
+        <FormField
+            label="Birthday"
+            value={birthday}
+            type="date"
+            onChange={un => setBirthDate(un)}
+          />
+      </div>
     );
+  }
+
+  return (
+    <BaseContainer className="game container">
+      <h2>Edit User</h2>
+      <p className="game paragraph">Get user information from secure endpoint:</p>
+      { content }
+      <Button width="100%" className="user button" onClick={() => updateUser()}>Save Changes</Button>
+      <Button width="100%" onClick={() => history.push('/game/user/' + id)}>Back to User</Button>
+    </BaseContainer>
+  );
 }
 
 export default Edit;

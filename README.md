@@ -1,5 +1,5 @@
-# SoPra  FS23 - Client Template with build pack
- 
+# SoPra FS23 - Client Template with build pack
+
 ## Getting started
 
 Read and go through these Tutorials. It will make your life easier:)
@@ -44,4 +44,3 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 
 > Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
-Test

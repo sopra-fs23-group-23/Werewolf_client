@@ -42,13 +42,27 @@
     align-items: center;
     background: lighten($background, 5);
   }
-  &.name {
-    font-weight: 300;
+  &.current {
+    border: 1px solid $accent;
+  }
+  &.status {
+    font-size: 13px;
+    font-weight: 400;
     margin-left: 5px;
+    &.ONLINE {
+      color: greenyellow;
+    }
+    &.OFFLINE {
+      color: red;
+    }
   }
   &.username {
     font-weight: 500;
     color: $accent;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   &.id {
     margin-left: auto;

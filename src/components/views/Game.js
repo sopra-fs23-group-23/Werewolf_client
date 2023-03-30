@@ -1,25 +1,26 @@
-import React from 'react'
 import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
-import { Link } from "react-router-dom";
 
-const Player = ({user}) => (
-  <div className="player container">
-    <div className="player username">username: {user.username}</div>
-  </div>
-);
+const Player = ({user}) => {
+  const isCurrentUser = user.id === parseInt(localStorage.getItem('uid')) ? 'current' : '';
+  return (
+    <div className={"player container " + isCurrentUser}>
+      <Link to={'/game/user/' + user.id} className='player username'>{ user.username }</Link>
+      <div className={"player status " + user.status}>{user.status}</div>
+      <div className="player id">id: {user.id}</div>
+    </div>
+  )
+};
 
 Player.propTypes = {
   user: PropTypes.object
 };
-
-// var ConditionalLink = localStorage.getItem("status") === "ONLINE" ? Link : React.DOM.div;
 
 const Game = () => {
   // use react-router-dom's hook to access the history
@@ -31,24 +32,19 @@ const Game = () => {
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   const [users, setUsers] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const logout = async () =>{
+  const logout = async () => {
     try {
-    const response = await api.put(`/users/logout/${localStorage.getItem("id")}`);
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // See here to get more data.
-    console.log('logout: ',response);
-    localStorage.clear();
+      await api.put('/logout');
+    } catch(error) {
+      console.error(error);
+      alert("Logout failed. See console for details.");
+    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('uid');
     history.push('/login');
-
-  }catch (error) {
-    console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
-    console.error("Details:", error);
-    alert("Something went wrong while fetching the users! See the console for details.");
   }
-}
 
   // the effect hook can be used to react to change in your component.
   // in this case, the effect hook is only run once, the first time the component is mounted
@@ -58,18 +54,10 @@ const Game = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        const response = await api.get('/users');
-
-        // delays continuous execution of an async operation for 1 second.
-        // This is just a fake async call, so that the spinner can be displayed
-        // feel free to remove it :)
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // Get the returned users and update the state.
-        setUsers(response.data);
-
-        // See here to get more data.
-        console.log(response);
+        const allUsersResponse = await api.get('/users');
+        const currentUserResponse = await api.get('/users/' + localStorage.getItem('uid'))
+        setUsers(allUsersResponse.data);
+        setCurrentUser(currentUserResponse.data);
       } catch (error) {
         console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
         console.error("Details:", error);
@@ -81,15 +69,14 @@ const Game = () => {
   }, []);
 
   let content = <Spinner/>;
+  let name = '';
 
   if (users) {
     content = (
       <div className="game">
         <ul className="game user-list">
           {users.map(user => (
-            <Link to={{pathname: `/game/profile/${user.id}`, state: user.id}}>
-              <Player user={user} key={user.id}/>
-            </Link>
+            <Player user={user} key={user.id}/>
           ))}
         </ul>
         <Button
@@ -101,11 +88,15 @@ const Game = () => {
       </div>
     );
   }
+  if (currentUser) {
+    name = currentUser.username;
+  }
+
   return (
     <BaseContainer className="game container">
-      <h2>Happy Coding!</h2>
-      <p className="game paragraph" >
-        Get all users from secure endpoint:
+      <h2>All Users</h2>
+      <p className="game paragraph">
+        Logged in user: <strong>{ name }</strong>
       </p>
       {content}
     </BaseContainer>

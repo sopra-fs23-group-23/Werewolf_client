@@ -13,7 +13,7 @@
     flex-direction: column;
     justify-content: center;
     width: 60%;
-    max-width: 30em;
+    max-width: 25em;
     height: 20em;
     font-size: 16px;
     font-weight: 300;
@@ -35,12 +35,12 @@
     margin-left: -4px;
     border: none;
     border-radius: 0.75em;
-    margin-bottom: 20px;
     background: transparentize(white, 0.85);
     color: $textColor;
   }
   &.label {
     color: $textColor;
+    margin-top: 15px;
     margin-bottom: 10px;
     text-transform: lowercase;
     font-weight: 300;
@@ -48,6 +48,15 @@
   &.button-container {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
+    margin-top: 1em;
+  }
+  &.link {
+    color: white;
+    align-self: center;
+    text-align: center;
+    margin-top: 1.2em;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }

@@ -1,38 +1,43 @@
 import React, {useState} from 'react';
 import {api} from 'helpers/api';
 import User from 'models/User';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import FormField from 'components/ui/FormField';
 
-const Login = props => {
+const Register = props => {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
-  const doLogin = async (e) => {
+  const doRegister = async (e) => {
     e.preventDefault();
     try {
       const requestBody = JSON.stringify({username, password});
-      const response = await api.post('/login', requestBody);
+      const response = await api.post('/users', requestBody);
+
       // Get the returned user and update a new object.
       const user = new User(response.data);
+
+      // Store the token into the local storage.
       localStorage.setItem('token', user.token);
       localStorage.setItem('uid', user.id);
+
+      // Login successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);
     } catch (error) {
       //alert(`Something went wrong during the login: \n${handleError(error)}`);
-      alert(error.response.data?.message || "Login failed.")
+      alert(error.response.data?.message || "Registration failed.")
     }
   };
 
   return (
     <BaseContainer>
       <div className="login container">
-        <h1>Login</h1>
-        <form className="login form" onSubmit={e => doLogin(e)}>
+        <h1>Register</h1>
+        <form className="login form" onSubmit={e => doRegister(e)}>
           <FormField
             label="Username"
             value={username}
@@ -48,12 +53,12 @@ const Login = props => {
             <Button
               disabled={!username || !password}
               width="100%"
-              onClick={e => doLogin(e)}
+              onClick={e => doRegister(e)}
             >
-              Login
+              Register
             </Button>
           </div>
-          <Link to="/register" className='login link'>Go to Registration</Link>
+          <Link to="/login" className='login link'>Go to Login</Link>
         </form>
       </div>
     </BaseContainer>
@@ -64,4 +69,4 @@ const Login = props => {
  * You can get access to the history object's properties via the withRouter.
  * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
  */
-export default Login;
+export default Register;
