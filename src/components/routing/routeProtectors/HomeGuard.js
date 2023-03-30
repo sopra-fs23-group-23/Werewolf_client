@@ -10,13 +10,13 @@ import PropTypes from 'prop-types';
  * @Guard
  * @param props
  */
-export const GameGuard = (props) => {
+export const HomeGuard = (props) => {
   if (localStorage.getItem('token')) {
     return props.children;
   }
   return <Redirect to="/login" />;
 };
 
-GameGuard.propTypes = {
+HomeGuard.propTypes = {
   children: PropTypes.node,
 };

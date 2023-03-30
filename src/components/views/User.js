@@ -17,8 +17,6 @@ const User = () => {
     async function fetchData() {
       try {
         const response = await api.get('/users/' + id);
-        //await new Promise(resolve => setTimeout(resolve, 300));
-        // format creationDate and birthday before saving to state
         const creationDateRaw = new Date(response.data.creationDate);
         response.data.creationDate = creationDateRaw.toLocaleDateString();
         if (response.data.birthday) {

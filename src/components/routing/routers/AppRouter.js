@@ -1,9 +1,11 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { GameGuard } from 'components/routing/routeProtectors/GameGuard';
-import GameRouter from 'components/routing/routers/GameRouter';
+import { HomeGuard } from '../routeProtectors/HomeGuard';
 import { LoginGuard } from 'components/routing/routeProtectors/LoginGuard';
+import HomeRouter from './HomeRouter';
 import Login from 'components/views/Login';
 import Register from 'components/views/Register';
+import Lobby from 'components/views/Lobby';
+import Game from 'components/views/Game';
 
 /**
  * Main router of your application.
@@ -18,11 +20,6 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/game">
-          <GameGuard>
-            <GameRouter base="/game" />
-          </GameGuard>
-        </Route>
         <Route exact path="/login">
           <LoginGuard>
             <Login />
@@ -33,16 +30,28 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
+        <Route exact path="/lobby">
+          <HomeGuard>
+            <Lobby />
+          </HomeGuard>
+        </Route>
+        <Route exact path="/game">
+          <HomeGuard>
+            <Game />
+          </HomeGuard>
+        </Route>
+        <Route>
+          <HomeGuard>
+            <HomeRouter />
+          </HomeGuard>
+        </Route>
         <Route path="*">
-          {/* redirect non existing routes to /game, which redirects to /login if not logged in */}
-          <Redirect to="/game" />
+          {/* redirect non existing routes to /home, which redirects to /login if not logged in */}
+          <Redirect to="/home" />
         </Route>
       </Switch>
     </BrowserRouter>
   );
 };
 
-/*
- * Don't forget to export your component!
- */
 export default AppRouter;
