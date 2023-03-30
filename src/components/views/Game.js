@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api, handleError } from 'helpers/api';
+import { api } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
 import { useHistory, Link } from 'react-router-dom';
@@ -64,12 +64,7 @@ const Game = () => {
         setUsers(allUsersResponse.data);
         setCurrentUser(currentUserResponse.data);
       } catch (error) {
-        console.error(
-          `Something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error('Details:', error);
+        console.error(error);
         alert(
           'Something went wrong while fetching the users! See the console for details.'
         );

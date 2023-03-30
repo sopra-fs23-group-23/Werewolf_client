@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api, handleError } from 'helpers/api';
+import { api } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
 import { useHistory } from 'react-router-dom';
@@ -27,12 +27,7 @@ const User = () => {
         }
         setUser(response.data);
       } catch (error) {
-        console.error(
-          `Something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error('Details:', error);
+        console.error(error);
         alert("Could not fetch user with ID '" + id + "'");
         history.push('/game/dashboard');
       }

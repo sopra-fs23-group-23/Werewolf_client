@@ -23,7 +23,6 @@ const Login = (props) => {
       localStorage.setItem('uid', user.id);
       history.push(`/game`);
     } catch (error) {
-      //alert(`Something went wrong during the login: \n${handleError(error)}`);
       alert(error.response.data?.message || 'Login failed.');
     }
   };

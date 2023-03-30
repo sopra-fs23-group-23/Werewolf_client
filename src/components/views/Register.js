@@ -28,7 +28,6 @@ const Register = (props) => {
       // Login successfully worked --> navigate to the route /game in the GameRouter
       history.push(`/game`);
     } catch (error) {
-      //alert(`Something went wrong during the login: \n${handleError(error)}`);
       alert(error.response.data?.message || 'Registration failed.');
     }
   };
