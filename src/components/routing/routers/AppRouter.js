@@ -1,8 +1,8 @@
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { GameGuard } from "components/routing/routeProtectors/GameGuard";
-import GameRouter from "components/routing/routers/GameRouter";
-import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
-import Login from "components/views/Login";
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { GameGuard } from 'components/routing/routeProtectors/GameGuard';
+import GameRouter from 'components/routing/routers/GameRouter';
+import { LoginGuard } from 'components/routing/routeProtectors/LoginGuard';
+import Login from 'components/views/Login';
 import Register from 'components/views/Register';
 
 /**
@@ -33,7 +33,9 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
-        <Route path="*">  {/* redirect non existing routes to /game, which redirects to /login if not logged in */}
+        <Route path="*">
+          {' '}
+          {/* redirect non existing routes to /game, which redirects to /login if not logged in */}
           <Redirect to="/game" />
         </Route>
       </Switch>
@@ -42,6 +44,6 @@ const AppRouter = () => {
 };
 
 /*
-* Don't forget to export your component!
+ * Don't forget to export your component!
  */
 export default AppRouter;

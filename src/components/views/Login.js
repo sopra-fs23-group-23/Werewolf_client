@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {api} from 'helpers/api';
+import React, { useState } from 'react';
+import { api } from 'helpers/api';
 import User from 'models/User';
-import {Link, useHistory} from 'react-router-dom';
-import {Button} from 'components/ui/Button';
+import { Link, useHistory } from 'react-router-dom';
+import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
-import BaseContainer from "components/ui/BaseContainer";
+import BaseContainer from 'components/ui/BaseContainer';
 import FormField from 'components/ui/FormField';
 
-const Login = props => {
+const Login = (props) => {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -15,7 +15,7 @@ const Login = props => {
   const doLogin = async (e) => {
     e.preventDefault();
     try {
-      const requestBody = JSON.stringify({username, password});
+      const requestBody = JSON.stringify({ username, password });
       const response = await api.post('/login', requestBody);
       // Get the returned user and update a new object.
       const user = new User(response.data);
@@ -24,36 +24,36 @@ const Login = props => {
       history.push(`/game`);
     } catch (error) {
       //alert(`Something went wrong during the login: \n${handleError(error)}`);
-      alert(error.response.data?.message || "Login failed.")
+      alert(error.response.data?.message || 'Login failed.');
     }
   };
 
   return (
     <BaseContainer>
-      <div className="login container">
+      <div>
         <h1>Login</h1>
-        <form className="login form" onSubmit={e => doLogin(e)}>
+        <form onSubmit={(e) => doLogin(e)}>
           <FormField
             label="Username"
             value={username}
-            onChange={un => setUsername(un)}
+            onChange={(un) => setUsername(un)}
           />
           <FormField
             label="Password"
             value={password}
             type="password"
-            onChange={n => setPassword(n)}
+            onChange={(n) => setPassword(n)}
           />
-          <div className="login button-container">
+          <div>
             <Button
               disabled={!username || !password}
               width="100%"
-              onClick={e => doLogin(e)}
+              onClick={(e) => doLogin(e)}
             >
               Login
             </Button>
           </div>
-          <Link to="/register" className='login link'>Go to Registration</Link>
+          <Link to="/register">Go to Registration</Link>
         </form>
       </div>
     </BaseContainer>

@@ -1,10 +1,10 @@
-import { Redirect, Route } from "react-router-dom";
-import Game from "components/views/Game";
+import { Redirect, Route } from 'react-router-dom';
+import Game from 'components/views/Game';
 import PropTypes from 'prop-types';
 import User from 'components/views/User';
 import Edit from 'components/views/Edit';
 
-const GameRouter = props => {
+const GameRouter = (props) => {
   /**
    * "this.props.base" is "/app" because as been passed as a prop in the parent of GameRouter, i.e., App.js
    */
@@ -26,11 +26,11 @@ const GameRouter = props => {
   );
 };
 /*
-* Don't forget to export your component!
+ * Don't forget to export your component!
  */
 
 GameRouter.propTypes = {
-  base: PropTypes.string
+  base: PropTypes.string,
 };
 
 export default GameRouter;
