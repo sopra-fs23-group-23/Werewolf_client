@@ -10,6 +10,7 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  config.headers.Authorization = localStorage.getItem('token');
+  // TODO: rename token to Authorization
+  config.headers.token = localStorage.getItem('token');
   return config;
 });

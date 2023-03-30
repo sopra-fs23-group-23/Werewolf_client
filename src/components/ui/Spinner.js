@@ -1,7 +1,7 @@
 import React from 'react';
 import 'styles/ui/Spinner.scss';
 
-export const Spinner = () => (
+const Spinner = () => (
   <div className="loading-spinner">
     <div></div>
     <div></div>
@@ -9,3 +9,5 @@ export const Spinner = () => (
     <div></div>
   </div>
 );
+
+export default Spinner;

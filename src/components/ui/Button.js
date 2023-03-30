@@ -1,6 +1,6 @@
 import 'styles/ui/Button.scss';
 
-export const Button = (props) => (
+const Button = (props) => (
   <button
     {...props}
     style={{ width: props.width, ...props.style }}
@@ -9,3 +9,5 @@ export const Button = (props) => (
     {props.children}
   </button>
 );
+
+export default Button;

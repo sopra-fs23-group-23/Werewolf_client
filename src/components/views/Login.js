@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
 import User from 'models/User';
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from 'components/ui/Button';
-import 'styles/views/Login.scss';
-import BaseContainer from 'components/ui/BaseContainer';
+import Button from 'components/ui/Button';
 import FormField from 'components/ui/FormField';
+import 'styles/views/Login.scss';
 
 const Login = (props) => {
   const history = useHistory();
@@ -28,7 +27,7 @@ const Login = (props) => {
   };
 
   return (
-    <BaseContainer>
+    <div className="container">
       <div>
         <h1>Login</h1>
         <form onSubmit={(e) => doLogin(e)}>
@@ -55,12 +54,8 @@ const Login = (props) => {
           <Link to="/register">Go to Registration</Link>
         </form>
       </div>
-    </BaseContainer>
+    </div>
   );
 };
 
-/**
- * You can get access to the history object's properties via the withRouter.
- * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
- */
 export default Login;

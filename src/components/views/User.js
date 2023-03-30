@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
-import { Spinner } from 'components/ui/Spinner';
-import { Button } from 'components/ui/Button';
-import { useHistory } from 'react-router-dom';
-import BaseContainer from 'components/ui/BaseContainer';
+import Spinner from 'components/ui/Spinner';
+import Button from 'components/ui/Button';
 import 'styles/views/Game.scss';
 import 'styles/views/User.scss';
-import { useParams } from 'react-router-dom';
 
 const User = () => {
   const history = useHistory();
@@ -17,17 +15,11 @@ const User = () => {
     async function fetchData() {
       try {
         const response = await api.get('/users/' + id);
-        const creationDateRaw = new Date(response.data.creationDate);
-        response.data.creationDate = creationDateRaw.toLocaleDateString();
-        if (response.data.birthday) {
-          const birthdayRaw = new Date(response.data.birthday);
-          response.data.birthday = birthdayRaw.toLocaleDateString();
-        }
         setUser(response.data);
       } catch (error) {
         console.error(error);
-        alert("Could not fetch user with ID '" + id + "'");
-        history.push('/game/dashboard');
+        alert('Could not fetch user with ID ' + id);
+        history.push('/home');
       }
     }
     fetchData();
@@ -51,21 +43,13 @@ const User = () => {
             <td>Status</td>
             <td className={'user ' + user.status}>{user.status}</td>
           </tr>
-          <tr>
-            <td>Date Joined</td>
-            <td>{user.creationDate}</td>
-          </tr>
-          <tr>
-            <td>Birth Date</td>
-            <td>{user.birthday || 'unknown'}</td>
-          </tr>
         </tbody>
       </table>
     );
   }
 
   return (
-    <BaseContainer className="game container">
+    <div className="game container">
       <h2>User Details</h2>
       <p className="game paragraph">
         Get user information from secure endpoint:
@@ -75,17 +59,17 @@ const User = () => {
         <Button
           width="100%"
           className="user button"
-          onClick={() => history.push('/game/edit/' + id)}
+          onClick={() => history.push('/edit/' + id)}
         >
           Edit Profile
         </Button>
       ) : (
         ''
       )}
-      <Button width="100%" onClick={() => history.push('/game/dashboard')}>
+      <Button width="100%" onClick={() => history.push('/home')}>
         Back to Dashboard
       </Button>
-    </BaseContainer>
+    </div>
   );
 };
 
