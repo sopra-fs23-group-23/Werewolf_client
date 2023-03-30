@@ -34,7 +34,6 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
         <Route path="*">
-          {' '}
           {/* redirect non existing routes to /game, which redirects to /login if not logged in */}
           <Redirect to="/game" />
         </Route>
