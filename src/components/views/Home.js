@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { api } from 'helpers/api';
-import Button from 'components/ui/Button';
 
 const Home = () => {
   const history = useHistory();
@@ -19,12 +18,15 @@ const Home = () => {
   };
 
   return (
-    <div className="container">
-      <div>Home</div>
-      <Link to={'/user/' + localStorage.getItem('uid')}>Profile</Link>
-      <Button width="100%" onClick={() => logout()}>
-        Logout
-      </Button>
+    <div className="background background-light">
+      <div className="container">
+        <h1>Hey, Elsbeth</h1>
+        <Link to={'/user/' + localStorage.getItem('uid')}>Profile</Link>
+        <br />
+        <button className="btn" onClick={() => logout()}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

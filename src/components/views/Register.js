@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { api } from 'helpers/api';
 import User from 'models/User';
-import Button from 'components/ui/Button';
 import FormField from 'components/ui/FormField';
-import 'styles/views/Login.scss';
+import 'styles/views/Auth.scss';
 
 const Register = (props) => {
   const history = useHistory();
@@ -44,13 +43,13 @@ const Register = (props) => {
           onChange={(n) => setPassword(n)}
         />
         <div>
-          <Button
+          <button
+            className="btn"
             disabled={!username || !password}
-            width="100%"
             onClick={(e) => doRegister(e)}
           >
             Register
-          </Button>
+          </button>
         </div>
         <Link to="/login">Go to Login</Link>
       </form>

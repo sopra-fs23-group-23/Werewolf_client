@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
 import Spinner from 'components/ui/Spinner';
-import Button from 'components/ui/Button';
 import 'styles/views/Game.scss';
 import 'styles/views/User.scss';
 
@@ -49,20 +48,24 @@ const User = () => {
   }
 
   return (
-    <div className="container">
-      <h2>User Details</h2>
-      <p>Get user information from secure endpoint:</p>
-      {content}
-      {isCurrentUser() ? (
-        <Button width="100%" onClick={() => history.push('/edit/' + id)}>
-          Edit Profile
-        </Button>
-      ) : (
-        ''
-      )}
-      <Button width="100%" onClick={() => history.push('/home')}>
-        Back to Dashboard
-      </Button>
+    <div className="background background-dark">
+      <div className="container">
+        <h2>User Details</h2>
+        {content}
+        {isCurrentUser() ? (
+          <button
+            className="btn btn-danger btn-danger-dark"
+            onClick={() => history.push('/edit/' + id)}
+          >
+            Edit Profile
+          </button>
+        ) : (
+          ''
+        )}
+        <button className="btn btn-light" onClick={() => history.push('/home')}>
+          Back to Home
+        </button>
+      </div>
     </div>
   );
 };

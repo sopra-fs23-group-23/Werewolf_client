@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { api } from 'helpers/api';
 import Spinner from 'components/ui/Spinner';
-import Button from 'components/ui/Button';
 import FormField from 'components/ui/FormField';
 import 'styles/views/Game.scss';
 import 'styles/views/Edit.scss';
@@ -57,16 +56,20 @@ const Edit = () => {
   }
 
   return (
-    <div className="container">
-      <h2>Edit User</h2>
-      <p>Get user information from secure endpoint:</p>
-      {content}
-      <Button width="100%" onClick={() => updateUser()}>
-        Save Changes
-      </Button>
-      <Button width="100%" onClick={() => history.push('/user/' + id)}>
-        Back to User
-      </Button>
+    <div className="background background-dark">
+      <div className="container">
+        <h2>Edit User</h2>
+        {content}
+        <button className="btn btn-light" onClick={() => updateUser()}>
+          Save Changes
+        </button>
+        <button
+          className="btn btn-light"
+          onClick={() => history.push('/user/' + id)}
+        >
+          Back to User
+        </button>
+      </div>
     </div>
   );
 };
