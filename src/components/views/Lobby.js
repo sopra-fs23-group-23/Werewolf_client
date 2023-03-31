@@ -1,7 +1,11 @@
+import 'styles/views/Lobby.scss';
+
 const Lobby = () => {
   return (
-    <div className="container">
-      <div>Lobby</div>
+    <div className="background background-dark">
+      <div className="container">
+        <div>Lobby</div>
+      </div>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
 import Spinner from 'components/ui/Spinner';
-import 'styles/views/Game.scss';
 import 'styles/views/User.scss';
 
 const User = () => {
@@ -53,12 +52,17 @@ const User = () => {
         <h2>User Details</h2>
         {content}
         {isCurrentUser() ? (
-          <button
-            className="btn btn-danger btn-danger-dark"
-            onClick={() => history.push('/edit/' + id)}
-          >
-            Edit Profile
-          </button>
+          <>
+            <button
+              className="btn btn-light"
+              onClick={() => history.push('/edit/' + id)}
+            >
+              Edit Profile
+            </button>
+            <br />
+            <button className="btn btn-danger">Delete Profile</button>
+            <br />
+          </>
         ) : (
           ''
         )}

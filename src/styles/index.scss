@@ -33,6 +33,10 @@ h3 {
   padding: 20px 0;
 }
 
+a {
+  display: inline-block;
+}
+
 .background {
   min-height: 100vh;
   &-light {
@@ -54,10 +58,12 @@ h3 {
   padding: 10px 15px;
   border: 3px solid black;
   border-radius: 100px;
-  font-weight: bold;
-  @include transition;
-  color: black;
   background: transparent;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 10px;
+  @include transition;
   &:hover {
     cursor: pointer;
     background-color: black;
@@ -79,6 +85,14 @@ h3 {
     color: $color-danger;
     &:hover {
       background-color: $color-danger;
+    }
+  }
+  &:disabled {
+    opacity: 0.5;
+    &:hover {
+      cursor: default;
+      background-color: inherit;
+      color: inherit;
     }
   }
 }

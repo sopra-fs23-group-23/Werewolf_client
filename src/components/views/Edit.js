@@ -3,7 +3,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { api } from 'helpers/api';
 import Spinner from 'components/ui/Spinner';
 import FormField from 'components/ui/FormField';
-import 'styles/views/Game.scss';
 import 'styles/views/Edit.scss';
 
 const Edit = () => {
@@ -63,6 +62,7 @@ const Edit = () => {
         <button className="btn btn-light" onClick={() => updateUser()}>
           Save Changes
         </button>
+        <br />
         <button
           className="btn btn-light"
           onClick={() => history.push('/user/' + id)}

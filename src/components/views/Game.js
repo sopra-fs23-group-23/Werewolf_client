@@ -1,7 +1,11 @@
+import 'styles/views/Game.scss';
+
 const Game = () => {
   return (
-    <div className="container">
-      <div>Game</div>
+    <div className="background background-dark">
+      <div className="container">
+        <div>Game</div>
+      </div>
     </div>
   );
 };
