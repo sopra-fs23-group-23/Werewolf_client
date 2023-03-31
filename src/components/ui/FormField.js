@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
+import 'styles/ui/Formfield.scss';
 
 const FormField = ({ label, value, type, onChange }) => {
   return (
     <div>
       <label>{label}</label>
       <input
+        className="input"
         placeholder="enter here.."
         value={value}
         type={type || 'text'}
