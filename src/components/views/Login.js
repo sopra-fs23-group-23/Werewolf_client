@@ -4,6 +4,7 @@ import { api } from 'helpers/api';
 import User from 'models/User';
 import FormField from 'components/ui/FormField';
 import 'styles/views/Auth.scss';
+import 'styles/ui/Button.scss';
 
 const Login = (props) => {
   const history = useHistory();
@@ -44,11 +45,10 @@ const Login = (props) => {
             />
             <div>
               <button
-                className="btn"
+                className="primary-button"
                 disabled={!username || !password}
                 onClick={(e) => doLogin(e)}
-              >
-                Login
+              >Login
               </button>
             </div>
             <Link to="/register">Go to Registration</Link>
