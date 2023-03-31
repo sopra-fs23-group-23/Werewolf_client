@@ -1,15 +1,1 @@
 @import 'styles/theme';
-
-.user {
-  &.information {
-    width: 100%;
-    margin-bottom: 0.5em;
-    margin-top: 1em;
-  }
-  &.ONLINE {
-    color: greenyellow;
-  }
-  &.OFFLINE {
-    color: red;
-  }
-}
