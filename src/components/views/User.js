@@ -33,7 +33,7 @@ const User = () => {
 
   if (user) {
     content = (
-      <table className="user information">
+      <table>
         <tbody>
           <tr>
             <td>Username</td>
@@ -49,18 +49,12 @@ const User = () => {
   }
 
   return (
-    <div className="game container">
+    <div className="container">
       <h2>User Details</h2>
-      <p className="game paragraph">
-        Get user information from secure endpoint:
-      </p>
+      <p>Get user information from secure endpoint:</p>
       {content}
       {isCurrentUser() ? (
-        <Button
-          width="100%"
-          className="user button"
-          onClick={() => history.push('/edit/' + id)}
-        >
+        <Button width="100%" onClick={() => history.push('/edit/' + id)}>
           Edit Profile
         </Button>
       ) : (

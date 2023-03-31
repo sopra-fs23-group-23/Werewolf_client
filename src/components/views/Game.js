@@ -1,5 +1,9 @@
 const Game = () => {
-  return <div>Game</div>;
+  return (
+    <div className="container">
+      <div>Game</div>
+    </div>
+  );
 };
 
 export default Game;

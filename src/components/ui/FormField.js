@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 
 const FormField = ({ label, value, type, onChange }) => {
   return (
-    <div className="login field">
-      <label className="login label">{label}</label>
+    <div>
+      <label>{label}</label>
       <input
-        className="login input"
         placeholder="enter here.."
         value={value}
         type={type || 'text'}

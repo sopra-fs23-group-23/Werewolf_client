@@ -30,34 +30,30 @@ const Register = (props) => {
 
   return (
     <div className="container">
-      <div className="login container">
-        <h1>Register</h1>
-        <form className="login form" onSubmit={(e) => doRegister(e)}>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-          />
-          <FormField
-            label="Password"
-            value={password}
-            type="password"
-            onChange={(n) => setPassword(n)}
-          />
-          <div className="login button-container">
-            <Button
-              disabled={!username || !password}
-              width="100%"
-              onClick={(e) => doRegister(e)}
-            >
-              Register
-            </Button>
-          </div>
-          <Link to="/login" className="login link">
-            Go to Login
-          </Link>
-        </form>
-      </div>
+      <h1>Register</h1>
+      <form onSubmit={(e) => doRegister(e)}>
+        <FormField
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+        />
+        <FormField
+          label="Password"
+          value={password}
+          type="password"
+          onChange={(n) => setPassword(n)}
+        />
+        <div>
+          <Button
+            disabled={!username || !password}
+            width="100%"
+            onClick={(e) => doRegister(e)}
+          >
+            Register
+          </Button>
+        </div>
+        <Link to="/login">Go to Login</Link>
+      </form>
     </div>
   );
 };

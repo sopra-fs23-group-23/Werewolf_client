@@ -19,13 +19,13 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="container">
       <div>Home</div>
       <Link to={'/user/' + localStorage.getItem('uid')}>Profile</Link>
       <Button width="100%" onClick={() => logout()}>
         Logout
       </Button>
-    </>
+    </div>
   );
 };
 

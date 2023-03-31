@@ -48,24 +48,20 @@ const Edit = () => {
 
   if (username) {
     content = (
-      <div className="edit information">
-        <FormField
-          label="Username"
-          value={username}
-          onChange={(un) => setUsername(un)}
-        />
-      </div>
+      <FormField
+        label="Username"
+        value={username}
+        onChange={(un) => setUsername(un)}
+      />
     );
   }
 
   return (
-    <div className="game container">
+    <div className="container">
       <h2>Edit User</h2>
-      <p className="game paragraph">
-        Get user information from secure endpoint:
-      </p>
+      <p>Get user information from secure endpoint:</p>
       {content}
-      <Button width="100%" className="user button" onClick={() => updateUser()}>
+      <Button width="100%" onClick={() => updateUser()}>
         Save Changes
       </Button>
       <Button width="100%" onClick={() => history.push('/user/' + id)}>

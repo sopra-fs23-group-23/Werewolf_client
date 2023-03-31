@@ -1,5 +1,9 @@
 const Lobby = () => {
-  return <div>Lobby</div>;
+  return (
+    <div className="container">
+      <div>Lobby</div>
+    </div>
+  );
 };
 
 export default Lobby;
