@@ -1,13 +1,13 @@
-import 'styles/views/Game.scss';
+import 'styles/views/Lobby.scss';
 
-const Game = () => {
+const Lobby = () => {
   return (
     <div className="background background-dark">
       <div className="container">
-        <div>Game</div>
+        <div>Lobby</div>
       </div>
     </div>
   );
 };
 
-export default Game;
+export default Lobby;

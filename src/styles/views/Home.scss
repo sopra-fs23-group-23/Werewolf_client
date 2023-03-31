@@ -1,0 +1,41 @@
+@import 'styles/theme';
+
+.home {
+    button {
+        height: 50px;
+        width: 180px;
+    }
+    .user-wrapper{
+        padding-top: 2em;
+        display: flex;
+        flex-direction: row;
+        align-items: end;
+        justify-content: space-between;
+        .profile-wrapper{
+            justify-self: flex-end;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img {
+                width: 130px;
+                height: 130px;
+                border-radius: 80px;
+            }
+            a h5 {
+                margin: 1em;
+            }
+        }
+    }
+    .createLobby{
+        margin-top: 8em;
+    }
+    .joinLobby{
+        display: flex;
+        flex-direction: row;
+        align-items: top;
+
+        button {
+            margin: 10px 0 0 40px;
+        }
+    }
+}
