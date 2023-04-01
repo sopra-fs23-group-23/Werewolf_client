@@ -73,7 +73,6 @@ const Home = () => {
     }
   };
 
-  //<a onClick={logout()} ><h5>logout</h5></a>
   return (
     <div className="background background-dark">
       <div className="home container">
