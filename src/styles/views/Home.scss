@@ -1,12 +1,16 @@
 @import 'styles/theme';
 
 .home {
+
+    .logout {
+        margin-top: 2em;
+        width: 120px;
+    }
     button {
         height: 50px;
         width: 180px;
     }
     .user-wrapper{
-        padding-top: 2em;
         display: flex;
         flex-direction: row;
         align-items: end;
@@ -27,7 +31,7 @@
         }
     }
     .createLobby{
-        margin-top: 8em;
+        margin-top: 6em;
     }
     .joinLobby{
         display: flex;
