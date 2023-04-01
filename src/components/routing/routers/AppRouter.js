@@ -23,9 +23,9 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
         <Route exact path="/lobby">
-          <HomeGuard>
+          {/*<HomeGuard>*/}
             <Lobby />
-          </HomeGuard>
+          {/*</HomeGuard>*/}
         </Route>
         <Route exact path="/game">
           <HomeGuard>
