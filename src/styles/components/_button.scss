@@ -1,42 +1,47 @@
 .btn {
+  position: relative;
   padding: 10px 15px;
   border: 3px solid black;
   border-radius: 100px;
-  background: transparent;
+  background: none;
   color: black;
   font-weight: bold;
   text-decoration: none;
   margin-bottom: 10px;
+  overflow: hidden;
+  z-index: 1;
   @include transition;
-  &:hover {
-    cursor: pointer;
-    background-color: black;
-    color: white;
+  &:before {
+    content: '';
+    position: absolute;
+    background: black;
+    opacity: 0.2;
+    bottom: 0;
+    left: 0;
+    right: 100%;
+    top: 0;
+    z-index: -1;
+    @include transition;
   }
-  &:active {
-    opacity: 0.8;
+  &:hover:enabled {
+    cursor: pointer;
+    right: 0;
+    &::before {
+      right: 0;
+    }
+  }
+  &:active:enabled::before {
+    opacity: 0.3;
   }
   &-light {
     border-color: white;
     color: white;
-    &:hover {
-      color: black;
-      background-color: white;
-    }
   }
   &-danger {
     border-color: $color-danger;
     color: $color-danger;
-    &:hover {
-      background-color: $color-danger;
-    }
   }
   &:disabled {
     opacity: 0.5;
-    &:hover {
-      cursor: default;
-      background-color: inherit;
-      color: inherit;
-    }
   }
 }
