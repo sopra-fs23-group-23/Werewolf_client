@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import 'styles/ui/Formfield.scss';
+import 'styles/ui/FormField.scss';
 
 const FormField = ({ label, placeholder, value, type, onChange }) => {
   return (

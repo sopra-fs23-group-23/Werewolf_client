@@ -1,24 +1,27 @@
 @import 'styles/theme';
 
-.input {
-  position: relative;
-  height: 35px;
-  padding-left: 15px;
-  border: none;
-  margin-left: -4px;
-  margin-bottom: 20px;
-  color: $color-text-night;
-  text-align: center;
-  border-bottom: $color-text-night solid 4px;
-  transition: 0.1s ease-in;
-  overflow: hidden;
-  background: none;
-
-  &:hover {
-    font-weight: 600;
+.formField {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  width: 280px;
+  label {
+    font-family: inter;
+    text-align: center;
+    font-weight: bold
+  }
+  input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    text-align: center;
+    padding: 10px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+    //TODO: replace with H2 or so
   }
 
-  &:focus {
-    font-weight: 600;
-  }
 }
+
+//TODO: import field to new project
