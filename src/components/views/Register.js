@@ -31,7 +31,7 @@ const Register = (props) => {
     <div className="background background-light">
       <div className="container">
         <div className="auth">
-          <div className="login-container">
+          <div className="column-container">
             <h1>Register</h1>
             <form onSubmit={(e) => doRegister(e)}>
               <FormField

@@ -29,7 +29,7 @@ const Login = (props) => {
     <div className="background background-light">
       <div className="container">
         <div className="auth">
-          <div className="login-container">
+          <div className="column-container">
             <h1>Login</h1>
             <form onSubmit={(e) => doLogin(e)}>
               <FormField
@@ -43,15 +43,13 @@ const Login = (props) => {
                 type="password"
                 onChange={(n) => setPassword(n)}
               />
-              <div>
-                <button
-                  className="btn"
-                  disabled={!username || !password}
-                  onClick={(e) => doLogin(e)}
-                >
-                  Login
-                </button>
-              </div>
+              <button
+                className="btn"
+                disabled={!username || !password}
+                onClick={(e) => doLogin(e)}
+              >
+                Login
+              </button>
               <Link to="/register">Go to Registration</Link>
             </form>
           </div>

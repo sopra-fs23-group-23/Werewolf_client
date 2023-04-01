@@ -1,4 +1,16 @@
 @import 'styles/theme';
 
 .edit {
+  display: grid;
+  grid-template-columns: 300px auto;
+
+  button{
+    margin-top: 20px;
+    margin-bottom: 0;
+    min-width: 180px;
+  }
+
+  h1{
+    margin-bottom: -40px;
+  }
 }
