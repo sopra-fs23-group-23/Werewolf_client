@@ -12,8 +12,6 @@ const Home = () => {
   const [lobbyId, setLobbyId] = useState('');
   const [user, setUser] = useState(''); 
 
-  console.log("Hallo");
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -25,7 +23,7 @@ const Home = () => {
         testUser.username = 'Ricardo';
         setUser(testUser);
 
-        //alert('Could not fetch user with ID ' + id);
+        //alert('Could not fetch user with ID ' + id); 12
         //history.push('/home');
       }
     }
