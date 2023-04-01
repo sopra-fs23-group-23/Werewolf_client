@@ -1,4 +1,39 @@
 @import 'styles/theme';
 
 .auth {
+  display: grid;
+  grid-template-columns: 300px auto;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: $color-bg-dark;
+  position: absolute;
+  height:100%;
+  width: 350px;
+  top:0;
+
+  h1 {
+    margin-bottom: 0;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .form-field {
+      margin-top: 20px;
+    }
+
+    button {
+      margin: 20px;
+    }
+  }
 }

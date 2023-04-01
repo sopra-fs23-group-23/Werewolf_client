@@ -26,33 +26,35 @@ const Login = (props) => {
   };
 
   return (
-    <div className="background background-light auth">
+    <div className="background background-light">
       <div className="container">
-        <div>
-          <h1>Login</h1>
-          <form onSubmit={(e) => doLogin(e)}>
-            <FormField
-              label="Username"
-              value={username}
-              onChange={(un) => setUsername(un)}
-            />
-            <FormField
-              label="Password"
-              value={password}
-              type="password"
-              onChange={(n) => setPassword(n)}
-            />
-            <div>
-              <button
-                className="btn"
-                disabled={!username || !password}
-                onClick={(e) => doLogin(e)}
-              >
-                Login
-              </button>
-            </div>
-            <Link to="/register">Go to Registration</Link>
-          </form>
+        <div className="auth">
+          <div className="login-container">
+            <h1>Login</h1>
+            <form onSubmit={(e) => doLogin(e)}>
+              <FormField
+                label="Username"
+                value={username}
+                onChange={(un) => setUsername(un)}
+              />
+              <FormField
+                label="Password"
+                value={password}
+                type="password"
+                onChange={(n) => setPassword(n)}
+              />
+              <div>
+                <button
+                  className="btn"
+                  disabled={!username || !password}
+                  onClick={(e) => doLogin(e)}
+                >
+                  Login
+                </button>
+              </div>
+              <Link to="/register">Go to Registration</Link>
+            </form>
+          </div>
         </div>
       </div>
     </div>

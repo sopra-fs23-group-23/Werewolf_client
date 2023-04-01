@@ -46,18 +46,25 @@ button {
 a {
   display: inline-block;
   text-decoration: none;
-  color: #ffffff;
+  color: $color-text-dark;
+}
+
+:link {
+  text-decoration-line: underline;
+  &:hover {
+    font-weight: bold;
+  }
 }
 
 .background {
   min-height: 100vh;
   &-light {
     background-color: $color-bg-light;
-    color: black;
+    color: $color-text-light;
   }
   &-dark {
     background-color: $color-bg-dark;
-    color: white;
+    color: $color-text-dark;
   }
   &-dark-image {
     background-image: url('../../public/assets/bg-dark.png');
@@ -73,3 +80,5 @@ a {
   max-width: $width-xl;
   margin: 0 auto;
 }
+
+
