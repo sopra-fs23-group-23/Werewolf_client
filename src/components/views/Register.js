@@ -28,7 +28,7 @@ const Register = (props) => {
   };
 
   return (
-    <div className="background background-light">
+    <div className="background background-light auth">
       <div className="container">
         <h1>Register</h1>
         <form onSubmit={(e) => doRegister(e)}>

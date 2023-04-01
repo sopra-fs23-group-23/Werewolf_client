@@ -3,7 +3,7 @@ import 'styles/ui/FormField.scss';
 
 const FormField = ({ label, placeholder, value, type, onChange }) => {
   return (
-    <div className='formField'>
+    <div className="form-field">
       <label>{label}</label>
       <input
         placeholder={placeholder}

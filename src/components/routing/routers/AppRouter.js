@@ -5,7 +5,6 @@ import Login from 'components/views/Login';
 import Register from 'components/views/Register';
 import Lobby from 'components/views/Lobby';
 import Game from 'components/views/Game';
-import User from 'components/views/User';
 import Edit from 'components/views/Edit';
 import Home from 'components/views/Home';
 
@@ -35,13 +34,8 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/home">
           {/*<HomeGuard>*/}
-            <Home />
+          <Home />
           {/*</HomeGuard> TODO: uncomment homeguard again*/}
-        </Route>
-        <Route exact path="/user/:id">
-          <HomeGuard>
-            <User />
-          </HomeGuard>
         </Route>
         <Route exact path="/edit/:id">
           <HomeGuard>

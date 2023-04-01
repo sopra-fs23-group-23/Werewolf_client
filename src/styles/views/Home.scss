@@ -1,6 +1,7 @@
 @import 'styles/theme';
 
 .home {
+    
     button {
         height: 50px;
         width: 180px;
@@ -29,10 +30,10 @@
             }
         }
     }
-    &-createLobby{
+    &-create-lobby{
         margin-top: 6em;
     }
-    &-joinLobby{
+    &-join-lobby{
         display: flex;
         flex-direction: row;
         align-items: top;
