@@ -33,7 +33,7 @@ const AppRouter = () => {
             <Game />
           </HomeGuard>
         </Route>
-        <Route exact path="/home/:id">
+        <Route exact path="/home">
           {/*<HomeGuard>*/}
             <Home />
           {/*</HomeGuard> TODO: uncomment homeguard again*/}

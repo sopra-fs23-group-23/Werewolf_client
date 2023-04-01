@@ -1,21 +1,20 @@
 @import 'styles/theme';
 
 .home {
-
-    .logout {
-        margin-top: 2em;
-        width: 120px;
-    }
     button {
         height: 50px;
         width: 180px;
     }
-    .user-wrapper{
+    &-logout {
+        margin-top: 2em;
+        width: 120px !important;
+    }
+    &-user_wrapper{
         display: flex;
         flex-direction: row;
         align-items: end;
         justify-content: space-between;
-        .profile-wrapper{
+        .home-profile_wrapper{
             justify-self: flex-end;
             display: flex;
             flex-direction: column;
@@ -30,14 +29,13 @@
             }
         }
     }
-    .createLobby{
+    &-createLobby{
         margin-top: 6em;
     }
-    .joinLobby{
+    &-joinLobby{
         display: flex;
         flex-direction: row;
         align-items: top;
-
         button {
             margin: 10px 0 0 40px;
         }
