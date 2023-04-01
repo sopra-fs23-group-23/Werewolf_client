@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Labrada:wght@300;400;500;600;700;800&display=swap');
 @import 'styles/theme';
+@import 'styles/components/button';
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -33,7 +34,12 @@ h3 {
   padding: 20px 0;
 }
 
-h5, button {
+h1 {
+  font-size: 60px;
+}
+
+h5,
+button {
   font-size: 18px;
 }
 
@@ -58,47 +64,4 @@ a {
 .container {
   max-width: $width-xl;
   margin: 0 auto;
-}
-
-.btn {
-  padding: 10px 15px;
-  border: 3px solid black;
-  border-radius: 100px;
-  background: transparent;
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
-  margin-bottom: 10px;
-  @include transition;
-  &:hover {
-    cursor: pointer;
-    background-color: black;
-    color: white;
-  }
-  &:active {
-    opacity: 0.8;
-  }
-  &-light {
-    border-color: white;
-    color: white;
-    &:hover {
-      color: black;
-      background-color: white;
-    }
-  }
-  &-danger {
-    border-color: $color-danger;
-    color: $color-danger;
-    &:hover {
-      background-color: $color-danger;
-    }
-  }
-  &:disabled {
-    opacity: 0.5;
-    &:hover {
-      cursor: default;
-      background-color: inherit;
-      color: inherit;
-    }
-  }
 }

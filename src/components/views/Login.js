@@ -27,7 +27,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className="background background-light">
+    <div className="background background-light auth">
       <div className="container">
         <div>
           <h1>Login</h1>
@@ -48,7 +48,8 @@ const Login = (props) => {
                 className="primary-button"
                 disabled={!username || !password}
                 onClick={(e) => doLogin(e)}
-              >Login
+              >
+                Login
               </button>
             </div>
             <Link to="/register">Go to Registration</Link>

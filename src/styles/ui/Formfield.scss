@@ -1,6 +1,6 @@
 @import 'styles/theme';
 
-.formField {
+.form-field {
   display: flex;
   flex-direction: column;
   background-color: transparent;
@@ -8,7 +8,7 @@
   label {
     font-family: inter;
     text-align: center;
-    font-weight: bold
+    font-weight: bold;
   }
   input {
     background-color: transparent;
@@ -21,7 +21,6 @@
     color: #ffffff;
     //TODO: replace with H2 or so
   }
-
 }
 
 //TODO: import field to new project

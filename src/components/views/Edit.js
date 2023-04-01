@@ -55,7 +55,7 @@ const Edit = () => {
   }
 
   return (
-    <div className="background background-dark">
+    <div className="background background-dark edit">
       <div className="container">
         <h2>Edit User</h2>
         {content}

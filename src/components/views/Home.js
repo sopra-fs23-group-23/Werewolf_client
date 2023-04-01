@@ -7,10 +7,10 @@ import Lobby from 'models/Lobby';
 import User from 'models/User';
 
 const Home = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const history = useHistory();
   const [lobbyId, setLobbyId] = useState('');
-  const [user, setUser] = useState(''); 
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -29,7 +29,7 @@ const Home = () => {
     }
     fetchData();
   }, [history, id]);
-  
+
   const logout = async (e) => {
     e.preventDefault();
     try {
@@ -46,10 +46,10 @@ const Home = () => {
   const createLobby = async (e) => {
     e.preventDefault();
     try {
-      const requestBody = JSON.stringify({id});
+      const requestBody = JSON.stringify({ id });
       alert(`Creating lobby with user ${user.username}`);
       const response = await api.post('/lobbies', requestBody);
-      const lobby = new Lobby(response.data)
+      const lobby = new Lobby(response.data);
 
       history.push(`/lobby/${lobby.lobbyId}`);
     } catch (error) {
@@ -60,10 +60,10 @@ const Home = () => {
   const joinLobby = async (e) => {
     e.preventDefault();
     try {
-      const requestBody = JSON.stringify({id});
+      const requestBody = JSON.stringify({ id });
       alert(`Joining lobby ${lobbyId} with user ${id}`);
       const response = await api.put(`/lobbies/${lobbyId}`, requestBody);
-      const lobby = new Lobby(response.data)
+      const lobby = new Lobby(response.data);
 
       history.push(`/lobby/${lobby.lobbyId}`);
     } catch (error) {
@@ -72,43 +72,49 @@ const Home = () => {
   };
 
   return (
-    <div className="background background-dark">
+    <div className="background background-dark home">
       <div className="home container">
-        
         <button className="btn btn-light logout" onClick={logout()}>
           logout
         </button>
 
         <div className="user-wrapper">
-          <h1>Hey,<br/> {user.username} </h1>
+          <h1>
+            Hey,
+            <br /> {user.username}{' '}
+          </h1>
           <div className="profile-wrapper">
             <a href="./edit">
-              <img src="https://tse2.mm.bing.net/th?id=OIP.gstkHSUl8M3MtSWnIY0xhgHaHa&pid=Api&P=0" alt="Panda profile" />
+              <img
+                src="https://tse2.mm.bing.net/th?id=OIP.gstkHSUl8M3MtSWnIY0xhgHaHa&pid=Api&P=0"
+                alt="Panda profile"
+              />
               <h5>edit profile</h5>
             </a>
           </div>
         </div>
-        
-        <div className='createLobby'>
+
+        <div className="createLobby">
           <button className="btn btn-light" onClick={(e) => createLobby(e)}>
             create lobby
           </button>
         </div>
         <h5>or</h5>
-          <div className='joinLobby'>
-            <FormField
-              placeholder = "123 456"
-              onChange={(e) => setLobbyId(e)}
-            >
-            </FormField>
-            <button className="btn btn-light" onClick={(e) => joinLobby(e)} disabled = {lobbyId.length < 6}>
-              join lobby
-            </button>
-          </div>
-        
+        <div className="joinLobby">
+          <FormField
+            placeholder="123 456"
+            onChange={(e) => setLobbyId(e)}
+          ></FormField>
+          <button
+            className="btn btn-light"
+            onClick={(e) => joinLobby(e)}
+            disabled={lobbyId.length < 6}
+          >
+            join lobby
+          </button>
+        </div>
       </div>
     </div>
-    
   );
 };
 

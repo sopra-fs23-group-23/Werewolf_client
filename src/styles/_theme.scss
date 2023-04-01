@@ -3,7 +3,7 @@
 $color-bg-light: #bae09f;
 $color-bg-dark: #30305d;
 $color-danger: #dd2222;
-$color-text-night: #EEEEEE;
+$color-text-night: #eeeeee;
 $color-text-day: #000000;
 
 ///////////// SCREEN SIZES
@@ -28,8 +28,4 @@ $font-serif: 'Labrada', serif;
 
 @mixin transition {
   transition: all 0.3s ease;
-}
-
-h1 {
-  font-size: 60px;
 }
