@@ -17,8 +17,8 @@ const Login = (props) => {
       const response = await api.post('/users/login', requestBody);
       // Get the returned user and update a new object.
       const user = new User(response.data);
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('uid', user.id);
+      sessionStorage.setItem('token', user.token);
+      sessionStorage.setItem('uid', user.id);
       history.push(`/home`);
     } catch (error) {
       alert(error.response.data?.message || 'Login failed.');

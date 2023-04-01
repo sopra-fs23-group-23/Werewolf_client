@@ -75,7 +75,7 @@ const Home = () => {
     <div className="background background-dark-image home">
       <div className="container">
         
-        <button className="btn btn-light home-logout" onClick={logout()}>
+        <button className="btn btn-light home-logout" onClick={(e) => logout(e)}>
           logout
         </button>
 
