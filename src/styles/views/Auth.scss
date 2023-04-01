@@ -5,3 +5,34 @@
   grid-template-columns: 300px auto;
 }
 
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  position: absolute;
+  height:100%;
+  width: 350px;
+  top:0;
+
+  h1 {
+    margin-bottom: -10px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .form-field {
+      margin-top: 10px;
+    }
+
+    button {
+      margin: 20px;
+    }
+  }
+}
