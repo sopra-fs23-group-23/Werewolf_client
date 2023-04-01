@@ -23,7 +23,7 @@ const Home = () => {
         testUser.username = 'Ricardo';
         setUser(testUser);
 
-        //alert('Could not fetch user with ID ' + id); 12
+        //alert('Could not fetch user with ID ' + id); 123
         //history.push('/home');
       }
     }
