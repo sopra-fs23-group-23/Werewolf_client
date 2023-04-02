@@ -12,11 +12,11 @@
   input {
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid $color-text-light;;
+    border-bottom: 2px solid $color-text-dark;;
     text-align: center;
     padding: 10px;
     font-size: 40px;
-    color: $color-text-light;
+    color: $color-text-dark;
 
     &:hover {
       font-weight: bold;
@@ -29,11 +29,11 @@
 
   &-light {
     input {
-      border-color: $color-text-dark;
-      color: $color-text-dark;
+      border-color: $color-text-light;
+      color: $color-text-light;
     }
     label {
-      color: $color-text-dark;
+      color: $color-text-light;
     }
   }
 

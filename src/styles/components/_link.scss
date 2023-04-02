@@ -1,12 +1,12 @@
 .link {
   text-decoration-line: underline;
   display: inline-block;
-  color: $color-text-light;
+  color: $color-text-dark;
   &:hover {
     font-weight: bold;
   }
   &-light {
-    color: $color-text-dark;
+    color: $color-text-light;
   }
   &-danger {
     color: $color-danger;
