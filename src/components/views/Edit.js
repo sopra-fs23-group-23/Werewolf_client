@@ -51,11 +51,13 @@ const Edit = () => {
       <form onSubmit={(e) => updateUser(e)}>
         {content}
         <FormField
+          theme="light"
           label="Username"
           value={username}
           onChange={(un) => setUsername(un)}
         />
         <FormField
+          theme="light"
           label="Password"
           value={password}
           type="password"
@@ -66,7 +68,7 @@ const Edit = () => {
   }
 
   return (
-    <div className="background background-dark edit">
+    <div className="background background-dark">
       <div className="container">
         <div className="edit">
           <div className="column-container">

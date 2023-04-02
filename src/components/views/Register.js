@@ -52,7 +52,10 @@ const Register = (props) => {
               >
                 Register
               </button>
-              <Link to="/login">Go to Login</Link>
+              <Link to="/login" className="link"
+              >
+                Go to Login
+              </Link>
             </form>
           </div>
         </div>

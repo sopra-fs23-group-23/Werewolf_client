@@ -44,13 +44,15 @@ const Login = (props) => {
                 onChange={(n) => setPassword(n)}
               />
               <button
-                className="btn"
+                className="btn btn-dark"
                 disabled={!username || !password}
                 onClick={(e) => doLogin(e)}
               >
                 Login
               </button>
-              <Link to="/register">Go to Registration</Link>
+              <Link to="/register" className="link"
+              >
+                Go to Registration</Link>
             </form>
           </div>
         </div>
