@@ -100,6 +100,7 @@ const Home = () => {
         <h5>or</h5>
         <div className='home-join-lobby'>
           <FormField
+            theme="light"
             placeholder = "123 456"
             onChange={(e) => setLobbyId(e)}
           >
