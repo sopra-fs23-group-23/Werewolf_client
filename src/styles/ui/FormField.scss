@@ -12,11 +12,11 @@
   input {
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid $color-text-dark;
+    border-bottom: 2px solid $color-text-light;;
     text-align: center;
     padding: 10px;
     font-size: 40px;
-    color: $color-text-dark;
+    color: $color-text-light;
 
     &:hover {
       font-weight: bold;
@@ -28,8 +28,9 @@
   }
 
   &-light {
-    border-color: $color-text-light;
+    border-color: $color-text-dark;
     color: $color-text-dark;
+    margin-top: 200px;
   }
 
   &-danger {

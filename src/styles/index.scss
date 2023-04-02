@@ -2,6 +2,8 @@
 @import 'styles/theme';
 @import 'styles/components/button';
 @import 'styles/components/column-container';
+@import 'styles/components/link';
+@import 'styles/ui/FormField';
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -50,13 +52,6 @@ a {
   color: $color-text-dark;
 }
 
-:link {
-  text-decoration-line: underline;
-  &:hover {
-    font-weight: bold;
-  }
-}
-
 .background {
   min-height: 100vh;
   &-light {
@@ -73,7 +68,6 @@ a {
     width: 100vw;
     height: 100vh;
     color:white;
-
   }
 }
 
