@@ -1,13 +1,13 @@
 /**
  * Role model
  */
-class User {
+class Role {
   constructor(data = {}) {
     this.rolename = null;
-    this.username = null;
+    this.uid = [];
     this.description = null;
     this.amount = null;
     Object.assign(this, data);
   }
 }
-export default User;
+export default Role;
