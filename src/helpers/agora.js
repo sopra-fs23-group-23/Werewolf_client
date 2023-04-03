@@ -1,5 +1,8 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
-/*
+
+const {RtcTokenBuilder, RtmTokenBuilder, RtcRole, RtmRole} = require('agora-access-token')
+
+
 //Miro options:
 let options = 
 {
@@ -8,9 +11,10 @@ let options =
     token: '007eJxTYGA/Utp6z/rSsi1fTD8tVuWUVL51pLjmyr8r0sK3Ht1sDn6mwGBsYpFilmhkYJpibmpibJZqaWhmYWlmbGaWbJpqbGiavLdZI6UhkJHhZWQaCyMDBIL4XAzhqUWp5fk5ZanFDAwApDojZA==',
     uid: 0,
 };
-*/
+
 
 //David options:
+/*
 let options = 
 {
     appId: '2d64cdbec0324225b28f83ed19f75397',
@@ -18,6 +22,20 @@ let options =
     token: '8214500e1ebd4e10bcd411dd4df44395',
     uid: 0,
 };
+*/
+
+const appId = '348d6a205d75436e916896366c5e315c';
+const appCertificate = '2e1e585ed3f74218ae249f7d14656fe2';
+const channelName = 'TestChannel';
+const uid = 0;
+const role = RtcRole.PUBLISHER;
+const expirationTimeInSeconds = 3600
+const currentTimestamp = Math.floor(Date.now() / 1000)
+const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
+// Build token with uid
+const tokenA = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs);
+console.log("Token with integer number Uid: " + tokenA);
+
 
 let channelParameters =
 {
