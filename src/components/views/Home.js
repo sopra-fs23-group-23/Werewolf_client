@@ -81,15 +81,9 @@ const Home = () => {
 
         <div className="home-user_wrapper">
           <h1>Hey,<br/> {user.username} </h1>
-          <div className="home-profile_wrapper">
             <a href="./edit">
-              <img
-                src="https://tse2.mm.bing.net/th?id=OIP.gstkHSUl8M3MtSWnIY0xhgHaHa&pid=Api&P=0"
-                alt="Panda profile"
-              />
               <h5>edit profile</h5>
             </a>
-          </div>
         </div>
         
         <div className='home-create-lobby'>
