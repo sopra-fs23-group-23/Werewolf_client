@@ -28,32 +28,37 @@ const Register = (props) => {
   };
 
   return (
-    <div className="background background-light auth">
+    <div className="background background-light">
       <div className="container">
-        <h1>Register</h1>
-        <form onSubmit={(e) => doRegister(e)}>
-          <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
-          />
-          <FormField
-            label="Password"
-            value={password}
-            type="password"
-            onChange={(n) => setPassword(n)}
-          />
-          <div>
-            <button
-              className="btn"
-              disabled={!username || !password}
-              onClick={(e) => doRegister(e)}
-            >
-              Register
-            </button>
+        <div className="auth">
+          <div className="column-container">
+            <h1>Register</h1>
+            <form onSubmit={(e) => doRegister(e)}>
+              <FormField
+                label="Username"
+                value={username}
+                onChange={(un) => setUsername(un)}
+              />
+              <FormField
+                label="Password"
+                value={password}
+                type="password"
+                onChange={(n) => setPassword(n)}
+              />
+              <button
+                className="btn"
+                disabled={!username || !password}
+                onClick={(e) => doRegister(e)}
+              >
+                Register
+              </button>
+              <Link to="/login" className="link"
+              >
+                Go to Login
+              </Link>
+            </form>
           </div>
-          <Link to="/login">Go to Login</Link>
-        </form>
+        </div>
       </div>
     </div>
   );

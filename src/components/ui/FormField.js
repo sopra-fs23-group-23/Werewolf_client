@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import 'styles/ui/FormField.scss';
 
-const FormField = ({ label, placeholder, value, type, onChange }) => {
+const FormField = ({ label, placeholder, value, type, onChange, theme}) => {
   return (
-    <div className="form-field">
+    <div className= {`form-field form-field-${theme}`}>
       <label>{label}</label>
       <input
         placeholder={placeholder}
@@ -21,6 +20,7 @@ FormField.propTypes = {
   value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
+  theme: PropTypes.string
 };
 
 export default FormField;

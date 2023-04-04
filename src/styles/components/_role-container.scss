@@ -1,0 +1,22 @@
+//outsourced here since we may can reuse this for the information button in game
+
+.role-container {
+  padding: 60px 200px;
+  @include center;
+  flex-direction: column;
+
+  p{
+    text-align: center;
+  }
+
+  img {
+    height: 350px;
+    width: 220px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+  }
+
+  h5 {
+    margin-bottom: -30px;
+  }
+}

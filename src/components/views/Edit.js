@@ -8,6 +8,7 @@ import 'styles/views/Edit.scss';
 const Edit = () => {
   const history = useHistory();
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { id } = useParams();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const Edit = () => {
       try {
         await api.put('/users/' + id, {
           username,
+          password
         });
         history.push('/user/' + id);
       } catch (error) {
@@ -46,29 +48,45 @@ const Edit = () => {
 
   if (username) {
     content = (
-      <FormField
-        label="Username"
-        value={username}
-        onChange={(un) => setUsername(un)}
-      />
+      <form onSubmit={(e) => updateUser(e)}>
+        {content}
+        <FormField
+          theme="light"
+          label="Username"
+          value={username}
+          onChange={(un) => setUsername(un)}
+        />
+        <FormField
+          theme="light"
+          label="Password"
+          value={password}
+          type="password"
+          onChange={(n) => setPassword(n)}
+        />
+      </form>
     );
   }
 
   return (
-    <div className="background background-dark edit">
+    <div className="background background-dark">
       <div className="container">
-        <h2>Edit User</h2>
-        {content}
-        <button className="btn btn-light" onClick={() => updateUser()}>
-          Save Changes
-        </button>
-        <br />
-        <button
-          className="btn btn-light"
-          onClick={() => history.push('/user/' + id)}
-        >
-          Back to User
-        </button>
+        <div className="edit">
+          <div className="column-container">
+            <h1>Edit User</h1>
+            {content}
+            <button className="btn btn-light"
+                    onClick={() => updateUser()}
+            >
+              Save Changes
+            </button>
+            <button
+              className="btn btn-light"
+              onClick={() => history.push('/user/' + id)}
+            >
+              Back to User
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

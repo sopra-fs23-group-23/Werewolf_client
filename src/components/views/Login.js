@@ -17,8 +17,8 @@ const Login = (props) => {
       const response = await api.post('/users/login', requestBody);
       // Get the returned user and update a new object.
       const user = new User(response.data);
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('uid', user.id);
+      sessionStorage.setItem('token', user.token);
+      sessionStorage.setItem('uid', user.id);
       history.push(`/home`);
     } catch (error) {
       alert(error.response.data?.message || 'Login failed.');
@@ -29,7 +29,7 @@ const Login = (props) => {
     <div className="background background-light">
       <div className="container">
         <div className="auth">
-          <div className="login-container">
+          <div className="column-container">
             <h1>Login</h1>
             <form onSubmit={(e) => doLogin(e)}>
               <FormField
@@ -43,16 +43,16 @@ const Login = (props) => {
                 type="password"
                 onChange={(n) => setPassword(n)}
               />
-              <div>
-                <button
-                  className="btn"
-                  disabled={!username || !password}
-                  onClick={(e) => doLogin(e)}
-                >
-                  Login
-                </button>
-              </div>
-              <Link to="/register">Go to Registration</Link>
+              <button
+                className="btn btn-dark"
+                disabled={!username || !password}
+                onClick={(e) => doLogin(e)}
+              >
+                Login
+              </button>
+              <Link to="/register" className="link"
+              >
+                Go to Registration</Link>
             </form>
           </div>
         </div>

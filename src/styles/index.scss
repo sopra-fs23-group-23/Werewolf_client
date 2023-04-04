@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Labrada:wght@300;400;500;600;700;800&display=swap');
 @import 'styles/theme';
 @import 'styles/components/button';
+@import 'styles/components/column-container';
+@import 'styles/components/link';
+@import 'styles/components/role-container';
+@import 'styles/ui/FormField';
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -46,25 +50,17 @@ button {
 a {
   display: inline-block;
   text-decoration: none;
-  color: $color-text-dark;
-}
-
-:link {
-  text-decoration-line: underline;
-  &:hover {
-    font-weight: bold;
-  }
 }
 
 .background {
   min-height: 100vh;
   &-light {
     background-color: $color-bg-light;
-    color: $color-text-light;
+    color: $color-text-dark;
   }
   &-dark {
     background-color: $color-bg-dark;
-    color: $color-text-dark;
+    color: $color-text-light;
   }
   &-dark-image {
     background-image: url('../../public/assets/bg-dark.png');
@@ -72,7 +68,6 @@ a {
     width: 100vw;
     height: 100vh;
     color:white;
-
   }
 }
 
