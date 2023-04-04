@@ -11,8 +11,12 @@
         width: 120px !important;
     }
     &-user_wrapper{
-        a h5 {
-            margin: 0;
+        a {
+            text-decoration: underline 2px solid white;
+            h5 {
+                margin: 0;
+                color: white;
+            }
         }
         h1 {
             padding-bottom: 5px;
