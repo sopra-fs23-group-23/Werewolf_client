@@ -1,4 +1,78 @@
 @import 'styles/theme';
 
 .lobby {
+    &-body{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow-y: hidden;
+    }
+    &-headerrow{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-top: 1em;
+        .details-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            h5 {
+                margin-top: 0;
+            }
+        }
+        .admin-wrapper{
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            align-items: center;
+            h5 {
+                margin-right: 1em;
+            }
+        }
+    }
+    &-profile{
+        justify-self: flex-end;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        img {
+            width: 130px;
+            height: 130px;
+            border-radius: 80px;
+        }
+    }
+    &-userrow{
+        margin-top: 2em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding-top: 1em;
+        width: 100%;
+        flex-wrap: wrap;
+        flex: 1 0 auto;
+        // To enable overflow-y height must be set. Refer to:
+        // https://stackoverflow.com/questions/14962468/how-can-i-combine-flexbox-and-vertical-scroll-in-a-full-height-app
+        height: 0;
+        overflow-y: auto;
+        .lobby-profile {
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+    }
+    &-footerrow{
+        display: flex;
+        flex-shrink: 0;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        div {
+            width: fit-content;
+            button{
+                margin-left: 1em;
+            }
+        }
+    }
 }

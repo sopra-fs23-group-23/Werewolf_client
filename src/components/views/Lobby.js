@@ -1,106 +1,142 @@
+import {useEffect, useState} from 'react';
+import {api} from 'helpers/api';
 import 'styles/views/Lobby.scss';
-import AgoraRTC from "agora-rtc-sdk-ng"
+import LobbyModel from 'models/Lobby';
+import Spinner from 'components/ui/Spinner';
 
-let options = 
-{
-    // Pass your App ID here.
-    appId: '348d6a205d75436e916896366c5e315c',
-    // Set the channel name.
-    channel: 'Werewolves',
-    // Pass your temp token here.
-    token: '007eJxTYGA/Utp6z/rSsi1fTD8tVuWUVL51pLjmyr8r0sK3Ht1sDn6mwGBsYpFilmhkYJpibmpibJZqaWhmYWlmbGaWbJpqbGiavLdZI6UhkJHhZWQaCyMDBIL4XAzhqUWp5fk5ZanFDAwApDojZA==',
-    // Set the user ID.
-    uid: 0,
-};
+const Profile = ({user}) => (
+  <div className="lobby-profile">
+      <img
+        src="https://tse2.mm.bing.net/th?id=OIP.gstkHSUl8M3MtSWnIY0xhgHaHa&pid=Api&P=0"
+        alt="Panda profile"
+      />
+      <p>{user.name}</p>
+  </div>
+)
 
-let channelParameters =
-{
-  // A variable to hold a local audio track.
-  localAudioTrack: null,
-  // A variable to hold a remote audio track.
-  remoteAudioTrack: null,
-    // A variable to hold the remote user id.
-  remoteUid: null,
-};
-async function startBasicCall()
-{
-  // Create an instance of the Agora Engine
-  const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-  
-  // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
-  agoraEngine.on("user-published", async (user, mediaType) =>
-  {
-    // Subscribe to the remote user when the SDK triggers the "user-published" event.
-    await agoraEngine.subscribe(user, mediaType);
-    console.log("subscribe success");
-
-    // Subscribe and play the remote audio track.
-    if (mediaType == "audio")
-    {
-      channelParameters.remoteUid=user.uid;
-      // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
-      channelParameters.remoteAudioTrack = user.audioTrack;
-      // Play the remote audio track. 
-      channelParameters.remoteAudioTrack.play();
-      showMessage("Remote user connected: " + user.uid);
-    }
-
-    // Listen for the "user-unpublished" event.
-    agoraEngine.on("user-unpublished", user =>
-    {
-      console.log(user.uid + "has left the channel");
-      showMessage("Remote user has left the channel");
-    });
-  });
-
-  window.onload = function ()
-  {
-    // Listen to the Join button click event.
-    document.getElementById("join").onclick = async function ()
-    {
-      // Join a channel.
-      await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
-      showMessage("Joined channel: " + options.channel);
-      // Create a local audio track from the microphone audio.
-      channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-      // Publish the local audio track in the channel.
-      await agoraEngine.publish(channelParameters.localAudioTrack);
-      console.log("Publish success!");
-    }
-    
-    // Listen to the Leave button click event.
-    document.getElementById('leave').onclick = async function ()
-    {
-      // Destroy the local audio track.
-      channelParameters.localAudioTrack.close();
-      // Leave the channel
-      await agoraEngine.leave();
-      console.log("You left the channel");
-      // Refresh the page for reuse
-      window.location.reload();
-    }
+const ButtonMenu = ({isAdmin}) => {
+  if (isAdmin) {
+    return (
+      <div>
+        <button className="btn btn-light">
+          Dissolve Lobby
+        </button>
+        <button className="btn btn-light">
+          Start Game
+        </button>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <button className="btn btn-light">
+          Leave Lobby
+        </button>
+      </div>
+    )
   }
 }
 
-function showMessage(text){
-  document.getElementById("message").textContent = text;
-}
-
-startBasicCall();
-
 const Lobby = () => {
-  return (
-    <div className="background background-dark lobby">
-      <div className="container">
-        <h2 class="left-align">Get started with Voice Calling</h2>
-        <div class="row">
-          <div>
-            <button type="button" id="join">Join</button>
-            <button type="button" id="leave">Leave</button>
+  // TODO move to helper
+  const lobbyId = sessionStorage.getItem("lobbyId")
+  const uid = localStorage.getItem("uid")
+  const [lobby, setLobby] = useState(null);
+
+  useEffect(()=>{
+    function updateDataToLobby(data) {
+      const lobby = new LobbyModel(data)
+      setLobby(lobby)
+    }
+
+    async function fetchLobby() {
+      // try {
+      //   const response = await api.get(`/lobbies/${lobbyId}`);
+      //   updateDataToLobby(response.data)
+      // } catch (error) {
+      //   console.error("Details:", error);
+      //   alert("Something went wrong while fetching the lobby! See the console for details.");
+      // }
+      function createMockPlayers() {
+        var mockPlayers = []
+        for (let i = 0; i < 20; i++) {
+          mockPlayers.push({
+            id: i,
+            name: `Mockplayer ${i}`,
+            isAlive: true
+          })
+        }
+        return mockPlayers;
+      }
+
+      const mockPlayers = createMockPlayers();
+      const lobby = {
+        id: 123456,
+        admin: mockPlayers.pop(),
+        players: mockPlayers
+      }
+      updateDataToLobby(lobby)
+    }
+
+    async function fetchEmitterToken() {
+      const response = await api.get(`/lobbies/${lobbyId}/sse`)
+      return response.data
+    }
+
+    async function subscribeToEmitter(emitterToken) {
+      const eventSource = new EventSource(`http://localhost:8080/lobbies/${lobbyId}/sse/${emitterToken}`)
+      eventSource.onopen = event => {
+        console.log("Connection established");
+      }
+    
+      eventSource.onmessage = (event) => {
+        updateDataToLobby(JSON.parse(event.data))
+      }
+    
+      eventSource.onerror = (event) => {
+        console.log("OnError fired: ",event.target.readyState)
+        eventSource.close()
+      }
+    }
+
+    fetchLobby();
+    // fetchEmitterToken()
+    //   .then((emitterToken) => subscribeToEmitter(emitterToken))
+  }, [lobbyId])
+
+  let content = (
+    // TODO spinner does not work
+    <Spinner/>
+  )
+
+  if (lobby) {
+    content = (
+      <div className="container lobby-body">
+        <div className="lobby-headerrow">
+          <div className='details-wrapper'>
+            <h1 className="left-align">Lobby</h1>
+            <h5>Code to join: {lobby.id}</h5>
+          </div>
+          <div className='admin-wrapper'>
+            <h5>admin</h5>
+            <Profile user={lobby.admin}/>
           </div>
         </div>
-        <div id="message"></div>
+        <div className="lobby-userrow">
+          {lobby.players.map(player => (
+            <Profile user={player} key={player.id}/>
+          ))}
+        </div>
+        <div className='lobby-footerrow'>
+          <ButtonMenu isAdmin={lobby.admin.id == uid}/>
+        </div>
       </div>
+    )
+  }
+
+  return (
+    <div className="background background-dark-image lobby">
+      {content}
     </div>
   );
 };
