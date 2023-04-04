@@ -1,15 +1,13 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
 
-const {RtcTokenBuilder, RtmTokenBuilder, RtcRole, RtmRole} = require('agora-access-token')
-
 
 //Miro options:
 let options = 
 {
     appId: '348d6a205d75436e916896366c5e315c',
-    channel: 'Werewolves',
-    token: '007eJxTYGA/Utp6z/rSsi1fTD8tVuWUVL51pLjmyr8r0sK3Ht1sDn6mwGBsYpFilmhkYJpibmpibJZqaWhmYWlmbGaWbJpqbGiavLdZI6UhkJHhZWQaCyMDBIL4XAzhqUWp5fk5ZanFDAwApDojZA==',
-    uid: 0,
+    channel: 'asdfchannel',
+    token: '006348d6a205d75436e916896366c5e315cIAA1M3nVX2pHOF8U9lT/FzU1yqiivpDR03NPtKXg72s80yLuPc8AAAAAIgD4VnNSbBMtZAQAAQD8zytkAgD8zytkAwD8zytkBAD8zytk',
+    uid: 1,
 };
 
 
@@ -24,6 +22,11 @@ let options =
 };
 */
 
+
+/*
+
+try to create token in frontend but will implement it in backend
+
 const appId = '348d6a205d75436e916896366c5e315c';
 const appCertificate = '2e1e585ed3f74218ae249f7d14656fe2';
 const channelName = 'TestChannel';
@@ -35,7 +38,7 @@ const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
 // Build token with uid
 const tokenA = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs);
 console.log("Token with integer number Uid: " + tokenA);
-
+*/
 
 let channelParameters =
 {
