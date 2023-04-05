@@ -1,2 +1,19 @@
+@import 'styles/theme';
+
 .information {
+
+}
+
+.own-role-container {
+  padding: 20px 100px;
+  @include center;
+  flex-direction: column;
+
+  h5{
+    margin-bottom: -30px;
+  }
+
+  p{
+    margin-bottom: -10px;
+  }
 }

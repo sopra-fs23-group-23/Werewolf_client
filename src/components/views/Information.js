@@ -3,16 +3,16 @@ import { Link, useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
 import 'styles/views/Information.scss';
 import Role from 'models/Role';
-import Spinner from "../ui/Spinner";
+import RoleInformation from "../ui/RoleInformation";
 
 
 const Information = () => {
   //const id = sessionStorage.getItem('uid')
-  const id = 1;
+  const id = 6;
   const history = useHistory();
   const [lobbyId, setLobbyId] = useState('');
   const [roles, setRoles] = useState('');
-  const [currentRole, setCurrentRole] = useState('');
+  const [ownRole, setOwnRole] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -35,31 +35,28 @@ const Information = () => {
         testRoles.push(werewolf)
         testRoles.push(villager)
         setRoles(testRoles)
-        findCurrentRole();
+        findOwnRole();
       }
     }
     fetchData();
   }, [history, id]);
 
-  const findCurrentRole = () => {
+  const findOwnRole = () => {
     for (let i = 0; i < roles.length; i++) {
       for (let j = 0; j < roles[i].uid.length; j++) {
         if (id === roles[i].uid[j]) {
-          setCurrentRole(roles[i]);
+          setOwnRole(roles[i]);
         }
       }
     }
   }
 
-  let content = <Spinner/>;
+  let content = <h1>Loading...</h1>;
 
-  if(currentRole) {
+  if(ownRole) {
     content =
-      <div className="role-container role-container-dark">
-        <h5>This game your role will be</h5>
-        <h1>{currentRole.rolename}</h1>
-        <img src={`/public/roles/${currentRole.rolename}.png`} alt="a Villager"/>
-        <p>{currentRole.description}</p>
+      <div className="own-role-container">
+        <RoleInformation role={ownRole} ownRole={true} displayCount={false}/>
         <h5>Game starts in:</h5>
         <h5>0:31</h5>
     </div>
