@@ -6,7 +6,6 @@ class Role {
     this.rolename = null;
     this.uid = [];
     this.description = null;
-    this.amount = null;
     Object.assign(this, data);
   }
 }
