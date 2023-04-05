@@ -1,7 +1,6 @@
-//outsourced here since we may can reuse this for the information button in game
+@import 'styles/theme';
 
-.role-container {
-  padding: 60px 200px;
+.role-information {
   @include center;
   flex-direction: column;
 
@@ -14,6 +13,7 @@
     width: 220px;
     border-radius: 30px;
     margin-bottom: 20px;
+    border: 1px solid grey;
   }
 
   h5 {
