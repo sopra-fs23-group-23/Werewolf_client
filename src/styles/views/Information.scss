@@ -1,12 +1,19 @@
 @import 'styles/theme';
 
 .information {
-
+  bottom: 0;
+  left: 0;
 }
 
 .own-role-container {
-  padding-left: 120px;
-  padding-right: 120px;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: -30px;
+  position: absolute;
+  padding-left: 180px;
+  padding-right: 180px;
   @include center;
   flex-direction: column;
 
@@ -20,7 +27,12 @@
 }
 
 .all-role-container {
-
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: -30px;
+  position: absolute;
   padding-left: 60px;
   padding-right: 60px;
   @include center;
@@ -31,7 +43,7 @@
   }
 
   p{
-    margin: 30px 100px -20px;
+    margin: 30px 300px -20px;
     text-align: center;
   }
 
