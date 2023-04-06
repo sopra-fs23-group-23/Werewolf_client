@@ -88,7 +88,7 @@ function showMessage(text){
 
 startBasicCall();
 
-const Lobby = () => {
+const AgoraTest = () => {
   return (
     <div className="background background-dark lobby">
       <div className="container">
@@ -105,4 +105,4 @@ const Lobby = () => {
   );
 };
 
-export default Lobby;
+export default AgoraTest;
