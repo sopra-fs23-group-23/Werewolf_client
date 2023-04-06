@@ -15,13 +15,23 @@ const Profile = ({user}) => (
 )
 
 const ButtonMenu = ({isAdmin}) => {
+  function leave() {
+    // TODO
+    alert("Not implemented yet");
+  }
+
+  function startGame () {
+    // TODO
+    alert("Not implemented yet");
+  }
+
   if (isAdmin) {
     return (
       <div>
-        <button className="btn btn-light">
+        <button className="btn btn-light" onClick={leave}>
           Dissolve Lobby
         </button>
-        <button className="btn btn-light">
+        <button className="btn btn-light" onClick={startGame}>
           Start Game
         </button>
       </div>
@@ -29,7 +39,7 @@ const ButtonMenu = ({isAdmin}) => {
   } else {
     return (
       <div>
-        <button className="btn btn-light">
+        <button className="btn btn-light" onClick={leave}>
           Leave Lobby
         </button>
       </div>
@@ -39,7 +49,7 @@ const ButtonMenu = ({isAdmin}) => {
 
 const Lobby = () => {
   // TODO move to helper
-  const lobbyId = sessionStorage.getItem("lobbyId")
+  const lobbyId = localStorage.getItem("lobbyId")
   const uid = localStorage.getItem("uid")
   const [lobby, setLobby] = useState(null);
 
@@ -50,32 +60,13 @@ const Lobby = () => {
     }
 
     async function fetchLobby() {
-      // try {
-      //   const response = await api.get(`/lobbies/${lobbyId}`);
-      //   updateDataToLobby(response.data)
-      // } catch (error) {
-      //   console.error("Details:", error);
-      //   alert("Something went wrong while fetching the lobby! See the console for details.");
-      // }
-      function createMockPlayers() {
-        var mockPlayers = []
-        for (let i = 0; i < 20; i++) {
-          mockPlayers.push({
-            id: i,
-            name: `Mockplayer ${i}`,
-            isAlive: true
-          })
-        }
-        return mockPlayers;
+      try {
+        const response = await api.get(`/lobbies/${lobbyId}`);
+        updateDataToLobby(response.data)
+      } catch (error) {
+        console.error("Details:", error);
+        alert("Something went wrong while fetching the lobby! See the console for details.");
       }
-
-      const mockPlayers = createMockPlayers();
-      const lobby = {
-        id: 123456,
-        admin: mockPlayers.pop(),
-        players: mockPlayers
-      }
-      updateDataToLobby(lobby)
     }
 
     async function fetchEmitterToken() {
@@ -100,8 +91,8 @@ const Lobby = () => {
     }
 
     fetchLobby();
-    // fetchEmitterToken()
-    //   .then((emitterToken) => subscribeToEmitter(emitterToken))
+    fetchEmitterToken()
+      .then((emitterToken) => subscribeToEmitter(emitterToken))
   }, [lobbyId])
 
   let content = (
