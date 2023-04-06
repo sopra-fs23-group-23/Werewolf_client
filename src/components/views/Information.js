@@ -15,7 +15,7 @@ const Information = () => {
   const [allRoles, setAllRoles] = useState([]);
   const [lobbyId, setLobbyId] = useState('');
   const [ownRole, setOwnRole] = useState('');
-  const [showAllRoles, setShowAllRoles] = useState(true);
+  const [showAllRoles, setShowAllRoles] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -58,7 +58,7 @@ const Information = () => {
     console.log("II own role: ")
     console.log(ownRole)
     if(!ownRole || !allRoles) {
-      return <h1>Loading...</h1>
+      return <Spinner theme="light"/>
     } else if (showAllRoles) {
       return (
         <div className="all-role-container">
