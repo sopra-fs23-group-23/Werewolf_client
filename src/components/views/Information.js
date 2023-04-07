@@ -15,7 +15,7 @@ const Information = () => {
   const [allRoles, setAllRoles] = useState([]);
   const [lobbyId, setLobbyId] = useState('');
   const [ownRole, setOwnRole] = useState('');
-  const [showAllRoles, setShowAllRoles] = useState(false);
+  const [showAllRoles, setShowAllRoles] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
