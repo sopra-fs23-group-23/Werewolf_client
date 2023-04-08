@@ -42,11 +42,10 @@ const Home = () => {
     e.preventDefault();
     try {
       const requestBody = JSON.stringify({ id });
-      alert(`Creating lobby with user ${user.username}`);
       const response = await api.post('/lobbies', requestBody);
       const lobby = new Lobby(response.data);
-
-      history.push(`/lobby/${lobby.lobbyId}`);
+      StorageManager.setLobbyId(lobby.id);
+      history.push(`/lobby`);
     } catch (error) {
       alert(error.response.data?.message || 'Creating lobby failed.');
     }
@@ -56,11 +55,9 @@ const Home = () => {
     e.preventDefault();
     try {
       const requestBody = JSON.stringify({ id });
-      alert(`Joining lobby ${lobbyId} with user ${id}`);
-      const response = await api.put(`/lobbies/${lobbyId}`, requestBody);
-      const lobby = new Lobby(response.data);
-
-      history.push(`/lobby/${lobby.lobbyId}`);
+      await api.put(`/lobbies/${lobbyId}`, requestBody);
+      StorageManager.setLobbyId(lobbyId);
+      history.push(`/lobby`);
     } catch (error) {
       alert(error.response.data?.message || 'Joining lobby failed.');
     }
