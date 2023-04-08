@@ -33,12 +33,6 @@ const Home = () => {
 
   const logout = async (e) => {
     e.preventDefault();
-    try {
-      await api.put('/users/logout/' + StorageManager.getUserId());
-    } catch (error) {
-      console.error(error);
-      alert('Logout failed. See console for details.');
-    }
     StorageManager.removeUserId();
     StorageManager.removeUserToken();
     history.push('/login');
