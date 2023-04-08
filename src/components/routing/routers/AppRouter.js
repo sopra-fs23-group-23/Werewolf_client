@@ -24,14 +24,14 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
         <Route exact path="/lobby">
-          {/*<HomeGuard>*/}
+          <HomeGuard>
             <Lobby />
-          {/*</HomeGuard>*/}
+          </HomeGuard>
         </Route>
         <Route exact path="/information">
-          {/*<HomeGuard>*/}
-          <Information />
-          {/*</HomeGuard>*/}
+          <HomeGuard>
+            <Information />
+          </HomeGuard>
         </Route>
         <Route exact path="/game">
           <HomeGuard>
@@ -39,9 +39,9 @@ const AppRouter = () => {
           </HomeGuard>
         </Route>
         <Route exact path="/home">
-          {/*<HomeGuard>*/}
+          <HomeGuard>
           <Home />
-          {/*</HomeGuard> TODO: uncomment homeguard again*/}
+          </HomeGuard>
         </Route>
         <Route exact path="/edit/:id">
           <HomeGuard>
