@@ -45,12 +45,11 @@ const Edit = () => {
     putData();
   }
 
-  let content = <Spinner />;
+  let content = <Spinner theme="light"/>;
 
   if (username) {
     content = (
       <form onSubmit={(e) => updateUser(e)}>
-        {content}
         <FormField
           theme="light"
           label="Username"
@@ -64,6 +63,11 @@ const Edit = () => {
           type="password"
           onChange={(n) => setPassword(n)}
         />
+        <button className="btn btn-light"
+                onClick={() => updateUser()}
+        >
+          Save Changes
+        </button>
       </form>
     );
   }
@@ -75,11 +79,6 @@ const Edit = () => {
           <div className="column-container">
             <h1>Edit User</h1>
             {content}
-            <button className="btn btn-light"
-                    onClick={() => updateUser()}
-            >
-              Save Changes
-            </button>
             <button
               className="btn btn-light"
               onClick={() => history.push('/user/' + id)}

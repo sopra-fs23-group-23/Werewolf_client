@@ -73,7 +73,7 @@ const Home = () => {
 
         <div className="home-user_wrapper">
           <h1>Hey,<br/> {user.username} </h1>
-            <a href="./edit">
+            <a href={`./edit/${id}`}>
               <h5>edit profile</h5>
             </a>
         </div>
