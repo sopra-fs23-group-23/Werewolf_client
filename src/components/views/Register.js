@@ -4,6 +4,7 @@ import { api } from 'helpers/api';
 import User from 'models/User';
 import FormField from 'components/ui/FormField';
 import 'styles/views/Auth.scss';
+import StorageManager from 'helpers/StorageManager';
 
 const Register = (props) => {
   const history = useHistory();
@@ -18,8 +19,8 @@ const Register = (props) => {
 
       const user = new User(response.data);
 
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('uid', user.id);
+      StorageManager.setUserToken(user.token);
+      StorageManager.setUserId(user.id);
 
       history.push(`/home`);
     } catch (error) {

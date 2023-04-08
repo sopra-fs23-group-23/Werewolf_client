@@ -4,6 +4,7 @@ import { api } from 'helpers/api';
 import Spinner from 'components/ui/Spinner';
 import FormField from 'components/ui/FormField';
 import 'styles/views/Edit.scss';
+import StorageManager from 'helpers/StorageManager';
 
 const Edit = () => {
   const history = useHistory();
@@ -16,7 +17,7 @@ const Edit = () => {
       try {
         const response = await api.get('/users/' + id);
         // check if is current logged in user
-        if (response.data.id !== parseInt(localStorage.getItem('uid'))) {
+        if (response.data.id !== parseInt(StorageManager.getUserId())) {
           alert('Cannot enter edit page for other user.');
           history.push('/home');
         }

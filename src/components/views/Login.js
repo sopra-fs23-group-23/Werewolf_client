@@ -4,6 +4,7 @@ import { api } from 'helpers/api';
 import User from 'models/User';
 import FormField from 'components/ui/FormField';
 import 'styles/views/Auth.scss';
+import StorageManager from 'helpers/StorageManager';
 
 const Login = (props) => {
   const history = useHistory();
@@ -17,8 +18,8 @@ const Login = (props) => {
       const response = await api.post('/users/login', requestBody);
       // Get the returned user and update a new object.
       const user = new User(response.data);
-      sessionStorage.setItem('token', user.token);
-      sessionStorage.setItem('uid', user.id);
+      StorageManager.setUserToken(user.token);
+      StorageManager.setUserId(user.id);
       history.push(`/home`);
     } catch (error) {
       alert(error.response.data?.message || 'Login failed.');

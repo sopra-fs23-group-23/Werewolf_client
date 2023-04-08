@@ -9,7 +9,7 @@ import Spinner from "../ui/Spinner";
 
 
 const Information = () => {
-  //const id = sessionStorage.getItem('uid')
+  //const id = StorageManager.getUserId();
   const id = 6;
   const history = useHistory();
   const [allRoles, setAllRoles] = useState([]);

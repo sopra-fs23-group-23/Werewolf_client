@@ -5,9 +5,10 @@ import 'styles/views/Home.scss';
 import FormField from 'components/ui/FormField';
 import Lobby from 'models/Lobby';
 import User from 'models/User';
+import StorageManager from 'helpers/StorageManager';
 
 const Home = () => {
-  const id = sessionStorage.getItem('uid')
+  const id = StorageManager.getUserId();
   const history = useHistory();
   const [lobbyId, setLobbyId] = useState('');
   const [user, setUser] = useState('');
@@ -33,13 +34,13 @@ const Home = () => {
   const logout = async (e) => {
     e.preventDefault();
     try {
-      await api.put('/users/logout/' + sessionStorage.getItem('uid'));
+      await api.put('/users/logout/' + StorageManager.getUserId());
     } catch (error) {
       console.error(error);
       alert('Logout failed. See console for details.');
     }
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('uid');
+    StorageManager.removeUserId();
+    StorageManager.removeUserToken();
     history.push('/login');
   };
 

@@ -3,6 +3,7 @@ import {api} from 'helpers/api';
 import 'styles/views/Lobby.scss';
 import LobbyModel from 'models/Lobby';
 import Spinner from 'components/ui/Spinner';
+import StorageManager from 'helpers/StorageManager';
 
 const Profile = ({user}) => (
   <div className="lobby-profile">
@@ -48,9 +49,8 @@ const ButtonMenu = ({isAdmin}) => {
 }
 
 const Lobby = () => {
-  // TODO move to helper
-  const lobbyId = localStorage.getItem("lobbyId")
-  const uid = localStorage.getItem("uid")
+  const lobbyId = StorageManager.getLobbyId();
+  const uid = StorageManager.getUserId();
   const [lobby, setLobby] = useState(null);
 
   useEffect(()=>{
