@@ -79,10 +79,17 @@ const Lobby = () => {
       eventSource.onopen = event => {
         console.log("Connection established");
       }
-    
-      eventSource.onmessage = (event) => {
+      
+      eventSource.addEventListener("update", (event) => {
         updateDataToLobby(JSON.parse(event.data))
-      }
+      })
+      eventSource.addEventListener("delete", (event) => {
+        alert("Received event on 'delete', which is not implemented yet.")
+      })
+      eventSource.addEventListener("game", (event) => {
+        alert("Received event on 'game', which is not implemented yet.")
+      })
+
     
       eventSource.onerror = (event) => {
         console.log("OnError fired: ",event.target.readyState)
