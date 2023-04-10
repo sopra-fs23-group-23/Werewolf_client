@@ -23,16 +23,13 @@ let channelParameters =
 function waitForSessionStorageItem(key) {
   return new Promise(resolve => {
     const checkItem = () => {
-      const item = sessionStorage.getItem(key);
-      console.log(item);
-      if (item) {
-        resolve(item);
+      if (StorageManager.getLobbyId()) {
+        resolve();
       }
       else {
         setTimeout(checkItem, 100);
       }
     };
-
     checkItem();
   });
 }
@@ -63,14 +60,15 @@ export function startBasicCall() {
   });
 
   async function joinCall() {
-    try {
+
       // Join a channel.
-      await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
+      agoraEngine.join(options.appId, options.channel, options.token, options.uid);
       // Create a local audio track from the microphone audio.
       channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       // Publish the local audio track in the channel.
       await agoraEngine.publish(channelParameters.localAudioTrack);
       console.log("Publish success!");
+      
 
 
       // // Listen to the Leave button click event.
@@ -84,10 +82,6 @@ export function startBasicCall() {
       //   // Refresh the page for reuse
       //   window.location.reload();
       // }
-    } catch (error) {
-      console.error("Details: ", error);
-      alert("Something went wrong while fetching the channeltoken! See the console for details.");
-      joinCall();
-    }
   }
+  joinCall();
 }

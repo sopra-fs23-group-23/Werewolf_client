@@ -4,7 +4,7 @@ import 'styles/views/Lobby.scss';
 import LobbyModel from 'models/Lobby';
 import Spinner from 'components/ui/Spinner';
 import StorageManager from 'helpers/StorageManager';
-import { startBasicCall } from 'helpers/Agora';
+import { startBasicCall } from 'helpers/agora';
 
 
 const Profile = ({user}) => (
@@ -113,8 +113,11 @@ const Lobby = () => {
     fetchChannelToken();
     fetchEmitterToken().then((emitterToken) => subscribeToEmitter(emitterToken));
     startBasicCall();
+    
   }, [lobbyId])
 
+  
+  
   let content = (
     // TODO spinner does not work
     <Spinner/>
