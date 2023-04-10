@@ -4,7 +4,7 @@ import 'styles/views/Lobby.scss';
 import LobbyModel from 'models/Lobby';
 import Spinner from 'components/ui/Spinner';
 import StorageManager from 'helpers/StorageManager';
-import ('helpers/agora');
+import { startBasicCall } from 'helpers/Agora';
 
 
 const Profile = ({user}) => (
@@ -71,6 +71,16 @@ const Lobby = () => {
       }
     }
 
+    async function fetchChannelToken() {
+      try {
+        const response = await api.get(`agora/${lobbyId}/token`);
+        StorageManager.setChannelToken(response.data);
+      }catch (error) {
+        console.error("Details: ", error);
+        alert("Something went wrong while fetching the channeltoken! See the console for details.");
+      }
+    }
+
     async function fetchEmitterToken() {
       const response = await api.get(`/lobbies/${lobbyId}/sse`)
       return response.data
@@ -100,14 +110,15 @@ const Lobby = () => {
     }
 
     fetchLobby();
-    fetchEmitterToken()
-      .then((emitterToken) => subscribeToEmitter(emitterToken))
+    fetchChannelToken();
+    fetchEmitterToken().then((emitterToken) => subscribeToEmitter(emitterToken));
   }, [lobbyId])
 
   let content = (
     // TODO spinner does not work
     <Spinner/>
   )
+  startBasicCall();
 
   if (lobby) {
     content = (

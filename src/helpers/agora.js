@@ -1,13 +1,12 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
 
 
-//Miro options:
 let options = 
 {
     appId: '348d6a205d75436e916896366c5e315c',
-    channel: 'asdfchannel',
-    token: '006348d6a205d75436e916896366c5e315cIAA1M3nVX2pHOF8U9lT/FzU1yqiivpDR03NPtKXg72s80yLuPc8AAAAAIgD4VnNSbBMtZAQAAQD8zytkAgD8zytkAwD8zytkBAD8zytk',
-    uid: 1,
+    channel: sessionStorage.getItem('lobbyId'),
+    token: sessionStorage.getItem('channelToken'),
+    uid: sessionStorage.getItem('uid'),
 };
 
 let channelParameters =
@@ -20,7 +19,7 @@ let channelParameters =
   remoteUid: null,
 };
 
-export async function startBasicCall()
+export function startBasicCall()
 {
   // Create an instance of the Agora Engine
   const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -40,48 +39,38 @@ export async function startBasicCall()
       channelParameters.remoteAudioTrack = user.audioTrack;
       // Play the remote audio track. 
       channelParameters.remoteAudioTrack.play();
-      showMessage("Remote user connected: " + user.uid);
     }
 
     // Listen for the "user-unpublished" event.
     agoraEngine.on("user-unpublished", user =>
     {
       console.log(user.uid + "has left the channel");
-      showMessage("Remote user has left the channel");
     });
   });
 
-  window.onload = function ()
-  {
-    // Listen to the Join button click event.
-    document.getElementById("join-channel").onclick = async function ()
-    {
+  async function joinCall() {
+      console.log("trying to join");
+
       // Join a channel.
       await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
-      showMessage("Joined channel: " + options.channel);
       // Create a local audio track from the microphone audio.
       channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       // Publish the local audio track in the channel.
       await agoraEngine.publish(channelParameters.localAudioTrack);
       console.log("Publish success!");
-    }
     
-    // Listen to the Leave button click event.
-    document.getElementById('leave-channel').onclick = async function ()
-    {
-      // Destroy the local audio track.
-      channelParameters.localAudioTrack.close();
-      // Leave the channel
-      await agoraEngine.leave();
-      console.log("You left the channel");
-      // Refresh the page for reuse
-      window.location.reload();
-    }
+    
+    // // Listen to the Leave button click event.
+    // document.getElementById('leave-channel').onclick = async function ()
+    // {
+    //   // Destroy the local audio track.
+    //   channelParameters.localAudioTrack.close();
+    //   // Leave the channel
+    //   await agoraEngine.leave();
+    //   console.log("You left the channel");
+    //   // Refresh the page for reuse
+    //   window.location.reload();
+    // }
   }
+  joinCall();
 }
-
-function showMessage(text){
-  document.getElementById("message").textContent = text;
-}
-
-startBasicCall();
