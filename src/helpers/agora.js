@@ -1,12 +1,13 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
+import StorageManager from "./StorageManager";
 
 
-let options = 
+let options =
 {
-    appId: '348d6a205d75436e916896366c5e315c',
-    channel: sessionStorage.getItem('lobbyId'),
-    token: sessionStorage.getItem('channelToken'),
-    uid: sessionStorage.getItem('uid'),
+  appId: '348d6a205d75436e916896366c5e315c',
+  channel: StorageManager.getLobbyId(),
+  token: StorageManager.getChannelToken(),
+  uid: StorageManager.getUserId(),
 };
 
 let channelParameters =
@@ -15,26 +16,40 @@ let channelParameters =
   localAudioTrack: null,
   // A variable to hold a remote audio track.
   remoteAudioTrack: null,
-    // A variable to hold the remote user id.
+  // A variable to hold the remote user id.
   remoteUid: null,
 };
 
-export function startBasicCall()
-{
+function waitForSessionStorageItem(key) {
+  return new Promise(resolve => {
+    const checkItem = () => {
+      const item = sessionStorage.getItem(key);
+      console.log(item);
+      if (item) {
+        resolve(item);
+      }
+      else {
+        setTimeout(checkItem, 100);
+      }
+    };
+
+    checkItem();
+  });
+}
+
+export function startBasicCall() {
   // Create an instance of the Agora Engine
   const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-  
+
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
-  agoraEngine.on("user-published", async (user, mediaType) =>
-  {
+  agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
     await agoraEngine.subscribe(user, mediaType);
     console.log("subscribe success");
 
     // Subscribe and play the remote audio track.
-    if (mediaType == "audio")
-    {
-      channelParameters.remoteUid=user.uid;
+    if (mediaType == "audio") {
+      channelParameters.remoteUid = user.uid;
       // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
       channelParameters.remoteAudioTrack = user.audioTrack;
       // Play the remote audio track. 
@@ -42,15 +57,13 @@ export function startBasicCall()
     }
 
     // Listen for the "user-unpublished" event.
-    agoraEngine.on("user-unpublished", user =>
-    {
+    agoraEngine.on("user-unpublished", user => {
       console.log(user.uid + "has left the channel");
     });
   });
 
   async function joinCall() {
-      console.log("trying to join");
-
+    try {
       // Join a channel.
       await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
       // Create a local audio track from the microphone audio.
@@ -58,19 +71,23 @@ export function startBasicCall()
       // Publish the local audio track in the channel.
       await agoraEngine.publish(channelParameters.localAudioTrack);
       console.log("Publish success!");
-    
-    
-    // // Listen to the Leave button click event.
-    // document.getElementById('leave-channel').onclick = async function ()
-    // {
-    //   // Destroy the local audio track.
-    //   channelParameters.localAudioTrack.close();
-    //   // Leave the channel
-    //   await agoraEngine.leave();
-    //   console.log("You left the channel");
-    //   // Refresh the page for reuse
-    //   window.location.reload();
-    // }
+
+
+      // // Listen to the Leave button click event.
+      // document.getElementById('leave-channel').onclick = async function ()
+      // {
+      //   // Destroy the local audio track.
+      //   channelParameters.localAudioTrack.close();
+      //   // Leave the channel
+      //   await agoraEngine.leave();
+      //   console.log("You left the channel");
+      //   // Refresh the page for reuse
+      //   window.location.reload();
+      // }
+    } catch (error) {
+      console.error("Details: ", error);
+      alert("Something went wrong while fetching the channeltoken! See the console for details.");
+      joinCall();
+    }
   }
-  joinCall();
 }

@@ -112,13 +112,14 @@ const Lobby = () => {
     fetchLobby();
     fetchChannelToken();
     fetchEmitterToken().then((emitterToken) => subscribeToEmitter(emitterToken));
+    startBasicCall();
   }, [lobbyId])
 
   let content = (
     // TODO spinner does not work
     <Spinner/>
   )
-  startBasicCall();
+
 
   if (lobby) {
     content = (
