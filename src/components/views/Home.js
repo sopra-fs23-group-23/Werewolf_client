@@ -5,9 +5,10 @@ import 'styles/views/Home.scss';
 import FormField from 'components/ui/FormField';
 import Lobby from 'models/Lobby';
 import User from 'models/User';
+import StorageManager from 'helpers/StorageManager';
 
 const Home = () => {
-  const id = sessionStorage.getItem('uid')
+  const id = StorageManager.getUserId();
   const history = useHistory();
   const [lobbyId, setLobbyId] = useState('');
   const [user, setUser] = useState('');
@@ -32,14 +33,8 @@ const Home = () => {
 
   const logout = async (e) => {
     e.preventDefault();
-    try {
-      await api.put('/users/logout/' + sessionStorage.getItem('uid'));
-    } catch (error) {
-      console.error(error);
-      alert('Logout failed. See console for details.');
-    }
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('uid');
+    StorageManager.removeUserId();
+    StorageManager.removeUserToken();
     history.push('/login');
   };
 
@@ -47,11 +42,10 @@ const Home = () => {
     e.preventDefault();
     try {
       const requestBody = JSON.stringify({ id });
-      alert(`Creating lobby with user ${user.username}`);
       const response = await api.post('/lobbies', requestBody);
       const lobby = new Lobby(response.data);
-
-      history.push(`/lobby/${lobby.lobbyId}`);
+      StorageManager.setLobbyId(lobby.id);
+      history.push(`/lobby`);
     } catch (error) {
       alert(error.response.data?.message || 'Creating lobby failed.');
     }
@@ -61,11 +55,9 @@ const Home = () => {
     e.preventDefault();
     try {
       const requestBody = JSON.stringify({ id });
-      alert(`Joining lobby ${lobbyId} with user ${id}`);
-      const response = await api.put(`/lobbies/${lobbyId}`, requestBody);
-      const lobby = new Lobby(response.data);
-
-      history.push(`/lobby/${lobby.lobbyId}`);
+      await api.put(`/lobbies/${lobbyId}`, requestBody);
+      StorageManager.setLobbyId(lobbyId);
+      history.push(`/lobby`);
     } catch (error) {
       alert(error.response.data?.message || 'Joining lobby failed.');
     }
@@ -81,15 +73,9 @@ const Home = () => {
 
         <div className="home-user_wrapper">
           <h1>Hey,<br/> {user.username} </h1>
-          <div className="home-profile_wrapper">
-            <a href="./edit">
-              <img
-                src="https://tse2.mm.bing.net/th?id=OIP.gstkHSUl8M3MtSWnIY0xhgHaHa&pid=Api&P=0"
-                alt="Panda profile"
-              />
+            <a href={`./edit/${id}`}>
               <h5>edit profile</h5>
             </a>
-          </div>
         </div>
         
         <div className='home-create-lobby'>
@@ -100,6 +86,7 @@ const Home = () => {
         <h5>or</h5>
         <div className='home-join-lobby'>
           <FormField
+            theme="light"
             placeholder = "123 456"
             onChange={(e) => setLobbyId(e)}
           >

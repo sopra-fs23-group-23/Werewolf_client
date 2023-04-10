@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getDomain } from 'helpers/getDomain';
+import StorageManager from './StorageManager';
 
 export const api = axios.create({
   baseURL: getDomain(),
@@ -11,6 +12,6 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
   // TODO: rename token to Authorization
-  config.headers.token = localStorage.getItem('token');
+  config.headers.token = StorageManager.getUserToken();
   return config;
 });

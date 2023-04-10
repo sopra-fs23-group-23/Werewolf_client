@@ -12,7 +12,7 @@
   input {
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid $color-text-dark;
+    border-bottom: 2px solid $color-text-dark;;
     text-align: center;
     padding: 10px;
     font-size: 40px;
@@ -28,8 +28,13 @@
   }
 
   &-light {
-    border-color: $color-text-light;
-    color: $color-text-dark;
+    input {
+      border-color: $color-text-light;
+      color: $color-text-light;
+    }
+    label {
+      color: $color-text-light;
+    }
   }
 
   &-danger {

@@ -3,9 +3,9 @@
  */
 class Lobby {
   constructor(data = {}) {
-    this.lobbyId = null;
-    this.gameId = null;
-    this.code = null;
+    this.id = null;
+    this.admin = null;
+    this.players = null;
     Object.assign(this, data);
   }
 }

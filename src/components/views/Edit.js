@@ -4,6 +4,7 @@ import { api } from 'helpers/api';
 import Spinner from 'components/ui/Spinner';
 import FormField from 'components/ui/FormField';
 import 'styles/views/Edit.scss';
+import StorageManager from 'helpers/StorageManager';
 
 const Edit = () => {
   const history = useHistory();
@@ -16,7 +17,7 @@ const Edit = () => {
       try {
         const response = await api.get('/users/' + id);
         // check if is current logged in user
-        if (response.data.id !== parseInt(localStorage.getItem('uid'))) {
+        if (response.data.id !== parseInt(StorageManager.getUserId())) {
           alert('Cannot enter edit page for other user.');
           history.push('/home');
         }
@@ -44,39 +45,40 @@ const Edit = () => {
     putData();
   }
 
-  let content = <Spinner />;
+  let content = <Spinner theme="light"/>;
 
   if (username) {
     content = (
       <form onSubmit={(e) => updateUser(e)}>
-        {content}
         <FormField
+          theme="light"
           label="Username"
           value={username}
           onChange={(un) => setUsername(un)}
         />
         <FormField
+          theme="light"
           label="Password"
           value={password}
           type="password"
           onChange={(n) => setPassword(n)}
         />
+        <button className="btn btn-light"
+                onClick={() => updateUser()}
+        >
+          Save Changes
+        </button>
       </form>
     );
   }
 
   return (
-    <div className="background background-dark edit">
+    <div className="background background-dark">
       <div className="container">
         <div className="edit">
           <div className="column-container">
             <h1>Edit User</h1>
             {content}
-            <button className="btn btn-light"
-                    onClick={() => updateUser()}
-            >
-              Save Changes
-            </button>
             <button
               className="btn btn-light"
               onClick={() => history.push('/user/' + id)}
