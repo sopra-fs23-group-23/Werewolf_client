@@ -5,9 +5,9 @@ const AllRolesColumn = ({roles}) => {
   const createIndividualRole = (role) => {
     return (
       <div className="individual-role">
-        <h2>{role.rolename}</h2>
-        <img src={`/assets/images/roles/${role.rolename}.png`} alt={"Picture of a " + role.rolename}/>
-        <h5>{role.uid.length + "x"}</h5>
+        <h2>{role.roleName}</h2>
+        <img src={`/assets/images/roles/${role.roleName}.png`} alt={"Picture of a " + role.roleName}/>
+        <h5>{role.amount + "x"}</h5>
       </div>
       );
 

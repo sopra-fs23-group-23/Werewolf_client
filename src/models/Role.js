@@ -3,8 +3,8 @@
  */
 class Role {
   constructor(data = {}) {
-    this.rolename = null;
-    this.uid = [];
+    this.roleName = null;
+    this.amount = null;
     this.description = null;
     Object.assign(this, data);
   }
