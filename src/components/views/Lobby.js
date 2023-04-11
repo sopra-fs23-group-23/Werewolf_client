@@ -1,9 +1,7 @@
-import {useEffect, useState} from 'react';
-import {api} from 'helpers/api';
 import 'styles/views/Lobby.scss';
-import LobbyModel from 'models/Lobby';
 import Spinner from 'components/ui/Spinner';
-import StorageManager from 'helpers/StorageManager';
+import { useLobby } from 'hooks/Lobby.hooks';
+
 
 const Profile = ({user}) => (
   <div className="lobby-profile">
@@ -49,63 +47,14 @@ const ButtonMenu = ({isAdmin}) => {
 }
 
 const Lobby = () => {
-  const lobbyId = StorageManager.getLobbyId();
-  const uid = StorageManager.getUserId();
-  const [lobby, setLobby] = useState(null);
 
-  useEffect(()=>{
-    function updateDataToLobby(data) {
-      const lobby = new LobbyModel(data)
-      setLobby(lobby)
-    }
-
-    async function fetchLobby() {
-      try {
-        const response = await api.get(`/lobbies/${lobbyId}`);
-        updateDataToLobby(response.data)
-      } catch (error) {
-        console.error("Details:", error);
-        alert("Something went wrong while fetching the lobby! See the console for details.");
-      }
-    }
-
-    async function fetchEmitterToken() {
-      const response = await api.get(`/lobbies/${lobbyId}/sse`)
-      return response.data
-    }
-
-    async function subscribeToEmitter(emitterToken) {
-      const eventSource = new EventSource(`http://localhost:8080/lobbies/${lobbyId}/sse/${emitterToken}`)
-      eventSource.onopen = event => {
-        console.log("Connection established");
-      }
-      
-      eventSource.addEventListener("update", (event) => {
-        updateDataToLobby(JSON.parse(event.data))
-      })
-      eventSource.addEventListener("delete", (event) => {
-        alert("Received event on 'delete', which is not implemented yet.")
-      })
-      eventSource.addEventListener("game", (event) => {
-        alert("Received event on 'game', which is not implemented yet.")
-      })
-
-    
-      eventSource.onerror = (event) => {
-        console.log("OnError fired: ",event.target.readyState)
-        eventSource.close()
-      }
-    }
-
-    fetchLobby();
-    fetchEmitterToken()
-      .then((emitterToken) => subscribeToEmitter(emitterToken))
-  }, [lobbyId])
-
+  const {lobby, uid} = useLobby();
+  
   let content = (
     // TODO spinner does not work
     <Spinner/>
   )
+
 
   if (lobby) {
     content = (
