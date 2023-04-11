@@ -2,13 +2,7 @@ import AgoraRTC from "agora-rtc-sdk-ng"
 import StorageManager from "./StorageManager";
 
 
-let options =
-{
-  appId: '348d6a205d75436e916896366c5e315c',
-  channel: StorageManager.getLobbyId(),
-  token: StorageManager.getChannelToken(),
-  uid: StorageManager.getUserId(),
-};
+const appId = '348d6a205d75436e916896366c5e315c';
 
 let channelParameters =
 {
@@ -19,20 +13,6 @@ let channelParameters =
   // A variable to hold the remote user id.
   remoteUid: null,
 };
-
-function waitForSessionStorageItem(key) {
-  return new Promise(resolve => {
-    const checkItem = () => {
-      if (StorageManager.getLobbyId()) {
-        resolve();
-      }
-      else {
-        setTimeout(checkItem, 100);
-      }
-    };
-    checkItem();
-  });
-}
 
 export function startBasicCall() {
   // Create an instance of the Agora Engine
@@ -51,37 +31,17 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack = user.audioTrack;
       // Play the remote audio track. 
       channelParameters.remoteAudioTrack.play();
-    }
-
-    // Listen for the "user-unpublished" event.
-    agoraEngine.on("user-unpublished", user => {
-      console.log(user.uid + "has left the channel");
-    });
+    };
   });
 
   async function joinCall() {
-
-      // Join a channel.
-      agoraEngine.join(options.appId, options.channel, options.token, options.uid);
-      // Create a local audio track from the microphone audio.
-      channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-      // Publish the local audio track in the channel.
-      await agoraEngine.publish(channelParameters.localAudioTrack);
-      console.log("Publish success!");
-      
-
-
-      // // Listen to the Leave button click event.
-      // document.getElementById('leave-channel').onclick = async function ()
-      // {
-      //   // Destroy the local audio track.
-      //   channelParameters.localAudioTrack.close();
-      //   // Leave the channel
-      //   await agoraEngine.leave();
-      //   console.log("You left the channel");
-      //   // Refresh the page for reuse
-      //   window.location.reload();
-      // }
+    // Join a channel.
+    await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
+    // Create a local audio track from the microphone audio.
+    channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+    // Publish the local audio track in the channel.
+    await agoraEngine.publish(channelParameters.localAudioTrack);
+    console.log("Publish success!");
   }
   joinCall();
 }

@@ -11,7 +11,7 @@ class StorageManager {
         return sessionStorage.getItem("lobbyId")
     }
 
-    static getChannelToken(){
+    static getChannelToken() {
         return sessionStorage.getItem("channelToken")
     }
 
@@ -27,7 +27,7 @@ class StorageManager {
         sessionStorage.setItem("lobbyId", lobbyId)
     }
 
-    static setChannelToken(channelToken){
+    static setChannelToken(channelToken) {
         sessionStorage.setItem("channelToken", channelToken)
     }
 
@@ -43,11 +43,9 @@ class StorageManager {
         sessionStorage.removeItem('lobbyId');
     }
 
-    static removeChannelToken(){
+    static removeChannelToken() {
         sessionStorage.removeItem('channelToken');
     }
-
-
 }
 
 export default StorageManager
