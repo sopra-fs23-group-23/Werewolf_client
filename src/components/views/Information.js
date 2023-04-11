@@ -11,11 +11,11 @@ import Spinner from "../ui/Spinner";
 const Information = () => {
   //const id = StorageManager.getUserId();
   const id = 6;
+  const lobbyId = 100000;
   const history = useHistory();
   const [allRoles, setAllRoles] = useState([]);
-  const [lobbyId, setLobbyId] = useState('');
   const [ownRole, setOwnRole] = useState('');
-  const [showAllRoles, setShowAllRoles] = useState(true);
+  const [showAllRoles, setShowAllRoles] = useState(false);
 
   useEffect(() => {
     async function fetchData() {

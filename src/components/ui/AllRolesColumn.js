@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
-const RoleColumn = ({roles}) => {
+const AllRolesColumn = ({roles}) => {
 
   const createIndividualRole = (role) => {
     return (
       <div className="individual-role">
         <h2>{role.rolename}</h2>
-        <img src={`/public/roles/${role.rolename}.png`} alt={"Picture of a " + role.rolename}/>
+        <img src={`/assets/images/roles/${role.rolename}.png`} alt={"Picture of a " + role.rolename}/>
         <h5>{role.uid.length + "x"}</h5>
       </div>
       );
@@ -19,8 +19,8 @@ const RoleColumn = ({roles}) => {
   );
 };
 
-RoleColumn.propTypes = {
+AllRolesColumn.propTypes = {
   roles: PropTypes.array
 };
 
-export default RoleColumn;
+export default AllRolesColumn;
