@@ -3,19 +3,19 @@ import { Link, useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
 import 'styles/views/Information.scss';
 import Role from 'models/Role';
-import RoleColumn from "../ui/information/RoleColumn";
-import RoleInformation from "../ui/information/RoleInformation";
+import AllRolesColumn from "../ui/AllRolesColumn";
+import SingleRoleInformation from "../ui/SingleRoleInformation";
 import Spinner from "../ui/Spinner";
 
 
 const Information = () => {
   //const id = StorageManager.getUserId();
   const id = 6;
+  const lobbyId = 100000;
   const history = useHistory();
   const [allRoles, setAllRoles] = useState([]);
-  const [lobbyId, setLobbyId] = useState('');
   const [ownRole, setOwnRole] = useState('');
-  const [showAllRoles, setShowAllRoles] = useState(true);
+  const [showAllRoles, setShowAllRoles] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -53,17 +53,13 @@ const Information = () => {
   }
 
   const displayContent = () => {
-    console.log("II all roles: ")
-    console.log(allRoles)
-    console.log("II own role: ")
-    console.log(ownRole)
     if(!ownRole || !allRoles) {
       return <Spinner theme="light"/>
     } else if (showAllRoles) {
       return (
         <div className="all-role-container">
           <h5>Roles this game</h5>
-          <RoleColumn roles={allRoles} />
+          <AllRolesColumn roles={allRoles} />
           <p>Your assigned role and the roles in the game can be viewed during the game by clicking the info button.</p>
           <h5>Game starts in:</h5>
           <h5>0:31</h5>
@@ -72,7 +68,7 @@ const Information = () => {
     }
     return (
       <div className="own-role-container">
-        <RoleInformation role={ownRole} isOwnRole={true} displayCount={false}/>
+        <SingleRoleInformation role={ownRole} isOwnRole={true} displayCount={false}/>
         <h5>Game starts in:</h5>
         <h5>0:31</h5>
       </div>
