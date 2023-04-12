@@ -11,6 +11,7 @@ const Information = () => {
   const lobbyId = StorageManager.getLobbyId();
   const [allRoles, setAllRoles] = useState([]);
   const [ownRoles, setOwnRoles] = useState([]);
+  // eslint-disable-next-line
   const [showAllRoles, setShowAllRoles] = useState(false);
 
   useEffect(() => {
