@@ -25,7 +25,7 @@ export function startBasicCall() {
     console.log("subscribe success");
 
     // Subscribe and play the remote audio track.
-    if (mediaType == "audio") {
+    if (mediaType === "audio") {
       channelParameters.remoteUid = user.uid;
       // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
       channelParameters.remoteAudioTrack = user.audioTrack;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
 import 'styles/views/Home.scss';
 import FormField from 'components/ui/FormField';

@@ -2,7 +2,6 @@ import 'styles/views/Lobby.scss';
 import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
 import {api} from "../../helpers/api";
-import storageManager from "../../helpers/StorageManager";
 import StorageManager from "../../helpers/StorageManager";
 
 
@@ -82,7 +81,7 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <ButtonMenu isAdmin={lobby.admin.id == uid}/>
+          <ButtonMenu isAdmin={lobby.admin.id === uid}/>
         </div>
       </div>
     )

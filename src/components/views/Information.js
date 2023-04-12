@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import {useHistory} from 'react-router-dom';
 import { api } from 'helpers/api';
 import 'styles/views/Information.scss';
 import AllRolesColumn from "../ui/AllRolesColumn";
@@ -10,7 +9,6 @@ import StorageManager from "../../helpers/StorageManager";
 const Information = () => {
   const id = StorageManager.getUserId();
   const lobbyId = StorageManager.getLobbyId();
-  const history = useHistory();
   const [allRoles, setAllRoles] = useState([]);
   const [ownRoles, setOwnRoles] = useState([]);
   const [showAllRoles, setShowAllRoles] = useState(false);
