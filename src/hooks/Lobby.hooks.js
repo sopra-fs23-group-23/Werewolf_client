@@ -45,7 +45,8 @@ export const useLobby = () => {
 
   const subscribeToEmitter = useCallback(async (emitterToken) => {
     const eventSource = new EventSource(
-        `http://localhost:8080/lobbies/${lobbyId}/sse/${emitterToken}`
+        //`http://localhost:8080/lobbies/${lobbyId}/sse/${emitterToken}`
+        `https://sopra-fs23-group-23-server.oa.r.appspot.com/lobbies/${lobbyId}/sse/${emitterToken}`
       );
       eventSource.onopen = (event) => {
         console.log("Connection established");
