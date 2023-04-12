@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import { api } from 'helpers/api';
 import 'styles/views/Information.scss';
-import Role from 'models/Role';
 import AllRolesColumn from "../ui/AllRolesColumn";
 import SingleRoleInformation from "../ui/SingleRoleInformation";
 import Spinner from "../ui/Spinner";
@@ -14,7 +13,7 @@ const Information = () => {
   const history = useHistory();
   const [allRoles, setAllRoles] = useState([]);
   const [ownRoles, setOwnRoles] = useState([]);
-  const [showAllRoles, setShowAllRoles] = useState(true);
+  const [showAllRoles, setShowAllRoles] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,7 +23,7 @@ const Information = () => {
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
       } catch (error) {
-        alert('Could not fetch role data, continue with fake role\n' + error.response.data?.message);
+        alert('Could not fetch role information' + error.response.data?.message);
         console.error(error);
       }
     }

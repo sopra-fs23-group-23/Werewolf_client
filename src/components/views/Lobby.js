@@ -1,6 +1,9 @@
 import 'styles/views/Lobby.scss';
 import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
+import {api} from "../../helpers/api";
+import storageManager from "../../helpers/StorageManager";
+import StorageManager from "../../helpers/StorageManager";
 
 
 const Profile = ({user}) => (
@@ -19,8 +22,13 @@ const ButtonMenu = ({isAdmin}) => {
     alert("Not implemented yet");
   }
 
-  function startGame () {
+  async function startGame () {
     // TODO
+    try {
+      await api.put('/lobbies/' + StorageManager.getLobbyId() + "/roles");
+    } catch (e) {
+      console.log(e);
+    }
     alert("Not implemented yet");
   }
 
@@ -51,7 +59,6 @@ const Lobby = () => {
   const {lobby, uid} = useLobby();
   
   let content = (
-    // TODO spinner does not work
     <Spinner/>
   )
 
