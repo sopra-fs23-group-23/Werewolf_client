@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Labrada:wght@300;400;500;600;700;800&display=swap');
 @import 'styles/theme';
 @import 'styles/components/button';
+@import 'styles/components/infoButton';
 @import 'styles/components/columnContainer';
 @import 'styles/components/link';
 @import 'styles/ui/information/RoleInformation';
@@ -54,7 +55,8 @@ a {
 }
 
 .background {
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
   &-light {
     background-color: $color-bg-light;
     color: $color-text-dark;

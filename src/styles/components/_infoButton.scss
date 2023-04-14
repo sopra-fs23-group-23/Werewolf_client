@@ -1,0 +1,27 @@
+.info-button {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-serif;
+  font-size: 30px;
+  padding-bottom: 5px;
+  user-select: none;
+  border-style: solid;
+  border-width: 2px;
+  &-light {
+    border-style: solid;
+    border-color: $color-text-light;
+  }
+  &-dark {
+    border-color: $color-bg-dark;
+    color: $color-text-dark;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.4);
+  }
+}
