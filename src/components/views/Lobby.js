@@ -8,8 +8,8 @@ import StorageManager from "../../helpers/StorageManager";
 const Profile = ({user}) => (
   <div className="lobby-profile">
       <img
-        src="https://tse2.mm.bing.net/th?id=OIP.gstkHSUl8M3MtSWnIY0xhgHaHa&pid=Api&P=0"
-        alt="Panda profile"
+        src={user.avatarUrl}
+        alt={user.name + ' Avatar'}
       />
       <p>{user.name}</p>
   </div>
