@@ -45,7 +45,7 @@ const Information = () => {
     }
     return (
       <div className="own-role-container">
-        <SingleRoleInformation roles={ownRoles} isOwnRole={true} displayCount={false}/>
+        <SingleRoleInformation role={ownRoles[0]} isOwnRole={true} displayCount={false}/>
         <h5>Game starts in:</h5>
         <h5>0:31</h5>
       </div>
