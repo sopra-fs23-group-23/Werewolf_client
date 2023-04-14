@@ -1,9 +1,22 @@
+import RolePopup from 'components/ui/RolePopup';
+import { useEffect, useState } from 'react';
 import 'styles/views/Game.scss';
 
 const Game = () => {
+  const [popupActive, setPopupActive] = useState(true);
+
+  const hidePopup = (e) => {
+    if(e.target.classList.contains('info-button')) return;
+    setPopupActive(false);
+  }
+  const togglePopup = () => {
+    setPopupActive(!popupActive);
+  }
+
   return (
-    <div className="background background-dark game">
-      <div className='info-button info-button-light'>i</div>
+    <div className="background background-dark game" onClick={hidePopup}>
+      <div className='info-button info-button-light' onClick={togglePopup}>i</div>
+      {popupActive && <RolePopup  />}
       <div className="container">
         <div>Game</div>
       </div>
