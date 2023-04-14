@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { api } from 'helpers/api';
 import 'styles/views/Home.scss';
 import FormField from 'components/ui/FormField';
@@ -73,9 +73,9 @@ const Home = () => {
 
         <div className="home-user_wrapper">
           <h1>Hey,<br/> {user.username} </h1>
-            <a href={`./edit/${id}`}>
-              <h5>edit profile</h5>
-            </a>
+          <Link to={`./edit/${id}`}>
+            <h5>edit profile</h5>
+          </Link>
         </div>
         
         <div className='home-create-lobby'>
