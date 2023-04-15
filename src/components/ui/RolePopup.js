@@ -19,6 +19,11 @@ const RolePopup = ({ show, handleClose }) => {
         setAllRoles(responseAll.data);
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
+        allRoles.forEach((role, index) => {
+          if(role.roleName === ownRoles[0].roleName) {
+            setActiveIndex(index);  // show own role first when opening popup
+          }
+        });
       } catch (error) {
         console.log(error)
         alert('Could not fetch role information' + error.response.data?.message);
