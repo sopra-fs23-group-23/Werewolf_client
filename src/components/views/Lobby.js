@@ -61,7 +61,6 @@ const Lobby = () => {
     <Spinner/>
   )
 
-
   if (lobby) {
     content = (
       <div className="container lobby-body">
@@ -81,7 +80,7 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <ButtonMenu isAdmin={lobby.admin.id === uid}/>
+          <ButtonMenu isAdmin={lobby.admin.id === parseInt(uid)}/>
         </div>
       </div>
     )
