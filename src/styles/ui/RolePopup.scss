@@ -22,6 +22,11 @@
     position: relative;
     margin-left: auto;
     margin-right: auto;
+    &.background-light {
+      img:not(.role-popup-item-image) {
+        filter: brightness(0.1);
+      }
+    }
   }
 
   &-close {
