@@ -12,7 +12,7 @@ const Game = () => {
   return (
     <div className="background background-dark-image game">
       <div className='info-button info-button-light' onClick={togglePopup}>i</div>
-      <RolePopup show={popupActive} />
+      <RolePopup show={popupActive} handleClose={togglePopup} />
       <div className="container">
         <div>Game</div>
       </div>
