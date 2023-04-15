@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import 'styles/views/Game.scss';
 
 const Game = () => {
-  const [popupActive, setPopupActive] = useState(true);
+  const [popupActive, setPopupActive] = useState(false);
 
   const togglePopup = () => {
     setPopupActive(!popupActive);

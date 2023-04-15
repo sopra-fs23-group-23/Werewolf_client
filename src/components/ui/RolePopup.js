@@ -10,7 +10,7 @@ const RolePopup = ({ show, handleClose }) => {
   const lobbyId = StorageManager.getLobbyId();
   const [allRoles, setAllRoles] = useState([]);
   const [ownRoles, setOwnRoles] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -21,12 +21,26 @@ const RolePopup = ({ show, handleClose }) => {
         setOwnRoles(responseOwn.data);
       } catch (error) {
         console.log(error)
-        //alert('Could not fetch role information' + error.response.data?.message);
+        alert('Could not fetch role information' + error.response.data?.message);
         console.error(error);
       }
     }
     fetchData();
   }, [id, lobbyId]);
+
+  const nextRole = () => {
+    setActiveIndex((activeIndex + 1) % allRoles.length);
+  }
+
+  const previousRole = () => {
+    setActiveIndex((activeIndex + 1) % allRoles.length);
+  }
+
+  const handleClickOutsidePopup = (e) => {
+    if(e.target.classList.contains('role-popup-background')) {
+      handleClose();
+    }
+  }
 
   if(ownRoles.length === 0 || allRoles.length === 0) {
     return <Spinner theme="light"/>
@@ -34,12 +48,12 @@ const RolePopup = ({ show, handleClose }) => {
     return <div></div>;
   } else {
     return (
-      <div className='role-popup-background'>
+      <div className='role-popup-background' onClick={handleClickOutsidePopup}>
         <div className='role-popup-container background-dark'>
           <img src='/assets/images/icons/close.svg' className='role-popup-close' onClick={handleClose} />
-          {allRoles.map(role => 
-            <div className={'role-popup-item'} key={role.roleName}>
-              {(role.roleName === ownRoles[0].roleName) && <div>Your Role:</div>}
+          {allRoles.map((role, index) => 
+            <div className={'role-popup-item ' + (index === activeIndex ? 'active' : '')} key={index}>
+              <div className={'role-popup-item-indicator ' + (role.roleName === ownRoles[0].roleName ? 'active' : '')}>Your Role:</div>
               <h2 className='role-popup-item-title'>{ role.roleName }</h2>
               <img className='role-popup-item-image' src={`/assets/images/roles/${role.roleName}.png`} alt={"Picture of a " + role.roleName}/>
               <div className='role-popup-item-description'>{ role.description }</div>
@@ -47,8 +61,8 @@ const RolePopup = ({ show, handleClose }) => {
             </div>
           )}
           <div className='role-popup-nav'>
-            <img src='/assets/images/icons/back.svg' alt='back' />
-            <img src='/assets/images/icons/forward.svg' alt='back' />
+            <img src='/assets/images/icons/back.svg' alt='back' onClick={previousRole} />
+            <img src='/assets/images/icons/forward.svg' alt='back' onClick={nextRole} />
           </div>
         </div>
       </div>
