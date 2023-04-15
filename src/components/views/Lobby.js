@@ -81,7 +81,7 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <ButtonMenu isAdmin={lobby.admin.id === uid}/>
+          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)}/>
         </div>
       </div>
     )
