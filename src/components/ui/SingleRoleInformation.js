@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 
-const SingleRoleInformation = ({roles, isOwnRole, displayCount}) => {
-  const role = roles[0];
-  console.log(roles);
+const SingleRoleInformation = ({role, isOwnRole, displayCount}) => {
   return (
     <div className= {`role-information`}>
       {isOwnRole ? <h5>This game your role will be</h5> : ""}
@@ -15,7 +13,7 @@ const SingleRoleInformation = ({roles, isOwnRole, displayCount}) => {
 };
 
 SingleRoleInformation.propTypes = {
-  roles: PropTypes.array,
+  role: PropTypes.object,
   isOwnRole: PropTypes.bool,
   displayCount: PropTypes.bool,
 };
