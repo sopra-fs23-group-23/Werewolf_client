@@ -4,11 +4,13 @@ import LobbyModel from "models/Lobby";
 import StorageManager from "helpers/StorageManager";
 import { startBasicCall } from "helpers/agora";
 import { createEventSource } from "helpers/createEventSource";
+import { useHistory } from "react-router-dom";
 
 export const useLobby = () => {
   const lobbyId = StorageManager.getLobbyId();
   const uid = StorageManager.getUserId();
   const [lobby, setLobby] = useState(null);
+  const history = useHistory();
 
   const updateDataToLobby = useCallback((data) => {
     const lobby = new LobbyModel(data);
@@ -54,10 +56,11 @@ export const useLobby = () => {
         alert("Received event on 'delete', which is not implemented yet.");
       });
       eventSource.addEventListener("game", (event) => {
-        alert("Received event on 'game', which is not implemented yet.");
+        eventSource.close();
+        history.push("/game");
       });
   
-  }, [updateDataToLobby, lobbyId])
+  }, [updateDataToLobby, lobbyId, history])
 
   useEffect(() => {
     console.log("run");

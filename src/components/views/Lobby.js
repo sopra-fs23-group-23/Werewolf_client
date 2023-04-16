@@ -1,8 +1,7 @@
 import 'styles/views/Lobby.scss';
 import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
-import {api} from "../../helpers/api";
-import StorageManager from "../../helpers/StorageManager";
+import { api } from 'helpers/api';
 
 
 const Profile = ({user}) => (
@@ -15,29 +14,14 @@ const Profile = ({user}) => (
   </div>
 )
 
-const ButtonMenu = ({isAdmin}) => {
-  function leave() {
-    // TODO
-    alert("Not implemented yet");
-  }
-
-  async function startGame () {
-    // TODO
-    try {
-      await api.put('/lobbies/' + StorageManager.getLobbyId() + "/roles");
-    } catch (e) {
-      console.log(e);
-    }
-    alert("Not implemented yet");
-  }
-
+const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
     return (
       <div>
-        <button className="btn btn-light" onClick={leave}>
+        <button className="btn btn-light" onClick={leaveFunction}>
           Dissolve Lobby
         </button>
-        <button className="btn btn-light" onClick={startGame}>
+        <button className="btn btn-light" onClick={startGameFunction}>
           Start Game
         </button>
       </div>
@@ -45,7 +29,7 @@ const ButtonMenu = ({isAdmin}) => {
   } else {
     return (
       <div>
-        <button className="btn btn-light" onClick={leave}>
+        <button className="btn btn-light" onClick={leaveFunction}>
           Leave Lobby
         </button>
       </div>
@@ -54,6 +38,14 @@ const ButtonMenu = ({isAdmin}) => {
 }
 
 const Lobby = () => {
+  function leave() {
+    // TODO
+    alert("Not implemented yet");
+  }
+
+  async function startGame () {
+    api.post(`/games/${lobby.id}`);
+  }
 
   const {lobby, uid} = useLobby();
   
@@ -81,7 +73,7 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)}/>
+          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
       </div>
     )
