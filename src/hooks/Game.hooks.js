@@ -11,6 +11,9 @@ export const useGame = () => {
         const eventSource = createEventSource(`games/${lobbyId}/sse/${token}`);
         eventSource.addEventListener("start", (event) => {
             setStarted(true);
+        });
+        eventSource.addEventListener("stage", (event)=>{
+            console.log("Stage started.", event.data);
         })
     }, [setStarted]);
 
