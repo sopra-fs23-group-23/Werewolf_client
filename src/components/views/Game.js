@@ -1,3 +1,5 @@
+import RolePopup from 'components/ui/RolePopup';
+import { useEffect, useState } from 'react';
 import { useGame } from 'hooks/Game.hooks';
 import 'styles/views/Game.scss';
 import {Information} from '../ui/game/Information';
@@ -14,8 +16,16 @@ const Game = () => {
 
 
 
+  const [popupActive, setPopupActive] = useState(false);
+
+  const togglePopup = () => {
+    setPopupActive(!popupActive);
+  }
+
   return (
-    <div className="background background-dark game">
+    <div className="background background-dark-image game">
+      <div className='info-button info-button-light' onClick={togglePopup}>i</div>
+      <RolePopup show={popupActive} handleClose={togglePopup} />
       <div className="container">
         {content}
       </div>

@@ -53,7 +53,6 @@ const Lobby = () => {
     <Spinner/>
   )
 
-
   if (lobby) {
     content = (
       <div className="container lobby-body">
