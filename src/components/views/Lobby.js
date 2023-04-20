@@ -2,17 +2,7 @@ import 'styles/views/Lobby.scss';
 import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
 import { api } from 'helpers/api';
-
-
-const Profile = ({user}) => (
-  <div className="lobby-profile">
-      <img
-        src={user.avatarUrl}
-        alt={user.name + ' Avatar'}
-      />
-      <p>{user.name}</p>
-  </div>
-)
+import Profile from 'components/ui/Profile';
 
 const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
