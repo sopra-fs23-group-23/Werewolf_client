@@ -13,6 +13,7 @@ export const useLobby = () => {
   const history = useHistory();
 
   const updateDataToLobby = useCallback((data) => {
+    console.log("updateDataToLobby", data.lobby)
     const lobby = new LobbyModel(data);
     setLobby(lobby);
   }, []);
@@ -50,7 +51,9 @@ export const useLobby = () => {
       const eventSource = createEventSource(`/lobbies/${lobbyId}/sse/${emitterToken}`);
   
       eventSource.addEventListener("update", (event) => {
+        console.log("Game event.data", event.data);
         updateDataToLobby(JSON.parse(event.data));
+        console.log("Lobby in Lobby Hook", lobby);
       });
       eventSource.addEventListener("delete", (event) => {
         alert("Received event on 'delete', which is not implemented yet.");
