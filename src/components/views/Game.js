@@ -14,11 +14,31 @@ const Game = () => {
       <h1>Game has started</h1>
     );
   }
+  function leaveLobby() {
+    // TODO
+    alert("Not implemented yet");
+  }
+  function rematch() {
+    // TODO
+    alert("Not implemented yet");
+  }
 
   if (finished){
     setPopupActive(false);
     content = (
-        <h1>Game has ended</h1>
+        <div className='container winner-body'>
+          <div className='winner-headerrow'>
+            <button className='btn btn-light' onClick={leaveLobby()}>leave lobby</button>
+            <button className='btn btn-light' onClick={rematch()}>new game</button>
+          </div>
+          <div className='winner-role'>
+            <h1>The ... won the game.</h1>
+            <img src=''></img>
+          </div>
+          <div className='winner-players'>
+            <p>Display all other players here like death view, on hover the picture in winner-role should change. Also change text.</p>
+          </div>
+        </div>
     );
   }
 
