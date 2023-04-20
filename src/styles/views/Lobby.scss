@@ -43,6 +43,14 @@
             border-radius: 80px;
             background-color: white;
         }
+        div {
+            background-color: transparent !important;
+        }
+        video {
+            border-radius: 50%;
+            background-color: transparent;
+        }
+        
     }
     &-userrow{
         margin-top: 2em;
