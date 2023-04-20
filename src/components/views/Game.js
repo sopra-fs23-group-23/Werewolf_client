@@ -5,12 +5,20 @@ import 'styles/views/Game.scss';
 import {Information} from '../ui/game/Information';
 
 const Game = () => {
-  const started = useGame();
+  const {started, finished} = useGame();
 
   var content = Information();
+  
   if (started) {
     content = (
       <h1>Game has started</h1>
+    );
+  }
+
+  if (finished){
+    setPopupActive(false);
+    content = (
+        <h1>Game has ended</h1>
     );
   }
 

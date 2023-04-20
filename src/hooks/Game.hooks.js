@@ -6,6 +6,7 @@ export const useGame = () => {
     const lobbyId = StorageManager.getLobbyId();
     const token = StorageManager.getUserToken();
     const [started, setStarted] = useState(false);
+    const [finished, setFinished] = useState(false);
 
     const subscribeToEmitter = useCallback((lobbyId, token) =>{
         const eventSource = createEventSource(`games/${lobbyId}/sse/${token}`);
@@ -14,8 +15,13 @@ export const useGame = () => {
         });
         eventSource.addEventListener("stage", (event)=>{
             console.log("Stage started.", event.data);
-        })
-    }, [setStarted]);
+        });
+        eventSource.addEventListener("finish", (event)=>{
+          setStarted(false);
+          setFinished(true);
+          console.log("Game ended.", event.data);
+        });
+    }, [setStarted, setFinished]);
 
 
     useEffect(() => {
@@ -29,5 +35,5 @@ export const useGame = () => {
         subscribeToEmitter,
       ]);
 
-    return started;
+    return {started, finished};
 }
