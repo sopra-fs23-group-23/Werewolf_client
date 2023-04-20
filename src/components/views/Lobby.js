@@ -42,7 +42,7 @@ const Lobby = () => {
   let content = (
     <Spinner/>
   )
-
+  
   if (lobby) {
     content = (
       <div className="container lobby-body">
@@ -58,7 +58,7 @@ const Lobby = () => {
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
-            <Profile user={player} key={player.id}/>
+            <Profile user={player} size="hitlist" votes={3}/>
           ))}
         </div>
         <div className='lobby-footerrow'>
@@ -67,6 +67,7 @@ const Lobby = () => {
       </div>
     )
   }
+  
 
   return (
     <div className="background background-dark-image lobby">

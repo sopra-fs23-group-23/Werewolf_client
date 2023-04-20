@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
 
-const Profile = ({user}) => (
-    <div className="lobby-profile">
+const Profile = ({user, size, votes}) => (
+    <div className={`profile profile-${size}`}>
         <img
           src={user.avatarUrl}
           alt={user.name + ' Avatar'}
         />
-        <p>{user.name}</p>
+        <p className='profile-name'>{user.name}</p>
+
+        {votes &&
+          <h2 className='profile-votes'>{votes} votes</h2>
+        }
     </div>
   )
 
