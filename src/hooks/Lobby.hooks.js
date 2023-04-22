@@ -13,6 +13,7 @@ export const useLobby = () => {
   const history = useHistory();
 
   const updateDataToLobby = useCallback((data) => {
+    console.log("updateDataToLobby", data.lobby)
     const lobby = new LobbyModel(data);
     setLobby(lobby);
   }, []);
@@ -50,6 +51,7 @@ export const useLobby = () => {
       const eventSource = createEventSource(`/lobbies/${lobbyId}/sse/${emitterToken}`);
   
       eventSource.addEventListener("update", (event) => {
+        console.log("Lobby event.data", event.data);
         updateDataToLobby(JSON.parse(event.data));
       });
       eventSource.addEventListener("delete", (event) => {

@@ -31,19 +31,6 @@
             }
         }
     }
-    &-profile{
-        justify-self: flex-end;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        img {
-            width: 130px;
-            height: 130px;
-            border-radius: 80px;
-            background-color: white;
-        }
-    }
     &-userrow{
         margin-top: 2em;
         display: flex;

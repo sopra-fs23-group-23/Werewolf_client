@@ -2,17 +2,7 @@ import 'styles/views/Lobby.scss';
 import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
 import { api } from 'helpers/api';
-
-
-const Profile = ({user}) => (
-  <div className="lobby-profile">
-      <img
-        src={user.avatarUrl}
-        alt={user.name + ' Avatar'}
-      />
-      <p>{user.name}</p>
-  </div>
-)
+import Profile from 'components/ui/Profile';
 
 const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
@@ -52,7 +42,7 @@ const Lobby = () => {
   let content = (
     <Spinner/>
   )
-
+  
   if (lobby) {
     content = (
       <div className="container lobby-body">
@@ -68,7 +58,7 @@ const Lobby = () => {
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
-            <Profile user={player} key={player.id}/>
+            <Profile user={player}/>
           ))}
         </div>
         <div className='lobby-footerrow'>
@@ -77,6 +67,7 @@ const Lobby = () => {
       </div>
     )
   }
+  
 
   return (
     <div className="background background-dark-image lobby">
