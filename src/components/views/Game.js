@@ -76,9 +76,9 @@ const Game = () => {
 
       </div>
     );
-    content = (
-      <Endscreen endData={MockEndData} lobby={lobby} />
-    );
+    // content = (
+    //   <Endscreen endData={MockEndData} lobby={lobby} />
+    // );
   }
 
 
