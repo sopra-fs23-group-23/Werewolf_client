@@ -10,16 +10,20 @@ import Player from 'models/Player';
 
 const Game = () => {
 
-  const {started, lobby, voteMap, hitlist, finished, data} = useGame();
 
+  const {started, stage, lobby, admin, voteMap, voteParticipants, scheduledFinish, finished, data} = useGame();
+
+  
   const voteArray = Array.from(voteMap);
-  // console.log("KEY: ", voteArray.length);
+  console.log("VoteArray length: ", voteArray.length);
   // console.log("VALUE: ", voteArray[0][1].length);
 
   //loop over voteMap and create a new array with the player and the amount of votes
   //sort the array by the amount of votes
   //take the first 5 players and put them in the hitlist
   //take the first player and put him in the leader position
+
+  //const player = {id = 1, name = "test", avatarUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.c};
 
 
   var content = Information();
@@ -32,24 +36,25 @@ const Game = () => {
         </div>
         <div className="game-hitlist">
           <div className="game-hitlist-left">
-              {/* (voteArray[1][0]) && (
-                <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length}/>
-              ) */}
-              {/* (voteArray[2][0]) && (
-                <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length}/>
-              ) */}
-
+            { 4 <= voteArray.length ? (
+              <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length}/>
+            ) : null}
+            { 2 <= voteArray.length ? (
+              <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length}/>
+            ) : null}
           </div>
           <div className="game-hitlist-leader">
-              <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes = {voteArray[0][1].length}/>
+            { 1 <= voteArray.length ? (
+              <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes={voteArray[0][1].length}/>
+            ) : null}          
           </div>
           <div className="game-hitlist-right">
-              {/* (voteArray[3][0]) && (
-                <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length}/>
-              ) */}
-              {/* (voteArray[4][0]) && (
-                <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length}/>
-              ) */}
+            { 3 <= voteArray.length ? (
+              <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length}/>
+            ) : null}
+            { 5 <= voteArray.length ? (
+              <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length}/>
+            ) : null}
           </div>
         </div>
         <div className="game-player-selection">
@@ -65,7 +70,7 @@ const Game = () => {
 
         <div className="game-dead-players">
           {lobby.players.map(player => (
-            (player.alive) && (
+            (!player.alive) && (
               <Profile user={new Player(player)} mode="dead-player"/>
             )
           ))}

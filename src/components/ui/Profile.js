@@ -6,9 +6,11 @@ const Profile = ({user, mode, votes}) => (
           src={user.avatarUrl}
           alt={user.name + ' Avatar'}
         />
-        {!votes &&
+        {/* {!votes &&
         <p className='profile-name'>{user.name}</p>
-        }
+        } */}
+        <p className='profile-name'>{user.name}</p>
+        
         {votes &&
           <h2 className='profile-votes'>{votes} votes</h2>
         }
