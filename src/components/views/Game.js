@@ -64,7 +64,9 @@ const Game = () => {
         </div>
         <div className="game-player-selection">
           {lobby.players.map(player => (
+            (player.alive) && (
             <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} />
+            )
           ))}
         </div>
 
@@ -103,14 +105,16 @@ const Game = () => {
     setPopupActive(!popupActive);
   }
 
-  let colorTheme = "dark";
+  let backgroundTheme = "dark";
+  let textTheme = "light"
   if(stage === "Day") {
-    colorTheme = "light";
+    backgroundTheme = "light";
+    textTheme = "dark"
   }
 
   return (
-    <div className={`background background-${colorTheme}-image game`}>
-      <div className={`info-button info-button-${colorTheme}`} onClick={togglePopup}>i</div>
+    <div className={`background background-${textTheme}-image game`}>
+      <div className={`info-button info-button-${backgroundTheme}`} onClick={togglePopup}>i</div>
       <RolePopup show={popupActive} handleClose={togglePopup} />
       {content}
     </div>
