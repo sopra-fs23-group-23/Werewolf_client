@@ -8,8 +8,9 @@ import Player from 'models/Player';
 
 const Hitlist = ({voteArray}) => {
 
-    const hoverOver = async (optionId) => {
-        console.log("I hovered over person: " + optionId);
+    const hoverOver = async (hoverOver) => {
+        console.log("I hovered over person: " + hoverOver);
+        
     };
 
     const castVote = async (optionId) => {

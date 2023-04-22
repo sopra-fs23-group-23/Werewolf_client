@@ -14,9 +14,9 @@ import StorageManager from "../../helpers/StorageManager";
 const Game = () => {
 
 
-  const {started, stage, lobby, admin, voteMap, voteParticipants, scheduledFinish, finished, data} = useGame();
+  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, data} = useGame();
 
-  
+  console.log("VotingParty: ", votingParty);
   const voteArray = Array.from(voteMap);
   console.log("VoteArray length: ", voteArray.length);
   console.log("Finish: ", scheduledFinish);
@@ -36,8 +36,8 @@ const Game = () => {
     content = (
       <div className="container game">
         <div className="game-stage-info">
-          <h1>Werewolves</h1>
-          <p>Choose your prey</p>
+          <h1>{votingParty}</h1>
+          <p>{question}</p>
         </div>
         <div className="game-hitlist">
           <Hitlist voteArray={voteArray}/>
