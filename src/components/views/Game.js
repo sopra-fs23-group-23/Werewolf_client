@@ -12,6 +12,15 @@ const Game = () => {
 
   const {started, lobby, voteMap, hitlist, finished, data} = useGame();
 
+  const voteArray = Array.from(voteMap);
+  // console.log("KEY: ", voteArray.length);
+  // console.log("VALUE: ", voteArray[0][1].length);
+
+  //loop over voteMap and create a new array with the player and the amount of votes
+  //sort the array by the amount of votes
+  //take the first 5 players and put them in the hitlist
+  //take the first player and put him in the leader position
+
 
   var content = Information();
   if (started) {
@@ -23,21 +32,24 @@ const Game = () => {
         </div>
         <div className="game-hitlist">
           <div className="game-hitlist-left">
-            {lobby.players.map((player, index) => (
-              (index % 2 === 1 && index < 5) && (
-                <Profile user={new Player(player)} mode="hitlist" votes={index * 2}/>
+              (voteArray[1][0]) && (
+                <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length}/>
               )
-            ))}
+              (voteArray[2][0]) && (
+                <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length}/>
+              )
+
           </div>
           <div className="game-hitlist-leader">
-              <Profile user={voteMap.get( voteMap.keys().next().value() )} mode="hitlist-leader" votes = {10}/>
+              <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes = {voteArray[0][1].length}/>
           </div>
           <div className="game-hitlist-right">
-          {lobby.players.map((player, index) => (
-            (index % 2 === 0 && index !== 0 && index < 4) && (
-              <Profile user={new Player(player)} mode="hitlist" votes={index}/>
-            )
-          ))}
+              (voteArray[3][0]) && (
+                <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length}/>
+              )
+              (voteArray[4][0]) && (
+                <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length}/>
+              )
           </div>
         </div>
         <div className="game-player-selection">
