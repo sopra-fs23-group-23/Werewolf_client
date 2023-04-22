@@ -41,7 +41,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
 
         <div className={`game-dead-players game-dead-players-${backgroundTheme}`}>
           {lobby.players.map(player => (
-            (!player.alive) && (
+            (player.alive) && (
               <Profile user={new Player(player)} mode="dead-player"/>
             )
           ))}

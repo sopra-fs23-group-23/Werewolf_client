@@ -14,19 +14,13 @@ import StorageManager from "../../helpers/StorageManager";
 
 const Game = () => {
 
-  const MockEndData = {
-    "winner": "Werewolf",
-    "players": [
-      { "id": 1, "isAlive": true, "roles": ["Werewolf"] },
-      { "id": 2, "isAlive": true, "roles": ["Werewolf"] },
-      { "id": 3, "isAlive": false, "roles": ["Villager"] },
-      { "id": 4, "isAlive": false, "roles": ["Villager"] },
-      { "id": 5, "isAlive": false, "roles": ["Werewolf"] },
-      { "id": 6, "isAlive": false, "roles": ["Villager"] }
-    ]
-  };
-
   const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData} = useGame();
+
+  const [popupActive, setPopupActive] = useState(false);
+
+  const togglePopup = () => {
+    setPopupActive(!popupActive);
+  }
 
   let backgroundTheme = "dark";
   let textTheme = "light"
@@ -47,12 +41,6 @@ const Game = () => {
     content = (
       <Endscreen endData={MockEndData} lobby={lobby} />
     );
-  }
-
-  const [popupActive, setPopupActive] = useState(false);
-
-  const togglePopup = () => {
-    setPopupActive(!popupActive);
   }
 
   return (
