@@ -32,24 +32,24 @@ const Game = () => {
         </div>
         <div className="game-hitlist">
           <div className="game-hitlist-left">
-              (voteArray[1][0]) && (
+              {/* (voteArray[1][0]) && (
                 <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length}/>
-              )
-              (voteArray[2][0]) && (
+              ) */}
+              {/* (voteArray[2][0]) && (
                 <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length}/>
-              )
+              ) */}
 
           </div>
           <div className="game-hitlist-leader">
               <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes = {voteArray[0][1].length}/>
           </div>
           <div className="game-hitlist-right">
-              (voteArray[3][0]) && (
+              {/* (voteArray[3][0]) && (
                 <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length}/>
-              )
-              (voteArray[4][0]) && (
+              ) */}
+              {/* (voteArray[4][0]) && (
                 <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length}/>
-              )
+              ) */}
           </div>
         </div>
         <div className="game-player-selection">
