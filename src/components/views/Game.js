@@ -82,13 +82,10 @@ const Game = () => {
 
       </div>
     );
-    content = (
-      <Endscreen endData={MockEndData} lobby={lobby} />
-    );
+    //content = (
+      //<Endscreen endData={MockEndData} lobby={lobby} />
+    //);
   }
-
-
-
 
 
 
@@ -106,9 +103,14 @@ const Game = () => {
     setPopupActive(!popupActive);
   }
 
+  let colorTheme = "dark";
+  if(stage === "Day") {
+    colorTheme = "light";
+  }
+
   return (
-    <div className="background background-dark-image game">
-      <div className='info-button info-button-light' onClick={togglePopup}>i</div>
+    <div className={`background background-${colorTheme}-image game`}>
+      <div className={`info-button info-button-${colorTheme}`} onClick={togglePopup}>i</div>
       <RolePopup show={popupActive} handleClose={togglePopup} />
       {content}
     </div>

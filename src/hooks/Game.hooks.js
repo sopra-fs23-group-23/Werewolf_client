@@ -8,7 +8,7 @@ export const useGame = () => {
     const lobbyId = StorageManager.getLobbyId();
     const token = StorageManager.getUserToken();
     const [started, setStarted] = useState(false);
-    const [stage, setStage] = useState(0);
+    const [stage, setStage] = useState("");
     const [lobby, setLobby] = useState(null);
     const [admin, setAdmin] = useState(false);
     const [voteMap, setVoteMap] = useState(new Map());
