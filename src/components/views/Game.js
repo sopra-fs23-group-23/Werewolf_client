@@ -7,7 +7,8 @@ import Endscreen from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
 import Countdown from '../ui/Countdown';
-import StorageManager from "../../helpers/StorageManager";
+import {api} from "../../helpers/api";
+import storageManager from "../../helpers/StorageManager";
 
 
 const Game = () => {
@@ -27,7 +28,13 @@ const Game = () => {
   //take the first player and put him in the leader position
 
   const castVote = async (optionId) => {
-    console.log("I clicked person: " + optionId);
+    try {
+      console.log("I voted for person: " + optionId);
+      await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
+    } catch (error) {
+      alert(error.response.data?.message || 'Vote failed');
+    }
+
   };
 
   var content = Information();

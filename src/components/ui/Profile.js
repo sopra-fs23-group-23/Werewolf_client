@@ -2,14 +2,15 @@ import PropTypes from 'prop-types';
 import {useState} from "react";
 
 const Profile = ({user, mode, votes, onClickEvent}) => {
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     if(onClickEvent) {
       onClickEvent(user.id);
     }
   };
 
   return (
-    <div className={`profile profile-${mode}`} onClick={handleClick}>
+    <div className={`profile profile-${mode}`} onClick={(e) => handleClick(e)}>
       <img
         src={user.avatarUrl}
         alt={user.name + ' Avatar'}
