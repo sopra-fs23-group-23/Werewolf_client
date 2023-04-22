@@ -65,6 +65,9 @@
     max-height: 80px;
     overflow: hidden;
     transition: all 0.5s ease-in-out;
+    &-light {
+      background-color: rgba(34, 139, 34, 0.5);
+    }
     &:hover {
       max-height: 250px;
       transition: all 0.5s ease-in-out;
