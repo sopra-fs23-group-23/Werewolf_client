@@ -49,6 +49,7 @@
     flex-direction: row;
     justify-content: center;
     justify-self: center;
+    flex-wrap: wrap;
   }
   &-stage-counter {
     margin-top: 1em;
@@ -80,5 +81,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
   }
 }

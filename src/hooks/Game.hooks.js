@@ -103,11 +103,6 @@ export const useGame = () => {
           updateVoteParticipants(dataJSON);
           setScheduledFinish(new Date(dataJSON.scheduledFinish));
           console.log("scheduledFinish: ", new Date(scheduledFinish));
-
-          //print key value pairs of votemap
-          // for (const [key, value] of voteMap.entries()) {
-          //   console.log(`${key} votes for ${value}`);
-          // }
         })
     }, [setStarted]);
 

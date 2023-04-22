@@ -30,7 +30,7 @@ const Game = () => {
             ))}
           </div>
           <div className="game-hitlist-leader">
-              <Profile user={lobby.players[0]} mode="hitlist-leader" votes = {10}/>
+              <Profile user={voteMap.get( voteMap.keys().next().value() )} mode="hitlist-leader" votes = {10}/>
           </div>
           <div className="game-hitlist-right">
           {lobby.players.map((player, index) => (
@@ -53,7 +53,7 @@ const Game = () => {
 
         <div className="game-dead-players">
           {lobby.players.map(player => (
-            (!player.alive) && (
+            (player.alive) && (
               <Profile user={new Player(player)} mode="dead-player"/>
             )
           ))}
