@@ -41,6 +41,13 @@ const Game = () => {
   //take the first 5 players and put them in the hitlist
   //take the first player and put him in the leader position
 
+  let backgroundTheme = "dark";
+  let textTheme = "light"
+  if(stage === "Day") {
+    backgroundTheme = "light";
+    textTheme = "dark"
+  }
+  
   const castVote = async (optionId) => {
     console.log("I clicked person: " + optionId);
   };
@@ -66,7 +73,7 @@ const Game = () => {
           <Countdown finishTime={scheduledFinish} />
         </div>
 
-        <div className="game-dead-players">
+        <div className={`game-dead-players game-dead-players-${textTheme}`}>
           {lobby.players.map(player => (
             (!player.alive) && (
               <Profile user={new Player(player)} mode="dead-player"/>
