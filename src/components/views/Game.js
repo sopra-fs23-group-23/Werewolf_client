@@ -7,6 +7,7 @@ import Endscreen from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
 import Countdown from '../ui/Countdown';
+import Hitlist from '../ui/Hitlist';
 import StorageManager from "../../helpers/StorageManager";
 
 
@@ -39,27 +40,7 @@ const Game = () => {
           <p>Choose your prey</p>
         </div>
         <div className="game-hitlist">
-          <div className="game-hitlist-left">
-            { 4 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length}/>
-            ) : null}
-            { 2 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length}/>
-            ) : null}
-          </div>
-          <div className="game-hitlist-leader">
-            { 1 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes={voteArray[0][1].length}/>
-            ) : null}          
-          </div>
-          <div className="game-hitlist-right">
-            { 3 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length}/>
-            ) : null}
-            { 5 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length}/>
-            ) : null}
-          </div>
+          <Hitlist voteArray={voteArray}/>
         </div>
         <div className="game-player-selection">
           {lobby.players.map(player => (
