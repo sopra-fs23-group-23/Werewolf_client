@@ -71,7 +71,14 @@ a {
     object-fit: cover;
     width: 100vw;
     height: 100vh;
-    color:white;
+    color:$color-text-light;
+  }
+  &-light-image {
+    background-image: url('../../public/assets/images/bg-light.jpg');
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    color:$color-text-dark;
   }
 }
 
