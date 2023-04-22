@@ -54,7 +54,7 @@ const Game = () => {
 
         <div className="game-dead-players">
           {lobby.players.map(player => (
-            (!player.alive) && (
+            (player.alive) && (
               <Profile user={new Player(player)} mode="dead-player"/>
             )
           ))}
