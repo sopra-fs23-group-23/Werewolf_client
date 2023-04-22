@@ -13,6 +13,7 @@ export const useGame = () => {
     const [admin, setAdmin] = useState(false);
     const [voteMap, setVoteMap] = useState(new Map());
     const [voteParticipants, setVoteParticipants] = useState([]);
+    const [ownVote, setOwnVote] = useState(null);
     const [scheduledFinish, setScheduledFinish] = useState(null);
     const [hitlist, setHitlist] = useState([]);
     const [votingParty, setVotingParty] = useState([]);
@@ -57,6 +58,17 @@ export const useGame = () => {
       const lobby = new LobbyModel(data.lobby);
       setLobby(lobby);
 
+    }, []);
+
+    const updateOwnVote = useCallback((data) => {
+      setOwnVote(null);
+      data.pollOptions.forEach(option => {
+        option.supporters.forEach(supporter => {
+          if (parseInt(supporter.id) === parseInt(StorageManager.getUserId())) {
+            setOwnVote(option.player);
+          }
+        })
+      })
     }, []);
 
     const updateVoteMap = useCallback((data) => {
@@ -106,6 +118,7 @@ export const useGame = () => {
           const dataJSON = JSON.parse(event.data);
           updateVoteMap(dataJSON);
           updateVoteParticipants(dataJSON);
+          updateOwnVote(dataJSON);
           setScheduledFinish(new Date(dataJSON.scheduledFinish));
           setQuestion(dataJSON.question);
           //compareStrings
@@ -114,7 +127,6 @@ export const useGame = () => {
           } else {
             setVotingParty("Werewolves");
           }
-
           console.log("scheduledFinish: ", new Date(scheduledFinish));
         })
 
@@ -138,5 +150,5 @@ export const useGame = () => {
         subscribeToEmitter,
       ]);
 
-    return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData};
+    return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote};
 }

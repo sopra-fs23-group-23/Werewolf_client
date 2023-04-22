@@ -6,7 +6,7 @@ import Hitlist from '../Hitlist';
 import {api} from "../../../helpers/api";
 import storageManager from "../../../helpers/StorageManager";
 
-const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage }) => {
+const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage, ownVote}) => {
 
     const voteArray = Array.from(voteMap);
 
@@ -17,8 +17,14 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
 
     const castVote = async (optionId) => {
       try {
-        console.log("I voted for person: " + optionId);
-        await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
+        if(!ownVote) {
+          console.log("I voted for person: " + optionId);
+          await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
+        } else {
+          console.log("I newly voted for person: " + optionId);
+          await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + ownVote.id);
+          await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
+        }
       } catch (error) {
         alert(error.response.data?.message || 'Vote failed');
       }

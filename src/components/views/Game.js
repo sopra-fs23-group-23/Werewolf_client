@@ -9,7 +9,7 @@ import Stage from '../ui/game/Stage';
 
 const Game = () => {
 
-  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData} = useGame();
+  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote} = useGame();
 
   const [popupActive, setPopupActive] = useState(false);
 
@@ -28,7 +28,8 @@ const Game = () => {
 
   if (started) {
     content = (
-      <Stage votingParty={votingParty} question={question} voteMap={voteMap} voteParticipants={voteParticipants} lobby={lobby} scheduledFinish={scheduledFinish} admin={admin} stage={stage} />
+      <Stage votingParty={votingParty} question={question} voteMap={voteMap} voteParticipants={voteParticipants}
+             lobby={lobby} scheduledFinish={scheduledFinish} admin={admin} stage={stage} ownVote={ownVote}/>
     );
   }
 
