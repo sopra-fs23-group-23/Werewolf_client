@@ -5,28 +5,38 @@ import Profile from 'components/ui/Profile';
 import Player from 'models/Player';
 
 
+
 const Hitlist = ({voteArray}) => {
+
+    const hoverOver = async (optionId) => {
+        console.log("I hovered over person: " + optionId);
+    };
+
+    const castVote = async (optionId) => {
+        console.log("I clicked person: " + optionId);
+      };
+
     return (
         <div className="hitlist">
             <div className="hitlist-left">
                 { 4 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length}/>
+                <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length} onHoverEvent={hoverOver} onClickEvent={castVote}/>
                 ) : null}
                 { 2 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length}/>
+                <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length} onHoverEvent={hoverOver} onClickEvent={castVote}/>
                 ) : null}
             </div>
             <div className="hitlist-leader">
                 { 1 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes={voteArray[0][1].length}/>
+                <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes={voteArray[0][1].length} onHoverEvent={hoverOver} onClickEvent={castVote}/>
                 ) : null}          
             </div>
             <div className="hitlist-right">
                 { 3 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length}/>
+                <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length} onHoverEvent={hoverOver} onClickEvent={castVote}/>
                 ) : null}
                 { 5 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length}/>
+                <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length} onHoverEvent={hoverOver} onClickEvent={castVote}/>
                 ) : null}
             </div>
         </div>
