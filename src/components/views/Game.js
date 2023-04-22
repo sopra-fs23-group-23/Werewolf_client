@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useGame } from 'hooks/Game.hooks';
 import 'styles/views/Game.scss';
 import {Information} from '../ui/game/Information';
-import {Endscreen} from '../ui/game/Endscreen';
+import Endscreen from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
 
@@ -30,7 +30,7 @@ const Game = () => {
             ))}
           </div>
           <div className="game-hitlist-leader">
-              <Profile user={voteMap.get( voteMap.keys().next().value() )} mode="hitlist-leader" votes = {10}/>
+              <Profile mode="hitlist-leader" votes = {10}/>
           </div>
           <div className="game-hitlist-right">
           {lobby.players.map((player, index) => (
