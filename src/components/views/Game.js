@@ -2,7 +2,7 @@ import RolePopup from 'components/ui/RolePopup';
 import { useState } from 'react';
 import { useGame } from 'hooks/Game.hooks';
 import 'styles/views/Game.scss';
-import {Information} from '../ui/game/Information';
+import { Information } from '../ui/game/Information';
 import Endscreen from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
@@ -13,10 +13,24 @@ import StorageManager from "../../helpers/StorageManager";
 
 const Game = () => {
 
+  const MockEndData = {
+    "winner": "Werewolf",
+    "players": [
+      { "id": 1, "isAlive": true, "roles": ["Werewolf"] },
+      { "id": 2, "isAlive": true, "roles": ["Werewolf"] },
+      { "id": 3, "isAlive": false, "roles": ["Villager"] },
+      { "id": 4, "isAlive": false, "roles": ["Villager"] },
+      { "id": 5, "isAlive": false, "roles": ["Werewolf"] },
+      { "id": 6, "isAlive": false, "roles": ["Villager"] }
+    ]
+  };
 
-  const {started, stage, lobby, admin, voteMap, voteParticipants, scheduledFinish, finished, data} = useGame();
+  console.log("EndData: ", MockEndData);
 
-  
+
+  const { started, stage, lobby, admin, voteMap, voteParticipants, scheduledFinish, finished, endData } = useGame();
+
+
   const voteArray = Array.from(voteMap);
   console.log("VoteArray length: ", voteArray.length);
   console.log("Finish: ", scheduledFinish);
@@ -40,37 +54,45 @@ const Game = () => {
           <p>Choose your prey</p>
         </div>
         <div className="game-hitlist">
-          <Hitlist voteArray={voteArray}/>
+          <Hitlist voteArray={voteArray} />
         </div>
         <div className="game-player-selection">
           {lobby.players.map(player => (
-              <Profile user={new Player(player)} mode="selection" onClickEvent={castVote}/>
-            ))}
+            <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} />
+          ))}
         </div>
 
         <div className="game-stage-counter">
-            <Countdown finishTime={scheduledFinish}/>
+          <Countdown finishTime={scheduledFinish} />
         </div>
 
         <div className="game-dead-players">
           {lobby.players.map(player => (
             (!player.alive) && (
-              <Profile user={new Player(player)} mode="dead-player"/>
+              <Profile user={new Player(player)} mode="dead-player" />
             )
           ))}
         </div>
-        
+
       </div>
     );
-  }
-
-  if (finished){
     content = (
-        <Endscreen data={data}/>
+      <Endscreen endData={MockEndData} lobby={lobby} />
     );
   }
 
-  let playerMock = {id: "1234", name: "Willy", isAlive: true, avatarUrl: "https://api.dicebear.com/6.x/miniavs/svg?seed=2"};
+
+
+
+
+
+  if (finished) {
+    content = (
+      <Endscreen endData={MockEndData} lobby={lobby} />
+    );
+  }
+
+  let playerMock = { id: "1234", name: "Willy", isAlive: true, avatarUrl: "https://api.dicebear.com/6.x/miniavs/svg?seed=2" };
 
   const [popupActive, setPopupActive] = useState(false);
 
