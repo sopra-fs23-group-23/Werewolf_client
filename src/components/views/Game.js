@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useGame } from 'hooks/Game.hooks';
 import 'styles/views/Game.scss';
 import {Information} from '../ui/game/Information';
+import {Endscreen} from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
 
@@ -61,30 +62,10 @@ const Game = () => {
       </div>
     );
   }
-  function leaveLobby() {
-    // TODO
-    alert("Not implemented yet");
-  }
-  function rematch() {
-    // TODO
-    alert("Not implemented yet");
-  }
 
   if (finished){
     content = (
-        <div className='container winner-body'>
-          <div className='winner-headerrow'>
-            <button className='btn btn-light' onClick={leaveLobby()}>leave lobby</button>
-            <button className='btn btn-light' onClick={rematch()}>play again</button>
-          </div>
-          <div className='winner-role'>
-            <h1>The {data.winner}s won the game.</h1>
-            <img src={`/assets/images/roles/${data.winner}.png`} alt='Winning Team'></img>
-          </div>
-          <div className='winner-players'>
-            <p>Display all other players here like death view, on hover the picture in winner-role should change. Also change text.</p>
-          </div>
-        </div>
+        <Endscreen data={data}/>
     );
   }
 
