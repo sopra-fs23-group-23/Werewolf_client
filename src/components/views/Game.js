@@ -3,17 +3,17 @@ import { useState } from 'react';
 import { useGame } from 'hooks/Game.hooks';
 import 'styles/views/Game.scss';
 import {Information} from '../ui/game/Information';
+import {Endscreen} from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
 
 
 const Game = () => {
 
-  const {started, lobby, voteMap, hitlist} = useGame();
+  const {started, lobby, voteMap, hitlist, finished, data} = useGame();
 
 
   var content = Information();
-  
   if (started) {
     content = (
       <div className="container game">
@@ -60,6 +60,12 @@ const Game = () => {
         </div>
         
       </div>
+    );
+  }
+
+  if (finished){
+    content = (
+        <Endscreen data={data}/>
     );
   }
 

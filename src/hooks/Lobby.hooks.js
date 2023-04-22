@@ -65,13 +65,12 @@ export const useLobby = () => {
   }, [updateDataToLobby, lobbyId, history])
 
   useEffect(() => {
-    console.log("run");
     async function fetchData() {
       await fetchLobby();
       await fetchChannelToken();
       const emitterToken = await fetchEmitterToken();
       await subscribeToEmitter(emitterToken);
-      startBasicCall();
+      //startBasicCall();
     }
     fetchData().then();
   }, [
