@@ -6,6 +6,7 @@ import {Information} from '../ui/game/Information';
 import Endscreen from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
+import Countdown from '../ui/Countdown';
 import StorageManager from "../../helpers/StorageManager";
 
 
@@ -17,6 +18,7 @@ const Game = () => {
   
   const voteArray = Array.from(voteMap);
   console.log("VoteArray length: ", voteArray.length);
+  console.log("Finish: ", scheduledFinish);
   // console.log("VALUE: ", voteArray[0][1].length);
 
   //loop over voteMap and create a new array with the player and the amount of votes
@@ -66,8 +68,7 @@ const Game = () => {
         </div>
 
         <div className="game-stage-counter">
-          <h3>remaining time</h3>
-          <h2>2:36</h2>
+            <Countdown finishTime={scheduledFinish}/>
         </div>
 
         <div className="game-dead-players">
