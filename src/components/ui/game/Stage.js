@@ -3,6 +3,8 @@ import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
 import Hitlist from '../Hitlist';
+import {api} from "../../../helpers/api";
+import storageManager from "../../../helpers/StorageManager";
 
 const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage }) => {
 
@@ -14,7 +16,12 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
     }
 
     const castVote = async (optionId) => {
-        console.log("I clicked person: " + optionId);
+      try {
+        console.log("I voted for person: " + optionId);
+        await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
+      } catch (error) {
+        alert(error.response.data?.message || 'Vote failed');
+      }
     };
 
   return (
@@ -28,7 +35,9 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
         </div>
         <div className="game-player-selection">
           {lobby.players.map(player => (
+              (player.alive) && (
             <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} />
+            )
           ))}
         </div>
 
@@ -38,7 +47,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
 
         <div className={`game-dead-players game-dead-players-${backgroundTheme}`}>
           {lobby.players.map(player => (
-            (player.alive) && (
+            (!player.alive) && (
               <Profile user={new Player(player)} mode="dead-player"/>
             )
           ))}
