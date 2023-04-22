@@ -125,7 +125,7 @@ export const useGame = () => {
           console.log("Game ended.", event.data);
         });
 
-    }, [setStarted, setFinished]);
+    }, []);
 
     useEffect(() => {
         function fetchData() {
