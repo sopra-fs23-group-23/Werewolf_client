@@ -9,11 +9,8 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
     const voteArray = Array.from(voteMap);
 
     let backgroundTheme = "dark";
-    let textTheme = "light"
-
     if(stage === "Day") {
         backgroundTheme = "light";
-        textTheme = "dark"
     }
 
     const castVote = async (optionId) => {

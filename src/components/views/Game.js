@@ -5,11 +5,6 @@ import 'styles/views/Game.scss';
 import { Information } from '../ui/game/Information';
 import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
-import Profile from '../ui/Profile';
-import Player from 'models/Player';
-import Countdown from '../ui/Countdown';
-import Hitlist from '../ui/Hitlist';
-import StorageManager from "../../helpers/StorageManager";
 
 
 const Game = () => {
@@ -39,7 +34,7 @@ const Game = () => {
 
   if (finished) {
     content = (
-      <Endscreen endData={MockEndData} lobby={lobby} />
+      <Endscreen endData={endData} lobby={lobby} />
     );
   }
 
