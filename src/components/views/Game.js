@@ -47,7 +47,7 @@ const Game = () => {
     backgroundTheme = "light";
     textTheme = "dark"
   }
-  
+
   const castVote = async (optionId) => {
     console.log("I clicked person: " + optionId);
   };
@@ -73,7 +73,7 @@ const Game = () => {
           <Countdown finishTime={scheduledFinish} />
         </div>
 
-        <div className={`game-dead-players game-dead-players-${textTheme}`}>
+        <div className={`game-dead-players game-dead-players-${backgroundTheme}`}>
           {lobby.players.map(player => (
             (!player.alive) && (
               <Profile user={new Player(player)} mode="dead-player"/>
@@ -108,8 +108,8 @@ const Game = () => {
   }
 
   return (
-    <div className="background background-dark-image game">
-      <div className='info-button info-button-light' onClick={togglePopup}>i</div>
+    <div className={`background background-${backgroundTheme}-image game`}>
+      <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
       <RolePopup show={popupActive} handleClose={togglePopup} />
       {content}
     </div>
