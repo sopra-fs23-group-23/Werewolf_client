@@ -24,11 +24,11 @@ const Endscreen = ({ MendData, lobby }) => {
     ]
   };
 
-  console.log("Looby: " + lobby.players);
+  console.log("Lobby: " + lobby.players);
 
   let winnerIds = endData.players.filter(player => player.roles.includes(endData.winner)).map(player => player.id);
   let loserIds = endData.players.filter(player => !player.roles.includes(endData.winner)).map(player => player.id);
-  let winners = lobby.players.filter(player => console.log("Player", player));//winnerIds.includes(player.id));
+  let winners = lobby.players.filter(player => winnerIds.includes(player.id));
   let losers = lobby.players.filter(player => loserIds.includes(player.id));
 
   console.log("WinnerIds: " + winnerIds);
@@ -50,23 +50,16 @@ const Endscreen = ({ MendData, lobby }) => {
 
       <div className='endscreen-winner'>
         <img src={`/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
-        <div className='endscreen-winner-players'>
-          {lobby.players.map(player => (
-            <Profile user={new Player(player)} mode="dead-player" />
-          ))}
-          {/* {winners.map(player => (
-            <Profile user={new Player(player)} mode="dead-player" />
-
-            ))} */}
-        </div>
+      </div>
+      <div className='endscreen-winner-players'>
+        {winners.map(player => (
+          <Profile user={new Player(player)} mode="dead-player" />
+        ))}
       </div>
       <div className='endscreen-losers'>
-        {lobby.players.map(player => (
-            <Profile user={new Player(player)} mode="dead-player" />
-          ))}
-          {/* {losers.map(player => (
-            <Profile user={new Player(player)} mode="dead-player" />
-          ))} */}
+        {losers.map(player => (
+          <Profile user={new Player(player)} mode="dead-player" />
+        ))}
       </div>
     </div>
   );

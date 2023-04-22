@@ -13,21 +13,6 @@ import StorageManager from "../../helpers/StorageManager";
 
 const Game = () => {
 
-  const MockEndData = {
-    "winner": "Werewolf",
-    "players": [
-      { "id": 1, "isAlive": true, "roles": ["Werewolf"] },
-      { "id": 2, "isAlive": true, "roles": ["Werewolf"] },
-      { "id": 3, "isAlive": false, "roles": ["Villager"] },
-      { "id": 4, "isAlive": false, "roles": ["Villager"] },
-      { "id": 5, "isAlive": false, "roles": ["Werewolf"] },
-      { "id": 6, "isAlive": false, "roles": ["Villager"] }
-    ]
-  };
-
-  console.log("EndData: ", MockEndData);
-
-
   const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData} = useGame();
 
   console.log("VotingParty: ", votingParty);
@@ -84,19 +69,14 @@ const Game = () => {
       </div>
     );
     content = (
-      <Endscreen endData={MockEndData} lobby={lobby} />
-    );
-  }
-
-
-
-
-
-
-  if (finished) {
-    content = (
-      <Endscreen endData={MockEndData} lobby={lobby} />
-    );
+        <Endscreen endData={endData} lobby={lobby} />
+      );
+    // if (finished){
+    //   setPopupActive(false);
+    //   content = (
+    //     <Endscreen endData={endData} lobby={lobby} />
+    //   );
+    // }
   }
 
   let playerMock = { id: "1234", name: "Willy", isAlive: true, avatarUrl: "https://api.dicebear.com/6.x/miniavs/svg?seed=2" };
