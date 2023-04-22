@@ -76,34 +76,13 @@ export const useGame = () => {
       setVoteMap(newVoteMap);
     }, []);
 
-    // const updateVoteMap = useCallback((data) => {
-    //   console.log("updateVoteMap in Game", data.pollOptions)
-    //   const lobby = new LobbyModel(data.lobby);
-    //   const newVoteMap = new Map();
-    //   lobby.players.forEach(player => {
-    //     if (player.id < 4) {
-    //       newVoteMap.set(player.id, lobby.players[0].id)
-    //     } else if (player.id < 7) {
-    //       newVoteMap.set(player.id, lobby.players[1].id)
-    //     } else {
-    //       newVoteMap.set(player.id, lobby.players[2].id)
-    //     }
-    //  });
-    //   setVoteMap(newVoteMap);
-
-    // // }, []);
-
-    const updateHitlist = useCallback(() => {
-
-      const newHitlist = [];
-
-      for (const [key, value] of voteMap.entries()) {
-        if (key === value) {
-          newHitlist.push(key);
-        }
-      }
-      setHitlist(newHitlist);
-    }, [voteMap]);
+    const updateVoteParticipants = useCallback((data) => {
+      let voteParticipants = [];
+      data.participants.forEach(participant => {
+        voteParticipants.push(participant)
+      })
+      setVoteParticipants(voteParticipants);
+    }, []);
 
     const subscribeToEmitter = useCallback((lobbyId, token) =>{
         const eventSource = createEventSource(`games/${lobbyId}/sse/${token}`);
@@ -127,25 +106,15 @@ export const useGame = () => {
           setScheduledFinish(new Date(dataJSON.scheduledFinish));
           console.log("scheduledFinish: ", new Date(scheduledFinish));
         })
+
         eventSource.addEventListener("finish", (event)=>{
           setStarted(false);
           setFinished(true);
           setData(JSON.parse(event.data));
           console.log("Game ended.", event.data);
         });
+
     }, [setStarted, setFinished]);
-
-
-        //   updateVoteMap(JSON.parse(event.data));
-        //   updateHitlist(JSON.parse(event.data));
-        //   //print key value pairs of votemap
-        //   for (const [key, value] of voteMap.entries()) {
-        //     console.log(`${key} votes for ${value}`);
-        //   }
-        // });
-
-
-
 
     useEffect(() => {
         function fetchData() {
