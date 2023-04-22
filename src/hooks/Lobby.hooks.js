@@ -51,9 +51,8 @@ export const useLobby = () => {
       const eventSource = createEventSource(`/lobbies/${lobbyId}/sse/${emitterToken}`);
   
       eventSource.addEventListener("update", (event) => {
-        console.log("Game event.data", event.data);
+        console.log("Lobby event.data", event.data);
         updateDataToLobby(JSON.parse(event.data));
-        console.log("Lobby in Lobby Hook", lobby);
       });
       eventSource.addEventListener("delete", (event) => {
         alert("Received event on 'delete', which is not implemented yet.");

@@ -30,6 +30,19 @@
     align-items: baseline;
     justify-content: center;
     margin-bottom: 0.8em;
+
+    &-left {
+      flex: 1;
+      display:flex;
+      flex-direction: row;
+      justify-content: right;
+    }
+    &-right {
+      flex: 1;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: left;
+    }
   }
   &-player-selection {
     display: flex;

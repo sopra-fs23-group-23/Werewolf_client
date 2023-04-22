@@ -4,33 +4,46 @@ import { useGame } from 'hooks/Game.hooks';
 import 'styles/views/Game.scss';
 import {Information} from '../ui/game/Information';
 import Profile from '../ui/Profile';
+import Player from 'models/Player';
 
 
 const Game = () => {
 
-  const {started, lobby} = useGame();
+  const {started, lobby, voteMap, hitlist} = useGame();
+
 
   var content = Information();
   
   if (started) {
     content = (
       <div className="container game">
-        {/* {content} */}
         <div className="game-stage-info">
           <h1>Werewolves</h1>
           <p>Choose your prey</p>
         </div>
         <div className="game-hitlist">
-          <Profile user={playerMock} mode="hitlist" votes={1}/>
-          <Profile user={playerMock} mode="hitlist" votes={3}/>
-          <Profile user={playerMock} mode="hitlist-leader" votes={5}/>
-          <Profile user={playerMock} mode="hitlist" votes={2}/>
-          <Profile user={playerMock} mode="hitlist" votes={1}/>
+          <div className="game-hitlist-left">
+            {lobby.players.map((player, index) => (
+              (index % 2 === 1 && index < 5) && (
+                <Profile user={new Player(player)} mode="hitlist" votes={index * 2}/>
+              )
+            ))}
+          </div>
+          <div className="game-hitlist-leader">
+              <Profile user={lobby.players[0]} mode="hitlist-leader" votes = {10}/>
+          </div>
+          <div className="game-hitlist-right">
+          {lobby.players.map((player, index) => (
+            (index % 2 === 0 && index !== 0 && index < 4) && (
+              <Profile user={new Player(player)} mode="hitlist" votes={index}/>
+            )
+          ))}
+          </div>
         </div>
         <div className="game-player-selection">
-        {lobby.players.map(player => (
-            <Profile user={player} mode="selection"/>
-          ))}
+          {lobby.players.map(player => (
+              <Profile user={new Player(player)} mode="selection"/>
+            ))}
         </div>
 
         <div className="game-stage-counter">
@@ -39,12 +52,11 @@ const Game = () => {
         </div>
 
         <div className="game-dead-players">
-          <Profile user={playerMock} mode="dead-player"/>
-          <Profile user={playerMock} mode="dead-player"/>
-          <Profile user={playerMock} mode="dead-player"/>
-          <Profile user={playerMock} mode="dead-player"/>
-          <Profile user={playerMock} mode="dead-player"/>
-          <Profile user={playerMock} mode="dead-player"/>
+          {lobby.players.map(player => (
+            (!player.alive) && (
+              <Profile user={new Player(player)} mode="dead-player"/>
+            )
+          ))}
         </div>
         
       </div>
