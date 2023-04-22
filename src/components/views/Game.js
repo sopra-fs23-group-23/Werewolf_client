@@ -7,16 +7,16 @@ import Endscreen from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
 import Countdown from '../ui/Countdown';
-import {api} from "../../helpers/api";
-import storageManager from "../../helpers/StorageManager";
+import Hitlist from '../ui/Hitlist';
+import StorageManager from "../../helpers/StorageManager";
 
 
 const Game = () => {
 
 
-  const {started, stage, lobby, admin, voteMap, voteParticipants, scheduledFinish, finished, data} = useGame();
+  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, data} = useGame();
 
-  
+  console.log("VotingParty: ", votingParty);
   const voteArray = Array.from(voteMap);
   console.log("VoteArray length: ", voteArray.length);
   console.log("Finish: ", scheduledFinish);
@@ -28,13 +28,7 @@ const Game = () => {
   //take the first player and put him in the leader position
 
   const castVote = async (optionId) => {
-    try {
-      console.log("I voted for person: " + optionId);
-      await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
-    } catch (error) {
-      alert(error.response.data?.message || 'Vote failed');
-    }
-
+    console.log("I clicked person: " + optionId);
   };
 
   var content = Information();
@@ -42,31 +36,11 @@ const Game = () => {
     content = (
       <div className="container game">
         <div className="game-stage-info">
-          <h1>Werewolves</h1>
-          <p>Choose your prey</p>
+          <h1>{votingParty}</h1>
+          <p>{question}</p>
         </div>
         <div className="game-hitlist">
-          <div className="game-hitlist-left">
-            { 4 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length}/>
-            ) : null}
-            { 2 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length}/>
-            ) : null}
-          </div>
-          <div className="game-hitlist-leader">
-            { 1 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes={voteArray[0][1].length}/>
-            ) : null}          
-          </div>
-          <div className="game-hitlist-right">
-            { 3 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length}/>
-            ) : null}
-            { 5 <= voteArray.length ? (
-              <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length}/>
-            ) : null}
-          </div>
+          <Hitlist voteArray={voteArray}/>
         </div>
         <div className="game-player-selection">
           {lobby.players.map(player => (
