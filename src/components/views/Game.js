@@ -6,6 +6,7 @@ import {Information} from '../ui/game/Information';
 import Endscreen from '../ui/game/Endscreen';
 import Profile from '../ui/Profile';
 import Player from 'models/Player';
+import StorageManager from "../../helpers/StorageManager";
 
 
 const Game = () => {
@@ -21,6 +22,9 @@ const Game = () => {
   //take the first 5 players and put them in the hitlist
   //take the first player and put him in the leader position
 
+  const castVote = async (optionId) => {
+    console.log("I clicked person: " + optionId);
+  };
 
   var content = Information();
   if (started) {
@@ -54,7 +58,7 @@ const Game = () => {
         </div>
         <div className="game-player-selection">
           {lobby.players.map(player => (
-              <Profile user={new Player(player)} mode="selection"/>
+              <Profile user={new Player(player)} mode="selection" onClickEvent={castVote}/>
             ))}
         </div>
 
