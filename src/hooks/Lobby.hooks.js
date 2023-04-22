@@ -67,7 +67,7 @@ export const useLobby = () => {
   useEffect(() => {
     async function fetchData() {
       await fetchLobby();
-      await fetchChannelToken();
+      //await fetchChannelToken();
       const emitterToken = await fetchEmitterToken();
       await subscribeToEmitter(emitterToken);
       //startBasicCall();
