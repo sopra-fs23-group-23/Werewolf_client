@@ -2,7 +2,7 @@ import Player from 'models/Player';
 import Profile from '../Profile';
 import 'styles/ui/Endscreen.scss';
 
-const Endscreen = ({ MendData, lobby }) => {
+const Endscreen = ({ endData, lobby }) => {
   function leaveLobby() {
     // TODO
     //alert("Not implemented yet");
@@ -12,30 +12,30 @@ const Endscreen = ({ MendData, lobby }) => {
     //alert("Not implemented yet");
   }
 
-  const endData = {
-    "winner": "Werewolf",
-    "players": [
-      { "id": 1, "isAlive": true, "roles": ["Werewolf"] },
-      { "id": 2, "isAlive": true, "roles": ["Werewolf"] },
-      { "id": 3, "isAlive": false, "roles": ["Villager"] },
-      { "id": 4, "isAlive": false, "roles": ["Villager"] },
-      { "id": 5, "isAlive": false, "roles": ["Werewolf"] },
-      { "id": 6, "isAlive": false, "roles": ["Villager"] }
-    ]
-  };
+  // const endData = {
+  //   "winner": "Werewolf",
+  //   "players": [
+  //     { "id": 1, "isAlive": true, "roles": ["Werewolf"] },
+  //     { "id": 2, "isAlive": true, "roles": ["Werewolf"] },
+  //     { "id": 3, "isAlive": false, "roles": ["Villager"] },
+  //     { "id": 4, "isAlive": false, "roles": ["Villager"] },
+  //     { "id": 5, "isAlive": false, "roles": ["Werewolf"] },
+  //     { "id": 6, "isAlive": false, "roles": ["Villager"] }
+  //   ]
+  // };
 
-  console.log("Lobby: " + lobby.players);
+  // console.log("Lobby: " + lobby.players);
 
   let winnerIds = endData.players.filter(player => player.roles.includes(endData.winner)).map(player => player.id);
   let loserIds = endData.players.filter(player => !player.roles.includes(endData.winner)).map(player => player.id);
   let winners = lobby.players.filter(player => winnerIds.includes(player.id));
   let losers = lobby.players.filter(player => loserIds.includes(player.id));
 
-  console.log("WinnerIds: " + winnerIds);
-  console.log("loserIds: " + loserIds);
+  // console.log("WinnerIds: " + winnerIds);
+  // console.log("loserIds: " + loserIds);
 
-  console.log("Winners: " + winners);
-  console.log("losers: " + losers);
+  // console.log("Winners: " + winners);
+  // console.log("losers: " + losers);
   return (
     <div className='container endscreen'>
       <div className='endscreen-headerrow'>
