@@ -14,6 +14,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
     if(stage === "Day") {
         backgroundTheme = "light";
     }
+    
 
     const castVote = async (optionId) => {
       try {
