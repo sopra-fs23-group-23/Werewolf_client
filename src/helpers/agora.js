@@ -29,7 +29,7 @@ export function startBasicCall() {
   // Specify the ID of the DIV container. You can use the uid of the local user.
   localPlayerContainer.id = StorageManager.getUserId();
   // Set the textContent property of the local video container to the local user id.
-  localPlayerContainer.textContent = "Local user " + StorageManager.getUserId();
+  //localPlayerContainer.textContent = StorageManager.getUsername();
   // Set the local video container size.
   // localPlayerContainer.style.width = "640px";
   // localPlayerContainer.style.height = "480px";

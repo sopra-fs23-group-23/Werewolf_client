@@ -15,6 +15,15 @@ class StorageManager {
         return sessionStorage.getItem("channelToken")
     }
 
+    static getUsername() {
+        return sessionStorage.getItem("username")
+
+    }
+
+    static setUsername(username) {
+        sessionStorage.setItem("username", username);
+    }
+
     static setUserToken(token) {
         sessionStorage.setItem("token", token)
     }
@@ -29,6 +38,10 @@ class StorageManager {
 
     static setChannelToken(channelToken) {
         sessionStorage.setItem("channelToken", channelToken)
+    }
+
+    static removeUsername() {
+        sessionStorage.removeItem('username');
     }
 
     static removeUserToken() {
