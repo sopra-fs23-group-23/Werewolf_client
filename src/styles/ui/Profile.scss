@@ -44,13 +44,12 @@
         }
         &-isVoter {
             img {
-                height: 100px;
-                width: 100px;
-                border-radius: 50px;
-                &:hover {
-                    border: 3px solid green;
-                    cursor: pointer;
-                }
+                opacity: 1 !important;
+            }
+        }
+        &-isNotVoter {
+            img {
+                opacity: 0.5;
             }
         }
     }
