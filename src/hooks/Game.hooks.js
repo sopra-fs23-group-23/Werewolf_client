@@ -22,35 +22,35 @@ export const useGame = () => {
     const [question, setQuestion] = useState(null);
 
 
-    const MockPollOptions = {"question":"Who do you suspect to be a werewolf?","participants":[{"id":1,"name":"David","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=1","alive":true},{"id":2,"name":"Miro","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},{"id":3,"name":"Jan","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=3","alive":true},{"id":4,"name":"Marvin","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=4","alive":true},{"id":5,"name":"Michel","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=5","alive":true},{"id":6,"name":"Rudi","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=6","alive":true},{"id":7,"name":"Balthasar","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=7","alive":true},{"id":8,"name":"Salamander","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=8","alive":true},{"id":9,"name":"Roland","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=9","alive":true},{"id":10,"name":"Matthias","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=10","alive":true},{"id":11,"name":"ChlineSaurus","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=11","alive":true}],
-    "pollOptions":[
-      {"player":{"id":1,"name":"David","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=1","alive":true},
-      "supporters":[
-        {"id":2,"name":"Mike","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=12","alive":true},
-        {"id":3,"name":"Emily","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=13","alive":true},
-        {"id":4,"name":"Sarah","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=14","alive":true}
-      ]},
-        {"player":{"id":2,"name":"Miro","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},
-        "supporters":[
-          {"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
-          {"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
-          {"id":8,"name":"Yoda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
-          {"id":7,"name":"Nina","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=17","alive":true}
-        ]},
-        {"player":{"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},
-        "supporters":[
-          {"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
-          {"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
-        ]},
-        {"player":{"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},
-        "supporters":[
-          {"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
-          {"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
-          {"id":1,"name":"David","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
-          {"id":2,"name":"Röbi","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
-          {"id":7,"name":"Nina","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=17","alive":true}
-        ]}
-        ]};
+    // const MockPollOptions = {"question":"Who do you suspect to be a werewolf?","participants":[{"id":1,"name":"David","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=1","alive":true},{"id":2,"name":"Miro","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},{"id":3,"name":"Jan","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=3","alive":true},{"id":4,"name":"Marvin","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=4","alive":true},{"id":5,"name":"Michel","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=5","alive":true},{"id":6,"name":"Rudi","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=6","alive":true},{"id":7,"name":"Balthasar","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=7","alive":true},{"id":8,"name":"Salamander","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=8","alive":true},{"id":9,"name":"Roland","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=9","alive":true},{"id":10,"name":"Matthias","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=10","alive":true},{"id":11,"name":"ChlineSaurus","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=11","alive":true}],
+    // "pollOptions":[
+    //   {"player":{"id":1,"name":"David","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=1","alive":true},
+    //   "supporters":[
+    //     {"id":2,"name":"Mike","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=12","alive":true},
+    //     {"id":3,"name":"Emily","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=13","alive":true},
+    //     {"id":4,"name":"Sarah","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=14","alive":true}
+    //   ]},
+    //     {"player":{"id":2,"name":"Miro","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},
+    //     "supporters":[
+    //       {"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
+    //       {"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
+    //       {"id":8,"name":"Yoda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
+    //       {"id":7,"name":"Nina","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=17","alive":true}
+    //     ]},
+    //     {"player":{"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},
+    //     "supporters":[
+    //       {"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
+    //       {"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
+    //     ]},
+    //     {"player":{"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},
+    //     "supporters":[
+    //       {"id":5,"name":"John","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
+    //       {"id":6,"name":"Linda","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
+    //       {"id":1,"name":"David","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=15","alive":true},
+    //       {"id":2,"name":"Röbi","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=16","alive":true},
+    //       {"id":7,"name":"Nina","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=17","alive":true}
+    //     ]}
+    //     ]};
 
 
     const updateDataToLobby = useCallback((data) => {
@@ -72,7 +72,7 @@ export const useGame = () => {
     }, []);
 
     const updateVoteMap = useCallback((data) => {
-      data = MockPollOptions;
+      //data = MockPollOptions;
       const newVoteMap = new Map();
       //console.log("updateVoteMap in Game XXX", data)
       const sortedPollOptions = data.pollOptions.sort((a, b) => {
@@ -84,7 +84,9 @@ export const useGame = () => {
           supporterArray.push(supporter.id)
         })
         //console.log("VoteMap SET: ", new Player(option.player), supporterArray)
-        newVoteMap.set(new Player(option.player), supporterArray)
+        if (supporterArray.length > 0) {
+          newVoteMap.set(new Player(option.player), supporterArray)
+        }
 
       });
       console.log("VoteMap final: ", newVoteMap)

@@ -6,10 +6,37 @@ import Player from 'models/Player';
 
 
 
-const Hitlist = ({voteArray}) => {
+const Hitlist = ({voteMap}) => {
+
+    const voteArray = Array.from(voteMap);
 
     const hoverOver = async (hoverOver) => {
-        console.log("I hovered over person: " + hoverOver);
+        let simpleMap = new Map();
+        voteMap.forEach((value, key) => {
+            simpleMap.set(key.id, value);
+        });
+
+        
+        console.log("I hovered over Player with Id: " + hoverOver.id);
+        // Votemap get value by key
+        // console.log("Keys: ", simpleMap.keys());
+        // console.log("Test ", simpleMap.get(hoverOver.id));
+        let supporterArray = simpleMap.get(hoverOver.id);
+        // console.log(supporterArray);
+        let nonVoters = document.getElementsByClassName("profile-selection")
+        
+        //nonVoters.classList.add("profile-selection-isNotVoter");
+
+
+        supporterArray.forEach(supporter => {
+            console.log("Supporter: ", supporter);
+            let supporterProfile = document.getElementById(`profile-selection-${supporter}`);
+            console.log(supporterProfile);
+            supporterProfile.classList.add("profile-selection-isVoter");
+            //supporterProfile.classList.add("profile-selection-isVoter");
+            //.add("profile-selection-isVoter");
+
+        });
         
     };
 
@@ -47,7 +74,7 @@ const Hitlist = ({voteArray}) => {
 
 
 Hitlist.propTypes = {
-    voteArray: PropTypes.array.isRequired
+    voteMap: PropTypes.object.isRequired,
 };
 
 export default Hitlist;

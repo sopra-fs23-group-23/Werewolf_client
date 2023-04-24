@@ -10,12 +10,12 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   const handleMouseEnter = () => {
     if (onHoverEvent) {
-      onHoverEvent(user.id);
+      onHoverEvent(user);
     }
   };
 
   return (
-    <div className={`profile profile-${mode}`} onClick={handleClick} onMouseEnter={handleMouseEnter}>
+    <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick} onMouseEnter={handleMouseEnter}>
       <img src={user.avatarUrl} alt={`${user.name} Avatar`} />
       
       <div className="profile-name">{user.name}</div>

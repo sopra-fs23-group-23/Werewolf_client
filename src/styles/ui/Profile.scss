@@ -42,6 +42,17 @@
                 cursor: pointer;
             }
         }
+        &-isVoter {
+            img {
+                height: 100px;
+                width: 100px;
+                border-radius: 50px;
+                &:hover {
+                    border: 3px solid green;
+                    cursor: pointer;
+                }
+            }
+        }
     }
     &-lobby  {
         margin: 0.5em 1em;

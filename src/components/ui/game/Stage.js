@@ -8,13 +8,11 @@ import storageManager from "../../../helpers/StorageManager";
 
 const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage, ownVote}) => {
 
-    const voteArray = Array.from(voteMap);
-
     let backgroundTheme = "dark";
     if(stage === "Day") {
         backgroundTheme = "light";
     }
-    
+
 
     const castVote = async (optionId) => {
       try {
@@ -38,7 +36,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
           <p>{question}</p>
         </div>
         <div className="game-hitlist">
-          <Hitlist voteArray={voteArray} />
+          <Hitlist voteMap={voteMap} />
         </div>
         <div className="game-player-selection">
           {lobby.players.map(player => (
