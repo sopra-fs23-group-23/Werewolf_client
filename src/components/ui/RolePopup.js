@@ -31,7 +31,7 @@ const RolePopup = ({ show, handleClose }) => {
       }
     }
     fetchData();
-  }, [id, lobbyId]);
+  }, [id, lobbyId, allRoles, ownRoles]);
 
   const nextRole = () => {
     setActiveIndex((activeIndex + 1) % allRoles.length);
@@ -55,7 +55,7 @@ const RolePopup = ({ show, handleClose }) => {
     return (
       <div className='role-popup-background' onClick={handleClickOutsidePopup}>
         <div className='role-popup-container background-dark'>
-          <img src='/assets/images/icons/close.svg' className='role-popup-close' onClick={handleClose} />
+          <img src='/assets/images/icons/close.svg' className='role-popup-close' onClick={handleClose} alt='close'/>
           {allRoles.map((role, index) => 
             <div className={'role-popup-item ' + (index === activeIndex ? 'active' : '')} key={index}>
               <div className={'role-popup-item-indicator ' + (role.roleName === ownRoles[0].roleName ? 'active' : '')}>Your Role:</div>

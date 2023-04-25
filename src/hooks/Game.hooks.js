@@ -15,7 +15,7 @@ export const useGame = () => {
     const [voteParticipants, setVoteParticipants] = useState([]);
     const [ownVote, setOwnVote] = useState(null);
     const [scheduledFinish, setScheduledFinish] = useState(null);
-    const [hitlist, setHitlist] = useState([]);
+    //const [hitlist, setHitlist] = useState([]);
     const [votingParty, setVotingParty] = useState([]);
     const [finished, setFinished] = useState(false);
     const [endData, setData] = useState(null);
@@ -124,7 +124,7 @@ export const useGame = () => {
           setScheduledFinish(new Date(dataJSON.scheduledFinish));
           setQuestion(dataJSON.question);
           //compareStrings
-          if (dataJSON.question == "Who do you suspect to be a werewolf?"){ 
+          if (dataJSON.question === "Who do you suspect to be a werewolf?"){ 
             setVotingParty("Villagers");
           } else {
             setVotingParty("Werewolves");
@@ -139,7 +139,7 @@ export const useGame = () => {
           console.log("Game ended:", event.data);
         });
 
-    }, []);
+    }, [scheduledFinish, updateDataToLobby, updateVoteMap, updateVoteParticipants, updateOwnVote]);
 
     useEffect(() => {
         function fetchData() {

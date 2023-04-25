@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'styles/ui/Hitlist.scss';
 import PropTypes from 'prop-types';
 import Profile from 'components/ui/Profile';
