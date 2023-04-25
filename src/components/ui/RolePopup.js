@@ -31,7 +31,7 @@ const RolePopup = ({ show, handleClose }) => {
       }
     }
     fetchData();
-  }, [id, lobbyId, allRoles, ownRoles]);
+  }, [id, lobbyId]);
 
   const nextRole = () => {
     setActiveIndex((activeIndex + 1) % allRoles.length);
