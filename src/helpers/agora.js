@@ -17,13 +17,11 @@ let channelParameters =
 export function startBasicCall() {
   // Create an instance of the Agora Engine
   const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
     await agoraEngine.subscribe(user, mediaType);
     console.log("subscribe success");
-
     // Subscribe and play the remote audio track.
     if (mediaType === "audio") {
       channelParameters.remoteUid = user.uid;

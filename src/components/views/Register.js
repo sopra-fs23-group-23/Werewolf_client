@@ -18,9 +18,11 @@ const Register = (props) => {
       const response = await api.post('/users', requestBody);
 
       const user = new User(response.data);
+      console.log("User: ", user);
 
       StorageManager.setUserToken(user.token);
       StorageManager.setUserId(user.id);
+      StorageManager.setUsername(user.username);
 
       history.push(`/home`);
     } catch (error) {
