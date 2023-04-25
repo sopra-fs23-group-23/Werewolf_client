@@ -8,11 +8,10 @@ import storageManager from "../../../helpers/StorageManager";
 
 const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage, ownVote}) => {
 
-    let backgroundTheme = "dark";
+  let backgroundTheme = "dark";
     if(stage === "Day") {
         backgroundTheme = "light";
     }
-
 
     const castVote = async (optionId) => {
       try {
@@ -25,6 +24,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
           await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
         }
       } catch (error) {
+        console.error(error);
         alert(error.response.data?.message || 'Vote failed');
       }
     };
@@ -47,7 +47,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
         </div>
 
         <div className="game-stage-counter">
-          <Countdown finishTime={scheduledFinish} />
+          {scheduledFinish ? <Countdown finishTime={scheduledFinish} /> : ""}
         </div>
 
         <div className={`game-dead-players game-dead-players-${backgroundTheme}`}>
