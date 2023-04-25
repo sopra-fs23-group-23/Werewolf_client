@@ -8,7 +8,9 @@ import PropTypes from 'prop-types';
 const RolePopup = ({ show, handleClose }) => {
   const id = StorageManager.getUserId();
   const lobbyId = StorageManager.getLobbyId();
+  // eslint-disable-next-line
   const [allRoles, setAllRoles] = useState([]);
+  // eslint-disable-next-line
   const [ownRoles, setOwnRoles] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
