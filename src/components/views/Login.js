@@ -18,8 +18,10 @@ const Login = (props) => {
       const response = await api.post('/login', requestBody);
       // Get the returned user and update a new object.
       const user = new User(response.data);
+      console.log("User: ", user);
       StorageManager.setUserToken(user.token);
       StorageManager.setUserId(user.id);
+      StorageManager.setUsername(user.username);
       history.push(`/home`);
     } catch (error) {
       alert(error.response.data?.message || 'Login failed.');
@@ -27,7 +29,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className="background background-light">
+    <div className="background background-light-image">
       <div className="container">
         <div className="auth">
           <div className="column-container">

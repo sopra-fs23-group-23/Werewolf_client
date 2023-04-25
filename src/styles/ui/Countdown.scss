@@ -1,0 +1,18 @@
+@import 'styles/theme';
+
+.countdown{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    h3 {
+        font-family: $font-default;
+        margin: 0 0 0.2em 0;
+        padding: 0;
+      }
+    h2 {
+        font-family: $font-default;
+        margin: 0;
+        padding: 0;
+    }
+}

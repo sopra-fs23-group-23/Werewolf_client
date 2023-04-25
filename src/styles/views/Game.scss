@@ -1,4 +1,83 @@
 @import 'styles/theme';
 
+.loader {
+  display: none;
+}
 .game {
+  .info-button {
+    margin-top: 30px;
+    margin-left: 30px;
+  }
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  
+  &-stage-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+      padding-bottom: 0;
+    }
+    p {
+      margin-top: 0.5em;
+      font-size: 1.2em;
+    }
+  }
+  &-player-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-self: center;
+    flex-wrap: wrap;
+  }
+  &-stage-counter {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h3 {
+      font-family: $font-default;
+      margin: 0 0 0.2em 0;
+      padding: 0;
+    }
+    h2 {
+      font-family: $font-default;
+      margin: 0;
+      padding: 0;
+    }
+
+  }
+  &-dead-players {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: $width-xl;
+    background-color: rgba(170, 170, 170, 0.5);
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-height: 80px;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    &-light {
+      background-color: rgba(34, 139, 34, 0.5);
+    }
+    &:hover {
+      max-height: 250px;
+      transition: all 0.5s ease-in-out;
+      //background-color: rgba(170, 170, 255, 0.8);
+      .profile-dead-player {
+        .profile-name {
+          opacity: 1;
+          transition: all 0.5s ease-in-out;
+        }
+      }
+    }
+  }
 }

@@ -9,8 +9,7 @@ const AllRolesColumn = ({roles}) => {
         <img src={`/assets/images/roles/${role.roleName}.png`} alt={"Picture of a " + role.roleName}/>
         <h5>{role.amount + "x"}</h5>
       </div>
-      );
-
+    );
   }
   return (
     <div className= {`roles-column`}>

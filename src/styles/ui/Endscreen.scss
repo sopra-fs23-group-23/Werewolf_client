@@ -1,0 +1,84 @@
+@import 'styles/theme';
+
+.endscreen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-headerrow{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        margin: 2em 0;
+        button {
+            height: min-content;
+            margin: auto 0;
+        }
+        &-role{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10em;
+            h1 {
+                padding: 0;
+            }
+            h2 {
+                padding: 0;
+            }
+        }
+        
+    }
+    &-winner {
+        img {
+            height: 350px;
+            width: 220px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            border: 1px solid grey;
+        }
+        &-players{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0 2em;
+            .profile-name {
+                opacity: 1;
+            }
+            
+        }
+
+    }
+
+    &-losers {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: $width-xl;
+        background-color: rgba(170, 170, 170, 0.5);
+        border-radius: 20px 20px 0 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        max-height: 80px;
+        overflow: hidden;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+          max-height: 250px;
+          transition: all 0.5s ease-in-out;
+          //background-color: rgba(170, 170, 255, 0.8);
+          .profile-dead-player {
+            .profile-name {
+              opacity: 1;
+              transition: all 0.5s ease-in-out;
+            }
+          }
+        }
+      }
+    
+    
+}

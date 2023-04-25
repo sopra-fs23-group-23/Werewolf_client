@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Labrada:wght@300;400;500;600;700;800&display=swap');
 @import 'styles/theme';
 @import 'styles/components/button';
+@import 'styles/components/infoButton';
 @import 'styles/components/columnContainer';
 @import 'styles/components/link';
-@import 'styles/ui/information/RoleInformation';
-@import 'styles/ui/information/RoleColumn';
+@import 'styles/ui/RoleInformation';
+@import 'styles/ui/RoleColumn';
 @import 'styles/ui/FormField';
+@import 'styles/ui/Profile';
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -54,7 +56,8 @@ a {
 }
 
 .background {
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
   &-light {
     background-color: $color-bg-light;
     color: $color-text-dark;
@@ -68,7 +71,14 @@ a {
     object-fit: cover;
     width: 100vw;
     height: 100vh;
-    color:white;
+    color:$color-text-light;
+  }
+  &-light-image {
+    background-image: url('../../public/assets/images/bg-light.jpg');
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    color:$color-text-dark;
   }
 }
 

@@ -1,43 +1,17 @@
 import 'styles/views/Lobby.scss';
 import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
-import {api} from "../../helpers/api";
-import StorageManager from "../../helpers/StorageManager";
+import { api } from 'helpers/api';
+import Profile from 'components/ui/Profile';
 
-
-const Profile = ({user}) => (
-  <div className="lobby-profile">
-      <img
-        src="https://tse2.mm.bing.net/th?id=OIP.gstkHSUl8M3MtSWnIY0xhgHaHa&pid=Api&P=0"
-        alt="Panda profile"
-      />
-      <p>{user.name}</p>
-  </div>
-)
-
-const ButtonMenu = ({isAdmin}) => {
-  function leave() {
-    // TODO
-    alert("Not implemented yet");
-  }
-
-  async function startGame () {
-    // TODO
-    try {
-      await api.put('/lobbies/' + StorageManager.getLobbyId() + "/roles");
-    } catch (e) {
-      console.log(e);
-    }
-    alert("Not implemented yet");
-  }
-
+const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
     return (
       <div>
-        <button className="btn btn-light" onClick={leave}>
+        <button className="btn btn-light" onClick={leaveFunction}>
           Dissolve Lobby
         </button>
-        <button className="btn btn-light" onClick={startGame}>
+        <button className="btn btn-light" onClick={startGameFunction}>
           Start Game
         </button>
       </div>
@@ -45,7 +19,7 @@ const ButtonMenu = ({isAdmin}) => {
   } else {
     return (
       <div>
-        <button className="btn btn-light" onClick={leave}>
+        <button className="btn btn-light" onClick={leaveFunction}>
           Leave Lobby
         </button>
       </div>
@@ -54,14 +28,21 @@ const ButtonMenu = ({isAdmin}) => {
 }
 
 const Lobby = () => {
+  function leave() {
+    // TODO
+    alert("Not implemented yet");
+  }
+
+  async function startGame () {
+    api.post(`/games/${lobby.id}`);
+  }
 
   const {lobby, uid} = useLobby();
   
   let content = (
     <Spinner/>
   )
-
-
+  
   if (lobby) {
     content = (
       <div className="container lobby-body">
@@ -77,15 +58,16 @@ const Lobby = () => {
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
-            <Profile user={player} key={player.id}/>
+            <Profile user={player}/>
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <ButtonMenu isAdmin={lobby.admin.id === uid}/>
+          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
       </div>
     )
   }
+  
 
   return (
     <div className="background background-dark-image lobby">

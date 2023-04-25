@@ -7,7 +7,6 @@ import Lobby from 'components/views/Lobby';
 import Game from 'components/views/Game';
 import Edit from 'components/views/Edit';
 import Home from 'components/views/Home';
-import Information from 'components/views/Information';
 
 const AppRouter = () => {
   return (
@@ -28,15 +27,10 @@ const AppRouter = () => {
             <Lobby />
           </HomeGuard>
         </Route>
-        <Route exact path="/information">
-          <HomeGuard>
-            <Information />
-          </HomeGuard>
-        </Route>
         <Route exact path="/game">
-          <HomeGuard>
+          {/* <HomeGuard> //TODO: uncomment again*/}
             <Game />
-          </HomeGuard>
+          {/* </HomeGuard> */}
         </Route>
         <Route exact path="/home">
           <HomeGuard>
