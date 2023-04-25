@@ -136,7 +136,7 @@ export const useGame = () => {
           setStarted(false);
           setFinished(true);
           setData(JSON.parse(event.data));
-          console.log("Game ended.", event.data);
+          console.log("Game ended:", event.data);
         });
 
     }, []);
