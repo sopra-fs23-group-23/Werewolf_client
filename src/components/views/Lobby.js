@@ -5,8 +5,7 @@ import { api } from 'helpers/api';
 
 
 const Profile = ({user}) => (
-  <div className="lobby-profile">
-    <div id='videostream'></div>
+  <div className="lobby-profile" id={`lobby-profile-${user.id}`}>
       {/* <img
         src={user.avatarUrl}
         alt={user.name + ' Avatar'}

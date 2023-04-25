@@ -29,19 +29,7 @@ export function startBasicCall() {
   // Specify the ID of the DIV container. You can use the uid of the local user.
   localPlayerContainer.id = StorageManager.getUserId();
   // Set the textContent property of the local video container to the local user id.
-  //localPlayerContainer.textContent = StorageManager.getUsername();
   // Set the local video container size.
-  // localPlayerContainer.style.width = "640px";
-  // localPlayerContainer.style.height = "480px";
-  // localPlayerContainer.style.padding = "15px 5px 5px 5px";
-  localPlayerContainer.style.width = "130px";
-  localPlayerContainer.style.height = "130px";
-  // Set the remote video container size.
-  // remotePlayerContainer.style.width = "640px";
-  // remotePlayerContainer.style.height = "480px";
-  // remotePlayerContainer.style.padding = "15px 5px 5px 5px";
-  remotePlayerContainer.style.width = "130px";
-  remotePlayerContainer.style.height = "130px";
 
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
@@ -60,9 +48,8 @@ export function startBasicCall() {
       // Specify the ID of the DIV container. You can use the uid of the remote user.
       remotePlayerContainer.id = user.uid.toString();
       channelParameters.remoteUid = user.uid.toString();
-      remotePlayerContainer.textContent = "Remote user " + user.uid.toString();
       // Append the remote container to the page body.
-      document.body.append(remotePlayerContainer);
+      //document.body.append(remotePlayerContainer);
       // Play the remote video track.
       channelParameters.remoteVideoTrack.play(remotePlayerContainer);
     }
@@ -84,7 +71,13 @@ export function startBasicCall() {
     // Create a local video track from the video captured by a camera.
     channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
     // Append the local video container to the page body.
-    document.querySelector(".lobby-userrow #videostream").append(localPlayerContainer);
+    //document.querySelector(".lobby-userrow .lobby-profile").append(localPlayerContainer, remotePlayerContainer);
+    const lobbyProfile = document.querySelector(`.lobby-userrow #lobby-profile-${StorageManager.getUserId()}`);
+    lobbyProfile.append(localPlayerContainer);
+    lobbyProfile.append(remotePlayerContainer);
+    // lobbyProfile.insertAdjacentElement("beforeend", localPlayerContainer);
+    //lobbyProfile.insertAdjacentElement("beforeend", remotePlayerContainer);
+    
     //document.body.append(remotePlayerContainer);
     // Publish the local audio track in the channel.
     await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
