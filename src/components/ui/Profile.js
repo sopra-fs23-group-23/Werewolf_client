@@ -1,22 +1,31 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
+
+
   const handleClick = () => {
     if (onClickEvent) {
       onClickEvent(user.id);
     }
   };
 
-  const handleMouseEnter = () => {
+  const handleHover = (hoveredPlayer) => {
     if (onHoverEvent) {
-      onHoverEvent(user);
+      return () => onHoverEvent(hoveredPlayer);
     }
   };
 
+  // const handleMouseLeave = () => {
+  //   if (onHoverEvent) {
+  //     onHoverEvent(user, 0);
+  //   }
+  // };
+
   return (
-    <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick} onMouseEnter={handleMouseEnter}>
-      <img src={user.avatarUrl} alt={`${user.name} Avatar`} />
+    <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick} >
+    <img src={user.avatarUrl} alt={`${user.name} Avatar`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} />
       
       <div className="profile-name">{user.name}</div>
       
