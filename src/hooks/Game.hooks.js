@@ -16,7 +16,6 @@ export const useGame = () => {
     const [voteParticipants, setVoteParticipants] = useState([]);
     const [ownVote, setOwnVote] = useState(null);
     const [scheduledFinish, setScheduledFinish] = useState(null);
-    //const [hitlist, setHitlist] = useState([]);
     const [votingParty, setVotingParty] = useState([]);
     const [finished, setFinished] = useState(false);
     const [endData, setData] = useState(null);
