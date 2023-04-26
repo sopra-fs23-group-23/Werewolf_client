@@ -22,6 +22,10 @@ export const useLobby = () => {
     try {
       const response = await api.get(`/lobbies/${lobbyId}`);
       updateDataToLobby(response.data);
+      history.push("/game");
+      if (response.data.lobby.closed !== true) {
+        setInterval(fetchLobby, 3000);
+      };
     } catch (error) {
       console.error("Details:", error);
       alert(

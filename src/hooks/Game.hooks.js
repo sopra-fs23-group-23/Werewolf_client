@@ -21,6 +21,9 @@ export const useGame = () => {
     const [endData, setData] = useState(null);
     const [question, setQuestion] = useState(null);
 
+    const [game, setGame] = useState(null);
+    const [poll, setPoll] = useState(null);
+
 
     // const MockPollOptions = {"question":"Who do you suspect to be a werewolf?","participants":[{"id":1,"name":"David","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=1","alive":true},{"id":2,"name":"Miro","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=2","alive":true},{"id":3,"name":"Jan","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=3","alive":true},{"id":4,"name":"Marvin","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=4","alive":true},{"id":5,"name":"Michel","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=5","alive":true},{"id":6,"name":"Rudi","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=6","alive":true},{"id":7,"name":"Balthasar","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=7","alive":true},{"id":8,"name":"Salamander","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=8","alive":true},{"id":9,"name":"Roland","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=9","alive":true},{"id":10,"name":"Matthias","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=10","alive":true},{"id":11,"name":"ChlineSaurus","avatarUrl":"https://api.dicebear.com/6.x/miniavs/svg?seed=11","alive":true}],
     // "pollOptions":[
@@ -54,8 +57,8 @@ export const useGame = () => {
 
 
     const updateDataToLobby = useCallback((data) => {
-      console.log("updateDataToGame", data.lobby)
-      const lobby = new LobbyModel(data.lobby);
+      console.log("Updated lobby:", data)
+      const lobby = new LobbyModel(data);
       setLobby(lobby);
 
     }, []);
@@ -101,50 +104,14 @@ export const useGame = () => {
       setVoteParticipants(voteParticipants);
     }, []);
 
-    // const subscribeToEmitter = useCallback((lobbyId, token) =>{
-    //     const eventSource = createEventSource(`games/${lobbyId}/sse/${token}`);
-    //     eventSource.addEventListener("start", (event) => {
-    //         setStarted(true);
-    //     });
-
-    //     eventSource.addEventListener("stage", (event)=>{
-    //       console.log("Stage started:", event.data);
-    //       const dataJSON = JSON.parse(event.data);
-    //       updateDataToLobby(dataJSON);
-    //       setStage(dataJSON.stage.type);
-    //       setAdmin(new Player(dataJSON.admin));
-    //     })
-
-    //     eventSource.addEventListener("poll", (event)=>{
-    //       console.log("Poll started:", event.data);
-    //       const dataJSON = JSON.parse(event.data);
-    //       updateVoteMap(dataJSON);
-    //       updateVoteParticipants(dataJSON);
-    //       updateOwnVote(dataJSON);
-    //       setScheduledFinish(new Date(dataJSON.scheduledFinish));
-    //       setQuestion(dataJSON.question);
-    //       //compareStrings
-    //       if (dataJSON.question === "Who do you suspect to be a werewolf?"){ 
-    //         setVotingParty("Villagers");
-    //       } else {
-    //         setVotingParty("Werewolves");
-    //       }
-    //       console.log("scheduledFinish: ", new Date(scheduledFinish));
-    //     })
-
-    //     eventSource.addEventListener("finish", (event)=>{
-    //       setStarted(false);
-    //       setFinished(true);
-    //       setData(JSON.parse(event.data));
-    //       console.log("Game ended:", event.data);
-    //     });
-
-    // }, [scheduledFinish, updateDataToLobby, updateVoteMap, updateVoteParticipants, updateOwnVote]);
-
     const fetchGame = useCallback(async () => {
       try{
-        const response = await api.get(`/games/${lobbyId}`,);
-
+        const response = await api.get(`/games/${lobbyId}`);
+        console.log("fetchGame", response.data);
+        setGame(JSON.parse(response.data));
+        updateDataToLobby(game.lobby);
+        setStage(game.stage.type);
+        setAdmin(new Player(game.admin));
       } catch (error) {
         console.error("Details", error);
         alert(
@@ -153,13 +120,34 @@ export const useGame = () => {
       }
     }, [lobbyId]);
 
+    const fetchPoll = useCallback(async () => {
+      try{
+        const response = await api.get(`/games/${lobbyId}/poll`);
+        setPoll(JSON.parse(response.data));
+
+        // maybe call these functions outside of try catch block to properly catch errors
+        updateVoteMap(poll);
+        updateVoteParticipants(poll);
+        updateOwnVote(poll);
+        setScheduledFinish(new Date(poll.scheduledFinish));
+        setQuestion(poll.question);
+
+      } catch (error) {
+        console.error("Details", error);
+        alert(
+          "Something went wrong fetching the poll. See console for details."
+        );
+      }
+    }, [lobbyId]);
+
     useEffect(() => {
-        function fetchData() {
-          fetchGame();
-          // TODO: IMPLEMENT GAME, STAGE GETTER
+        async function fetchData() {
+          await fetchGame();
+          await fetchPoll();
+          setStarted(true);
         }
+        setTimeout(30000);
         fetchData().then();
-        setInterval(fetchGame, 3000);
       }, [lobbyId,token]);
 
     return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote};
