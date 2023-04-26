@@ -39,9 +39,10 @@ const Lobby = () => {
     api.post(`/games/${lobby.id}`);
   }
 
-  const {lobby, uid} = useLobby();
+  const {lobby, uid, intervalId} = useLobby();
 
   if(lobby && lobby.closed) {
+    clearInterval(intervalId);
     console.log("game should have started");
 
     history.push(`/game`);

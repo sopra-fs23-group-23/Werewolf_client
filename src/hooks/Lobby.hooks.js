@@ -11,6 +11,7 @@ export const useLobby = () => {
   const uid = StorageManager.getUserId();
   const [lobby, setLobby] = useState(null);
   const history = useHistory();
+  const [intervalId, setIntervalId] = useState(null);
 
   const updateDataToLobby = useCallback((data) => {
     console.log("updateDataToLobby", data)
@@ -50,10 +51,10 @@ export const useLobby = () => {
       //startBasicCall();
     }
     fetchData().then();
-    setInterval(fetchLobby, 3000);
+    setIntervalId(setInterval(fetchLobby, 3000));
   }, [
     lobbyId
   ]);
 
-  return { lobby, uid };
+  return { lobby, uid, intervalId};
 };
