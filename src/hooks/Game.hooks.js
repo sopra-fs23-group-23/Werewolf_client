@@ -3,6 +3,7 @@ import { createEventSource } from "helpers/createEventSource";
 import { useCallback, useEffect, useState} from "react";
 import LobbyModel from "models/Lobby";
 import Player from "models/Player";
+import { api } from "helpers/api";
 
 export const useGame = () => {
     const lobbyId = StorageManager.getLobbyId();
@@ -139,6 +140,8 @@ export const useGame = () => {
         );
       }
     }, [lobbyId]);
+
+    // TODO: fetchPoll and fetchGame again every time the scheduledFinish is reached
 
     useEffect(() => {
         async function fetchData() {
