@@ -7,24 +7,20 @@ import { useEffect, useState } from 'react';
 const Countdown = ({finishTime}) => {
 
 
-    const [remainingMinutes, setRemainingMinutes] = useState(0);
-    const [remainingSeconds, setRemainingSeconds] = useState(0);
+    const [remainingMinutes, setRemainingMinutes] = useState("");
+    const [remainingSeconds, setRemainingSeconds] = useState("");
 
     useEffect(() => {
-        console.log(finishTime);
-        /* const interval = setInterval(() => {
-            const now = new Date();
-            const timeLeft = Math.ceil((finishTime - now) / 1000);
-            
-            setRemainingMinutes(Math.floor(timeLeft / 60));
-            setRemainingSeconds(timeLeft % 60);
-        }, 1000); */
-        //return () => clearInterval(interval);
+        const secondsLeft = (finishTime - new Date()) / 1000;
+        const remainingMinutesString = Math.max(Math.floor(secondsLeft / 60), 0).toString().padStart(2, '0');
+        const remainingSecondsString = Math.max(Math.floor(secondsLeft % 60), 0).toString().padStart(2, '0');
+        setRemainingMinutes(remainingMinutesString);
+        setRemainingSeconds(remainingSecondsString);
     }, [finishTime]);
 
-    if (remainingMinutes <= 0 && remainingSeconds <= 0) {
+    /* if (remainingMinutes <= 0 && remainingSeconds <= 0) {
         return null;
-    }
+    } */
 
     return (
         <div className="countdown">
