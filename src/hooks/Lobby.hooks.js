@@ -45,7 +45,8 @@ export const useLobby = () => {
   useEffect(() => {
     async function fetchData() {
       await fetchLobby();
-      await fetchChannelToken();
+      //await fetchChannelToken();
+      //startBasicCall();
     }
     fetchData().then();
     setInterval(fetchLobby, 3000);

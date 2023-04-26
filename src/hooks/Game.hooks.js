@@ -101,56 +101,66 @@ export const useGame = () => {
       setVoteParticipants(voteParticipants);
     }, []);
 
-    const subscribeToEmitter = useCallback((lobbyId, token) =>{
-        const eventSource = createEventSource(`games/${lobbyId}/sse/${token}`);
-        eventSource.addEventListener("start", (event) => {
-            setStarted(true);
-        });
+    // const subscribeToEmitter = useCallback((lobbyId, token) =>{
+    //     const eventSource = createEventSource(`games/${lobbyId}/sse/${token}`);
+    //     eventSource.addEventListener("start", (event) => {
+    //         setStarted(true);
+    //     });
 
-        eventSource.addEventListener("stage", (event)=>{
-          console.log("Stage started:", event.data);
-          const dataJSON = JSON.parse(event.data);
-          updateDataToLobby(dataJSON);
-          setStage(dataJSON.stage.type);
-          setAdmin(new Player(dataJSON.admin));
-        })
+    //     eventSource.addEventListener("stage", (event)=>{
+    //       console.log("Stage started:", event.data);
+    //       const dataJSON = JSON.parse(event.data);
+    //       updateDataToLobby(dataJSON);
+    //       setStage(dataJSON.stage.type);
+    //       setAdmin(new Player(dataJSON.admin));
+    //     })
 
-        eventSource.addEventListener("poll", (event)=>{
-          console.log("Poll started:", event.data);
-          const dataJSON = JSON.parse(event.data);
-          updateVoteMap(dataJSON);
-          updateVoteParticipants(dataJSON);
-          updateOwnVote(dataJSON);
-          setScheduledFinish(new Date(dataJSON.scheduledFinish));
-          setQuestion(dataJSON.question);
-          //compareStrings
-          if (dataJSON.question === "Who do you suspect to be a werewolf?"){ 
-            setVotingParty("Villagers");
-          } else {
-            setVotingParty("Werewolves");
-          }
-          console.log("scheduledFinish: ", new Date(scheduledFinish));
-        })
+    //     eventSource.addEventListener("poll", (event)=>{
+    //       console.log("Poll started:", event.data);
+    //       const dataJSON = JSON.parse(event.data);
+    //       updateVoteMap(dataJSON);
+    //       updateVoteParticipants(dataJSON);
+    //       updateOwnVote(dataJSON);
+    //       setScheduledFinish(new Date(dataJSON.scheduledFinish));
+    //       setQuestion(dataJSON.question);
+    //       //compareStrings
+    //       if (dataJSON.question === "Who do you suspect to be a werewolf?"){ 
+    //         setVotingParty("Villagers");
+    //       } else {
+    //         setVotingParty("Werewolves");
+    //       }
+    //       console.log("scheduledFinish: ", new Date(scheduledFinish));
+    //     })
 
-        eventSource.addEventListener("finish", (event)=>{
-          setStarted(false);
-          setFinished(true);
-          setData(JSON.parse(event.data));
-          console.log("Game ended:", event.data);
-        });
+    //     eventSource.addEventListener("finish", (event)=>{
+    //       setStarted(false);
+    //       setFinished(true);
+    //       setData(JSON.parse(event.data));
+    //       console.log("Game ended:", event.data);
+    //     });
 
-    }, [scheduledFinish, updateDataToLobby, updateVoteMap, updateVoteParticipants, updateOwnVote]);
+    // }, [scheduledFinish, updateDataToLobby, updateVoteMap, updateVoteParticipants, updateOwnVote]);
+
+    const fetchGame = useCallback(async () => {
+      try{
+        const response = await api.get(`/games/${lobbyId}`,);
+
+      } catch (error) {
+        console.error("Details", error);
+        alert(
+          "Something went wrong fetching the game. See console for details."
+        );
+      }
+    }, [lobbyId]);
 
     useEffect(() => {
         function fetchData() {
-          subscribeToEmitter(lobbyId, token);
+          fetchGame();
+          // TODO: IMPLEMENT GAME, STAGE GETTER
         }
-        fetchData();
-      }, [
-        lobbyId,
-        token,
-        subscribeToEmitter,
-      ]);
+        fetchData().then();
+        setInterval(fetchGame, 3000);
+      }, [lobbyId,token]);
 
     return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote};
 }
