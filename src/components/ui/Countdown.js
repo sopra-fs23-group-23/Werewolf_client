@@ -11,14 +11,15 @@ const Countdown = ({finishTime}) => {
     const [remainingSeconds, setRemainingSeconds] = useState(0);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        console.log(finishTime);
+        /* const interval = setInterval(() => {
             const now = new Date();
             const timeLeft = Math.ceil((finishTime - now) / 1000);
             
             setRemainingMinutes(Math.floor(timeLeft / 60));
             setRemainingSeconds(timeLeft % 60);
-        }, 1000);
-        return () => clearInterval(interval);
+        }, 1000); */
+        //return () => clearInterval(interval);
     }, [finishTime]);
 
     if (remainingMinutes <= 0 && remainingSeconds <= 0) {

@@ -12,8 +12,6 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
     if(stage === "Day") {
         backgroundTheme = "light";
     }
-    console.log("---------------");
-    console.log(ownVote);
     const castVote = async (optionId) => {
       try {
         if(!ownVote) {
@@ -40,7 +38,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
           <Hitlist voteMap={voteMap} />
         </div>
         <div className="game-player-selection">
-          {voteParticipants.map(player => (
+          {lobby.players.map(player => (
             (player.alive) && (
             <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} />
             )

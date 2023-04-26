@@ -26,7 +26,6 @@ export const useGame = () => {
     const [poll, setPoll] = useState(null);
 
     const updateDataToLobby = useCallback((data) => {
-      console.log("Updated lobby:", data)
       const lobby = new LobbyModel(data);
       setLobby(lobby);
 
@@ -61,7 +60,7 @@ export const useGame = () => {
         }
 
       });
-      console.log("VoteMap final: ", newVoteMap)
+      //console.log("VoteMap final: ", newVoteMap)
       setVoteMap(newVoteMap);
     }, []);
 
@@ -76,7 +75,6 @@ export const useGame = () => {
     const fetchGame = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}`);
-        console.log("fetchGame", response.data);
         setGame(response.data);
         updateDataToLobby(response.data.lobby);
         setStage(response.data.stage.type);
@@ -97,7 +95,7 @@ export const useGame = () => {
         updateOwnVote(response.data);
         setScheduledFinish(new Date(response.data.scheduledFinish));
         setQuestion(response.data.question);
-
+        setVotingParty(response.data.role);
       } catch (error) {
         console.error("Details", error);
         alert(
@@ -117,6 +115,12 @@ export const useGame = () => {
           await fetchGame();
           await fetchPoll();
           setStarted(true);
+          setInterval(async () => {
+            await fetchPoll();
+          }, 1000);
+          setInterval(async () => {
+            await fetchGame();
+          }, 1000);
         }
         fetchData().then();
       }, 3000);
