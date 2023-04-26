@@ -19,7 +19,7 @@ export const useGame = () => {
     //const [hitlist, setHitlist] = useState([]);
     const [votingParty, setVotingParty] = useState([]);
     const [finished, setFinished] = useState(false);
-    const [endData, setData] = useState(null);
+    const [endData, setEndData] = useState(null);
     const [question, setQuestion] = useState(null);
 
     const [game, setGame] = useState(null);
@@ -79,9 +79,8 @@ export const useGame = () => {
         updateDataToLobby(response.data.lobby);
         setStage(response.data.stage.type);
         setAdmin(new Player(response.data.lobby.admin));
-        setFinished(response.data.finished);
-        if(response.data.finished === true) {
-          console.log(response.data.finished);
+        if(response.data.finished) {
+          console.log("The game has ended, calling fetchEndData now");
           fetchEndData();
         }
       } catch (error) {
@@ -106,20 +105,29 @@ export const useGame = () => {
         }
         setVotingParty(response.data.role);
       } catch (error) {
-        console.error("Details", error);
+        console.error("Details Fetch Poll Error: ", error);
         alert(
           "Something went wrong fetching the poll. See console for details."
         );
       }
     }, [lobbyId]);
 
-    // only gets called once when 
-    const fetchEndData = () => {
-      console.log("FETCH END DATA");
-    };
+    // only gets called once when game is finished
 
-    
-    // TODO: everytime after that: isFinished = true? --> GET /game/id/winner
+    const fetchEndData = useCallback(async () => {
+      try {
+        const response = await api.get(`/games/${lobbyId}/winner`);
+        setStarted(false);
+        setFinished(true);
+        setEndData(response.data);
+        console.log("Game ended: ", response.data);
+      } catch (error) {
+        console.error("Details Fetch End Data Error: ", error);
+        alert(
+          "Something went wrong fetching the end data. See console for details."
+        ); 
+      }
+    }, [lobbyId]);
 
     useEffect(() => {
       setTimeout(() => {
