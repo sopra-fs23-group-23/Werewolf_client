@@ -68,17 +68,22 @@ a {
     color: $color-text-light;
   }
   &-dark-image {
-    background-image: url('../../public/assets/images/bg-dark.png');
-    //background-image: url('../../public/assets/images/cemetery-dark.png');
-    object-fit: cover;
+    background-color: $color-bg-dark;
+    background-image: url('../../public/assets/images/cemetery-dark.png') !important;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: bottom;
     width: 100vw;
     height: 100vh;
     color:$color-text-light;
   }
   &-light-image {
-    background-image: url('../../public/assets/images/bg-light.jpg');
-    //background-image: url('../../public/assets/images/cemetery-light.png');
-    object-fit: cover;
+    background-color: $color-bg-light;
+    background-image: url('../../public/assets/images/cemetery-light.png') !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: bottom;
     width: 100vw;
     height: 100vh;
     color:$color-text-dark;

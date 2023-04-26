@@ -29,7 +29,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className="background background-light-image">
+    <div className="background background-light">
       <div className="container">
         <div className="auth">
           <div className="column-container">

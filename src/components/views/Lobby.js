@@ -79,7 +79,7 @@ const Lobby = () => {
   
 
   return (
-    <div className="background background-dark-image lobby">
+    <div className="background background-dark lobby">
       {content}
     </div>
   );

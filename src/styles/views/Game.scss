@@ -61,11 +61,13 @@
     width: 100vw;
 
     &-dark {
-      background-image: url('../../../public/assets/images/cemetery-dark.png') !important;
+      /* background-image: url('../../../public/assets/images/cemetery-dark.png') !important;
+      background-size: cover;
+      background-repeat: no-repeat; */
     }
 
     &-light {
-      background-image: url('../../../public/assets/images/cemetery-light.png') !important;
+      /* background-image: url('../../../public/assets/images/cemetery-light.png') !important; */
     }
 
   
