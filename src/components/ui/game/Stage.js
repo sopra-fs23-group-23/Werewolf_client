@@ -39,8 +39,8 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
           <Hitlist voteMap={voteMap} />
         </div>
         <div className="game-player-selection">
-          {lobby.players.map(player => (
-              (player.alive) && (
+          {voteParticipants.map(player => (
+            (player.alive) && (
             <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} />
             )
           ))}

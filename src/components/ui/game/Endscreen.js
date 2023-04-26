@@ -12,30 +12,16 @@ const Endscreen = ({ endData, lobby }) => {
     //alert("Not implemented yet");
   }
 
-  // const endData = {
-  //   "winner": "Werewolf",
-  //   "players": [
-  //     { "id": 1, "isAlive": true, "roles": ["Werewolf"] },
-  //     { "id": 2, "isAlive": true, "roles": ["Werewolf"] },
-  //     { "id": 3, "isAlive": false, "roles": ["Villager"] },
-  //     { "id": 4, "isAlive": false, "roles": ["Villager"] },
-  //     { "id": 5, "isAlive": false, "roles": ["Werewolf"] },
-  //     { "id": 6, "isAlive": false, "roles": ["Villager"] }
-  //   ]
-  // };
 
-  // console.log("Lobby: " + lobby.players);
+  let winnerIds = lobby.players.filter(player => endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
+  let loserIds = lobby.players.filter(player => !endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
 
-  let winnerIds = endData.players.filter(player => player.roles.includes(endData.winner)).map(player => player.id);
-  let loserIds = endData.players.filter(player => !player.roles.includes(endData.winner)).map(player => player.id);
-  let winners = lobby.players.filter(player => winnerIds.includes(player.id));
-  let losers = lobby.players.filter(player => loserIds.includes(player.id));
 
-  // console.log("WinnerIds: " + winnerIds);
-  // console.log("loserIds: " + loserIds);
+  let winnerArray = lobby.players.filter(player => winnerIds.includes(player.id));
+  let looserArray = lobby.players.filter(player => loserIds.includes(player.id));
 
-  // console.log("Winners: " + winners);
-  // console.log("losers: " + losers);
+
+
   return (
     <div className='container endscreen'>
       <div className='endscreen-headerrow'>
@@ -52,12 +38,12 @@ const Endscreen = ({ endData, lobby }) => {
         <img src={`/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
       </div>
       <div className='endscreen-winner-players'>
-        {winners.map(player => (
+        {winnerArray.map(player => (
           <Profile user={new Player(player)} mode="dead-player" />
         ))}
       </div>
       <div className='endscreen-losers'>
-        {losers.map(player => (
+        {looserArray.map(player => (
           <Profile user={new Player(player)} mode="dead-player" />
         ))}
       </div>

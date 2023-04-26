@@ -52,9 +52,9 @@
     }
     &-indicator {
       margin-bottom: -5px;
-      visibility: visible;
+      visibility: hidden;
       &.active {
-        visibility: hidden;
+        visibility: visible;
       }
     }
     &-title {
