@@ -88,15 +88,15 @@ export const useGame = () => {
 
     const fetchPoll = useCallback(async () => {
       try{
-        const response = await api.get(`/games/${lobbyId}/poll`);
-        setPoll(JSON.parse(response.data));
+        const response = await api.get(`/games/${lobbyId}/polls`);
+        setPoll(response.data);
 
         // maybe call these functions outside of try catch block to properly catch errors
-        updateVoteMap(poll);
-        updateVoteParticipants(poll);
-        updateOwnVote(poll);
-        setScheduledFinish(new Date(poll.scheduledFinish));
-        setQuestion(poll.question);
+        updateVoteMap(response.data);
+        updateVoteParticipants(response.data);
+        updateOwnVote(response.data);
+        setScheduledFinish(new Date(response.data.scheduledFinish));
+        setQuestion(response.data.question);
 
       } catch (error) {
         console.error("Details", error);
@@ -116,10 +116,10 @@ export const useGame = () => {
         async function fetchData() {
           await fetchGame();
           await fetchPoll();
-          //setStarted(true);
+          setStarted(true);
         }
         fetchData().then();
-      }, 2000);
+      }, 3000);
     }, [lobbyId, token]);
 
     return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote};
