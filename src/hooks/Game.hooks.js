@@ -94,7 +94,11 @@ export const useGame = () => {
         updateVoteParticipants(response.data);
         updateOwnVote(response.data);
         setScheduledFinish(new Date(response.data.scheduledFinish));
-        setQuestion(response.data.question);
+        if (response.data.participants.length > 0) {
+          setQuestion(response.data.question);
+        } else {
+          setQuestion("You are not part of the current vote");
+        }
         setVotingParty(response.data.role);
       } catch (error) {
         console.error("Details", error);
