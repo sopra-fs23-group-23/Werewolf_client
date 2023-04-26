@@ -13,7 +13,7 @@ export const useLobby = () => {
   const history = useHistory();
 
   const updateDataToLobby = useCallback((data) => {
-    console.log("updateDataToLobby", data.lobby)
+    console.log("updateDataToLobby", data)
     const lobby = new LobbyModel(data);
     setLobby(lobby);
   }, []);
@@ -21,11 +21,12 @@ export const useLobby = () => {
   const fetchLobby = useCallback(async () => {
     try {
       const response = await api.get(`/lobbies/${lobbyId}`);
-      updateDataToLobby(response.data);
-      history.push("/game");
-      if (response.data.lobby.closed !== true) {
-        setInterval(fetchLobby, 3000);
-      };
+      console.log(response)
+      await updateDataToLobby(response.data);
+      if(lobby.closed) {
+        console.log("game should have started");
+        history.push("/game");
+      }
     } catch (error) {
       console.error("Details:", error);
       alert(
@@ -53,10 +54,10 @@ export const useLobby = () => {
       //startBasicCall();
     }
     fetchData().then();
-    setInterval(fetchLobby, 3000);
+    setInterval(fetchLobby, 3000, );
   }, [
     lobbyId
   ]);
-  console.log("I was here in the function");
+
   return { lobby, uid };
 };
