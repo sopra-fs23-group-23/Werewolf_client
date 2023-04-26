@@ -35,12 +35,12 @@ const Endscreen = ({ endData, lobby }) => {
       </div>
       <div className='endscreen-winner-players'>
         {winnerArray.map(player => (
-          <Profile user={new Player(player)} mode="dead-player" />
+          <Profile user={new Player(player)} mode="dead-player" key={player.id} />
         ))}
       </div>
       <div className='endscreen-losers'>
         {looserArray.map(player => (
-          <Profile user={new Player(player)} mode="dead-player" />
+          <Profile user={new Player(player)} mode="dead-player" key={player.id} />
         ))}
       </div>
     </div>
