@@ -12,7 +12,8 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
     if(stage === "Day") {
         backgroundTheme = "light";
     }
-
+    console.log("---------------");
+    console.log(ownVote);
     const castVote = async (optionId) => {
       try {
         if(!ownVote) {

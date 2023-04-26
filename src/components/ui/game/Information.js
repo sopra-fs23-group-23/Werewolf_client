@@ -28,7 +28,7 @@ export const Information = () => {
     }
     setTimeout(()=>{setShowAllRoles(true)}, 1500)
     fetchData();
-  }, [id, lobbyId, setShowAllRoles]);
+  }, [id, lobbyId]);
 
   const game_spinner = (
     <div>

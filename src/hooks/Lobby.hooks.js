@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 export const useLobby = () => {
   const lobbyId = StorageManager.getLobbyId();
   const uid = StorageManager.getUserId();
-  const token = StorageManager.getUserToken();
   const [lobby, setLobby] = useState(null);
   const history = useHistory();
 
@@ -29,7 +28,7 @@ export const useLobby = () => {
         "Something went wrong while fetching the lobby! See the console for details."
       );
     }
-  }, [updateDataToLobby, lobbyId]);
+  }, [lobbyId]);
 
   const fetchChannelToken = useCallback(async () => {
     try {
@@ -43,37 +42,16 @@ export const useLobby = () => {
     }
   }, [lobbyId]);
 
-  const subscribeToEmitter = useCallback(async (userToken) => {
-      const eventSource = createEventSource(`/lobbies/${lobbyId}/sse/${userToken}`);
-  
-      eventSource.addEventListener("update", (event) => {
-        console.log("Lobby event.data", event.data);
-        updateDataToLobby(JSON.parse(event.data));
-      });
-      eventSource.addEventListener("delete", (event) => {
-        alert("Received event on 'delete', which is not implemented yet.");
-      });
-      eventSource.addEventListener("game", (event) => {
-        eventSource.close();
-        history.push("/game");
-      });
-  
-  }, [updateDataToLobby, lobbyId, history])
-
   useEffect(() => {
     async function fetchData() {
       await fetchLobby();
       await fetchChannelToken();
-      await subscribeToEmitter(token);
-      startBasicCall();
     }
     fetchData().then();
+    setInterval(fetchLobby, 3000);
   }, [
-    lobbyId,
-    token,
-    fetchChannelToken,
-    fetchLobby,
-    subscribeToEmitter,
+    lobbyId
   ]);
+  console.log("I was here in the function");
   return { lobby, uid };
 };

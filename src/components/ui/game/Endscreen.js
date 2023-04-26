@@ -12,15 +12,11 @@ const Endscreen = ({ endData, lobby }) => {
     //alert("Not implemented yet");
   }
 
-
   let winnerIds = lobby.players.filter(player => endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
   let loserIds = lobby.players.filter(player => !endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
 
-
   let winnerArray = lobby.players.filter(player => winnerIds.includes(player.id));
   let looserArray = lobby.players.filter(player => loserIds.includes(player.id));
-
-
 
   return (
     <div className='container endscreen'>
