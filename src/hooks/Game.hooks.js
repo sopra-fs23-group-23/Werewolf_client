@@ -79,6 +79,11 @@ export const useGame = () => {
         updateDataToLobby(response.data.lobby);
         setStage(response.data.stage.type);
         setAdmin(new Player(response.data.lobby.admin));
+        setFinished(response.data.finished);
+        if(response.data.finished === true) {
+          console.log(response.data.finished);
+          fetchEndData();
+        }
       } catch (error) {
         console.error(error);
       }
@@ -108,9 +113,12 @@ export const useGame = () => {
       }
     }, [lobbyId]);
 
-    // const fetchWinner = ....
+    // only gets called once when 
+    const fetchEndData = () => {
+      console.log("FETCH END DATA");
+    };
 
-    // TODO: fetchPoll and fetchGame again every time the scheduledFinish is reached
+    
     // TODO: everytime after that: isFinished = true? --> GET /game/id/winner
 
     useEffect(() => {

@@ -12,7 +12,11 @@ const Endscreen = ({ endData, lobby }) => {
     //alert("Not implemented yet");
   }
 
-  let winnerIds = lobby.players.filter(player => endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
+  return (
+    <div>THE END</div>
+  );
+
+  /* let winnerIds = lobby.players.filter(player => endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
   let loserIds = lobby.players.filter(player => !endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
 
   let winnerArray = lobby.players.filter(player => winnerIds.includes(player.id));
@@ -44,6 +48,6 @@ const Endscreen = ({ endData, lobby }) => {
         ))}
       </div>
     </div>
-  );
+  ); */
 }
 export default Endscreen;
