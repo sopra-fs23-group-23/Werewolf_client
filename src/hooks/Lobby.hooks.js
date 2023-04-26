@@ -51,7 +51,7 @@ export const useLobby = () => {
       //startBasicCall();
     }
     fetchData().then();
-    setIntervalId(setInterval(fetchLobby, 3000));
+    setIntervalId(setInterval(fetchLobby, 1000));
   }, [
     lobbyId
   ]);
