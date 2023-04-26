@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 export const useLobby = () => {
   const lobbyId = StorageManager.getLobbyId();
   const uid = StorageManager.getUserId();
+  const token = StorageManager.getUserToken();
   const [lobby, setLobby] = useState(null);
   const history = useHistory();
 
@@ -42,13 +43,8 @@ export const useLobby = () => {
     }
   }, [lobbyId]);
 
-  const fetchEmitterToken = useCallback(async () => {
-    const response = await api.get(`/lobbies/${lobbyId}/sse`);
-    return response.data;
-  }, [lobbyId]);
-
-  const subscribeToEmitter = useCallback(async (emitterToken) => {
-      const eventSource = createEventSource(`/lobbies/${lobbyId}/sse/${emitterToken}`);
+  const subscribeToEmitter = useCallback(async (userToken) => {
+      const eventSource = createEventSource(`/lobbies/${lobbyId}/sse/${userToken}`);
   
       eventSource.addEventListener("update", (event) => {
         console.log("Lobby event.data", event.data);
@@ -68,15 +64,14 @@ export const useLobby = () => {
     async function fetchData() {
       await fetchLobby();
       await fetchChannelToken();
-      const emitterToken = await fetchEmitterToken();
-      await subscribeToEmitter(emitterToken);
+      await subscribeToEmitter(token);
       startBasicCall();
     }
     fetchData().then();
   }, [
     lobbyId,
+    token,
     fetchChannelToken,
-    fetchEmitterToken,
     fetchLobby,
     subscribeToEmitter,
   ]);

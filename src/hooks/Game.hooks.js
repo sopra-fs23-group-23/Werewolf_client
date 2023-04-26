@@ -88,7 +88,7 @@ export const useGame = () => {
           setScheduledFinish(new Date(dataJSON.scheduledFinish));
           setQuestion(dataJSON.question);
           //compareStrings
-          if (dataJSON.question == "Who do you suspect to be a werewolf?"){ 
+          if (dataJSON.question === "Who do you suspect to be a werewolf?"){ 
             setVotingParty("Villagers");
           } else {
             setVotingParty("Werewolves");
@@ -103,7 +103,7 @@ export const useGame = () => {
           console.log("Game ended:", event.data);
         });
 
-    }, []);
+    }, [scheduledFinish, updateDataToLobby, updateVoteMap, updateVoteParticipants, updateOwnVote]);
 
     useEffect(() => {
         function fetchData() {

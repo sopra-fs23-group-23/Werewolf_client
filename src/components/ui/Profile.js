@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
