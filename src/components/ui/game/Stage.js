@@ -40,7 +40,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
         <div className="game-player-selection">
           {lobby.players.map(player => (
             (player.alive) && (
-            <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} />
+            <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} key={player.id} />
             )
           ))}
         </div>
@@ -52,7 +52,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
           <div className={`game-dead-players`}>
             {lobby.players.map(player => (
               (!player.alive) && (
-                <Profile user={new Player(player)} mode="dead-player"/>
+                <Profile user={new Player(player)} mode="dead-player" key={player.id} />
               )
             ))}
           </div>

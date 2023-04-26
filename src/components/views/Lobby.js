@@ -67,7 +67,7 @@ const Lobby = () => {
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
-            <Profile user={player}/>
+            <Profile user={player} key={player.id} />
           ))}
         </div>
         <div className='lobby-footerrow'>
