@@ -3,6 +3,7 @@ import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
 import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
+import {useHistory} from "react-router-dom";
 
 const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
@@ -28,6 +29,7 @@ const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
 }
 
 const Lobby = () => {
+  const history = useHistory();
   function leave() {
     // TODO
     alert("Not implemented yet");
@@ -38,6 +40,12 @@ const Lobby = () => {
   }
 
   const {lobby, uid} = useLobby();
+
+  if(lobby && lobby.closed) {
+    console.log("game should have started");
+
+    history.push(`/game`);
+  }
   
   let content = (
     <Spinner/>

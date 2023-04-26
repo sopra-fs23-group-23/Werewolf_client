@@ -23,10 +23,6 @@ export const useLobby = () => {
       const response = await api.get(`/lobbies/${lobbyId}`);
       console.log(response)
       await updateDataToLobby(response.data);
-      if(lobby.closed) {
-        console.log("game should have started");
-        history.push("/game");
-      }
     } catch (error) {
       console.error("Details:", error);
       alert(
@@ -54,7 +50,7 @@ export const useLobby = () => {
       //startBasicCall();
     }
     fetchData().then();
-    setInterval(fetchLobby, 3000, );
+    setInterval(fetchLobby, 3000);
   }, [
     lobbyId
   ]);
