@@ -20,12 +20,9 @@ const Home = () => {
         setUser(response.data);
       } catch (error) {
         console.error(error);
-        let testUser = new User();
-        testUser.username = 'Ricardo';
-        setUser(testUser);
-
-        //alert('Could not fetch user with ID ' + id); 123
-        //history.push('/home');
+        alert('Could not fetch user with ID ' + id);
+        sessionStorage.clear();
+        history.push('/login');
       }
     }
     fetchData();
