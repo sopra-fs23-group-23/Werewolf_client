@@ -1,6 +1,7 @@
 @import 'styles/theme';
 
 .game {
+  
   .info-button {
     margin-top: 30px;
     margin-left: 30px;
@@ -22,6 +23,7 @@
     }
   }
   &-player-selection {
+    z-index: 2;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -29,6 +31,7 @@
     flex-wrap: wrap;
   }
   &-stage-counter {
+    z-index: 2;
     margin-top: 1em;
     display: flex;
     flex-direction: column;
@@ -46,33 +49,56 @@
     }
 
   }
-  &-dead-players {
+  &-dead {
+    z-index: 1;
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
-    max-width: $width-xl;
-    background-color: rgba(170, 170, 170, 0.5);
-    border-radius: 20px 20px 0 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    max-height: 80px;
-    overflow: hidden;
-    transition: all 0.5s ease-in-out;
-    &-light {
-      background-color: rgba(34, 139, 34, 0.5);
+    transform: translateX(-50%) ;
+    background-size: contain;
+    background-position: center;
+    height: 40vh;
+    width: 100vw;
+
+    &-dark {
+      background-image: url('../../../public/assets/images/cemetery-dark.png') !important;
     }
-    &:hover {
-      max-height: 250px;
+
+    &-light {
+      background-image: url('../../../public/assets/images/cemetery-light.png') !important;
+    }
+
+  
+    &-players {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      //margin-top: auto;
+      max-width: $width-xl;
+      background-color: rgba(170, 170, 170, 0.5);
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      max-height: 80px;
+      overflow: hidden;
       transition: all 0.5s ease-in-out;
-      //background-color: rgba(170, 170, 255, 0.8);
-      .profile-dead-player {
-        .profile-name {
-          opacity: 1;
-          transition: all 0.5s ease-in-out;
+      
+      &-light {
+        background-color: rgba(34, 139, 34, 0.5);
+      }
+      &:hover {
+        max-height: 250px;
+        transition: all 0.5s ease-in-out;
+        //background-color: rgba(170, 170, 255, 0.8);
+        .profile-dead-player {
+          .profile-name {
+            opacity: 1;
+            transition: all 0.5s ease-in-out;
+          }
         }
       }
     }

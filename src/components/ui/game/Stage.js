@@ -49,14 +49,16 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
         <div className="game-stage-counter">
           <Countdown finishTime={scheduledFinish} />
         </div>
-
-        <div className={`game-dead-players game-dead-players-${backgroundTheme}`}>
-          {lobby.players.map(player => (
-            (!player.alive) && (
-              <Profile user={new Player(player)} mode="dead-player"/>
-            )
-          ))}
+        <div className={`game-dead game-dead-${backgroundTheme}`}>
+          <div className={`game-dead-players`}>
+            {lobby.players.map(player => (
+              (!player.alive) && (
+                <Profile user={new Player(player)} mode="dead-player"/>
+              )
+            ))}
+          </div>
         </div>
+        
       </div>
   );
 }
