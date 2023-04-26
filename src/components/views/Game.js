@@ -76,7 +76,7 @@ const Game = () => {
     <div className={`background background-${backgroundTheme}-image game`}>
       {content}
       <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
-      <RolePopup show={popupActive} handleClose={togglePopup} />
+      <RolePopup show={popupActive} handleClose={togglePopup} stage={stage} />
     </div>
   );
 };

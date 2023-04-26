@@ -5,7 +5,7 @@ import StorageManager from "../../helpers/StorageManager";
 import Spinner from "../ui/Spinner";
 import PropTypes from 'prop-types';
 
-const RolePopup = ({ show, handleClose }) => {
+const RolePopup = ({ show, handleClose, stage }) => {
   const id = StorageManager.getUserId();
   const lobbyId = StorageManager.getLobbyId();
   // eslint-disable-next-line
@@ -33,7 +33,7 @@ const RolePopup = ({ show, handleClose }) => {
       }
     }
     fetchData();
-  }, [id, lobbyId]);
+  }, [id, lobbyId, stage]);
 
   const nextRole = () => {
     setActiveIndex((activeIndex + 1) % allRoles.length);
@@ -56,7 +56,7 @@ const RolePopup = ({ show, handleClose }) => {
   } else {
     return (
       <div className='role-popup-background' onClick={handleClickOutsidePopup}>
-        <div className='role-popup-container background-dark'>
+        <div className={'role-popup-container ' + (stage === 'Day' ? 'background-light' : 'background-dark')}>
           <img src='/assets/images/icons/close.svg' className='role-popup-close' onClick={handleClose} alt='close'/>
           {allRoles.map((role, index) => 
             <div className={'role-popup-item ' + (index === activeIndex ? 'active' : '')} key={index}>
