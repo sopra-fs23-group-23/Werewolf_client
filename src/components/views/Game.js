@@ -70,7 +70,7 @@ const Game = () => {
     clearInterval(intervalFetchPoll);
     clearInterval(intervalFetchGame);
     content = (
-      <Endscreen endData={endData} lobby={lobby} />
+      <Endscreen endData={endData} lobby={lobby} stage={stage} />
     );
   }
 
