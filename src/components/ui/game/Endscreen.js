@@ -60,7 +60,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
         </div>
 
         <div className='endscreen-winner'>
-          <img src={`/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
+          <img src={`../../public/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
         </div>
         <div className='endscreen-winner-players'>
           {winnerArray.map(player => (
