@@ -10,7 +10,7 @@ import WaitingScreen from '../ui/game/WaitingScreen';
 
 const Game = () => {
 
-  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote} = useGame();
+  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll} = useGame();
 
   const [popupActive, setPopupActive] = useState(false);
 
@@ -67,6 +67,8 @@ const Game = () => {
   }
 
   if (finished) {
+    clearInterval(intervalFetchPoll);
+    clearInterval(intervalFetchGame);
     content = (
       <Endscreen endData={endData} lobby={lobby} />
     );
