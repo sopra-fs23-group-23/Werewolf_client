@@ -127,16 +127,22 @@ export const useGame = () => {
     }, [lobbyId]);
 
     useEffect(() => {
-      setTimeout(() => {
-        async function fetchData() {
+      setTimeout(async () => {
+        //async function fetchData() {
           await fetchGame();
           await fetchPoll();
           setStarted(true);
 
-          setIntervalFetchPoll(setInterval(fetchPoll, 1000));
-          setIntervalFetchGame(setInterval(fetchGame, 1000));
-        }
-        fetchData().then();
+          const pollIntervalId = setInterval(fetchPoll, 1000);
+          setIntervalFetchPoll(pollIntervalId);
+          const gameIntervalId = setInterval(fetchGame, 1000);
+          setIntervalFetchGame(gameIntervalId);
+        //}
+        //fetchData().then();
+        return () => {
+          clearInterval(pollIntervalId);
+          clearInterval(gameIntervalId);
+        };
       }, 15000);
     }, [lobbyId, token]);
 

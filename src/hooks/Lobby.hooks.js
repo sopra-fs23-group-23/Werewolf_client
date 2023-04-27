@@ -45,7 +45,9 @@ export const useLobby = () => {
       startBasicCall();
     }
     fetchData().then();
-    setIntervalId(setInterval(fetchLobby, 1000));
+    const intervalId = setInterval(fetchLobby, 1000);
+    setIntervalId(intervalId);
+    return () => clearInterval(intervalId);
   }, [
     lobbyId
   ]);
