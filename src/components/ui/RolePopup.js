@@ -33,6 +33,7 @@ const RolePopup = ({ show, handleClose, stage }) => {
       }
     }
     fetchData();
+    //eslint-disable-next-line
   }, [id, lobbyId, stage]);
 
   const nextRole = () => {
