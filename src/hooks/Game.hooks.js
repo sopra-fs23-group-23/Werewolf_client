@@ -1,5 +1,4 @@
 import StorageManager from "helpers/StorageManager";
-import { createEventSource } from "helpers/createEventSource";
 import { useCallback, useEffect, useState} from "react";
 import LobbyModel from "models/Lobby";
 import Player from "models/Player";
@@ -16,7 +15,6 @@ export const useGame = () => {
     const [voteParticipants, setVoteParticipants] = useState([]);
     const [ownVote, setOwnVote] = useState(null);
     const [scheduledFinish, setScheduledFinish] = useState(null);
-    //const [hitlist, setHitlist] = useState([]);
     const [votingParty, setVotingParty] = useState([]);
     const [finished, setFinished] = useState(false);
     const [endData, setEndData] = useState(null);
@@ -25,8 +23,8 @@ export const useGame = () => {
     const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
     const [intervalFetchGame, setIntervalFetchGame] = useState(null);
 
-    const [game, setGame] = useState(null);
-    const [poll, setPoll] = useState(null);
+    // const [game, setGame] = useState(null);
+    // const [poll, setPoll] = useState(null);
 
     const updateDataToLobby = useCallback((data) => {
       const lobby = new LobbyModel(data);
@@ -78,7 +76,7 @@ export const useGame = () => {
     const fetchGame = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}`);
-        setGame(response.data);
+        //setGame(response.data);
         updateDataToLobby(response.data.lobby);
         setStage(response.data.stage.type);
         setAdmin(new Player(response.data.lobby.admin));
@@ -89,12 +87,13 @@ export const useGame = () => {
       } catch (error) {
         console.error(error);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId]);
 
     const fetchPoll = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}/polls`);
-        setPoll(response.data);
+        //setPoll(response.data);
 
         // maybe call these functions outside of try catch block to properly catch errors
         updateVoteMap(response.data);
@@ -110,6 +109,7 @@ export const useGame = () => {
       } catch (error) {
         console.error("Details Fetch Poll Error: ", error);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId]);
 
     // only gets called once when game is finished
@@ -144,6 +144,7 @@ export const useGame = () => {
           clearInterval(gameIntervalId);
         };
       }, 15000);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
     return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll};

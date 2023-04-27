@@ -3,14 +3,11 @@ import { api } from "helpers/api";
 import LobbyModel from "models/Lobby";
 import StorageManager from "helpers/StorageManager";
 import { startBasicCall } from "helpers/agora";
-import { createEventSource } from "helpers/createEventSource";
-import { useHistory } from "react-router-dom";
 
 export const useLobby = () => {
   const lobbyId = StorageManager.getLobbyId();
   const uid = StorageManager.getUserId();
   const [lobby, setLobby] = useState(null);
-  const history = useHistory();
   const [intervalId, setIntervalId] = useState(null);
 
   const updateDataToLobby = useCallback((data) => {
@@ -27,7 +24,9 @@ export const useLobby = () => {
     } catch (error) {
       console.error("Details:", error);
     }
-  }, [lobbyId]);
+  },
+    // eslint-disable-next-line
+    [lobbyId]);
 
   const fetchChannelToken = useCallback(async () => {
     try {
@@ -48,9 +47,9 @@ export const useLobby = () => {
     const intervalId = setInterval(fetchLobby, 1000);
     setIntervalId(intervalId);
     return () => clearInterval(intervalId);
-  }, [
-    lobbyId
-  ]);
+  },
+  // eslint-disable-next-line
+  [lobbyId]);
 
   return { lobby, uid, intervalId};
 };
