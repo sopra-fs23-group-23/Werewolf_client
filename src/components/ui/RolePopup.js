@@ -69,8 +69,8 @@ const RolePopup = ({ show, handleClose, stage }) => {
             </div>
           )}
           <div className='role-popup-nav'>
-            <img src='/assets/images/back.svg' alt='back' onClick={previousRole} />
-            <img src='/assets/images/forward.svg' alt='back' onClick={nextRole} />
+            <img src='public/assets/images/back.svg' alt='back' onClick={previousRole} />
+            <img src='/public/assets/images/forward.svg' alt='back' onClick={nextRole} />
           </div>
         </div>
       </div>
