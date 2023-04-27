@@ -109,9 +109,6 @@ export const useGame = () => {
         setVotingParty(response.data.role);
       } catch (error) {
         console.error("Details Fetch Poll Error: ", error);
-        alert(
-          "Something went wrong fetching the poll. See console for details."
-        );
       }
     }, [lobbyId]);
 
@@ -125,10 +122,7 @@ export const useGame = () => {
         setStarted(false);
         setFinished(true);
       } catch (error) {
-        console.error("Details Fetch End Data Error: ", error);
-        alert(
-          "Something went wrong fetching the end data. See console for details."
-        ); 
+        console.error("Details Fetch End Data Error: ", error); 
       }
     }, [lobbyId]);
 
@@ -143,7 +137,7 @@ export const useGame = () => {
           setIntervalFetchGame(setInterval(fetchGame, 1000));
         }
         fetchData().then();
-      }, 5000);
+      }, 15000);
     }, [lobbyId, token]);
 
     return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll};
