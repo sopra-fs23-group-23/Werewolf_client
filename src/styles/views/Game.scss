@@ -29,6 +29,15 @@
     justify-content: center;
     justify-self: center;
     flex-wrap: wrap;
+    &-active {
+      img {
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          border: 3px solid green;
+          cursor: pointer;
+        }
+      }
+    }
   }
   &-stage-counter {
     z-index: 2;
@@ -47,7 +56,6 @@
       margin: 0;
       padding: 0;
     }
-
   }
   &-dead {
     z-index: 1;

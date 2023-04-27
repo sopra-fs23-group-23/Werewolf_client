@@ -38,10 +38,6 @@
             width: 75px;
             border-radius: 50px;
             transition: all 0.2s ease-in-out;
-            &:hover {
-                border: 3px solid green;
-                cursor: pointer;
-            }
         }
         &-isVoter {
             img {

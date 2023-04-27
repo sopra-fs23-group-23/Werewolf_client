@@ -37,14 +37,13 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
         <div className="game-hitlist">
           <Hitlist voteMap={voteMap} />
         </div>
-        <div className="game-player-selection">
-          {lobby.players.map(player => (
-            (player.alive) && (
-            <Profile user={new Player(player)} mode="selection" onClickEvent={castVote} key={player.id} />
-            )
-          ))}
-        </div>
-
+      <div className={`game-player-selection ${voteParticipants.length > 0 ? "game-player-selection-active": ""}`}>
+      {lobby.players.map(player => (
+        (player.alive) && (
+          <Profile user={new Player(player)} mode="selection" onClickEvent={voteParticipants.length > 0 ?castVote : ""} key={player.id} />
+        )
+      ))}
+    </div>
         <div className="game-stage-counter">
           {scheduledFinish ? <Countdown finishTime={scheduledFinish} /> : ""}
         </div>
