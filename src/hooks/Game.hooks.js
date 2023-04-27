@@ -22,6 +22,9 @@ export const useGame = () => {
     const [endData, setEndData] = useState(null);
     const [question, setQuestion] = useState(null);
 
+    const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
+    const [intervalFetchGame, setIntervalFetchGame] = useState(null);
+
     const [game, setGame] = useState(null);
     const [poll, setPoll] = useState(null);
 
@@ -106,9 +109,6 @@ export const useGame = () => {
         setVotingParty(response.data.role);
       } catch (error) {
         console.error("Details Fetch Poll Error: ", error);
-        alert(
-          "Something went wrong fetching the poll. See console for details."
-        );
       }
     }, [lobbyId]);
 
@@ -117,15 +117,12 @@ export const useGame = () => {
     const fetchEndData = useCallback(async () => {
       try {
         const response = await api.get(`/games/${lobbyId}/winner`);
-        setStarted(false);
-        setFinished(true);
         setEndData(response.data);
         console.log("Game ended: ", response.data);
+        setStarted(false);
+        setFinished(true);
       } catch (error) {
-        console.error("Details Fetch End Data Error: ", error);
-        alert(
-          "Something went wrong fetching the end data. See console for details."
-        ); 
+        console.error("Details Fetch End Data Error: ", error); 
       }
     }, [lobbyId]);
 
@@ -135,16 +132,13 @@ export const useGame = () => {
           await fetchGame();
           await fetchPoll();
           setStarted(true);
-          setInterval(async () => {
-            await fetchPoll();
-          }, 1000);
-          setInterval(async () => {
-            await fetchGame();
-          }, 1000);
+
+          setIntervalFetchPoll(setInterval(fetchPoll, 1000));
+          setIntervalFetchGame(setInterval(fetchGame, 1000));
         }
         fetchData().then();
-      }, 3000);
+      }, 15000);
     }, [lobbyId, token]);
 
-    return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote};
+    return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll};
 }
