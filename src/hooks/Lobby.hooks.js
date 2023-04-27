@@ -23,12 +23,9 @@ export const useLobby = () => {
     try {
       const response = await api.get(`/lobbies/${lobbyId}`);
       console.log(response)
-      await updateDataToLobby(response.data);
+      updateDataToLobby(response.data);
     } catch (error) {
       console.error("Details:", error);
-      alert(
-        "Something went wrong while fetching the lobby! See the console for details."
-      );
     }
   }, [lobbyId]);
 
@@ -38,17 +35,14 @@ export const useLobby = () => {
       StorageManager.setChannelToken(response.data);
     } catch (error) {
       console.error("Details: ", error);
-      alert(
-        "Something went wrong while fetching the channeltoken! See the console for details."
-      );
     }
   }, [lobbyId]);
 
   useEffect(() => {
     async function fetchData() {
       await fetchLobby();
-      //await fetchChannelToken();
-      //startBasicCall();
+      await fetchChannelToken();
+      startBasicCall();
     }
     fetchData().then();
     setIntervalId(setInterval(fetchLobby, 1000));
