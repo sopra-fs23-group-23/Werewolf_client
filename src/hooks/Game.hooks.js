@@ -1,5 +1,4 @@
 import StorageManager from "helpers/StorageManager";
-import { createEventSource } from "helpers/createEventSource";
 import { useCallback, useEffect, useState} from "react";
 import LobbyModel from "models/Lobby";
 import Player from "models/Player";
@@ -24,9 +23,6 @@ export const useGame = () => {
 
     const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
     const [intervalFetchGame, setIntervalFetchGame] = useState(null);
-
-    const [game, setGame] = useState(null);
-    const [poll, setPoll] = useState(null);
 
     const updateDataToLobby = useCallback((data) => {
       const lobby = new LobbyModel(data);
@@ -78,7 +74,6 @@ export const useGame = () => {
     const fetchGame = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}`);
-        setGame(response.data);
         updateDataToLobby(response.data.lobby);
         setStage(response.data.stage.type);
         setAdmin(new Player(response.data.lobby.admin));
@@ -89,12 +84,12 @@ export const useGame = () => {
       } catch (error) {
         console.error(error);
       }
-    }, [lobbyId]);
+      // eslint-disable-next-line no-use-before-define
+    }, [lobbyId, updateDataToLobby, fetchEndData]);
 
     const fetchPoll = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}/polls`);
-        setPoll(response.data);
 
         // maybe call these functions outside of try catch block to properly catch errors
         updateVoteMap(response.data);
@@ -110,7 +105,7 @@ export const useGame = () => {
       } catch (error) {
         console.error("Details Fetch Poll Error: ", error);
       }
-    }, [lobbyId]);
+    }, [lobbyId, updateOwnVote, updateVoteMap, updateVoteParticipants,]);
 
     // only gets called once when game is finished
 
@@ -138,7 +133,7 @@ export const useGame = () => {
         }
         fetchData().then();
       }, 15000);
-    }, [lobbyId, token]);
+    }, [lobbyId, token, fetchGame, fetchPoll]);
 
     return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll};
 }

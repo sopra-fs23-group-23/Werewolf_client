@@ -1,4 +1,3 @@
-import Player from 'models/Player';
 import Profile from '../Profile';
 import 'styles/ui/Endscreen.scss';
 import { useHistory } from "react-router-dom";
@@ -14,6 +13,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
   if(stage === "Day") {
     var buttonTheme = "dark";
   } else {
+    //eslint-disable-next-line
     var buttonTheme = "light";
   }
 
@@ -46,6 +46,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
   }, [endData, lobby])
 
   return (
+    //eslint-disable-next-line
     content = (
       <div className='container endscreen'>
         <div className='endscreen-headerrow'>
@@ -62,7 +63,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
           <img src={`/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
         </div>
         <div className='endscreen-winner-players'>
-          {endData.players.map(player => (
+          {winnerArray.map(player => (
             <Profile user={player} mode="dead-player" />
           ))}        
         </div>
