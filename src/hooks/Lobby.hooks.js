@@ -24,7 +24,9 @@ export const useLobby = () => {
     } catch (error) {
       console.error("Details:", error);
     }
-  }, [lobbyId, updateDataToLobby]);
+  },
+    // eslint-disable-next-line
+    [lobbyId]);
 
   const fetchChannelToken = useCallback(async () => {
     try {
@@ -42,10 +44,12 @@ export const useLobby = () => {
       startBasicCall();
     }
     fetchData().then();
-    setIntervalId(setInterval(fetchLobby, 1000));
-  }, [
-    lobbyId, fetchChannelToken, fetchLobby
-  ]);
+    const intervalId = setInterval(fetchLobby, 1000);
+    setIntervalId(intervalId);
+    return () => clearInterval(intervalId);
+  },
+  // eslint-disable-next-line
+  [lobbyId]);
 
   return { lobby, uid, intervalId};
 };

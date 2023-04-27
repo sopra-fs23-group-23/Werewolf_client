@@ -10,11 +10,11 @@ const Endscreen = ({ endData, lobby, stage}) => {
   const [winnerArray, setWinnerArray] = useState([]);
   const [looserArray, setLooserArray] = useState([]);
 
+  var buttonTheme;
   if(stage === "Day") {
-    var buttonTheme = "dark";
+     buttonTheme = "dark";
   } else {
-    //eslint-disable-next-line
-    var buttonTheme = "light";
+    buttonTheme = "light";
   }
 
   function leaveLobby() {
@@ -60,16 +60,18 @@ const Endscreen = ({ endData, lobby, stage}) => {
         </div>
 
         <div className='endscreen-winner'>
-          <img src={`/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
+          <img src={`../../public/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
         </div>
+        <h5>Winners</h5>
         <div className='endscreen-winner-players'>
+          
           {winnerArray.map(player => (
-            <Profile user={player} mode="dead-player" />
+            <Profile user={player} mode="dead-player" key={player.id}/>
           ))}        
         </div>
         <div className='endscreen-losers'>
           {looserArray.map(player => (
-            <Profile user={player} mode="dead-player" />
+            <Profile user={player} mode="dead-player" key={player.id}/>
           ))}
         </div>
       </div>

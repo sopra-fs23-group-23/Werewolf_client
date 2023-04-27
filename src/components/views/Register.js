@@ -22,7 +22,6 @@ const Register = (props) => {
 
       StorageManager.setUserToken(user.token);
       StorageManager.setUserId(user.id);
-      StorageManager.setUsername(user.username);
 
       history.push(`/home`);
     } catch (error) {
