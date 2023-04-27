@@ -19,12 +19,9 @@ export const useGame = () => {
     const [finished, setFinished] = useState(false);
     const [endData, setEndData] = useState(null);
     const [question, setQuestion] = useState(null);
-
     const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
     const [intervalFetchGame, setIntervalFetchGame] = useState(null);
 
-    // const [game, setGame] = useState(null);
-    // const [poll, setPoll] = useState(null);
 
     const updateDataToLobby = useCallback((data) => {
       const lobby = new LobbyModel(data);
@@ -76,7 +73,6 @@ export const useGame = () => {
     const fetchGame = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}`);
-        //setGame(response.data);
         updateDataToLobby(response.data.lobby);
         setStage(response.data.stage.type);
         setAdmin(new Player(response.data.lobby.admin));
@@ -93,7 +89,6 @@ export const useGame = () => {
     const fetchPoll = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}/polls`);
-        //setPoll(response.data);
 
         // maybe call these functions outside of try catch block to properly catch errors
         updateVoteMap(response.data);
@@ -112,8 +107,6 @@ export const useGame = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId]);
 
-    // only gets called once when game is finished
-
     const fetchEndData = useCallback(async () => {
       try {
         const response = await api.get(`/games/${lobbyId}/winner`);
@@ -128,7 +121,6 @@ export const useGame = () => {
 
     useEffect(() => {
       setTimeout(async () => {
-        //async function fetchData() {
           await fetchGame();
           await fetchPoll();
           setStarted(true);
@@ -137,8 +129,6 @@ export const useGame = () => {
           setIntervalFetchPoll(pollIntervalId);
           const gameIntervalId = setInterval(fetchGame, 1000);
           setIntervalFetchGame(gameIntervalId);
-        //}
-        //fetchData().then();
         return () => {
           clearInterval(pollIntervalId);
           clearInterval(gameIntervalId);
