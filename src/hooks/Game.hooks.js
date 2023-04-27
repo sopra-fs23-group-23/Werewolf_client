@@ -87,6 +87,7 @@ export const useGame = () => {
       } catch (error) {
         console.error(error);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId]);
 
     const fetchPoll = useCallback(async () => {
@@ -108,6 +109,7 @@ export const useGame = () => {
       } catch (error) {
         console.error("Details Fetch Poll Error: ", error);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId]);
 
     // only gets called once when game is finished
@@ -136,6 +138,7 @@ export const useGame = () => {
         }
         fetchData().then();
       }, 15000);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
     return {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll};
