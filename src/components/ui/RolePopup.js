@@ -58,19 +58,19 @@ const RolePopup = ({ show, handleClose, stage }) => {
     return (
       <div className='role-popup-background' onClick={handleClickOutsidePopup}>
         <div className={'role-popup-container ' + (stage === 'Day' ? 'background-light' : 'background-dark')}>
-          <img src='/assets/images/icons/close.svg' className='role-popup-close' onClick={handleClose} alt='close'/>
+          <img src='/assets/images/close.svg' className='role-popup-close' onClick={handleClose} alt='close'/>
           {allRoles.map((role, index) => 
             <div className={'role-popup-item ' + (index === activeIndex ? 'active' : '')} key={index}>
               <div className={'role-popup-item-indicator ' + (role.roleName === ownRoles[0].roleName ? 'active' : '')}>Your Role:</div>
               <h2 className='role-popup-item-title'>{ role.roleName }</h2>
-              <img className='role-popup-item-image' src={`/assets/images/roles/${role.roleName}.png`} alt={"Picture of a " + role.roleName}/>
+              <img className='role-popup-item-image' src={`/assets/images/${role.roleName}.png`} alt={"Picture of a " + role.roleName}/>
               <div className='role-popup-item-description'>{ role.description }</div>
               <div className='role-popup-item-amount'>Players with this role at game start: { role.amount }</div>
             </div>
           )}
           <div className='role-popup-nav'>
-            <img src='/assets/images/icons/back.svg' alt='back' onClick={previousRole} />
-            <img src='/assets/images/icons/forward.svg' alt='back' onClick={nextRole} />
+            <img src='/assets/images/back.svg' alt='back' onClick={previousRole} />
+            <img src='/assets/images/forward.svg' alt='back' onClick={nextRole} />
           </div>
         </div>
       </div>
