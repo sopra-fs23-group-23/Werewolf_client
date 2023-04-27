@@ -4,7 +4,6 @@ import { api } from 'helpers/api';
 import 'styles/views/Home.scss';
 import FormField from 'components/ui/FormField';
 import Lobby from 'models/Lobby';
-import User from 'models/User';
 import StorageManager from 'helpers/StorageManager';
 
 const Home = () => {
