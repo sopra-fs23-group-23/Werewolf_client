@@ -2,6 +2,7 @@
 import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
+import Selection from '../game/Selection';
 import Hitlist from '../Hitlist';
 import {api} from "../../../helpers/api";
 import storageManager from "../../../helpers/StorageManager";
@@ -12,22 +13,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
     if(stage === "Day") {
         backgroundTheme = "light";
     }
-    const castVote = async (optionId) => {
-      try {
-        if(!ownVote) {
-          console.log("I voted for person: " + optionId);
-          await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
-        } else {
-          console.log("I newly voted for person: " + optionId);
-          await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + ownVote.id);
-          await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
-        }
-      } catch (error) {
-        console.error(error);
-        alert(error.response.data?.message || 'Vote failed');
-      }
-    };
-
+    
   return (
     <div className="container game">
         <div className="game-stage-info">
@@ -37,13 +23,8 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
         <div className="game-hitlist">
           <Hitlist voteMap={voteMap} />
         </div>
-      <div className={`game-player-selection ${voteParticipants.length > 0 ? "game-player-selection-active": ""}`}>
-      {lobby.players.map(player => (
-        (player.alive) && (
-          <Profile user={new Player(player)} mode="selection" onClickEvent={voteParticipants.length > 0 ?castVote : ""} key={player.id} />
-        )
-      ))}
-    </div>
+        <Selection voteParticipants={voteParticipants} votingParty = {votingParty} lobby={lobby} stage={stage} ownVote={ownVote} />
+      
         <div className="game-stage-counter">
           {scheduledFinish ? <Countdown finishTime={scheduledFinish} /> : ""}
         </div>
