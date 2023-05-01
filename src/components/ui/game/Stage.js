@@ -3,30 +3,40 @@ import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
 import Selection from '../game/Selection';
-import Hitlist from '../Hitlist';
-import {api} from "../../../helpers/api";
-import storageManager from "../../../helpers/StorageManager";
+import Hitlist from './Hitlist';
+import Spinner from '../Spinner';
+import AmorMatch from './AmorMatch';
 
-const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage, ownVote}) => {
+const Stage = ({ currentPoll, lobby, stage}) => {
 
   let backgroundTheme = "dark";
     if(stage === "Day") {
         backgroundTheme = "light";
     }
-    
+  
+  let HitlistType = <Spinner/>
+  switch (currentPoll.votingParty) {
+    case "Amor":
+      HitlistType = <AmorMatch voteArray={currentPoll.voteArray} />
+      break;
+    default:
+      HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
+      break;
+  }  
+      
   return (
     <div className="container game">
         <div className="game-stage-info">
-          <h1>{votingParty}</h1>
-          <p>{question}</p>
+          <h1>{currentPoll.votingParty}</h1>
+          <p>{currentPoll.question}</p>
         </div>
         <div className="game-hitlist">
-          <Hitlist voteMap={voteMap} />
+          {HitlistType}
         </div>
-        <Selection voteParticipants={voteParticipants} votingParty = {votingParty} lobby={lobby} stage={stage} ownVote={ownVote} />
+        <Selection currentPoll={currentPoll} lobby={lobby} />
       
         <div className="game-stage-counter">
-          {scheduledFinish ? <Countdown finishTime={scheduledFinish} /> : ""}
+          {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} /> : ""}
         </div>
         <div className={`game-dead game-dead-${backgroundTheme}`}>
           <div className={`game-dead-players`}>

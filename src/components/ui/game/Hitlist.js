@@ -6,15 +6,15 @@ import Player from 'models/Player';
 
 
 
-const Hitlist = ({voteMap}) => {
+const Hitlist = ({voteArray}) => {
 
-    const voteArray = Array.from(voteMap);
 
     let simpleMap = new Map();
-    voteMap.forEach((value, key) => {
-        simpleMap.set(key.id, value);
-    });
+    // voteMap.forEach((value, key) => {
+    //     simpleMap.set(key.id, value);
+    // });
 
+    // TODO: Doesn't work anymore because simpleMap is not a Map anymore
     const updateHoveredPlayer = (hoveredPlayer) => {
         let allPlayers = document.getElementsByClassName("profile-selection")
         if (hoveredPlayer !== null){

@@ -7,37 +7,38 @@ import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
 
-
 const Game = () => {
 
-  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll} = useGame();
+  const {started, stage, lobby, admin, currentPoll, finished, endData, intervalFetchGame, intervalFetchPoll} = useGame();
 
   const [popupActive, setPopupActive] = useState(false);
 
   const [pollActive, setPollActive] = useState(false);
 
   useEffect(() => {
-    const now = new Date();
-    const timeLeft = Math.ceil((scheduledFinish - now) / 1000);
-  
-    if (timeLeft <= 0) {
-      setPollActive(false);
-    } else {
-      const intervalId = setInterval(() => {
-        const updatedNow = new Date();
-        const updatedTimeLeft = Math.ceil((scheduledFinish - updatedNow) / 1000);
-  
-        if (updatedTimeLeft <= 0) {
-          setPollActive(false);
-          clearInterval(intervalId);
-        } else {
-          setPollActive(true);
-        }
-      }, 1000);
-  
-      return () => clearInterval(intervalId);
+    if (currentPoll) { //TODO: How to make this better?
+      const now = new Date();
+      const timeLeft = Math.ceil((currentPoll.scheduledFinish - now) / 1000);
+    
+      if (timeLeft <= 0) {
+        setPollActive(false);
+      } else {
+        const intervalId = setInterval(() => {
+          const updatedNow = new Date();
+          const updatedTimeLeft = Math.ceil((currentPoll.scheduledFinish - updatedNow) / 1000);
+    
+          if (updatedTimeLeft <= 0) {
+            setPollActive(false);
+            clearInterval(intervalId);
+          } else {
+            setPollActive(true);
+          }
+        }, 1000);
+    
+        return () => clearInterval(intervalId);
+      }
     }
-  }, [scheduledFinish]);
+  }, [currentPoll]); //was scheduleFinish
 
   const togglePopup = () => {
     setPopupActive(!popupActive);
@@ -61,8 +62,7 @@ const Game = () => {
 
   if (started && pollActive) {
     content = (
-      <Stage votingParty={votingParty} question={question} voteMap={voteMap} voteParticipants={voteParticipants}
-             lobby={lobby} scheduledFinish={scheduledFinish} admin={admin} stage={stage} ownVote={ownVote}/>
+      <Stage currentPoll={currentPoll} lobby={lobby} stage={stage} />
     );
   }
 
