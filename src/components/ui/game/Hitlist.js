@@ -66,9 +66,4 @@ const Hitlist = ({voteArray}) => {
     );
 };
 
-
-Hitlist.propTypes = {
-    voteMap: PropTypes.object.isRequired,
-};
-
 export default Hitlist;

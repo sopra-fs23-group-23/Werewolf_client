@@ -12,11 +12,12 @@ const Selection = ({ currentPoll, lobby}) => {
 
   const castVote = async (optionId) => {
     try {
-      if(!currentPoll.ownVote) {
+      if(currentPoll.ownVote == null) {
         console.log("I voted for person: " + optionId);
         await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
       } else {
         console.log("I newly voted for person: " + optionId);
+        console.log("I previously voted for person: " + currentPoll.ownVote.id);
         await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.ownVote.id);
         await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
       }
@@ -31,7 +32,7 @@ const Selection = ({ currentPoll, lobby}) => {
   switch (currentPoll.role) {
     case 'Werewolf':
       content = (
-      <>
+        <>
         <div className="game-player-selection-wrapper">
           {lobby.players.map(player => (
             (!voteParticipantIds.includes(player.id) && player.alive) && (
@@ -48,19 +49,19 @@ const Selection = ({ currentPoll, lobby}) => {
             );
           })}
         </div>
-      </>
+        </>
       );
       break;
       case 'Villager':
         content = (
           <>
-            <div className="game-player-selection-wrapper">
-              {lobby.players.map(player => (
-                player.alive && (
-                  <Profile user={new Player(player)} mode="selection" onClickEvent={currentPoll.participants.length > 0 ? castVote : ""} key={player.id} />
-                )
-              ))}
-            </div>
+          <div className="game-player-selection-wrapper">
+            {lobby.players.map(player => (
+              player.alive && (
+                <Profile user={new Player(player)} mode="selection" onClickEvent={currentPoll.participants.length > 0 ? castVote : ""} key={player.id} />
+             )
+            ))}
+          </div>
           </>
         );
       break;

@@ -1,4 +1,5 @@
 import Player from './Player';
+import StorageManager from 'helpers/StorageManager';
 
 class Poll {
   constructor(data = {}) {
@@ -6,12 +7,16 @@ class Poll {
     this.question = "";
     this.participants = [];
     this.pollOptions = [];
+    this.voteArray = [];
+    this.ownVote = null;
     this.scheduledFinish = null;
     Object.assign(this, data);
     if (data.scheduledFinish) {
       this.scheduledFinish = new Date(data.scheduledFinish);
     }
-
+    this.setOwnVote(this.pollOptions);
+    this.setVoteArray(this.pollOptions);
+    
   }
 
   setVoteArray(pollOptions) {
@@ -24,16 +29,16 @@ class Poll {
     this.voteArray = voteArray;
   }
 
-  setOwnVote(pollOptions, userId) {
+  setOwnVote(pollOptions) {
+    console.log("PollOptions: ", pollOptions);
     for (const option of pollOptions) {
       for (const supporter of option.supporters) {
-        if (supporter.id === userId) {
+        if (supporter.id == StorageManager.getUserId()) {
           this.ownVote = new Player(option.player);
           return;
         }
       }
     }
-    this.ownVote = null;
   }
 
   printPoll(){
