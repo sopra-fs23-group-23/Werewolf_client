@@ -9,16 +9,10 @@ import Player from 'models/Player';
 const Hitlist = ({voteArray}) => {
 
 
-    let simpleMap = new Map();
-    // voteMap.forEach((value, key) => {
-    //     simpleMap.set(key.id, value);
-    // });
-
-    // TODO: Doesn't work anymore because simpleMap is not a Map anymore
     const updateHoveredPlayer = (hoveredPlayer) => {
         let allPlayers = document.getElementsByClassName("profile-selection")
-        if (hoveredPlayer !== null){
-            let supporterArray = simpleMap.get(hoveredPlayer.id);
+        if (hoveredPlayer !== null) {
+            let [_, supporterArray] = voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
             for (let i = 0; i < allPlayers.length; i++) {           
                 let playerId = parseInt(allPlayers[i].id.substring(18));
                 if (!supporterArray.includes(playerId)){
@@ -31,6 +25,7 @@ const Hitlist = ({voteArray}) => {
             }
         }
     };
+    
 
     
 
