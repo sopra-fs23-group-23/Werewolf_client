@@ -9,7 +9,7 @@ import WaitingScreen from '../ui/game/WaitingScreen';
 
 const Game = () => {
 
-  const {started, stage, lobby, admin, currentPoll, finished, endData, intervalFetchGame, intervalFetchPoll} = useGame();
+  const {game, finished, started, currentPoll, endData, intervalFetchGame, intervalFetchPoll} = useGame();
 
   const [popupActive, setPopupActive] = useState(false);
 
@@ -46,7 +46,7 @@ const Game = () => {
 
   let backgroundTheme = "dark";
   let textTheme = "light"
-  if(stage === "Day") {
+  if(game?.stage.type === "Day") {
     backgroundTheme = "light";
     textTheme = "dark"
   }
@@ -54,7 +54,7 @@ const Game = () => {
   var content = Information();
 
   if (started && !pollActive) {
-    const theme = stage === "Day" ? "dark" : "light";
+    const theme = game?.stage.type === "Day" ? "dark" : "light";
     content = (
       <WaitingScreen theme={theme}/>
     );
@@ -62,7 +62,7 @@ const Game = () => {
 
   if (started && pollActive) {
     content = (
-      <Stage currentPoll={currentPoll} lobby={lobby} stage={stage} />
+      <Stage currentPoll={currentPoll} lobby={game?.lobby} stage={game?.stage.type} />
     );
   }
 
@@ -70,7 +70,7 @@ const Game = () => {
     clearInterval(intervalFetchPoll);
     clearInterval(intervalFetchGame);
     content = (
-      <Endscreen endData={endData} lobby={lobby} stage={stage} />
+      <Endscreen endData={endData} lobby={game?.lobby} stage={game?.stage.type} />
     );
   }
 
@@ -78,7 +78,7 @@ const Game = () => {
     <div className={`background background-${backgroundTheme}-image game`}>
       {content}
       <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
-      <RolePopup show={popupActive} handleClose={togglePopup} stage={stage} />
+      <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />
     </div>
   );
 };

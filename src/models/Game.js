@@ -6,7 +6,7 @@ class Game {
     this.finished = null;
     this.stage = null;
     this.actions = null;
-    // lobby property has its own object
+    this.lobby = null;
     Object.assign(this, data);
   }
 }
