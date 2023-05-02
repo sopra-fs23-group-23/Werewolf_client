@@ -18,7 +18,8 @@ export const Information = () => {
     async function fetchData() {
       try {
         const responseAll = await api.get('/lobbies/' + lobbyId + "/roles");
-        setAllRoles(responseAll.data);
+        const tmp = responseAll.data.filter(role => role.roleName !== 'Mayor');   // remove mayor from information screen
+        setAllRoles(tmp);
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
       } catch (error) {
@@ -26,7 +27,7 @@ export const Information = () => {
         console.error(error);
       }
     }
-    setTimeout(()=>{setShowAllRoles(true)}, 7000)
+    setTimeout(()=>{setShowAllRoles(true)}, 20)
     fetchData();
   }, [id, lobbyId]);
 

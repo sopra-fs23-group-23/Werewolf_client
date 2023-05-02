@@ -10,37 +10,38 @@ import StorageManager from 'helpers/StorageManager';
 import { muteAudio } from 'helpers/agora';
 
 
-
 const Game = () => {
 
-  const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll} = useGame();
+  const {game, finished, started, currentPoll, endData, intervalFetchGame, intervalFetchPoll} = useGame();
 
   const [popupActive, setPopupActive] = useState(false);
 
   const [pollActive, setPollActive] = useState(false);
 
   useEffect(() => {
-    const now = new Date();
-    const timeLeft = Math.ceil((scheduledFinish - now) / 1000);
-  
-    if (timeLeft <= 0) {
-      setPollActive(false);
-    } else {
-      const intervalId = setInterval(() => {
-        const updatedNow = new Date();
-        const updatedTimeLeft = Math.ceil((scheduledFinish - updatedNow) / 1000);
-  
-        if (updatedTimeLeft <= 0) {
-          setPollActive(false);
-          clearInterval(intervalId);
-        } else {
-          setPollActive(true);
-        }
-      }, 1000);
-  
-      return () => clearInterval(intervalId);
+    if (currentPoll) { //TODO: How to make this better?
+      const now = new Date();
+      const timeLeft = Math.ceil((currentPoll.scheduledFinish - now) / 1000);
+    
+      if (timeLeft <= 0) {
+        setPollActive(false);
+      } else {
+        const intervalId = setInterval(() => {
+          const updatedNow = new Date();
+          const updatedTimeLeft = Math.ceil((currentPoll.scheduledFinish - updatedNow) / 1000);
+    
+          if (updatedTimeLeft <= 0) {
+            setPollActive(false);
+            clearInterval(intervalId);
+          } else {
+            setPollActive(true);
+          }
+        }, 1000);
+    
+        return () => clearInterval(intervalId);
+      }
     }
-  }, [scheduledFinish]);
+  }, [currentPoll]); //was scheduleFinish
 
   const togglePopup = () => {
     setPopupActive(!popupActive);
@@ -48,7 +49,7 @@ const Game = () => {
 
   let backgroundTheme = "dark";
   let textTheme = "light"
-  if(stage === "Day") {
+  if(game?.stage.type === "Day") {
     backgroundTheme = "light";
     textTheme = "dark"
   }
@@ -61,7 +62,7 @@ const Game = () => {
   var content = Information();
 
   if (started && !pollActive) {
-    const theme = stage === "Day" ? "dark" : "light";
+    const theme = game?.stage.type === "Day" ? "dark" : "light";
     content = (
       <WaitingScreen theme={theme}/>
     );
@@ -69,8 +70,7 @@ const Game = () => {
 
   if (started && pollActive) {
     content = (
-      <Stage votingParty={votingParty} question={question} voteMap={voteMap} voteParticipants={voteParticipants}
-             lobby={lobby} scheduledFinish={scheduledFinish} admin={admin} stage={stage} ownVote={ownVote}/>
+      <Stage currentPoll={currentPoll} lobby={game?.lobby} stage={game?.stage.type} />
     );
   }
 
@@ -78,7 +78,7 @@ const Game = () => {
     clearInterval(intervalFetchPoll);
     clearInterval(intervalFetchGame);
     content = (
-      <Endscreen endData={endData} lobby={lobby} stage={stage} />
+      <Endscreen endData={endData} lobby={game?.lobby} stage={game?.stage.type} />
     );
   }
 

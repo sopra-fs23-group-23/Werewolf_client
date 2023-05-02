@@ -2,50 +2,43 @@
 import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
-import Hitlist from '../Hitlist';
-import {api} from "../../../helpers/api";
-import storageManager from "../../../helpers/StorageManager";
+import Selection from '../game/Selection';
+import Hitlist from './Hitlist';
+import Spinner from '../Spinner';
+import AmorMatch from './AmorMatch';
 
-const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage, ownVote}) => {
+const Stage = ({ currentPoll, lobby, stage}) => {
 
   let backgroundTheme = "dark";
     if(stage === "Day") {
         backgroundTheme = "light";
     }
-    const castVote = async (optionId) => {
-      try {
-        if(!ownVote) {
-          console.log("I voted for person: " + optionId);
-          await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
-        } else {
-          console.log("I newly voted for person: " + optionId);
-          await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + ownVote.id);
-          await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
-        }
-      } catch (error) {
-        console.error(error);
-        alert(error.response.data?.message || 'Vote failed');
-      }
-    };
-
+  
+  let HitlistType = <Spinner/>
+  switch (currentPoll.votingParty) {
+    case "Amor":
+      HitlistType = <AmorMatch voteArray={currentPoll.voteArray} />
+      break;
+    case "Witch":
+      //TODO: implement witch
+    default:
+      HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
+      break;
+  }  
+      
   return (
     <div className="container game">
         <div className="game-stage-info">
-          <h1>{votingParty}</h1>
-          <p>{question}</p>
+          <h1>{currentPoll.votingParty}</h1>
+          <p>{currentPoll.question}</p>
         </div>
         <div className="game-hitlist">
-          <Hitlist voteMap={voteMap} />
+          {HitlistType}
         </div>
-      <div className={`game-player-selection ${voteParticipants.length > 0 ? "game-player-selection-active": ""}`}>
-      {lobby.players.map(player => (
-        (player.alive) && (
-          <Profile user={new Player(player)} mode="selection" onClickEvent={voteParticipants.length > 0 ?castVote : ""} key={player.id} />
-        )
-      ))}
-    </div>
+        <Selection currentPoll={currentPoll} lobby={lobby} />
+      
         <div className="game-stage-counter">
-          {scheduledFinish ? <Countdown finishTime={scheduledFinish} /> : ""}
+          {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} /> : ""}
         </div>
         <div className={`game-dead game-dead-${backgroundTheme}`}>
           <div className={`game-dead-players`}>

@@ -6,19 +6,12 @@ import Player from 'models/Player';
 
 
 
-const Hitlist = ({voteMap}) => {
-
-    const voteArray = Array.from(voteMap);
-
-    let simpleMap = new Map();
-    voteMap.forEach((value, key) => {
-        simpleMap.set(key.id, value);
-    });
+const Hitlist = ({voteArray}) => {
 
     const updateHoveredPlayer = (hoveredPlayer) => {
         let allPlayers = document.getElementsByClassName("profile-selection")
-        if (hoveredPlayer !== null){
-            let supporterArray = simpleMap.get(hoveredPlayer.id);
+        if (hoveredPlayer !== null) {
+            let [_, supporterArray] = voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
             for (let i = 0; i < allPlayers.length; i++) {           
                 let playerId = parseInt(allPlayers[i].id.substring(18));
                 if (!supporterArray.includes(playerId)){
@@ -31,6 +24,7 @@ const Hitlist = ({voteMap}) => {
             }
         }
     };
+    
 
     
 
@@ -64,11 +58,6 @@ const Hitlist = ({voteMap}) => {
         </div>
         
     );
-};
-
-
-Hitlist.propTypes = {
-    voteMap: PropTypes.object.isRequired,
 };
 
 export default Hitlist;

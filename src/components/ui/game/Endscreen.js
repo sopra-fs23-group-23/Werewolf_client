@@ -62,7 +62,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
         </div>
 
         <div className='endscreen-winner'>
-          <img src={`../../public/assets/images/roles/${endData.winner}.png`} alt='Winning Team'></img>
+          <img src={`/static/media/${endData.winner}.png`} alt='Winning Team'></img>
         </div>
         <h5>Winners</h5>
         <div className='endscreen-winner-players'>
