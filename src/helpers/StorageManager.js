@@ -2,6 +2,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 
 class StorageManager {
     static agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+
     static getUserToken() {
         return sessionStorage.getItem("token")
     }
@@ -16,6 +17,10 @@ class StorageManager {
 
     static getChannelToken() {
         return sessionStorage.getItem("channelToken")
+    }
+    
+    static getAgoraEngine() {
+        return this.agoraEngine;
     }
 
     static setUserToken(token) {
@@ -48,10 +53,6 @@ class StorageManager {
 
     static removeChannelToken() {
         sessionStorage.removeItem('channelToken');
-    }
-
-    static getAgoraEngine() {
-        return this.agoraEngine;
     }
 }
 

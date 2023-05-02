@@ -35,31 +35,23 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack.play();
     };
   });
-  return agoraEngine;
 }
 
 export async function joinCall() {
   const agoraEngine = StorageManager.getAgoraEngine();
-    // Join a channel.
-    await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
-    // Create a local audio track from the microphone audio.
-    channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-    // Publish the local audio track in the channel.
-    await agoraEngine.publish(channelParameters.localAudioTrack);
-    console.log("Publish success!");
+  // Join a channel.
+  await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
+  // Create a local audio track from the microphone audio.
+  channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  // Publish the local audio track in the channel.
+  await agoraEngine.publish(channelParameters.localAudioTrack);
+  console.log("Publish success!");
 }
-  // async function leaveCall() {
-  //   // Destroy the local audio and track.
-  //   channelParameters.localAudioTrack.close();
-  //   // Leave the channel.
-  //   await agoraEngine.leave();
-  //   console.log("You left the channel");
-  //   StorageManager.removeChannelToken();
-  // }
-
 
 export async function leaveCall(){
+  const agoraEngine = StorageManager.getAgoraEngine();
   channelParameters.localAudioTrack.close();
+  await agoraEngine.leave();
   console.log("You left the channel");
   StorageManager.removeChannelToken();
 }
