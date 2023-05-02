@@ -22,7 +22,6 @@ export const useGame = () => {
     const updateDataToLobby = useCallback((data) => {
       const lobby = new LobbyModel(data);
       setLobby(lobby);
-
     }, []);
 
     const fetchGame = useCallback(async () => {
@@ -87,5 +86,5 @@ export const useGame = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
-    return {started, stage, lobby, admin, currentPoll, finished, endData, intervalFetchGame, intervalFetchPoll};
+    return {started, admin, stage, lobby, currentPoll, finished, endData, intervalFetchGame, intervalFetchPoll};
 }
