@@ -1,7 +1,6 @@
 import StorageManager from "helpers/StorageManager";
 import { useCallback, useEffect, useState} from "react";
-import LobbyModel from "models/Lobby";
-import Player from "models/Player";
+import GameModel from "models/Game";
 import { api } from "helpers/api";
 import Poll from "models/Poll";
 
@@ -9,28 +8,23 @@ export const useGame = () => {
     const lobbyId = StorageManager.getLobbyId();
     const token = StorageManager.getUserToken();
     const [started, setStarted] = useState(false);
-    const [stage, setStage] = useState("");
-    const [lobby, setLobby] = useState(null);
-    const [admin, setAdmin] = useState(false);
-    const [finished, setFinished] = useState(false);
+    const [game, setGame] = useState(null);
+    const [finished, setFinished] = useState(false);    // is also part of game, but this state is only set to true when endData is already fetched
     const [currentPoll, setCurrentPoll] = useState(null);
     const [endData, setEndData] = useState(null);
     const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
     const [intervalFetchGame, setIntervalFetchGame] = useState(null);
 
 
-    const updateDataToLobby = useCallback((data) => {
-      const lobby = new LobbyModel(data);
-      setLobby(lobby);
-
+    const updateDataToGame = useCallback((data) => {
+      const game = new GameModel(data);
+      setGame(game);
     }, []);
 
     const fetchGame = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}`);
-        updateDataToLobby(response.data.lobby);
-        setStage(response.data.stage.type);
-        setAdmin(new Player(response.data.lobby.admin));
+        updateDataToGame(response.data);
         if(response.data.finished) {
           console.log("The game has ended, calling fetchEndData now");
           fetchEndData();
@@ -83,9 +77,9 @@ export const useGame = () => {
           clearInterval(pollIntervalId);
           clearInterval(gameIntervalId);
         };
-      }, 15000);
+      }, 4000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
-    return {started, stage, lobby, admin, currentPoll, finished, endData, intervalFetchGame, intervalFetchPoll};
+    return {game, finished, started, currentPoll, endData, intervalFetchGame, intervalFetchPoll};
 }

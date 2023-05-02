@@ -64,6 +64,7 @@ const Edit = () => {
           onChange={(n) => setPassword(n)}
         />
         <button className="btn btn-light"
+                disabled={!username || !password}
                 onClick={() => updateUser()}
         >
           Save Changes

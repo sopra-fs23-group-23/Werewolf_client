@@ -4,6 +4,7 @@ import StorageManager from "./StorageManager";
 
 const appId = '348d6a205d75436e916896366c5e315c';
 
+
 let channelParameters =
 {
   // A variable to hold a local audio track.
@@ -16,7 +17,8 @@ let channelParameters =
 
 export function startBasicCall() {
   // Create an instance of the Agora Engine
-  const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+  const agoraEngine = StorageManager.getAgoraEngine();
+
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -31,15 +33,47 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack.play();
     };
   });
+}
 
-  async function joinCall() {
-    // Join a channel.
-    await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
-    // Create a local audio track from the microphone audio.
-    channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-    // Publish the local audio track in the channel.
-    await agoraEngine.publish(channelParameters.localAudioTrack);
-    console.log("Publish success!");
+export async function joinCall() {
+  const agoraEngine = StorageManager.getAgoraEngine();
+  // Join a channel.
+  await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
+  // Create a local audio track from the microphone audio.
+  channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  // Publish the local audio track in the channel.
+  await agoraEngine.publish(channelParameters.localAudioTrack);
+  console.log("Publish success!");
+}
+
+export async function leaveCall(){
+  const agoraEngine = StorageManager.getAgoraEngine();
+  channelParameters.localAudioTrack.close();
+  await agoraEngine.leave();
+  console.log("You left the channel");
+  StorageManager.removeChannelToken();
+}
+
+// export function changeMicrophone() {
+//   var microphoneTracks = AgoraRTC.getMicrophones();
+//   console.log("microphoneTracks", microphoneTracks);
+
+// var microphoneTracks = await AgoraRTC.getMicrophones();
+// var playbackDevices = await AgoraRTC.getPlaybackDevices();
+
+// console.log("microphoneTracks", microphoneTracks);
+// console.log("playbackDevices", playbackDevices);
+
+// }
+
+export async function muteAudio() {
+  if (StorageManager.getIsMuted() === "false") {
+    channelParameters.localAudioTrack.setEnabled(false);
+    document.getElementById("muteAudio").src = "/static/media/microphone-disabled.svg";
+    StorageManager.setIsMuted("true");
+  }else{
+    channelParameters.localAudioTrack.setEnabled(true);
+    document.getElementById("muteAudio").src = "/static/media/microphone-enabled.svg";
+    StorageManager.setIsMuted("false");
   }
-  joinCall();
 }

@@ -57,7 +57,6 @@ const Stage = ({ currentPoll, lobby, stage}) => {
             ))}
           </div>
         </div>
-        
       </div>
   );
 }

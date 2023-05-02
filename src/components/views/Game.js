@@ -6,10 +6,13 @@ import { Information } from '../ui/game/Information';
 import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
+import StorageManager from 'helpers/StorageManager';
+import { muteAudio } from 'helpers/agora';
+
 
 const Game = () => {
 
-  const {started, stage, lobby, admin, currentPoll, finished, endData, intervalFetchGame, intervalFetchPoll} = useGame();
+  const {game, finished, started, currentPoll, endData, intervalFetchGame, intervalFetchPoll} = useGame();
 
   const [popupActive, setPopupActive] = useState(false);
 
@@ -47,10 +50,15 @@ const Game = () => {
   let backgroundTheme = stage === "Day" ? "light" : "dark";
   let textTheme = stage === "Day" ? "dark" : "light";
 
+  let microphone = "microphone-enabled.svg";
+  if(StorageManager.getIsMuted() === "true") {
+    microphone = "microphone-disabled.svg";
+  }
+
   var content = Information();
 
   if (started && !pollActive) {
-    const theme = stage === "Day" ? "dark" : "light";
+    const theme = game?.stage.type === "Day" ? "dark" : "light";
     content = (
       <WaitingScreen theme={theme}/>
     );
@@ -58,7 +66,7 @@ const Game = () => {
 
   if (started && pollActive) {
     content = (
-      <Stage currentPoll={currentPoll} lobby={lobby} stage={stage} />
+      <Stage currentPoll={currentPoll} lobby={game?.lobby} stage={game?.stage.type} />
     );
   }
 
@@ -66,15 +74,20 @@ const Game = () => {
     clearInterval(intervalFetchPoll);
     clearInterval(intervalFetchGame);
     content = (
-      <Endscreen endData={endData} lobby={lobby} stage={stage} />
+      <Endscreen endData={endData} lobby={game?.lobby} stage={game?.stage.type} />
     );
   }
 
   return (
     <div className={`background background-${backgroundTheme}-image game`}>
       {content}
-      <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
-      <RolePopup show={popupActive} handleClose={togglePopup} stage={stage} />
+      <div className='game-controls'>
+        <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
+        <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
+            <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
+        </div>
+      </div>
+      <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />
     </div>
   );
 };

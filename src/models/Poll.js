@@ -33,7 +33,7 @@ class Poll {
     console.log("PollOptions: ", pollOptions);
     for (const option of pollOptions) {
       for (const supporter of option.supporters) {
-        if (supporter.id == StorageManager.getUserId()) {
+        if (parseInt(supporter.id) === parseInt(StorageManager.getUserId())) {
           this.ownVote = new Player(option.player);
           return;
         }

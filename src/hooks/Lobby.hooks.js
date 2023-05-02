@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { api } from "helpers/api";
 import LobbyModel from "models/Lobby";
 import StorageManager from "helpers/StorageManager";
-import { startBasicCall } from "helpers/agora";
+import { startBasicCall, joinCall } from "helpers/agora";
 
 export const useLobby = () => {
   const lobbyId = StorageManager.getLobbyId();
@@ -40,8 +40,9 @@ export const useLobby = () => {
   useEffect(() => {
     async function fetchData() {
       await fetchLobby();
-      //await fetchChannelToken();
-      //startBasicCall();
+      await fetchChannelToken();
+      startBasicCall();
+      await joinCall();
     }
     fetchData().then();
     const intervalId = setInterval(fetchLobby, 1000);

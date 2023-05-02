@@ -3,6 +3,7 @@ import 'styles/ui/Endscreen.scss';
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import Spinner from 'components/ui/Spinner';
+import { leaveCall } from 'helpers/agora';
 
 const Endscreen = ({ endData, lobby, stage}) => {
   const history = useHistory();
@@ -18,6 +19,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
   }
 
   function leaveLobby() {
+    leaveCall();
     history.push(`/home`);
     // TODO
     //alert("Not implemented yet");
@@ -50,7 +52,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
     content = (
       <div className='container endscreen'>
         <div className='endscreen-headerrow'>
-          <button className={`btn btn-${buttonTheme}`} onClick={leaveLobby}>leave lobby</button>
+          <button className={`btn btn-${buttonTheme}`} onClick={leaveLobby} id='leaveLobby'>leave lobby</button>
           <div className="endscreen-headerrow-role">
             <h2>The</h2>
             <h1>{endData.winner}s</h1>
@@ -60,7 +62,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
         </div>
 
         <div className='endscreen-winner'>
-          <img src={`/static/media/${endData.winner}.png`} alt='Winning Team'></img>
+          <img src={`/static/media/${endData.winner}-${(stage === 'Day' ? "light" : "dark")}.png`} alt='Winning Team'></img>
         </div>
         <h5>Winners</h5>
         <div className='endscreen-winner-players'>
