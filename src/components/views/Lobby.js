@@ -4,6 +4,7 @@ import { useLobby } from 'hooks/Lobby.hooks';
 import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
+import StorageManager from 'helpers/StorageManager';
 
 
 const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
@@ -31,6 +32,7 @@ const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
 
 const Lobby = () => {
   const history = useHistory();
+  StorageManager.setIsMuted("false");
   function leave() {
     // TODO
     alert("Not implemented yet");

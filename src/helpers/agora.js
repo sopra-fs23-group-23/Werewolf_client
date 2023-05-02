@@ -5,8 +5,6 @@ import StorageManager from "./StorageManager";
 const appId = '348d6a205d75436e916896366c5e315c';
 
 
-StorageManager.setIsMuted(false);
-
 let channelParameters =
 {
   // A variable to hold a local audio track.
@@ -69,13 +67,13 @@ export async function leaveCall(){
 // }
 
 export async function muteAudio() {
-  if (StorageManager.getIsMuted()) {
-    channelParameters.localAudioTrack.setEnabled(true);
-    document.getElementById("muteAudio").src = "../assets/images/icons/microphone-enabled.svg";
-    StorageManager.setIsMuted(false);
-  }else{
+  if (StorageManager.getIsMuted() === "false") {
     channelParameters.localAudioTrack.setEnabled(false);
     document.getElementById("muteAudio").src = "../assets/images/icons/microphone-disabled.svg";
-    StorageManager.setIsMuted(true);
+    StorageManager.setIsMuted("true");
+  }else{
+    channelParameters.localAudioTrack.setEnabled(true);
+    document.getElementById("muteAudio").src = "../assets/images/icons/microphone-enabled.svg";
+    StorageManager.setIsMuted("false");
   }
 }

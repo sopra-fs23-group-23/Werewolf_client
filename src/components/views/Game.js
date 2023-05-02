@@ -53,10 +53,8 @@ const Game = () => {
     textTheme = "dark"
   }
 
-  let isMuted = StorageManager.getIsMuted();
-  console.log("muted property:", isMuted);
   let microphone = "microphone-enabled.svg";
-  if(!isMuted) {
+  if(StorageManager.getIsMuted() === "true") {
     microphone = "microphone-disabled.svg";
   }
 
