@@ -9,10 +9,8 @@ import AmorMatch from './AmorMatch';
 
 const Stage = ({ currentPoll, lobby, stage}) => {
 
-  let backgroundTheme = "dark";
-    if(stage === "Day") {
-        backgroundTheme = "light";
-    }
+  let backgroundTheme = stage === "Day" ? "light" : "dark";
+  
   
   let HitlistType = <Spinner/>
   switch (currentPoll.votingParty) {
@@ -20,10 +18,20 @@ const Stage = ({ currentPoll, lobby, stage}) => {
       HitlistType = <AmorMatch voteArray={currentPoll.voteArray} />
       break;
     case "Witch":
-      //TODO: implement witch
-    default:
+      //TODO: implement witch (Differentiate Elixir and Potion, elixir: big hitlish, potion: big selection)
+      break;
+    case "Hunter":
+      //TODO: implement hunter (No hitlist, but big selection?)
+      break;
+    case "Seer":
+      //TODO: implement seer (No hitlist, but big selection?)
+      break;
+    case "Werewolf", "Villager":
       HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
       break;
+    default:
+      HitlistType = <Spinner/>
+    break;
   }  
       
   return (

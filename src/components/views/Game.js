@@ -44,12 +44,8 @@ const Game = () => {
     setPopupActive(!popupActive);
   }
 
-  let backgroundTheme = "dark";
-  let textTheme = "light"
-  if(stage === "Day") {
-    backgroundTheme = "light";
-    textTheme = "dark"
-  }
+  let backgroundTheme = stage === "Day" ? "light" : "dark";
+  let textTheme = stage === "Day" ? "dark" : "light";
 
   var content = Information();
 
