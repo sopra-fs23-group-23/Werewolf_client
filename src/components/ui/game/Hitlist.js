@@ -8,7 +8,6 @@ import Player from 'models/Player';
 
 const Hitlist = ({voteArray}) => {
 
-
     const updateHoveredPlayer = (hoveredPlayer) => {
         let allPlayers = document.getElementsByClassName("profile-selection")
         if (hoveredPlayer !== null) {

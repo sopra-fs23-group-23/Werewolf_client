@@ -29,6 +29,13 @@ const Selection = ({ currentPoll, lobby}) => {
   let content;
  
   switch (currentPoll.role) {
+    case 'Seer', 'Witch', 'Hunter':
+      content = (
+        <>
+          //TODO: implement
+        </>
+      );
+      break;
     case 'Werewolf':
       content = (
         <>

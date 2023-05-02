@@ -19,6 +19,8 @@ const Stage = ({ currentPoll, lobby, stage}) => {
     case "Amor":
       HitlistType = <AmorMatch voteArray={currentPoll.voteArray} />
       break;
+    case "Witch":
+      //TODO: implement witch
     default:
       HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
       break;
