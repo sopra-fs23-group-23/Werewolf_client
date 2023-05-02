@@ -26,7 +26,7 @@ export const Information = () => {
         console.error(error);
       }
     }
-    setTimeout(()=>{setShowAllRoles(true)}, 7000)
+    setTimeout(()=>{setShowAllRoles(true)}, 2000)
     fetchData();
   }, [id, lobbyId]);
 

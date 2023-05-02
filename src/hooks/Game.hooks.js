@@ -83,7 +83,7 @@ export const useGame = () => {
           clearInterval(pollIntervalId);
           clearInterval(gameIntervalId);
         };
-      }, 15000);
+      }, 4000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
