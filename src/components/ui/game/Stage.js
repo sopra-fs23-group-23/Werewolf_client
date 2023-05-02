@@ -5,7 +5,6 @@ import Countdown from '../Countdown';
 import Hitlist from '../Hitlist';
 import {api} from "../../../helpers/api";
 import storageManager from "../../../helpers/StorageManager";
-import { muteAudio } from "helpers/agora";
 
 const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, scheduledFinish, admin, stage, ownVote}) => {
 
@@ -56,9 +55,6 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
               )
             ))}
           </div>
-        </div>
-        <div className='agora agora-settings'>
-          <img id='muteAudio' src='../assets/images/icons/microphone-enabled.svg' onClick={muteAudio} alt='microphone image'/>
         </div>
       </div>
   );

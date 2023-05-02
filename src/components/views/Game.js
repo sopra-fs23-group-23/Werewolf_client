@@ -6,6 +6,8 @@ import { Information } from '../ui/game/Information';
 import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
+import StorageManager from 'helpers/StorageManager';
+import { muteAudio } from 'helpers/agora';
 
 
 
@@ -51,6 +53,13 @@ const Game = () => {
     textTheme = "dark"
   }
 
+  let isMuted = StorageManager.getIsMuted();
+  console.log("muted property:", isMuted);
+  let microphone = "microphone-enabled.svg";
+  if(!isMuted) {
+    microphone = "microphone-disabled.svg";
+  }
+
   var content = Information();
 
   if (started && !pollActive) {
@@ -78,7 +87,13 @@ const Game = () => {
   return (
     <div className={`background background-${backgroundTheme}-image game`}>
       {content}
-      <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
+      <div className='game-controls'>
+        <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
+        <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
+            <img id='muteAudio' src={`../assets/images/icons/${microphone}`} onClick={muteAudio} alt='microphone'/>
+        </div>
+      </div>
+      
       <RolePopup show={popupActive} handleClose={togglePopup} stage={stage} />
     </div>
   );
