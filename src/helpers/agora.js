@@ -4,6 +4,9 @@ import StorageManager from "./StorageManager";
 
 const appId = '348d6a205d75436e916896366c5e315c';
 
+
+var isMuteAudio = false;
+
 let channelParameters =
 {
   // A variable to hold a local audio track.
@@ -42,4 +45,28 @@ export function startBasicCall() {
     console.log("Publish success!");
   }
   joinCall();
+}
+
+// export function changeMicrophone() {
+//   var microphoneTracks = AgoraRTC.getMicrophones();
+//   console.log("microphoneTracks", microphoneTracks);
+
+// var microphoneTracks = await AgoraRTC.getMicrophones();
+// var playbackDevices = await AgoraRTC.getPlaybackDevices();
+
+// console.log("microphoneTracks", microphoneTracks);
+// console.log("playbackDevices", playbackDevices);
+
+// }
+
+export async function muteAudio() {
+  if (isMuteAudio === false) {
+    channelParameters.localAudioTrack.setEnabled(false);
+    document.getElementById("muteAudio").src = "../assets/images/icons/microphone-disabled.svg";
+    isMuteAudio = true;
+  }else{
+    channelParameters.localAudioTrack.setEnabled(true);
+    document.getElementById("muteAudio").src = "../assets/images/icons/microphone-enabled.svg";
+    isMuteAudio = false;
+  }
 }

@@ -21,7 +21,6 @@ const Login = (props) => {
       console.log("User: ", user);
       StorageManager.setUserToken(user.token);
       StorageManager.setUserId(user.id);
-      StorageManager.setUsername(user.username);
       history.push(`/home`);
     } catch (error) {
       alert(error.response.data?.message || 'Login failed.');

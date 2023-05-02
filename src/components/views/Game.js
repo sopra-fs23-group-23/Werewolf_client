@@ -8,6 +8,7 @@ import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
 
 
+
 const Game = () => {
 
   const {started, stage, lobby, admin, voteMap, votingParty, question, voteParticipants, scheduledFinish, finished, endData, ownVote, intervalFetchGame, intervalFetchPoll} = useGame();
