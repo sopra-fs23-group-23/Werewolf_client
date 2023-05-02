@@ -34,8 +34,10 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack.play();
     };
   });
+  return agoraEngine;
+}
 
-  async function joinCall() {
+export async function joinCall(agoraEngine) {
     // Join a channel.
     await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
     // Create a local audio track from the microphone audio.
@@ -43,9 +45,7 @@ export function startBasicCall() {
     // Publish the local audio track in the channel.
     await agoraEngine.publish(channelParameters.localAudioTrack);
     console.log("Publish success!");
-  }
-  joinCall();
-
+}
   // async function leaveCall() {
   //   // Destroy the local audio and track.
   //   channelParameters.localAudioTrack.close();
@@ -54,7 +54,7 @@ export function startBasicCall() {
   //   console.log("You left the channel");
   //   StorageManager.removeChannelToken();
   // }
-}
+
 
 export async function leaveCall(){
   channelParameters.localAudioTrack.close();
