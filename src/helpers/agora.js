@@ -19,7 +19,8 @@ let channelParameters =
 
 export function startBasicCall() {
   // Create an instance of the Agora Engine
-  const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+  const agoraEngine = StorageManager.getAgoraEngine();
+
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -37,7 +38,8 @@ export function startBasicCall() {
   return agoraEngine;
 }
 
-export async function joinCall(agoraEngine) {
+export async function joinCall() {
+  const agoraEngine = StorageManager.getAgoraEngine();
     // Join a channel.
     await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
     // Create a local audio track from the microphone audio.

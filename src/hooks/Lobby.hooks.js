@@ -41,8 +41,8 @@ export const useLobby = () => {
     async function fetchData() {
       await fetchLobby();
       await fetchChannelToken();
-      var agoraEngine = startBasicCall();
-      joinCall(agoraEngine);
+      startBasicCall();
+      await joinCall();
     }
     fetchData().then();
     const intervalId = setInterval(fetchLobby, 1000);
