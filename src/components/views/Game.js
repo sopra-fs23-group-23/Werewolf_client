@@ -88,11 +88,10 @@ const Game = () => {
       <div className='game-controls'>
         <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
-            <img id='muteAudio' src={`../assets/images/icons/${microphone}`} onClick={muteAudio} alt='microphone'/>
+            <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
         </div>
       </div>
-      
-      <RolePopup show={popupActive} handleClose={togglePopup} stage={stage} />
+      <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />
     </div>
   );
 };

@@ -69,11 +69,11 @@ export async function leaveCall(){
 export async function muteAudio() {
   if (StorageManager.getIsMuted() === "false") {
     channelParameters.localAudioTrack.setEnabled(false);
-    document.getElementById("muteAudio").src = "../assets/images/icons/microphone-disabled.svg";
+    document.getElementById("muteAudio").src = "/static/media/microphone-disabled.svg";
     StorageManager.setIsMuted("true");
   }else{
     channelParameters.localAudioTrack.setEnabled(true);
-    document.getElementById("muteAudio").src = "../assets/images/icons/microphone-enabled.svg";
+    document.getElementById("muteAudio").src = "/static/media/microphone-enabled.svg";
     StorageManager.setIsMuted("false");
   }
 }
