@@ -45,6 +45,21 @@ export function startBasicCall() {
     console.log("Publish success!");
   }
   joinCall();
+
+  // async function leaveCall() {
+  //   // Destroy the local audio and track.
+  //   channelParameters.localAudioTrack.close();
+  //   // Leave the channel.
+  //   await agoraEngine.leave();
+  //   console.log("You left the channel");
+  //   StorageManager.removeChannelToken();
+  // }
+}
+
+export async function leaveCall(){
+  channelParameters.localAudioTrack.close();
+  console.log("You left the channel");
+  StorageManager.removeChannelToken();
 }
 
 // export function changeMicrophone() {

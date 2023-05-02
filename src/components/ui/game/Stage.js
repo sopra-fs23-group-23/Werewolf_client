@@ -58,7 +58,7 @@ const Stage = ({ votingParty, question, voteMap, voteParticipants, lobby, schedu
           </div>
         </div>
         <div className='agora agora-settings'>
-          <img id='muteAudio' src='../assets/images/icons/microphone-enabled.svg' onClick={muteAudio}/>
+          <img id='muteAudio' src='../assets/images/icons/microphone-enabled.svg' onClick={muteAudio} alt='microphone image'/>
         </div>
       </div>
   );
