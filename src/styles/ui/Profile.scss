@@ -31,7 +31,7 @@
         }
         
     }
-    &-selection  {
+    &-selection-small  {
         margin: 0.5em 1em;
         img {
             height: 75px;
@@ -54,6 +54,16 @@
                 transition: all 0.2s ease-in-out;
             }
         }
+    }
+    &-selection-big  {
+        margin: 0.5em 1em;
+        img {
+            height: 100px;
+            width: 100px;
+            border-radius: 50px;
+            transition: all 0.2s ease-in-out;
+        }
+
     }
     &-lobby  {
         margin: 0.5em 1em;

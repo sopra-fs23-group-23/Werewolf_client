@@ -47,8 +47,6 @@ const Game = () => {
     setPopupActive(!popupActive);
   }
 
-  console.log("Game stage: ", game?.stage);
-
   let backgroundTheme = (game?.stage.type === "Day") ? "light" : "dark";
   let textTheme = (game?.stage.type === "Day") ? "dark" : "light";
 

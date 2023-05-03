@@ -6,21 +6,22 @@ import Player from 'models/Player';
 
 
 
-const Hitlist = ({voteArray}) => {
+const Hitlist = ({currentPoll}) => {
+
 
     const updateHoveredPlayer = (hoveredPlayer) => {
-        let allPlayers = document.getElementsByClassName("profile-selection")
+        let allPlayers = document.getElementsByClassName("profile-selection-small")
         if (hoveredPlayer !== null) {
-            let [_, supporterArray] = voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
+            let [_, supporterArray] = currentPoll.voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
             for (let i = 0; i < allPlayers.length; i++) {           
                 let playerId = parseInt(allPlayers[i].id.substring(18));
                 if (!supporterArray.includes(playerId)){
-                    allPlayers[i].classList.add("profile-selection-isNotVoter");
+                    allPlayers[i].classList.add("profile-selection-small-isNotVoter");
                 }
             }
         } else {
             for (let i = 0; i < allPlayers.length; i++) {
-                allPlayers[i].classList.remove("profile-selection-isNotVoter");
+                allPlayers[i].classList.remove("profile-selection-small-isNotVoter");
             }
         }
     };
@@ -35,24 +36,24 @@ const Hitlist = ({voteArray}) => {
     return (
         <div className="hitlist">
             <div className="hitlist-left">
-                { 4 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 4 <= currentPoll.voteArray.length ? (
+                <Profile user={new Player(currentPoll.voteArray[3][0])} mode="hitlist" votes={currentPoll.voteArray[3][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
-                { 2 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 2 <= currentPoll.voteArray.length ? (
+                <Profile user={new Player(currentPoll.voteArray[1][0])} mode="hitlist" votes={currentPoll.voteArray[1][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
             </div>
             <div className="hitlist-leader">
-                { 1 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes={voteArray[0][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 1 <= currentPoll.voteArray.length ? (
+                <Profile user={new Player(currentPoll.voteArray[0][0])} mode="hitlist-leader" votes={currentPoll.voteArray[0][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}          
             </div>
             <div className="hitlist-right">
-                { 3 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 3 <= currentPoll.voteArray.length ? (
+                <Profile user={new Player(currentPoll.voteArray[2][0])} mode="hitlist" votes={currentPoll.voteArray[2][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
-                { 5 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 5 <= currentPoll.voteArray.length ? (
+                <Profile user={new Player(currentPoll.voteArray[4][0])} mode="hitlist" votes={currentPoll.voteArray[4][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
             </div>
         </div>

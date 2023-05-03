@@ -20,6 +20,17 @@ class Poll {
     
   }
 
+  getRolePlural() {
+    switch (this.role) {
+      case "Werewolf":
+        return "Werewolves";
+      case "Villager":
+        return "Villagers";
+      default:
+        return this.role;
+    }
+  }
+
   setVoteArray(pollOptions) {
     const sortedPollOptions = pollOptions.filter(option => option.supporters.length > 0)
                                           .sort((a, b) => b.supporters.length - a.supporters.length);
@@ -31,7 +42,6 @@ class Poll {
   }
 
   setOwnVote(pollOptions) {
-    console.log("PollOptions: ", pollOptions);
     for (const option of pollOptions) {
       for (const supporter of option.supporters) {
         if (parseInt(supporter.id) === parseInt(StorageManager.getUserId())) {
