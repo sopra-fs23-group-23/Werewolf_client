@@ -20,7 +20,6 @@ export const useGame = () => {
         const response = await api.get(`/games/${lobbyId}`);
         setGame(new GameModel(response.data));
         if(response.data.finished) {
-          console.log("The game has ended, calling fetchEndData now");
           fetchEndData();
         }
       } catch (error) {
@@ -71,7 +70,7 @@ export const useGame = () => {
           clearInterval(pollIntervalId);
           clearInterval(gameIntervalId);
         };
-      }, 4000);
+      }, 15000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
