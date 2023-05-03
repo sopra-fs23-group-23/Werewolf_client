@@ -12,12 +12,12 @@ import { muteAudio } from 'helpers/agora';
 
 const Game = () => {
 
-  const {game, finished, started, currentPoll, endData, intervalFetchGame, intervalFetchPoll} = useGame();
+  const {game, finished, started, currentPoll, endData} = useGame();
 
   const [popupActive, setPopupActive] = useState(false);
 
   const [pollActive, setPollActive] = useState(false);
-
+  console.log("....................................");
   useEffect(() => {
     if (currentPoll) { //TODO: How to make this better?
       const now = new Date();
@@ -73,8 +73,6 @@ const Game = () => {
   }
 
   if (finished) {
-    clearInterval(intervalFetchPoll);
-    clearInterval(intervalFetchGame);
     content = (
       <Endscreen endData={endData} lobby={game?.lobby} stage={game?.stage.type} />
     );

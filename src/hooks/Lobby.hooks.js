@@ -35,8 +35,8 @@ export const useLobby = () => {
     async function fetchData() {
       await fetchLobby();
       await fetchChannelToken();
-      startBasicCall();
-      await joinCall();
+      //startBasicCall();
+      //await joinCall();
     }
     fetchData().then();
     const intervalId = setInterval(fetchLobby, 1000);
