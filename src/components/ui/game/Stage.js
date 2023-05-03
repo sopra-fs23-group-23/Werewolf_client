@@ -12,7 +12,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
   let backgroundTheme = stage === "Day" ? "light" : "dark";
   
   
-  let HitlistType = <Spinner/>
+  let HitlistType = null;
   switch (currentPoll.votingParty) {
     case "Amor":
       HitlistType = <AmorMatch voteArray={currentPoll.voteArray} />
@@ -30,7 +30,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
       HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
       break;
     default:
-      HitlistType = <Spinner/>
+      HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
     break;
   }  
       
