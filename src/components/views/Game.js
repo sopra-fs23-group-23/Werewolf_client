@@ -47,8 +47,10 @@ const Game = () => {
     setPopupActive(!popupActive);
   }
 
-  let backgroundTheme = stage === "Day" ? "light" : "dark";
-  let textTheme = stage === "Day" ? "dark" : "light";
+  console.log("Game stage: ", game?.stage);
+
+  let backgroundTheme = (game?.stage.type === "Day") ? "light" : "dark";
+  let textTheme = (game?.stage.type === "Day") ? "dark" : "light";
 
   let microphone = "microphone-enabled.svg";
   if(StorageManager.getIsMuted() === "true") {

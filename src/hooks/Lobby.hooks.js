@@ -10,17 +10,11 @@ export const useLobby = () => {
   const [lobby, setLobby] = useState(null);
   const [intervalId, setIntervalId] = useState(null);
 
-  const updateDataToLobby = useCallback((data) => {
-    console.log("updateDataToLobby", data)
-    const lobby = new LobbyModel(data);
-    setLobby(lobby);
-  }, []);
-
   const fetchLobby = useCallback(async () => {
     try {
       const response = await api.get(`/lobbies/${lobbyId}`);
       console.log(response)
-      updateDataToLobby(response.data);
+      setLobby(new LobbyModel(response.data));
     } catch (error) {
       console.error("Details:", error);
     }

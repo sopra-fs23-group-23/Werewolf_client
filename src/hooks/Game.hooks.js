@@ -15,16 +15,10 @@ export const useGame = () => {
     const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
     const [intervalFetchGame, setIntervalFetchGame] = useState(null);
 
-
-    const updateDataToGame = useCallback((data) => {
-      const game = new GameModel(data);
-      setGame(game);
-    }, []);
-
     const fetchGame = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}`);
-        updateDataToGame(response.data);
+        setGame(new GameModel(response.data));
         if(response.data.finished) {
           console.log("The game has ended, calling fetchEndData now");
           fetchEndData();
