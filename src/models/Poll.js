@@ -16,6 +16,7 @@ class Poll {
     }
     this.setOwnVote(this.pollOptions);
     this.setVoteArray(this.pollOptions);
+    this.isVoteParticipant = (this.participants.length > 0) ? true : false;
     
   }
 

@@ -6,6 +6,7 @@ import Selection from '../game/Selection';
 import Hitlist from './Hitlist';
 import Spinner from '../Spinner';
 import AmorMatch from './AmorMatch';
+import SweetDreams from './SweetDreams';
 
 const Stage = ({ currentPoll, lobby, stage}) => {
 
@@ -24,7 +25,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
       //TODO: implement hunter (No hitlist, but big selection?)
       break;
     case "Seer":
-      //TODO: implement seer (No hitlist, but big selection?)
+      //TODO: implement seer (No hitlist, but big selection?) 
       break;
     case "Werewolf", "Villager":
       HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
@@ -33,6 +34,25 @@ const Stage = ({ currentPoll, lobby, stage}) => {
       HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
     break;
   }  
+
+  let content = (
+    <Spinner theme={backgroundTheme} />
+  )
+
+  if (currentPoll.isVoteParticipant){
+    content = (
+      <>
+        <div className="game-hitlist">
+          {HitlistType}
+        </div>
+        <Selection currentPoll={currentPoll} lobby={lobby} />
+      </>
+    )
+  } else {
+    content = (
+      <SweetDreams currentPoll={currentPoll}/>
+    )
+  }
       
   return (
     <div className="container game">
@@ -40,11 +60,8 @@ const Stage = ({ currentPoll, lobby, stage}) => {
           <h1>{currentPoll.votingParty}</h1>
           <p>{currentPoll.question}</p>
         </div>
-        <div className="game-hitlist">
-          {HitlistType}
-        </div>
-        <Selection currentPoll={currentPoll} lobby={lobby} />
-      
+
+        {content}
         <div className="game-stage-counter">
           {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} /> : ""}
         </div>

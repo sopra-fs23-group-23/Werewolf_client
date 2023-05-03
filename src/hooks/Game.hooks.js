@@ -32,11 +32,7 @@ export const useGame = () => {
     const fetchPoll = useCallback(async () => {
       try{
         const response = await api.get(`/games/${lobbyId}/polls`);
-        //console.log("Response: ", response.data);
         let newPoll = new Poll(response.data);
-        //newPoll.setVoteArray(response.data.pollOptions);
-        //newPoll.setOwnVote(response.data.pollOptions, StorageManager.getUserId());
-        
         newPoll.printPoll();
         setCurrentPoll(newPoll);
       } catch (error) {
