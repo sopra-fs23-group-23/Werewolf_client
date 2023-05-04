@@ -16,10 +16,8 @@ const Selection = ({currentPoll}) => {
   const castVote = async (optionId) => {
     try {
       if(currentPoll.ownVote == null) {
-        console.log("I voted for person: " + optionId);
         await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
       } else {
-        console.log("I newly voted for person: " + optionId);
         await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.ownVote.id);
         await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
       }
