@@ -21,8 +21,6 @@ const Endscreen = ({ endData, lobby, stage}) => {
   function leaveLobby() {
     leaveCall();
     history.push(`/home`);
-    // TODO
-    //alert("Not implemented yet");
   }
   function rematch() {
     // TODO
