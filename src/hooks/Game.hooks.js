@@ -33,7 +33,6 @@ export const useGame = () => {
       try{
         const response = await api.get(`/games/${lobbyId}/polls`);
         let newPoll = new Poll(response.data);
-        console.log("Poll Data: ", response.data);
         newPoll.printPoll();
         setCurrentPoll(newPoll);
       } catch (error) {

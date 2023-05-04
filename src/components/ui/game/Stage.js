@@ -18,7 +18,9 @@ const Stage = ({ currentPoll, lobby, stage}) => {
     case "Amor":
       HitlistType = <AmorMatch currentPoll={currentPoll} />
       break;
-    case "Werewolf", "Villager":
+    case "Werewolf":
+    case "Villager":
+    case "Mayor":
       HitlistType = <Hitlist currentPoll={currentPoll} />
       break;
     default: //Witch, Hunter, Seer
