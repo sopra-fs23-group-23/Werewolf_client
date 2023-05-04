@@ -3,6 +3,7 @@ import 'styles/ui/Hitlist.scss';
 import PropTypes from 'prop-types';
 import Profile from 'components/ui/Profile';
 import Player from 'models/Player';
+import { useEffect } from 'react';
 
 
 
@@ -21,13 +22,23 @@ const Hitlist = ({currentPoll}) => {
                     allPlayers[i].classList.add("profile-selection-small-isNotVoter");
                 }
             }
+            // Remove the class after 4 seconds
+            setTimeout(() => {
+                updateHoveredPlayer(null);
+            }, 4000);      
+
         } else {
             for (let i = 0; i < allPlayers.length; i++) {
                 allPlayers[i].classList.remove("profile-selection-small-isNotVoter");
             }
         }
     };
-    
+
+    useEffect(() => {
+        updateHoveredPlayer(null);
+    }, [currentPoll.role]);
+
+
     const hitListLeaders = [];
     const hitList = [];
 
