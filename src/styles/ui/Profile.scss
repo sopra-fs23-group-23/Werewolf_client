@@ -22,16 +22,24 @@
 
         
     }
-    &-hitlist-leader{
+    &-lover, &-hitlist-leader {
         img {
             height: 150px;
             width: 150px;
             border-radius: 100px;
+        }
+    }
+    &-hitlist-leader{
+        img {
             border: 4px solid red;
         }
-        
     }
-    &-selection  {
+    &-lover {
+        img {
+            border: 4px solid pink;
+        }
+    }
+    &-selection-small  {
         margin: 0.5em 1em;
         img {
             height: 75px;
@@ -55,6 +63,16 @@
             }
         }
     }
+    &-selection-big  {
+        margin: 0.5em 1em;
+        img {
+            height: 100px;
+            width: 100px;
+            border-radius: 50px;
+            transition: all 0.2s ease-in-out;
+        }
+
+    }
     &-lobby  {
         margin: 0.5em 1em;
         img {
@@ -75,6 +93,7 @@
             transition: all 0.5s ease-in-out;
         }
     }
+    
     &-name {
         margin: 0.4em 0 0 0;
     }

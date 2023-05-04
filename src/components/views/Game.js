@@ -18,15 +18,11 @@ const Game = () => {
     setPopupActive(!popupActive);
   }
 
-  console.log("Game stage: ", game?.stage);
-
   let backgroundTheme = (game?.stage.type === "Day") ? "light" : "dark";
   let textTheme = (game?.stage.type === "Day") ? "dark" : "light";
 
-  let microphone = "microphone-enabled.svg";
-  if(StorageManager.getIsMuted() === "true") {
-    microphone = "microphone-disabled.svg";
-  }
+  let microphone = (StorageManager.getIsMuted() === "true") ? "microphone-disabled.svg" : "microphone-enabled.svg";
+
 
   var content = Information();
 
