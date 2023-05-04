@@ -45,16 +45,28 @@ export async function joinCall() {
   channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish(channelParameters.localAudioTrack);
-  console.log("Publish success!");
 }
 
 export async function leaveCall(){
   const agoraEngine = StorageManager.getAgoraEngine();
   channelParameters.localAudioTrack.close();
   await agoraEngine.leave();
-  console.log("You left the channel");
   StorageManager.removeChannelToken();
 }
+
+
+// export async function checkIfUserIsInCall() {
+//   const agoraEngine = StorageManager.getAgoraEngine();
+//   const remoteUsers = agoraEngine.remoteUsers;
+//   console.log("remoteUsers", remoteUsers);
+//   if (remoteUsers.length > 0) {
+//     console.log("You are in a call");
+//     return true;
+//   } else {
+//     console.log("You are not in a call");
+//     return false;
+//   }
+// }
 
 // export function changeMicrophone() {
 //   var microphoneTracks = AgoraRTC.getMicrophones();

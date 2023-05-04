@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState} from "react";
 import GameModel from "models/Game";
 import { api } from "helpers/api";
 import Poll from "models/Poll";
+import { joinCall, checkIfUserIsInCall } from "helpers/agora";
 
 let periodicFunctionToBeCalled = () => {};
 
@@ -51,8 +52,11 @@ export const useGame = () => {
   }
 
   const performStageChange = () => {
-    //TODO: Place for Miro to go wild with agora
+    if(StorageManager.getAgoraEngine().remoteUsers.length == 0) {
+      joinCall();
+    }
   }
+
   const fetchPoll = async () => {
     try{
       const response = await api.get(`/games/${lobbyId}/polls`);
