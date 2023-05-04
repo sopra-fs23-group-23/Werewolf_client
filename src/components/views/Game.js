@@ -9,26 +9,10 @@ import WaitingScreen from '../ui/game/WaitingScreen';
 import StorageManager from 'helpers/StorageManager';
 import { muteAudio } from 'helpers/agora';
 
-
 const Game = () => {
 
-  const {game, finished, started, currentPoll, endData} = useGame();
-
+  const {game, finished, started, currentPoll, endData, pollActive} = useGame();
   const [popupActive, setPopupActive] = useState(false);
-
-  const [pollActive, setPollActive] = useState(false);
-  useEffect(() => {
-    if (currentPoll) { //TODO: How to make this better?
-      const now = new Date();
-      const timeLeft = Math.ceil((currentPoll.scheduledFinish - now) / 1000);
-    
-      if (timeLeft <= 0) {
-        setPollActive(false);
-      } else {
-        setPollActive(true);
-      }
-    }
-  }, [currentPoll]); //was scheduleFinish
 
   const togglePopup = () => {
     setPopupActive(!popupActive);
