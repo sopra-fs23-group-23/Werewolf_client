@@ -6,24 +6,46 @@ import Player from 'models/Player';
 
 
 
-const Hitlist = ({voteArray}) => {
+const Hitlist = ({currentPoll}) => {
+
 
     const updateHoveredPlayer = (hoveredPlayer) => {
-        let allPlayers = document.getElementsByClassName("profile-selection")
+        let allPlayers = document.getElementsByClassName("profile-selection-small")
         if (hoveredPlayer !== null) {
-            let [_, supporterArray] = voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
+            let [_, supporterArray] = currentPoll.voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
+            console.log("SupporterArray: " + supporterArray);
             for (let i = 0; i < allPlayers.length; i++) {           
-                let playerId = parseInt(allPlayers[i].id.substring(18));
+                let playerId = parseInt(allPlayers[i].id.substring(24));
+                console.log("PlayerId: " + playerId);
                 if (!supporterArray.includes(playerId)){
-                    allPlayers[i].classList.add("profile-selection-isNotVoter");
+                    allPlayers[i].classList.add("profile-selection-small-isNotVoter");
                 }
             }
         } else {
             for (let i = 0; i < allPlayers.length; i++) {
-                allPlayers[i].classList.remove("profile-selection-isNotVoter");
+                allPlayers[i].classList.remove("profile-selection-small-isNotVoter");
             }
         }
     };
+    
+    const hitListLeaders = [];
+    const hitList = [];
+
+    if (currentPoll.voteArray.length > 0){
+        let maxVotes = currentPoll.voteArray[0][1].length;
+        for (let i = 0; i < currentPoll.voteArray.length; i++) {
+            if (currentPoll.voteArray[i][1].length === maxVotes) {
+                hitListLeaders.push(currentPoll.voteArray[i]);
+            } else {
+                hitList.push(currentPoll.voteArray[i]);
+            }
+        }
+    }
+    
+
+    
+    
+    
     
 
     
@@ -35,24 +57,24 @@ const Hitlist = ({voteArray}) => {
     return (
         <div className="hitlist">
             <div className="hitlist-left">
-                { 4 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[3][0])} mode="hitlist" votes={voteArray[3][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 3 <= hitList.length ? (
+                <Profile user={new Player(hitList[2][0])} mode="hitlist" votes={hitList[2][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
-                { 2 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[1][0])} mode="hitlist" votes={voteArray[1][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 1 <= hitList.length ? (
+                <Profile user={new Player(hitList[0][0])} mode="hitlist" votes={hitList[0][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
             </div>
             <div className="hitlist-leader">
-                { 1 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[0][0])} mode="hitlist-leader" votes={voteArray[0][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
-                ) : null}          
+                {hitListLeaders.map(([player, supporters]) => (
+                    <Profile user={new Player(player)} mode="hitlist-leader" votes={supporters.length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                ))}
             </div>
             <div className="hitlist-right">
-                { 3 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[2][0])} mode="hitlist" votes={voteArray[2][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 2 <= hitList.length ? (
+                <Profile user={new Player(hitList[1][0])} mode="hitlist" votes={hitList[1][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
-                { 5 <= voteArray.length ? (
-                <Profile user={new Player(voteArray[4][0])} mode="hitlist" votes={voteArray[4][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                { 4 <= hitList.length ? (
+                <Profile user={new Player(hitList[3][0])} mode="hitlist" votes={hitList[3][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
             </div>
         </div>

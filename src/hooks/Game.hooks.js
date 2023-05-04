@@ -4,75 +4,123 @@ import GameModel from "models/Game";
 import { api } from "helpers/api";
 import Poll from "models/Poll";
 
+let periodicFunctionToBeCalled = () => {};
+
+const periodicFunctionCaller = () => {
+  periodicFunctionToBeCalled();
+}
+
+//needed for the second game call after 2 seconds
+let stageContainer = "";
+
 export const useGame = () => {
-    const lobbyId = StorageManager.getLobbyId();
-    const token = StorageManager.getUserToken();
-    const [started, setStarted] = useState(false);
-    const [game, setGame] = useState(null);
-    const [finished, setFinished] = useState(false);    // is also part of game, but this state is only set to true when endData is already fetched
-    const [currentPoll, setCurrentPoll] = useState(null);
-    const [endData, setEndData] = useState(null);
-    const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
-    const [intervalFetchGame, setIntervalFetchGame] = useState(null);
+  const lobbyId = StorageManager.getLobbyId();
+  const token = StorageManager.getUserToken();
+  const [started, setStarted] = useState(false);
+  const [game, setGame] = useState(null);
+  const [finished, setFinished] = useState(false);    // is also part of game, but this state is only set to true when endData is already fetched
+  const [endData, setEndData] = useState(null);
+  const [currentPoll, setCurrentPoll] = useState(null);
+  const [pollActive, setPollActive] = useState(false);
+  const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
 
-    const fetchGame = useCallback(async () => {
-      try{
-        const response = await api.get(`/games/${lobbyId}`);
-        setGame(new GameModel(response.data));
-        if(response.data.finished) {
-          fetchEndData();
+  const isPollActive = (newPoll) => {
+    if (newPoll) {
+      const now = new Date();
+      const timeLeft = Math.ceil((newPoll.scheduledFinish - now) / 1000);
+      if (timeLeft <= 0) {
+        if (pollActive) {
+          setPollActive(false);
         }
-      } catch (error) {
-        console.error(error);
+        return false;
+      } else {
+        if (!pollActive) {
+          setPollActive(true);
+        }
+        return true;
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [lobbyId]);
+    }
+  }
 
-    const fetchPoll = useCallback(async () => {
-      try{
-        const response = await api.get(`/games/${lobbyId}/polls`);
-        //console.log("Response: ", response.data);
-        let newPoll = new Poll(response.data);
-        //newPoll.setVoteArray(response.data.pollOptions);
-        //newPoll.setOwnVote(response.data.pollOptions, StorageManager.getUserId());
-        
-        newPoll.printPoll();
-        setCurrentPoll(newPoll);
-      } catch (error) {
-        console.error("Details Fetch Poll Error: ", error);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [lobbyId]);
+  const pollDidChange = (newPoll) => {
+    return (currentPoll && currentPoll.role !== newPoll.role);
+  }
 
-    const fetchEndData = useCallback(async () => {
-      try {
-        const response = await api.get(`/games/${lobbyId}/winner`);
-        setEndData(response.data);
-        console.log("Game ended: ", response.data);
-        setStarted(false);
-        setFinished(true);
-      } catch (error) {
-        console.error("Details Fetch End Data Error: ", error); 
+  const stageDidChange = (newGame) => {
+    return (game && (newGame.stage.type !== stageContainer));
+  }
+
+  const performStageChange = () => {
+    //TODO: Place for Miro to go wild with agora
+  }
+  const fetchPoll = async () => {
+    try{
+      const response = await api.get(`/games/${lobbyId}/polls`);
+      let newPoll = new Poll(response.data);
+      newPoll.printPoll();
+      if(pollDidChange(newPoll)) {
+        await fetchGame();
+        if(!finished) {
+          //recall this function again because with high server demand it might happen that the game isn't updated a the
+          //time of the first game fetch
+          setTimeout(fetchGame, 2000);
+        }
       }
-    }, [lobbyId]);
+      setCurrentPoll(newPoll)
+      if(!isPollActive(newPoll)) {
+        await fetchGame();
+      }
+    } catch (error) {
+      console.error("Details Fetch Poll Error: ", error);
+    }
+  };
+
+  const fetchGame = async () => {
+    try{
+      const response = await api.get(`/games/${lobbyId}`);
+      let newGame = new GameModel(response.data);
+      if(stageDidChange(newGame)) {
+        performStageChange();
+      }
+      setGame(newGame);
+      stageContainer = newGame.stage.type;
+      if(response.data.finished) {
+        console.log("The game has ended, calling fetchEndData now");
+        await fetchEndData();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchEndData = useCallback(async () => {
+    try {
+      const response = await api.get(`/games/${lobbyId}/winner`);
+      setEndData(response.data);
+      console.log("Game ended: ", response.data);
+      setStarted(false);
+      setFinished(true);
+      clearInterval(intervalFetchPoll);
+    } catch (error) {
+      console.error("Details Fetch End Data Error: ", error);
+    }
+  }, [lobbyId, game]);
 
     useEffect(() => {
       setTimeout(async () => {
-          await fetchGame();
-          await fetchPoll();
-          setStarted(true);
-
-          const pollIntervalId = setInterval(fetchPoll, 1000);
-          setIntervalFetchPoll(pollIntervalId);
-          const gameIntervalId = setInterval(fetchGame, 1000);
-          setIntervalFetchGame(gameIntervalId);
+        await fetchGame();
+        await fetchPoll();
+        setStarted(true);
+        periodicFunctionToBeCalled = fetchPoll;
+        const pollIntervalId = setInterval(periodicFunctionCaller, 1000);
+        setIntervalFetchPoll(pollIntervalId);
         return () => {
           clearInterval(pollIntervalId);
-          clearInterval(gameIntervalId);
         };
       }, 15000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
-    return {game, finished, started, currentPoll, endData, intervalFetchGame, intervalFetchPoll};
-}
+  periodicFunctionToBeCalled = fetchPoll;
+  return {game, finished, started, currentPoll, endData, pollActive};
+};

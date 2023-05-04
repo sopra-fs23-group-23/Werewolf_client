@@ -8,6 +8,11 @@
     margin-bottom: 0.8em;
     min-height: 175px;
 
+    &-leader {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
     &-left {
       flex: 1;
       display:flex;

@@ -46,7 +46,6 @@ const Lobby = () => {
 
   if(lobby && lobby.closed) {
     clearInterval(intervalId);
-    console.log("game should have started");
 
     history.push(`/game`);
   }

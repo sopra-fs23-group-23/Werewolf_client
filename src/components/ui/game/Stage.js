@@ -5,46 +5,66 @@ import Countdown from '../Countdown';
 import Selection from '../game/Selection';
 import Hitlist from './Hitlist';
 import Spinner from '../Spinner';
-import AmorMatch from './AmorMatch';
+import AmorMatch from './special_components/AmorMatch';
+import SweetDreams from './special_components/SweetDreams';
+import WitchElixir from './special_components/WitchElixir';
 
 const Stage = ({ currentPoll, lobby, stage}) => {
 
   let backgroundTheme = stage === "Day" ? "light" : "dark";
   
-  
   let HitlistType = null;
-  switch (currentPoll.votingParty) {
+  switch (currentPoll.role) {
     case "Amor":
-      HitlistType = <AmorMatch voteArray={currentPoll.voteArray} />
+      HitlistType = <AmorMatch currentPoll={currentPoll} />
       break;
-    case "Witch":
-      //TODO: implement witch (Differentiate Elixir and Potion, elixir: big hitlish, potion: big selection)
+    case "Werewolf":
+    case "Villager":
+    case "Mayor":
+      HitlistType = <Hitlist currentPoll={currentPoll} />
       break;
-    case "Hunter":
-      //TODO: implement hunter (No hitlist, but big selection?)
+    default: //Witch, Hunter, Seer
+      HitlistType = null; // No Hitlist required, because only one person is allowed to vote
       break;
-    case "Seer":
-      //TODO: implement seer (No hitlist, but big selection?)
-      break;
-    case "Werewolf", "Villager":
-      HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
+  }
+  
+  let SelectionType = null;
+  switch (currentPoll.votingParty) {
+    case "Witch-Heal":
+      SelectionType = <WitchElixir currentPoll={currentPoll} />
       break;
     default:
-      HitlistType = <Hitlist voteArray={currentPoll.voteArray} />
-    break;
-  }  
-      
-  return (
-    <div className="container game">
-        <div className="game-stage-info">
-          <h1>{currentPoll.votingParty}</h1>
-          <p>{currentPoll.question}</p>
-        </div>
+      SelectionType = <Selection currentPoll={currentPoll} />
+      break;
+  }
+
+  let content = (
+    <Spinner theme={backgroundTheme} />
+  )
+
+  if (currentPoll.isVoteParticipant){
+    content = (
+      <>
         <div className="game-hitlist">
           {HitlistType}
         </div>
         <Selection currentPoll={currentPoll} lobby={lobby} />
+      </>
+    )
+  } else {
+    content = (
+      <SweetDreams currentPoll={currentPoll}/>
+    )
+  }
       
+  return (
+    <div className="container game">
+        <div className="game-stage-info">
+          <h1>{currentPoll.getRolePlural()}</h1>
+          <p>{currentPoll.question}</p>
+        </div>
+
+        {content}
         <div className="game-stage-counter">
           {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} /> : ""}
         </div>
