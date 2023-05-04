@@ -4,30 +4,11 @@ import GameModel from "models/Game";
 import { api } from "helpers/api";
 import Poll from "models/Poll";
 
-let lastPoll = null;
-let outsidePollSetter = () => {};
-let outsideGameFetch = () => {};
+let inceptionFunction = () => {};
 
-const pollDidChange = (newPoll) => {
-  return !!(lastPoll && lastPoll.role !== newPoll.role);
+const inception = () => {
+  inceptionFunction();
 }
-const fetchPoll = async () => {
-  const lobbyId = StorageManager.getLobbyId();
-  try{
-    const response = await api.get(`/games/${lobbyId}/polls`);
-    let newPoll = new Poll(response.data);
-    console.log("_______________________");
-    console.log(lastPoll);
-    newPoll.printPoll();
-    if(pollDidChange(newPoll)) {
-      await outsideGameFetch();
-    }
-    lastPoll = newPoll;
-    outsidePollSetter(newPoll);
-  } catch (error) {
-    console.error("Details Fetch Poll Error: ", error);
-  }
-};
 
 export const useGame = () => {
     const lobbyId = StorageManager.getLobbyId();
@@ -39,7 +20,25 @@ export const useGame = () => {
     const [currentPoll, setCurrentPoll] = useState(null);
     const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
 
+  const pollDidChange = (newPoll) => {
+    return !!(currentPoll && currentPoll.role !== newPoll.role);
+  }
+  const fetchPoll = async () => {
+    try{
+      const response = await api.get(`/games/${lobbyId}/polls`);
+      let newPoll = new Poll(response.data);
+      newPoll.printPoll();
+      if(pollDidChange(newPoll)) {
+        await fetchGame();
+      }
+      setCurrentPoll(newPoll)
+    } catch (error) {
+      console.error("Details Fetch Poll Error: ", error);
+    }
+  };
+
     const fetchGame = useCallback(async () => {
+      console.log("_______________________________");
       try{
         const response = await api.get(`/games/${lobbyId}`);
         setGame(new GameModel(response.data));
@@ -56,7 +55,6 @@ export const useGame = () => {
     }, [lobbyId]);
 
     const fetchEndData = useCallback(async () => {
-      console.log("I got here, Huiuiuiuiuiuiuiuiuiuiuiuiuiuiuiuiuiuiuiuiuiui");
       try {
         const response = await api.get(`/games/${lobbyId}/winner`);
         setEndData(response.data);
@@ -72,12 +70,11 @@ export const useGame = () => {
 
     useEffect(() => {
       setTimeout(async () => {
-        outsidePollSetter=setCurrentPoll;
-        outsideGameFetch=fetchGame;
         await fetchGame();
         await fetchPoll();
         setStarted(true);
-        const pollIntervalId = setInterval(fetchPoll, 1000);
+        inceptionFunction = fetchPoll;
+        const pollIntervalId = setInterval(inception, 1000);
         setIntervalFetchPoll(pollIntervalId);
         return () => {
           clearInterval(pollIntervalId);
@@ -86,8 +83,6 @@ export const useGame = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
-
-    console.log("#####################");
-    console.log(currentPoll);
-    return {game, finished, started, currentPoll, endData};
+  inceptionFunction = fetchPoll;
+  return {game, finished, started, currentPoll, endData};
 }
