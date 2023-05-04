@@ -56,6 +56,19 @@ const Stage = ({ currentPoll, lobby, stage}) => {
       <SweetDreams currentPoll={currentPoll}/>
     )
   }
+
+  let deadPlayers = null;
+  if (lobby) {
+    deadPlayers = (
+      <div className={`game-dead-players`}>
+        {lobby.players.map(player => (
+          (!player.alive) && (
+            <Profile user={new Player(player)} mode="dead-player" key={player.id} />
+          )
+        ))}
+      </div>
+    );
+  }
       
   return (
     <div className="container game">
@@ -69,13 +82,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
           {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} /> : ""}
         </div>
         <div className={`game-dead game-dead-${backgroundTheme}`}>
-          <div className={`game-dead-players`}>
-            {lobby.players.map(player => (
-              (!player.alive) && (
-                <Profile user={new Player(player)} mode="dead-player" key={player.id} />
-              )
-            ))}
-          </div>
+          {deadPlayers}
         </div>
       </div>
   );

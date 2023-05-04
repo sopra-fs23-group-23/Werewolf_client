@@ -9,7 +9,7 @@ const Selection = ({currentPoll}) => {
 
   let voteParticipantIds = currentPoll.participants.map(p => p.player.id);
 
-  const singleVoters = ["Witch-Kill", "Hunter", "Seer"];
+  const singleVoters = ["Witch-Kill", "Hunter", "Seer", "Mayor"];
   const selectionSize = singleVoters.includes(currentPoll.role) ? "selection-big" : "selection-small";
   
 
