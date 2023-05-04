@@ -40,7 +40,7 @@ export function startBasicCall() {
 export async function joinCall() {
   const agoraEngine = StorageManager.getAgoraEngine();
   // Join a channel.
-  await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
+  await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), parseInt(StorageManager.getUserId()));
   // Create a local audio track from the microphone audio.
   channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
   // Publish the local audio track in the channel.
