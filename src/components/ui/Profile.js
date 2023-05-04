@@ -15,12 +15,6 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
     }
   };
 
-  // const handleMouseLeave = () => {
-  //   if (onHoverEvent) {
-  //     onHoverEvent(user, 0);
-  //   }
-  // };
-
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick} >
     <img src={user.avatarUrl} alt={`${user.name} Avatar`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} />

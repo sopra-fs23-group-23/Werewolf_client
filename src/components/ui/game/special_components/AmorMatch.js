@@ -1,7 +1,10 @@
 import React from 'react';
-import 'styles/ui/Hitlist.scss';
+import 'styles/ui/AmorMatch.scss';
 import Profile from 'components/ui/Profile';
 import Player from 'models/Player';
+import storageManager from "../../../../helpers/StorageManager";
+import {api} from "../../../../helpers/api";
+
 
 const Button = ({onClick, children}) => {
     return (
@@ -14,21 +17,48 @@ const Button = ({onClick, children}) => {
 const AmorMatch = ({currentPoll}) => {
 
     
+    const removeLover = async (lover) => {
+        console.log("I removed lover: " + lover.id);
+        try {
+            await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + lover.id);
+        } catch (error) {
+            console.error(error);
+            alert(error.response.data?.message || 'Vote failed');
+        }
+    };
+
     
 
 
     return (
         <div className="amormatch">
-                <div className="amormatch-lover-left">
+                <div className="amormatch-lover">
                     { 1 <= currentPoll.voteArray.length ? (
-                        <Profile user={new Player(currentPoll.voteArray[0][0])} mode="hitlist-leader"/>
-                    ) : <p>Single as a Pringle</p>}
+                        <>
+                        <Profile user={new Player(currentPoll.voteArray[0][0])} mode="lover"/>
+                        <button
+                            className="btn btn-dark"
+                            onClick={() => removeLover(currentPoll.voteArray[0][0])}
+                        >
+                            remove Lover
+                        </button>
+                        </>
+                    ) : <div className='amormatch-lover-placeholder'><h3>Romeo still missing</h3></div>}
                 </div>
-                <div className="amormatch-lover-right">
+                    <h3>Love<br/> is in the <br/>air</h3>
+                <div className="amormatch-lover">
                     { 2 <= currentPoll.voteArray.length ? (
-                        <Profile user={new Player(currentPoll.voteArray[0][0])} mode="hitlist-leader" />
-
-                    ) : <p>Single as a Pringle</p>}
+                        <>
+                        <Profile user={new Player(currentPoll.voteArray[0][1])} mode="lover"/>
+                        <button
+                            className="btn btn-dark"
+                            onClick={() => removeLover(currentPoll.voteArray[0][1])}
+                        >
+                            remove Lover
+                        </button>
+                        </>
+                    ) : <div className='amormatch-lover-placeholder'><h3>Juliet still missing</h3></div>}
+                    
                 </div>
         </div>
     );
