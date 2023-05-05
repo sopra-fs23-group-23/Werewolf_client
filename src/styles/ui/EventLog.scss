@@ -29,6 +29,11 @@
       }
     }
   }
+  &-title {
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: -30px;
+  }
 
   &-close {
     position: absolute;
@@ -42,58 +47,6 @@
     &:hover {
       cursor: pointer;
       opacity: 0.5;
-    }
-  }
-
-  &-item {
-    text-align: center;
-    display: none;
-    &.active {
-      display: block;
-    }
-    &-indicator {
-      margin-bottom: -5px;
-      visibility: hidden;
-      &.active {
-        visibility: visible;
-      }
-    }
-    &-title {
-      padding-top: 0;
-      padding-bottom: 20px;
-    }
-    &-image {
-      height: 350px;
-      width: 220px;
-      border-radius: 30px;
-      border: 1px solid grey;
-    }
-    &-description {
-      margin-top: 20px;
-    }
-    &-amount {
-      font-weight: bold;
-      margin-top: 20px;
-    }
-  }
-
-  &-nav {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    img {
-      user-select: none;
-      -webkit-user-drag: none;
-      &:first-child {
-        margin-right: 20px;
-      }
-      &:last-child {
-        margin-left: 20px;
-      }
-      &:hover {
-        cursor: pointer;
-        opacity: 0.5;
-      }
     }
   }
 }

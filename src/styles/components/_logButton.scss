@@ -1,26 +1,41 @@
-.log-button {
+.log-container{
   margin-top: 30px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 5px;
-  user-select: none;
-  border: solid 2px white;
-  background-image: url('../../../public/static/media/scroll.svg');
-  background-repeat: no-repeat;
-  background-size: 70% auto;
-  background-position: center;
-  &-light {
-    filter: brightness(0) invert(1);
+  .update{
+    &-active{
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: red;
+      border: #bc0000 2px solid;
+      z-index: 2;
+      position: absolute;
+      margin-left: 36px;
+      margin-top: -1px;
+    }
   }
-  &-dark {
-    border-color: $color-text-dark;
-  }
-  &:hover {
-    cursor: pointer;
-    background-color: rgba(0,0,0,0.4);
+  .log-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+    user-select: none;
+    border: solid 2px white;
+    background-image: url('../../../public/static/media/scroll.svg');
+    background-repeat: no-repeat;
+    background-size: 70% auto;
+    background-position: center;
+    &-light {
+      filter: brightness(0) invert(1);
+    }
+    &-dark {
+      border-color: $color-text-dark;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(0,0,0,0.4);
+    }
   }
 }

@@ -15,12 +15,14 @@ const Game = () => {
   const {game, finished, started, currentPoll, endData, pollActive} = useGame();
   const [popupActive, setPopupActive] = useState(false);
   const [eventLogActive, setEventLogActive] = useState(false);
+  const [receivedUpdate, setReceivedUpdate] = useState(true);
 
   const togglePopup = () => {
     setPopupActive(!popupActive);
   }
 
   const toggleEventLog = () => {
+    setReceivedUpdate(false);
     setEventLogActive(!eventLogActive);
   }
 
@@ -56,7 +58,10 @@ const Game = () => {
       {content}
       <div className='game-controls'>
         <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
-        <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
+        <div className={`log-container`}>
+          <div className={`update ${receivedUpdate ? "update-active" : ""}`}></div>
+          <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
+        </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
             <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
         </div>

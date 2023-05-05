@@ -23,6 +23,7 @@ const EventPopup = ({ show, handleClose, stage }) => {
       <div className='log-popup-background' onClick={handleClickOutsidePopup}>
         <div className={'log-popup-container ' + (stage === 'Day' ? 'background-light' : 'background-dark')}>
           <img src='/static/media/close.svg' className='log-popup-close' onClick={handleClose} alt='close'/>
+          <h2 className='log-popup-title'>History</h2>
         </div>
       </div>
     );
