@@ -5,25 +5,28 @@ import StorageManager from "../../../helpers/StorageManager";
 import Spinner from "../../ui/Spinner";
 import PropTypes from 'prop-types';
 
-const EventPopup = ({ show, handleClose, stage }) => {
-  const id = StorageManager.getUserId();
-  const lobbyId = StorageManager.getLobbyId();
+const EventPopup = ({ show, handleClose, stage, logger}) => {
   const handleClickOutsidePopup = (e) => {
     if(e.target.classList.contains('log-popup-background')) {
       handleClose();
     }
   }
 
-  if(false) {
-    return <Spinner theme="light"/>
-  } else if(!show) {
+  if(!show) {
     return <div></div>;
   } else {
     return (
       <div className='log-popup-background' onClick={handleClickOutsidePopup}>
-        <div className={'log-popup-container ' + (stage === 'Day' ? 'background-light' : 'background-dark')}>
+        <div className={'log-popup-container ' + (stage === 'Day' ? 'background-light ' : 'background-dark ') +
+          'log-popup-container-'+ (stage === 'Day' ? 'light' : 'dark')}>
           <img src='/static/media/close.svg' className='log-popup-close' onClick={handleClose} alt='close'/>
-          <h2 className='log-popup-title'>History</h2>
+          <h2 className='log-popup-title'>History (WIP)</h2>
+          {logger.getLog().map((action) =>
+            <div className={"log-popup-action-container"}>
+              <h3>{action.type}</h3>
+              <p>{action.message}</p>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -32,7 +35,8 @@ const EventPopup = ({ show, handleClose, stage }) => {
 
 EventPopup.propTypes = {
   show: PropTypes.bool,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  logger: PropTypes.object
 };
 
 

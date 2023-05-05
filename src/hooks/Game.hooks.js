@@ -3,12 +3,15 @@ import { useCallback, useEffect, useState} from "react";
 import GameModel from "models/Game";
 import { api } from "helpers/api";
 import Poll from "models/Poll";
+import Log from "../models/Log";
 
 let periodicFunctionToBeCalled = () => {};
 
 const periodicFunctionCaller = () => {
   periodicFunctionToBeCalled();
 }
+
+const logger = new Log();
 
 //needed for the second game call after 2 seconds
 let stageContainer = "";
@@ -46,6 +49,15 @@ export const useGame = () => {
     return (currentPoll && currentPoll.role !== newPoll.role);
   }
 
+  const performPollChange = async () => {
+    await fetchGame();
+    if (!finished) {
+      //recall this function again because with high server demand it might happen that the game isn't updated a the
+      //time of the first game fetch
+      setTimeout(fetchGame, 2000);
+    }
+  }
+
   const stageDidChange = (newGame) => {
     return (game && (newGame.stage.type !== stageContainer));
   }
@@ -59,12 +71,7 @@ export const useGame = () => {
       let newPoll = new Poll(response.data);
       newPoll.printPoll();
       if(pollDidChange(newPoll)) {
-        await fetchGame();
-        if(!finished) {
-          //recall this function again because with high server demand it might happen that the game isn't updated a the
-          //time of the first game fetch
-          setTimeout(fetchGame, 2000);
-        }
+        await performPollChange();
       }
       setCurrentPoll(newPoll)
       if(!isPollActive(newPoll)) {
@@ -82,6 +89,8 @@ export const useGame = () => {
       if(stageDidChange(newGame)) {
         performStageChange();
       }
+      logger.addActions(response.data.actions);
+      console.log(newGame);
       setGame(newGame);
       stageContainer = newGame.stage.type;
       if(response.data.finished) {
@@ -117,9 +126,9 @@ export const useGame = () => {
         return () => {
           clearInterval(pollIntervalId);
         };
-      }, 4000);
+      }, 4500);
     }, [lobbyId, token]);
 
   periodicFunctionToBeCalled = fetchPoll;
-  return {game, finished, started, currentPoll, endData, pollActive};
+  return {game, finished, started, currentPoll, endData, pollActive, logger};
 };
