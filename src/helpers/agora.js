@@ -18,14 +18,12 @@ let channelParameters =
 export function startBasicCall() {
   // Create an instance of the Agora Engine
   const agoraEngine = StorageManager.getAgoraEngine();
-
+  AgoraRTC.setLogLevel(2);
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
     await agoraEngine.subscribe(user, mediaType);
-    console.log("Agora user:",user, mediaType);
     console.log("subscribe success");
-    console.log("uintid:",user._uintid);
     // Subscribe and play the remote audio track.
     if (mediaType === "audio") {
       channelParameters.remoteUid = user.uid;
@@ -51,7 +49,6 @@ export async function leaveCall(){
   const agoraEngine = StorageManager.getAgoraEngine();
   channelParameters.localAudioTrack.close();
   await agoraEngine.leave();
-  StorageManager.removeChannelToken();
 }
 
 

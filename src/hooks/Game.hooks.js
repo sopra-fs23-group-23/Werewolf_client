@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState} from "react";
 import GameModel from "models/Game";
 import { api } from "helpers/api";
 import Poll from "models/Poll";
-import { joinCall, checkIfUserIsInCall } from "helpers/agora";
+import { joinCall } from "helpers/agora";
 
 let periodicFunctionToBeCalled = () => {};
 
@@ -51,8 +51,8 @@ export const useGame = () => {
     return (game && (newGame.stage.type !== stageContainer));
   }
 
-  const performStageChange = () => {
-    if(StorageManager.getAgoraEngine().remoteUsers.length == 0) {
+  const performStageChange = (newGame) => {
+    if (newGame.stage.type === "Day"){
       joinCall();
     }
   }
@@ -84,7 +84,7 @@ export const useGame = () => {
       const response = await api.get(`/games/${lobbyId}`);
       let newGame = new GameModel(response.data);
       if(stageDidChange(newGame)) {
-        performStageChange();
+        performStageChange(newGame);
       }
       setGame(newGame);
       stageContainer = newGame.stage.type;
