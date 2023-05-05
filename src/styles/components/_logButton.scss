@@ -1,14 +1,19 @@
 .log-container{
   margin-top: 30px;
   .update{
+    z-index: 2;
+    position: absolute;
+    font-size: 12px;
+    text-align: center;
+    &-not-active{
+      opacity: 0;
+    }
     &-active{
-      width: 15px;
-      height: 15px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background-color: red;
       border: #bc0000 2px solid;
-      z-index: 2;
-      position: absolute;
       margin-left: 36px;
       margin-top: -1px;
     }

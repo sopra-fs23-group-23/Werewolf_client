@@ -59,7 +59,7 @@ const Game = () => {
       <div className='game-controls'>
         <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
         <div className={`log-container`}>
-          <div className={`update ${receivedUpdate ? "update-active" : ""}`}></div>
+          <div className={`update ${receivedUpdate ? "update-active" : "update-not-active"}`}>47</div>
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
