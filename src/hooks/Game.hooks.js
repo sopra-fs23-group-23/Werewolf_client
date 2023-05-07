@@ -54,9 +54,8 @@ export const useGame = () => {
   }
 
   const performStageChange = (newGame) => {
-    console.log("stage changed ***************************")
     if (newGame.stage.type === "Day"){
-      //joinCall();
+      joinCall();
     }
   }
 
@@ -90,16 +89,18 @@ export const useGame = () => {
       const response = await api.get(`/games/${lobbyId}`);
       if(response.data.finished) {
         console.log("The game has ended, calling fetchEndData now");
-        await fetchEndData();
-      }
-      let newGame = new GameModel(response.data);
-      console.log(newGame);
-      if(gameFetchCheck(newGame)) {
-        if(stageDidChange(newGame)) {
-          performStageChange(newGame);
-        }
         await logger.addActions(response.data.actions);
-        setGame(newGame);
+        await fetchEndData();
+      } else {
+        let newGame = new GameModel(response.data);
+        console.log(newGame);
+        if(gameFetchCheck(newGame)) {
+          if(stageDidChange(newGame)) {
+            performStageChange(newGame);
+          }
+          await logger.addActions(response.data.actions);
+          setGame(newGame);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -130,7 +131,7 @@ export const useGame = () => {
         return () => {
           clearInterval(pollIntervalId);
         };
-      }, 6000);
+      }, 15500);
     }, [lobbyId, token]);
 
   periodicFunctionToBeCalled = fetchPoll;

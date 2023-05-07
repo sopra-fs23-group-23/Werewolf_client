@@ -19,11 +19,12 @@ const EventPopup = ({ show, handleClose, stage, logger}) => {
       <div className='log-popup-background' onClick={handleClickOutsidePopup}>
         <div className={'log-popup-container ' + (stage === 'Day' ? 'background-light ' : 'background-dark ') +
           'log-popup-container-'+ (stage === 'Day' ? 'light' : 'dark')}>
-          <img src='/static/media/close.svg' className='log-popup-close' onClick={handleClose} alt='close'/>
-          <h2 className='log-popup-title'>History (WIP)</h2>
+          <img src='/static/media/close.svg' className={`log-popup-close log-popup-close-${(stage === 'Day' ? 'light' : 'dark')}`}
+               onClick={handleClose} alt='close'/>
+          <h2 className='log-popup-title'>History (work in progress)</h2>
           {logger.getLog().map((action) => <div className={"log-popup-action-container log-popup-action-container-"+
               (stage === 'Day' ? 'light' : 'dark')}>
-            {action.getRepresentation()}
+            {(stage === 'Day' ? action.getRepresentationLight() : action.getRepresentationDark())}
           </div>
           )}
         </div>

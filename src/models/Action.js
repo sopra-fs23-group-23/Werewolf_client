@@ -4,7 +4,8 @@ class Action {
     this.message=null;
     this.type = null;
     this.role = null;
-    this.representation = null;
+    this.representationDark = null;
+    this.representationLight = null;
     Object.assign(this, data);
   }
 
@@ -12,15 +13,30 @@ class Action {
     this.role = role;
   }
 
-  setRepresentation (representation) {
-    this.representation = representation;
+  setRepresentationDark (representation) {
+    this.representationDark = representation;
   }
 
-  getRepresentation () {
-    if(!this.representation) {
-      return <div></div>
+  getRepresentationDark () {
+    if(this.representationDark) {
+      return this.representationDark;
+    } else if(this.representationLight) {
+      return this.representationLight;
     }
-    return this.representation;
+    return <div></div>;
+  }
+
+  setRepresentationLight (representation) {
+    this.representationLight = representation;
+  }
+
+  getRepresentationLight () {
+    if(this.representationLight) {
+      return this.representationLight;
+    } else if(this.representationDark) {
+      return this.representationDark;
+    }
+    return <div></div>;
   }
 }
 export default Action;
