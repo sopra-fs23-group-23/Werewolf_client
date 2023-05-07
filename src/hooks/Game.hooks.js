@@ -14,8 +14,7 @@ const periodicFunctionCaller = () => {
 
 const logger = new Log();
 
-//needed for the second game call after 2 seconds
-let stageContainer = "";
+let gameShouldBeFetchedAgain = false;
 
 export const useGame = () => {
   const lobbyId = StorageManager.getLobbyId();
@@ -47,26 +46,29 @@ export const useGame = () => {
   }
 
   const pollDidChange = (newPoll) => {
-    return (currentPoll && currentPoll.role !== newPoll.role);
-  }
-
-  const performPollChange = async () => {
-    await fetchGame();
-    if (!finished) {
-      //recall this function again because with high server demand it might happen that the game isn't updated a the
-      //time of the first game fetch
-      setTimeout(fetchGame, 2000);
-    }
+    return (currentPoll && currentPoll.id !== newPoll.id);
   }
 
   const stageDidChange = (newGame) => {
-    return (game && (newGame.stage.type !== stageContainer));
+    return (game && (newGame.stage.type !== game.stage.type));
   }
 
   const performStageChange = (newGame) => {
+    console.log("stage changed ***************************")
     if (newGame.stage.type === "Day"){
-      joinCall();
+      //joinCall();
     }
+  }
+
+  const gameFetchCheck = (newGame) => {
+    //if the game didn't change through the check stop the action performed on a gameStateChange and instead fetch again
+    //one second late
+    if(!game) {
+      gameShouldBeFetchedAgain = false;
+    } else {
+      gameShouldBeFetchedAgain = (newGame.pollCount === game.pollCount);
+    }
+    return !gameShouldBeFetchedAgain;
   }
 
   const fetchPoll = async () => {
@@ -74,13 +76,10 @@ export const useGame = () => {
       const response = await api.get(`/games/${lobbyId}/polls`);
       let newPoll = new Poll(response.data);
       newPoll.printPoll();
-      if(pollDidChange(newPoll)) {
-        await performPollChange();
-      }
-      setCurrentPoll(newPoll)
-      if(!isPollActive(newPoll)) {
+      if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !isPollActive(newPoll)) {
         await fetchGame();
       }
+      setCurrentPoll(newPoll);
     } catch (error) {
       console.error("Details Fetch Poll Error: ", error);
     }
@@ -89,17 +88,18 @@ export const useGame = () => {
   const fetchGame = async () => {
     try{
       const response = await api.get(`/games/${lobbyId}`);
-      let newGame = new GameModel(response.data);
-      if(stageDidChange(newGame)) {
-        performStageChange(newGame);
-      }
-      logger.addActions(response.data.actions);
-      console.log(newGame);
-      setGame(newGame);
-      stageContainer = newGame.stage.type;
       if(response.data.finished) {
         console.log("The game has ended, calling fetchEndData now");
         await fetchEndData();
+      }
+      let newGame = new GameModel(response.data);
+      console.log(newGame);
+      if(gameFetchCheck(newGame)) {
+        if(stageDidChange(newGame)) {
+          performStageChange(newGame);
+        }
+        await logger.addActions(response.data.actions);
+        setGame(newGame);
       }
     } catch (error) {
       console.error(error);
@@ -130,7 +130,7 @@ export const useGame = () => {
         return () => {
           clearInterval(pollIntervalId);
         };
-      }, 4500);
+      }, 6000);
     }, [lobbyId, token]);
 
   periodicFunctionToBeCalled = fetchPoll;

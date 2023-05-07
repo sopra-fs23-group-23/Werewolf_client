@@ -57,9 +57,22 @@
   &-action-container {
     margin-right: 25px;
     min-height: 60px;
-    border: red solid 2px;
     margin-bottom: 10px;
     border-radius: 20px;
+
+    &-dark {
+      border: $color-text-dark solid 2px;
+      background-color: #FFFFFF15;
+    }
+
+    &-light {
+      border: $color-text-dark solid 2px;
+      background-color: #00000020;
+    }
+
+    .death-event {
+
+    }
   }
 }
 
