@@ -131,7 +131,7 @@ export const useGame = () => {
         return () => {
           clearInterval(pollIntervalId);
         };
-      }, 15500);
+      }, 16000);
     }, [lobbyId, token]);
 
   periodicFunctionToBeCalled = fetchPoll;

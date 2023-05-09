@@ -27,6 +27,15 @@ class Log {
       switch (newAction.type) {
         case "NullPlayerCommand":
           continue;
+        case "AddPlayerToRolePollCommand":
+          newAction.setRepresentationDark(
+          <div className={"mayor-event"}>
+            <h3>{newAction.message}</h3>
+            <img className={"hat"} src={`/static/media/hat.png`} alt={"mayor representation"}/>
+            <img className={"bow-tie"} src={`/static/media/bow-tie.png`} alt={"mayor representation"}/>
+            <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
+          </div>);
+          break;
         case "KillPlayerPollCommand":
           await this.fetchRole(newAction);
           newAction.setRepresentationDark(
@@ -47,9 +56,7 @@ class Log {
         default:
           newAction.setRepresentationDark(
             <div className={""}>
-              <h3>{action.type}</h3>
-              <p>{action.message}</p>
-              <p>special message handling not implemented yet...</p>
+              <h3>{newAction.message}</h3>
             </div>)
       }
 
