@@ -6,8 +6,9 @@ import Selection from '../game/Selection';
 import Hitlist from './Hitlist';
 import Spinner from '../Spinner';
 import AmorMatch from './special_components/AmorMatch';
-import SweetDreams from './special_components/SweetDreams';
+import SweetDreams from './special_components/NotParticipant';
 import WitchElixir from './special_components/WitchElixir';
+import NotParticipant from './special_components/NotParticipant';
 
 const Stage = ({ currentPoll, lobby, stage}) => {
 
@@ -53,7 +54,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
     )
   } else {
     content = (
-      <SweetDreams currentPoll={currentPoll}/>
+      <NotParticipant currentPoll={currentPoll} stage={stage}/>
     )
   }
 
