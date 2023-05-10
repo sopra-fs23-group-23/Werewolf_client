@@ -18,7 +18,7 @@ let channelParameters =
 export function startBasicCall() {
   // Create an instance of the Agora Engine
   const agoraEngine = StorageManager.getAgoraEngine();
-
+  AgoraRTC.setLogLevel(2);
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -38,21 +38,32 @@ export function startBasicCall() {
 export async function joinCall() {
   const agoraEngine = StorageManager.getAgoraEngine();
   // Join a channel.
-  await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
+  await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), parseInt(StorageManager.getUserId()));
   // Create a local audio track from the microphone audio.
   channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish(channelParameters.localAudioTrack);
-  console.log("Publish success!");
 }
 
 export async function leaveCall(){
   const agoraEngine = StorageManager.getAgoraEngine();
   channelParameters.localAudioTrack.close();
   await agoraEngine.leave();
-  console.log("You left the channel");
-  StorageManager.removeChannelToken();
 }
+
+
+// export async function checkIfUserIsInCall() {
+//   const agoraEngine = StorageManager.getAgoraEngine();
+//   const remoteUsers = agoraEngine.remoteUsers;
+//   console.log("remoteUsers", remoteUsers);
+//   if (remoteUsers.length > 0) {
+//     console.log("You are in a call");
+//     return true;
+//   } else {
+//     console.log("You are not in a call");
+//     return false;
+//   }
+// }
 
 // export function changeMicrophone() {
 //   var microphoneTracks = AgoraRTC.getMicrophones();

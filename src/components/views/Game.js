@@ -8,14 +8,31 @@ import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
 import StorageManager from 'helpers/StorageManager';
 import { muteAudio } from 'helpers/agora';
+import EventLog from "../ui/game/EventLog";
 
 const Game = () => {
 
-  const {game, finished, started, currentPoll, endData, pollActive} = useGame();
+  const {game, finished, started, currentPoll, endData, pollActive, logger} = useGame();
   const [popupActive, setPopupActive] = useState(false);
+  const [eventLogActive, setEventLogActive] = useState(false);
+  const [amountEventsRead, setAmountEventsRead] = useState(0);
 
   const togglePopup = () => {
     setPopupActive(!popupActive);
+  }
+
+  const toggleEventLog = () => {
+    if(logger){
+      setAmountEventsRead(logger.getAmount());
+    }
+    setEventLogActive(!eventLogActive);
+  }
+
+  const getUpdateAmount = () => {
+    if(eventLogActive) {
+      return 0;
+    }
+    return logger.getAmount() - amountEventsRead;
   }
 
   let backgroundTheme = (game?.stage.type === "Day") ? "light" : "dark";
@@ -50,11 +67,16 @@ const Game = () => {
       {content}
       <div className='game-controls'>
         <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
+        <div className={`log-container`}>
+          <div className={`update ${!(getUpdateAmount() === 0) ? "update-active" : "update-not-active"}`}>{getUpdateAmount()}</div>
+          <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
+        </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
             <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />
+      <EventLog show={eventLogActive} handleClose={toggleEventLog} stage={game?.stage.type} logger = {logger}/>
     </div>
   );
 };

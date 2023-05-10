@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import Spinner from 'components/ui/Spinner';
 import { leaveCall } from 'helpers/agora';
+import StorageManager from 'helpers/StorageManager';
 
 const Endscreen = ({ endData, lobby, stage}) => {
   const history = useHistory();
@@ -20,9 +21,8 @@ const Endscreen = ({ endData, lobby, stage}) => {
 
   function leaveLobby() {
     leaveCall();
+    StorageManager.removeChannelToken();
     history.push(`/home`);
-    // TODO
-    //alert("Not implemented yet");
   }
   function rematch() {
     // TODO
