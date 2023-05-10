@@ -64,7 +64,6 @@
         }
     }
     &-selection-big  {
-        margin: 0.5em 1em;
         img {
             height: 100px;
             width: 100px;
@@ -74,12 +73,14 @@
 
         &-kill {
             img {
-                border: 4px solid red;
+                border: 5px solid red;
+                transition: all 0.2s ease-in-out;
             }            
         }
         &-save {
             img {
-                border: 4px solid green;
+                border: 5px solid green;
+                transition: all 0.2s ease-in-out;
             }
         }
         &-hidden {
@@ -93,20 +94,37 @@
             }
         }
         &-select {
-            &-active {
-                img {
-                    border: 4px solid blue;
-                }
+            img {
+                border: 4px solid blue;
+                transition: all 0.2s ease-in-out;
             }
-            &-hidden {
-                img {
-                    opacity: 0.3;
-                    transition: all 0.2s ease-in-out;
-                }
-                .profile-name{
-                    opacity: 0.3;
-                    transition: all 0.2s ease-in-out;
-                }
+            
+        }
+
+    }
+    &-singleOption {
+        img {
+            height: 150px;
+            width: 150px;
+            border-radius: 80px;
+            transition: all 0.2s ease-in-out;
+        }
+        &-kill {
+            img {
+                height: 150px;
+                width: 150px;
+                border-radius: 80px;
+                transition: all 0.2s ease-in-out;
+                border: 5px solid red;
+            }            
+        }
+        &-save {
+            img {
+                height: 150px;
+                width: 150px;
+                border-radius: 80px;
+                transition: all 0.2s ease-in-out;
+                border: 5px solid green;
             }
         }
 

@@ -4,7 +4,7 @@ import 'styles/ui/Endscreen.scss';
 import {api} from "../../../../helpers/api";
 import storageManager from "../../../../helpers/StorageManager";
 
-const SingleOption = ({currentPoll}) => {
+const SingleOption = ({currentPoll, stage}) => {
 
 
   const addVote = async () => {
@@ -27,7 +27,7 @@ const SingleOption = ({currentPoll}) => {
         }
     };
 
-  let selectionMode = "SingleOption";
+  let selectionMode = "singleOption";
 
   if (currentPoll.ownVote) {
     switch (currentPoll.role) {
@@ -46,13 +46,14 @@ const SingleOption = ({currentPoll}) => {
             buttonText = "Remove Elixir";
         break;
         default:
-            buttonText = "Save";
+            buttonText = "Remove Vote";
         break;
     }
-  
+    
+    const buttonTheme = (stage === "Day") ? "btn btn-dark" : "btn btn-light";
     const removeButton = currentPoll.ownVote && (
         <button
-            className="btn btn-light"
+            className= {buttonTheme}
             onClick={removeVote}
         >
             {buttonText}

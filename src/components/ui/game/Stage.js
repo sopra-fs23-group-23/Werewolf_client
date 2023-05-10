@@ -35,10 +35,10 @@ const Stage = ({ currentPoll, lobby, stage}) => {
   let SelectionType = null;
   switch (voteType) {
     case "Witch-Heal":
-      SelectionType = <SingleOption currentPoll={currentPoll} />
+      SelectionType = <SingleOption currentPoll={currentPoll} stage={stage} />
       break;
     default: //Hunter, Seer, Mayor, etc. //Witch also which implicitly is Witch-Kill
-      SelectionType = <MultiOption currentPoll={currentPoll} />
+      SelectionType = <MultiOption currentPoll={currentPoll} stage={stage} />
       break;
   }
 

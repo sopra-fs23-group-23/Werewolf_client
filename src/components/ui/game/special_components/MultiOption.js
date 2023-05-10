@@ -4,7 +4,7 @@ import 'styles/ui/Endscreen.scss';
 import {api} from "../../../../helpers/api";
 import storageManager from "../../../../helpers/StorageManager";
 
-const MultiOption = ({currentPoll}) => {
+const MultiOption = ({currentPoll, stage}) => {
 
   let voteParticipantIds = currentPoll.participants.map(p => p.player.id);
 
@@ -65,6 +65,16 @@ const MultiOption = ({currentPoll}) => {
     );
   };
 
+  const buttonTheme = (stage === "Day") ? "btn btn-dark" : "btn btn-light";
+  const removeButton = currentPoll.ownVote && (
+    <button
+        className= {buttonTheme}
+        onClick={removeVote}
+    >
+        remove Vote
+    </button>
+  );
+
   let content;
  
   switch (currentPoll.role) {
@@ -85,13 +95,7 @@ const MultiOption = ({currentPoll}) => {
       content = (
         <>
           {selectionProfiles(currentPoll.pollOptions)}
-          <button
-              className="btn btn-light"
-              onClick={removeVote}
-              visible={currentPoll.ownVote}
-          >
-              remove Vote
-          </button>
+          {removeButton}
         </>
       );
       break;
