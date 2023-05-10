@@ -55,7 +55,6 @@ const MultiOption = ({currentPoll, stage}) => {
   };
 
   const selectionProfiles = (playerCollection)  => {
-    console.log("Player Collection: ", playerCollection);
     return (
       <div className="game-player-selection-wrapper">
         {playerCollection.map(option => (

@@ -17,7 +17,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
   if (currentPoll.role === "Witch") {
     voteType = (currentPoll.question === "Select a player to kill with your poison potion.") ? "Witch-Kill" : "Witch-Heal";
   }
-  console.log("VoteType: " + voteType)
+
   let HitlistType = null;
   switch (voteType) {
     case "Cupid":
