@@ -59,7 +59,6 @@ const SingleOption = ({currentPoll, stage}) => {
         </button>
     );
     
-
     let content;
 
     switch (currentPoll.role) {
