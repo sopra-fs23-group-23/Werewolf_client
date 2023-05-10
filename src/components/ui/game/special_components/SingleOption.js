@@ -1,6 +1,5 @@
 import Profile from '../../Profile';
 import Player from 'models/Player';
-import 'styles/ui/Endscreen.scss';
 import {api} from "../../../../helpers/api";
 import storageManager from "../../../../helpers/StorageManager";
 
@@ -50,7 +49,7 @@ const SingleOption = ({currentPoll, stage}) => {
         break;
     }
     
-    const buttonTheme = (stage === "Day") ? "btn btn-dark" : "btn btn-light";
+    const buttonTheme = (stage === "Day") ? "btn btn-remove btn-dark" : "btn btn-remove btn-light";
     const removeButton = currentPoll.ownVote && (
         <button
             className= {buttonTheme}

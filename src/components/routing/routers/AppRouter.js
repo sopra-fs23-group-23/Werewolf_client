@@ -28,9 +28,9 @@ const AppRouter = () => {
           </HomeGuard>
         </Route>
         <Route exact path="/game">
-          {/* <HomeGuard> //TODO: uncomment again*/}
+          <HomeGuard>
             <Game />
-          {/* </HomeGuard> */}
+          </HomeGuard>
         </Route>
         <Route exact path="/home">
           <HomeGuard>

@@ -1,6 +1,5 @@
 import Profile from '../../Profile';
 import Player from 'models/Player';
-import 'styles/ui/Endscreen.scss';
 import {api} from "../../../../helpers/api";
 import storageManager from "../../../../helpers/StorageManager";
 
@@ -10,16 +9,18 @@ const MultiOption = ({currentPoll, stage}) => {
 
   const singleVoters = ["Witch", "Hunter", "Seer", "Mayor"];
   const singleKillVoters = ["Witch", "Hunter", "Seer", "Mayor"];
-  const singleSelectVoters = ["Seer"];
+  const singleSelectVoters = ["Seer", "Mayor-Death"];
+
+  const roleType = (currentPoll.question === "Who should become the mayor?") ? "Mayor-Death": currentPoll.role;
 
   const getSelectionMode = (player) => {
     let selectionMode = "selection-small";
-    if (singleVoters.includes(currentPoll.role)){
+    if (singleVoters.includes(roleType)){
       selectionMode = "selection-big";
       if (currentPoll.ownVote && currentPoll.ownVote.id === player.id) {
-        if (singleKillVoters.includes(currentPoll.role)) {
+        if (singleKillVoters.includes(roleType)) {
           selectionMode += "-kill";
-        } else if (singleSelectVoters.includes(currentPoll.role)) {
+        } else if (singleSelectVoters.includes(roleType)) {
           selectionMode += "-select";
         }
       } else if (currentPoll.ownVote) {
@@ -64,7 +65,7 @@ const MultiOption = ({currentPoll, stage}) => {
     );
   };
 
-  const buttonTheme = (stage === "Day") ? "btn btn-dark" : "btn btn-light";
+  const buttonTheme = (stage === "Day") ? "btn btn-remove btn-dark" : "btn btn-remove btn-light";
   const removeButton = currentPoll.ownVote && (
     <button
         className= {buttonTheme}
