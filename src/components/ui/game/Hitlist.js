@@ -1,11 +1,7 @@
 import React from 'react';
 import 'styles/ui/Hitlist.scss';
-import PropTypes from 'prop-types';
 import Profile from 'components/ui/Profile';
 import Player from 'models/Player';
-import { useEffect } from 'react';
-
-
 
 const Hitlist = ({currentPoll}) => {
 
@@ -13,7 +9,7 @@ const Hitlist = ({currentPoll}) => {
     const updateHoveredPlayer = (hoveredPlayer) => {
         let allPlayers = document.getElementsByClassName("profile-selection-small")
         if (hoveredPlayer !== null) {
-            let [_, supporterArray] = currentPoll.voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
+            let [, supporterArray] = currentPoll.voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
             console.log("SupporterArray: " + supporterArray);
             for (let i = 0; i < allPlayers.length; i++) {           
                 let playerId = parseInt(allPlayers[i].id.substring(24));
@@ -33,10 +29,6 @@ const Hitlist = ({currentPoll}) => {
             }
         }
     };
-
-    useEffect(() => {
-        updateHoveredPlayer(null);
-    }, [currentPoll.role]);
 
 
     const hitListLeaders = [];

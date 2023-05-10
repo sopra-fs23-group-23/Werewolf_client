@@ -6,7 +6,6 @@ import Selection from '../game/Selection';
 import Hitlist from './Hitlist';
 import Spinner from '../Spinner';
 import AmorMatch from './special_components/AmorMatch';
-import SweetDreams from './special_components/NotParticipant';
 import WitchElixir from './special_components/WitchElixir';
 import NotParticipant from './special_components/NotParticipant';
 
@@ -19,11 +18,16 @@ const Stage = ({ currentPoll, lobby, stage}) => {
     case "Amor":
       HitlistType = <AmorMatch currentPoll={currentPoll} />
       break;
+    case "Seer":
+      HitlistType = <Hitlist currentPoll={currentPoll} /> // TODO: Add Seer Hitlist
+      break;
     case "Werewolf":
     case "Villager":
     case "Mayor":
       HitlistType = <Hitlist currentPoll={currentPoll} />
       break;
+    
+
     default: //Witch, Hunter, Seer
       HitlistType = null; // No Hitlist required, because only one person is allowed to vote
       break;
@@ -49,7 +53,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
         <div className="game-hitlist">
           {HitlistType}
         </div>
-        <Selection currentPoll={currentPoll} lobby={lobby} />
+        {SelectionType}
       </>
     )
   } else {

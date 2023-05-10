@@ -6,14 +6,6 @@ import storageManager from "../../../../helpers/StorageManager";
 import {api} from "../../../../helpers/api";
 
 
-const Button = ({onClick, children}) => {
-    return (
-        <button className="button" onClick={onClick}>
-            {children}
-        </button>
-    );
-}
-
 const AmorMatch = ({currentPoll}) => {
 
     

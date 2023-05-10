@@ -1,8 +1,4 @@
-import { useState, useEffect } from 'react';
-import { api } from 'helpers/api';
 import 'styles/ui/EventLog.scss';
-import StorageManager from "../../../helpers/StorageManager";
-import Spinner from "../../ui/Spinner";
 import PropTypes from 'prop-types';
 
 const EventPopup = ({ show, handleClose, stage, logger}) => {

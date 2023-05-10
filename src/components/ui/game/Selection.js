@@ -3,7 +3,6 @@ import Player from 'models/Player';
 import 'styles/ui/Endscreen.scss';
 import {api} from "../../../helpers/api";
 import storageManager from "../../../helpers/StorageManager";
-import Spinner from 'components/ui/Spinner';
 
 const Selection = ({currentPoll}) => {
 
