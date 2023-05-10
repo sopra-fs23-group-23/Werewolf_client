@@ -25,7 +25,7 @@ class Log {
       let newAction = new Action(action);
 
       switch (newAction.type) {
-        case "NullPlayerCommand":
+        case "NullPlayerCommand", "PrivateAddPlayerToRolePollCommand":
           continue;
         case "AddPlayerToRolePollCommand":
           newAction.setRepresentationDark(
