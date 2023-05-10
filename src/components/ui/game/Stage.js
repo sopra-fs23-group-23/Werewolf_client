@@ -5,7 +5,7 @@ import Countdown from '../Countdown';
 import Selection from '../game/Selection';
 import Hitlist from './Hitlist';
 import Spinner from '../Spinner';
-import AmorMatch from './special_components/AmorMatch';
+import CupidMatch from './special_components/CupidMatch';
 import WitchElixir from './special_components/WitchElixir';
 import NotParticipant from './special_components/NotParticipant';
 
@@ -13,10 +13,13 @@ const Stage = ({ currentPoll, lobby, stage}) => {
 
   let backgroundTheme = stage === "Day" ? "light" : "dark";
   
+  // if (currentPoll.role === "Witch"){
+  //   currentPoll.role = (question !== "Select a player to kill with your poison potion.") ? "Witch-Kill" : "Witch-Heal";
+  // }
   let HitlistType = null;
   switch (currentPoll.role) {
-    case "Amor":
-      HitlistType = <AmorMatch currentPoll={currentPoll} />
+    case "Cupid":
+      HitlistType = <CupidMatch currentPoll={currentPoll} />
       break;
     case "Seer":
       HitlistType = <Hitlist currentPoll={currentPoll} /> // TODO: Add Seer Hitlist
@@ -26,8 +29,6 @@ const Stage = ({ currentPoll, lobby, stage}) => {
     case "Mayor":
       HitlistType = <Hitlist currentPoll={currentPoll} />
       break;
-    
-
     default: //Witch, Hunter, Seer
       HitlistType = null; // No Hitlist required, because only one person is allowed to vote
       break;
@@ -38,7 +39,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
     case "Witch-Heal":
       SelectionType = <WitchElixir currentPoll={currentPoll} />
       break;
-    default:
+    default: //Hunter, Seer, Mayor, etc. //Witch also which implicitly is Witch-Kill
       SelectionType = <Selection currentPoll={currentPoll} />
       break;
   }

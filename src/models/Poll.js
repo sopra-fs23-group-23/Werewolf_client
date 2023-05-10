@@ -20,6 +20,13 @@ class Poll {
     
   }
 
+  getOwnRemainingVotes() {
+    if (this.isVoteParticipant) {
+      return this.participants.filter(participant => parseInt(participant.player.id) === parseInt(StorageManager.getUserId()))[0].remainingVotes;
+    }
+    return 0;
+  }
+
   getRolePlural() {
     switch (this.role) {
       case "Werewolf":
