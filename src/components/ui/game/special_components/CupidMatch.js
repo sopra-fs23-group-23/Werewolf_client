@@ -1,20 +1,12 @@
 import React from 'react';
-import 'styles/ui/AmorMatch.scss';
+import 'styles/ui/CupidMatch.scss';
 import Profile from 'components/ui/Profile';
 import Player from 'models/Player';
 import storageManager from "../../../../helpers/StorageManager";
 import {api} from "../../../../helpers/api";
 
 
-const Button = ({onClick, children}) => {
-    return (
-        <button className="button" onClick={onClick}>
-            {children}
-        </button>
-    );
-}
-
-const AmorMatch = ({currentPoll}) => {
+const CupidMatch = ({currentPoll}) => {
 
     
     const removeLover = async (lover) => {
@@ -27,37 +19,34 @@ const AmorMatch = ({currentPoll}) => {
         }
     };
 
-    
-
-
     return (
-        <div className="amormatch">
-                <div className="amormatch-lover">
+        <div className="cupidmatch">
+                <div className="cupidmatch-lover">
                     { 1 <= currentPoll.voteArray.length ? (
                         <>
-                        <Profile user={new Player(currentPoll.voteArray[0][0])} isDuplicate={true} mode="lover"/>
+                        <Profile user={new Player(currentPoll.voteArray[0][0])} mode="lover"/>
                         <button
-                            className="btn btn-dark"
+                            className="btn btn-light"
                             onClick={() => removeLover(currentPoll.voteArray[0][0])}
                         >
                             remove Lover
                         </button>
                         </>
-                    ) : <div className='amormatch-lover-placeholder'><h3>Romeo still missing</h3></div>}
+                    ) : <div className='cupidmatch-lover-placeholder'><h3>Romeo still missing</h3></div>}
                 </div>
                     <h3>Love<br/> is in the <br/>air</h3>
-                <div className="amormatch-lover">
+                <div className="cupidmatch-lover">
                     { 2 <= currentPoll.voteArray.length ? (
                         <>
-                        <Profile user={new Player(currentPoll.voteArray[0][1])} isDuplicate={true} mode="lover"/>
+                        <Profile user={new Player(currentPoll.voteArray[1][0])} mode="lover"/>
                         <button
-                            className="btn btn-dark"
-                            onClick={() => removeLover(currentPoll.voteArray[0][1])}
+                            className="btn btn-light"
+                            onClick={() => removeLover(currentPoll.voteArray[1][0])}
                         >
                             remove Lover
                         </button>
                         </>
-                    ) : <div className='amormatch-lover-placeholder'><h3>Juliet still missing</h3></div>}
+                    ) : <div className='cupidmatch-lover-placeholder'><h3>Juliet still missing</h3></div>}
                     
                 </div>
         </div>
@@ -65,4 +54,4 @@ const AmorMatch = ({currentPoll}) => {
 }
 
 
-export default AmorMatch;
+export default CupidMatch;

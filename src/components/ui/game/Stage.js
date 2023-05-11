@@ -2,39 +2,43 @@
 import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
-import Selection from '../game/Selection';
-import Hitlist from './Hitlist';
+import MultiOption from './special_components/MultiOption';
+import SingleOption from './special_components/SingleOption';
+import Hitlist from './special_components/Hitlist';
 import Spinner from '../Spinner';
-import AmorMatch from './special_components/AmorMatch';
-import SweetDreams from './special_components/SweetDreams';
-import WitchElixir from './special_components/WitchElixir';
+import CupidMatch from './special_components/CupidMatch';
+import NotParticipant from './special_components/NotParticipant';
 
 const Stage = ({ currentPoll, lobby, stage}) => {
 
   let backgroundTheme = stage === "Day" ? "light" : "dark";
-  
+
+  let voteType = currentPoll.role;
+  if (currentPoll.role === "Witch") {
+    voteType = (currentPoll.question === "Select a player to kill with your poison potion.") ? "Witch-Kill" : "Witch-Heal";
+  }
+
   let HitlistType = null;
-  switch (currentPoll.role) {
-    case "Amor":
-      HitlistType = <AmorMatch currentPoll={currentPoll} />
+  switch (voteType) {
+    case "Cupid":
+      HitlistType = <CupidMatch currentPoll={currentPoll} />
       break;
     case "Werewolf":
     case "Villager":
-    case "Mayor":
       HitlistType = <Hitlist currentPoll={currentPoll} />
       break;
-    default: //Witch, Hunter, Seer
+    default: //Hunter, Seer, Mayor, etc.
       HitlistType = null; // No Hitlist required, because only one person is allowed to vote
       break;
   }
   
   let SelectionType = null;
-  switch (currentPoll.votingParty) {
+  switch (voteType) {
     case "Witch-Heal":
-      SelectionType = <WitchElixir currentPoll={currentPoll} />
+      SelectionType = <SingleOption currentPoll={currentPoll} stage={stage} />
       break;
-    default:
-      SelectionType = <Selection currentPoll={currentPoll} />
+    default: //Hunter, Seer, Mayor, etc. //Witch also which implicitly is Witch-Kill
+      SelectionType = <MultiOption currentPoll={currentPoll} stage={stage} />
       break;
   }
 
@@ -45,16 +49,27 @@ const Stage = ({ currentPoll, lobby, stage}) => {
   if (currentPoll.isVoteParticipant){
     content = (
       <>
-        <div className="game-hitlist">
-          {HitlistType}
-        </div>
-        <Selection currentPoll={currentPoll} lobby={lobby} />
+        {HitlistType}
+        {SelectionType}
       </>
     )
   } else {
     content = (
-      <SweetDreams currentPoll={currentPoll}/>
+      <NotParticipant currentPoll={currentPoll} stage={stage}/>
     )
+  }
+
+  let deadPlayers = null;
+  if (lobby) {
+    deadPlayers = (
+      <div className={`game-dead-players`}>
+        {lobby.players.map(player => (
+          (!player.alive) && (
+            <Profile user={new Player(player)} mode="dead-player" key={player.id} />
+          )
+        ))}
+      </div>
+    );
   }
       
   return (
@@ -69,13 +84,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
           {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} /> : ""}
         </div>
         <div className={`game-dead game-dead-${backgroundTheme}`}>
-          <div className={`game-dead-players`}>
-            {lobby.players.map(player => (
-              (!player.alive) && (
-                <Profile user={new Player(player)} mode="dead-player" key={player.id} />
-              )
-            ))}
-          </div>
+          {deadPlayers}
         </div>
       </div>
   );

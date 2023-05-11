@@ -12,7 +12,7 @@ const periodicFunctionCaller = () => {
   periodicFunctionToBeCalled();
 }
 
-const logger = new Log();
+let logger = new Log();
 
 let gameShouldBeFetchedAgain = false;
 
@@ -119,10 +119,12 @@ export const useGame = () => {
     } catch (error) {
       console.error("Details Fetch End Data Error: ", error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lobbyId, game]);
 
     useEffect(() => {
       setTimeout(async () => {
+        logger = new Log();
         await fetchGame();
         await fetchPoll();
         setStarted(true);
@@ -133,6 +135,7 @@ export const useGame = () => {
           clearInterval(pollIntervalId);
         };
       }, 16000);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
   periodicFunctionToBeCalled = fetchPoll;
