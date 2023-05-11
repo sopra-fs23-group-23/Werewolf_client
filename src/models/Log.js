@@ -13,11 +13,31 @@ class Log {
   async fetchRole (action) {
     try {
       const roleVictim = await api.get('/lobbies/' + StorageManager.getLobbyId() + "/roles/" + action.affectedPlayer.id);
-      action.setRole(roleVictim.data[0].roleName);
+      action.setRole(roleVictim.data);
     } catch (error) {
       alert('Could not fetch role information' + error.response.data?.message);
       console.error(error);
     }
+  }
+
+  getRoleListFormatted (roleList) {
+    if (parseInt(roleList.length) === 1) {
+      return roleList[0].roleName;
+    }
+    let returnString = roleList[0].roleName;
+    for (let i = 1; i < roleList.length; i++){
+      if (roleList[i].roleName === "Villager" && (roleList[i-1].roleName === "Cupid" || roleList[i-1].roleName === "Hunter"
+        || roleList[i-1].roleName === "Seer" || roleList[i-1].roleName === "Witch")) {
+        continue;
+      }
+      if (i === (parseInt(roleList.length) - 1 )) {
+        returnString += " and ";
+      } else {
+        returnString += ", "
+      }
+      returnString += roleList[i].roleName;
+    }
+    return returnString;
   }
 
   async addActions (actions) {
@@ -25,7 +45,7 @@ class Log {
       let newAction = new Action(action);
 
       switch (newAction.type) {
-        case "NullPlayerCommand":
+        case "PrivateAddPlayerToRolePollCommand":
           continue;
         case "AddPlayerToRolePollCommand":
           newAction.setRepresentationDark(
@@ -36,21 +56,22 @@ class Log {
             <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
           </div>);
           break;
+        case "WitchKillPlayerPollCommand":
         case "KillPlayerPollCommand":
           await this.fetchRole(newAction);
           newAction.setRepresentationDark(
             <div className={"death-event"}>
               <h3>{newAction.message}</h3>
               <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
-              <p>{newAction.affectedPlayer.name + " was a " + newAction.role}</p>
-              <img className={"role-image"} src={`/static/media/${newAction.role}-dark.png`} alt={"Picture of a " + newAction.role}/>
+              <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
+              <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-dark.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
             </div>)
           newAction.setRepresentationLight(
             <div className={"death-event"}>
               <h3>{newAction.message}</h3>
               <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
-              <p>{newAction.affectedPlayer.name + " was a " + newAction.role + "."}</p>
-              <img className={"role-image"} src={`/static/media/${newAction.role}-light.png`} alt={"Picture of a " + newAction.role}/>
+              <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
+              <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-light.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
             </div>)
           break;
         default:

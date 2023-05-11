@@ -41,14 +41,6 @@ const Hitlist = ({currentPoll}) => {
             }
         }
     }
-    
-
-    
-    
-    
-    
-
-    
 
     const castVote = async (optionId) => {
         console.log("I clicked person: " + optionId);

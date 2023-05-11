@@ -14,12 +14,29 @@ export const Information = () => {
   // eslint-disable-next-line
   const [showAllRoles, setShowAllRoles] = useState(false);
 
+  const filterRoles = (roleList) => {
+    let filteredList = roleList.filter(role => role.roleName !== 'Mayor' && role.roleName !== 'Lover');
+    for(const role of filteredList) {
+
+      if(role.roleName !== "Villager") {
+        continue;
+      }
+      for(const innerRole of filteredList) {
+        if((innerRole.roleName === "Hunter") || (innerRole.roleName === "Cupid" || (innerRole.roleName === "Seer") ||
+          (innerRole.roleName === "Witch"))) {
+          role.amount -= innerRole.amount;
+        }
+      }
+    }
+    return filteredList;
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
         const responseAll = await api.get('/lobbies/' + lobbyId + "/roles");
-        const tmp = responseAll.data.filter(role => role.roleName !== 'Mayor');   // remove mayor from information screen
-        setAllRoles(tmp);
+        const filtered = filterRoles(responseAll.data);
+        setAllRoles(filtered);
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
       } catch (error) {

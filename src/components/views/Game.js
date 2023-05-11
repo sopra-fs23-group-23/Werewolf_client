@@ -1,5 +1,5 @@
 import RolePopup from 'components/ui/RolePopup';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useGame } from 'hooks/Game.hooks';
 import 'styles/views/Game.scss';
 import { Information } from '../ui/game/Information';
@@ -27,6 +27,13 @@ const Game = () => {
     }
     setEventLogActive(!eventLogActive);
   }
+
+  useEffect(() => {
+    let objDiv = document.getElementById("LogContainer");
+    if(objDiv) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  }, [eventLogActive])
 
   const getUpdateAmount = () => {
     if(eventLogActive) {

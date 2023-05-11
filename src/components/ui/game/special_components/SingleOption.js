@@ -27,7 +27,6 @@ const SingleOption = ({currentPoll, stage}) => {
     };
 
   let selectionMode = "singleOption";
-
   if (currentPoll.ownVote) {
     switch (currentPoll.role) {
         case 'Witch':
@@ -59,7 +58,6 @@ const SingleOption = ({currentPoll, stage}) => {
         </button>
     );
     
-
     let content;
 
     switch (currentPoll.role) {

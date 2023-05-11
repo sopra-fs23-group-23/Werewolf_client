@@ -24,7 +24,7 @@ const CupidMatch = ({currentPoll}) => {
                 <div className="cupidmatch-lover">
                     { 1 <= currentPoll.voteArray.length ? (
                         <>
-                        <Profile user={new Player(currentPoll.voteArray[0][0])} isDuplicate={true} mode="lover"/>
+                        <Profile user={new Player(currentPoll.voteArray[0][0])} mode="lover"/>
                         <button
                             className="btn btn-light"
                             onClick={() => removeLover(currentPoll.voteArray[0][0])}
@@ -38,19 +38,8 @@ const CupidMatch = ({currentPoll}) => {
                 <div className="cupidmatch-lover">
                     { 2 <= currentPoll.voteArray.length ? (
                         <>
-<<<<<<< HEAD
-<<<<<<<< HEAD:src/components/ui/game/special_components/CupidMatch.js
-                        <Profile user={new Player(currentPoll.voteArray[1][0])} mode="lover"/>
-========
+                        <Profile user={new Player(currentPoll.voteArray[1][0])} isDuplicate={true} mode="lover"/>
                         <Profile user={new Player(currentPoll.voteArray[0][1])} isDuplicate={true} mode="lover"/>
->>>>>>>> video:src/components/ui/game/special_components/AmorMatch.js
-=======
-<<<<<<< HEAD:src/components/ui/game/special_components/AmorMatch.js
-                        <Profile user={new Player(currentPoll.voteArray[0][1])} isDuplicate={true} mode="lover"/>
-=======
-                        <Profile user={new Player(currentPoll.voteArray[1][0])} mode="lover"/>
->>>>>>> main:src/components/ui/game/special_components/CupidMatch.js
->>>>>>> video
                         <button
                             className="btn btn-light"
                             onClick={() => removeLover(currentPoll.voteArray[1][0])}
