@@ -31,19 +31,6 @@
             }
         }
     }
-    &-profile{
-        justify-self: flex-end;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        img {
-            width: 130px;
-            height: 130px;
-            border-radius: 80px;
-            background-color: white;
-        }
-    }
     &-userrow{
         margin-top: 2em;
         display: flex;
@@ -57,21 +44,6 @@
         // https://stackoverflow.com/questions/14962468/how-can-i-combine-flexbox-and-vertical-scroll-in-a-full-height-app
         height: 0;
         overflow-y: auto;
-        .lobby-profile {
-            margin-left: 1em;
-            margin-right: 1em;
-            div {
-                width: 130px;
-                height: 130px;
-                padding: 3px;
-                background-color: transparent !important;
-            }
-            video {
-                border-radius: 50%;
-                background-color: transparent;
-            }
-        }
-
     }
     &-footerrow{
         display: flex;

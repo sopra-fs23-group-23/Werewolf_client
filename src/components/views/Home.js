@@ -4,7 +4,6 @@ import { api } from 'helpers/api';
 import 'styles/views/Home.scss';
 import FormField from 'components/ui/FormField';
 import Lobby from 'models/Lobby';
-import User from 'models/User';
 import StorageManager from 'helpers/StorageManager';
 
 const Home = () => {
@@ -20,12 +19,9 @@ const Home = () => {
         setUser(response.data);
       } catch (error) {
         console.error(error);
-        let testUser = new User();
-        testUser.username = 'Ricardo';
-        setUser(testUser);
-
-        //alert('Could not fetch user with ID ' + id); 123
-        //history.push('/home');
+        alert('Could not fetch user with ID ' + id);
+        sessionStorage.clear();
+        history.push('/login');
       }
     }
     fetchData();
@@ -64,7 +60,7 @@ const Home = () => {
   };
 
   return (
-    <div className="background background-dark-image home">
+    <div className="background background-dark home">
       <div className="container">
         
         <button className="btn btn-light home-logout" onClick={(e) => logout(e)}>

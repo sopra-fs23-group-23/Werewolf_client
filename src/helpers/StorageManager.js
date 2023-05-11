@@ -1,4 +1,8 @@
+import AgoraRTC from "agora-rtc-sdk-ng";
+
 class StorageManager {
+    static agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+
     static getUserToken() {
         return sessionStorage.getItem("token")
     }
@@ -15,13 +19,12 @@ class StorageManager {
         return sessionStorage.getItem("channelToken")
     }
 
-    static getUsername() {
-        return sessionStorage.getItem("username")
-
+    static getAgoraEngine() {
+        return this.agoraEngine;
     }
 
-    static setUsername(username) {
-        sessionStorage.setItem("username", username);
+    static getIsMuted() {
+        return sessionStorage.getItem("isMuted")
     }
 
     static setUserToken(token) {
@@ -40,8 +43,8 @@ class StorageManager {
         sessionStorage.setItem("channelToken", channelToken)
     }
 
-    static removeUsername() {
-        sessionStorage.removeItem('username');
+    static setIsMuted(isMuted) {
+        sessionStorage.setItem("isMuted", isMuted)
     }
 
     static removeUserToken() {
@@ -58,6 +61,14 @@ class StorageManager {
 
     static removeChannelToken() {
         sessionStorage.removeItem('channelToken');
+    }
+
+    static removeIsMuted() {
+        sessionStorage.removeItem('isMuted');
+    }
+
+    static removeAgoraEngine() {
+        this.agoraEngine = null;
     }
 }
 

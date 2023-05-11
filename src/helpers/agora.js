@@ -4,6 +4,7 @@ import StorageManager from "./StorageManager";
 
 const appId = '348d6a205d75436e916896366c5e315c';
 
+
 let channelParameters =
 {
   // A variable to hold a local audio track.
@@ -18,19 +19,11 @@ let channelParameters =
   remoteUid: null,
 };
 
+
 export function startBasicCall() {
   // Create an instance of the Agora Engine
-  const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-
-  // Dynamically create a container in the form of a DIV element to play the remote video track.
-  const remotePlayerContainer = document.createElement("div");
-  // Dynamically create a container in the form of a DIV element to play the local video track.
-  const localPlayerContainer = document.createElement('div');
-  // Specify the ID of the DIV container. You can use the uid of the local user.
-  localPlayerContainer.id = StorageManager.getUserId();
-  // Set the textContent property of the local video container to the local user id.
-  // Set the local video container size.
-
+  const agoraEngine = StorageManager.getAgoraEngine();
+  AgoraRTC.setLogLevel(2);
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -45,13 +38,8 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack = user.audioTrack;
       // Save the remote user id for reuse.
       channelParameters.remoteUid = user.uid.toString();
-      // Specify the ID of the DIV container. You can use the uid of the remote user.
-      remotePlayerContainer.id = user.uid.toString();
-      channelParameters.remoteUid = user.uid.toString();
-      // Append the remote container to the page body.
-      //document.body.append(remotePlayerContainer);
       // Play the remote video track.
-      channelParameters.remoteVideoTrack.play(remotePlayerContainer);
+      channelParameters.remoteVideoTrack.play(`profile-video-${channelParameters.remoteUid}`);
     }
     // Subscribe and play the remote audio track.
     if (mediaType === "audio") {
@@ -62,28 +50,62 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack.play();
     };
   });
+}
 
-  async function joinCall() {
-    // Join a channel.
-    await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), StorageManager.getUserId());
-    // Create a local audio track from the microphone audio.
-    channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-    // Create a local video track from the video captured by a camera.
-    channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-    // Append the local video container to the page body.
-    //document.querySelector(".lobby-userrow .lobby-profile").append(localPlayerContainer, remotePlayerContainer);
-    const lobbyProfile = document.querySelector(`.lobby-userrow #lobby-profile-${StorageManager.getUserId()}`);
-    lobbyProfile.append(localPlayerContainer);
-    lobbyProfile.append(remotePlayerContainer);
-    // lobbyProfile.insertAdjacentElement("beforeend", localPlayerContainer);
-    //lobbyProfile.insertAdjacentElement("beforeend", remotePlayerContainer);
-    
-    //document.body.append(remotePlayerContainer);
-    // Publish the local audio track in the channel.
-    await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
-    // Play the local video track.
-    channelParameters.localVideoTrack.play(localPlayerContainer);
-    console.log("Publish success!");
+export async function joinCall() {
+  const agoraEngine = StorageManager.getAgoraEngine();
+  // Join a channel.
+  await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), parseInt(StorageManager.getUserId()));
+  // Create a local audio track from the microphone audio.
+  channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  // Create a local video track from the video captured by a camera.
+  channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+  // Publish the local audio track in the channel.
+  await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
+  channelParameters.localVideoTrack.play(`profile-video-${StorageManager.getUserId()}`);
+  channelParameters.localVideoTrack.play(`profile-video-${StorageManager.getUserId()}-dup`);
+}
+
+export async function leaveCall(){
+  const agoraEngine = StorageManager.getAgoraEngine();
+  channelParameters.localAudioTrack.close();
+  await agoraEngine.leave();
+}
+
+
+// export async function checkIfUserIsInCall() {
+//   const agoraEngine = StorageManager.getAgoraEngine();
+//   const remoteUsers = agoraEngine.remoteUsers;
+//   console.log("remoteUsers", remoteUsers);
+//   if (remoteUsers.length > 0) {
+//     console.log("You are in a call");
+//     return true;
+//   } else {
+//     console.log("You are not in a call");
+//     return false;
+//   }
+// }
+
+// export function changeMicrophone() {
+//   var microphoneTracks = AgoraRTC.getMicrophones();
+//   console.log("microphoneTracks", microphoneTracks);
+
+// var microphoneTracks = await AgoraRTC.getMicrophones();
+// var playbackDevices = await AgoraRTC.getPlaybackDevices();
+
+// console.log("microphoneTracks", microphoneTracks);
+// console.log("playbackDevices", playbackDevices);
+
+// }
+
+export async function muteAudio() {
+  if (StorageManager.getIsMuted() === "false") {
+    channelParameters.localAudioTrack.setEnabled(false);
+    document.getElementById("muteAudio").src = "/static/media/microphone-disabled.svg";
+    StorageManager.setIsMuted("true");
+  }else{
+    channelParameters.localAudioTrack.setEnabled(true);
+    document.getElementById("muteAudio").src = "/static/media/microphone-enabled.svg";
+    StorageManager.setIsMuted("false");
   }
-  joinCall();
 }

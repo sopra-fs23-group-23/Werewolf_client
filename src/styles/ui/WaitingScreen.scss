@@ -1,0 +1,17 @@
+@import 'styles/theme';
+
+.waiting-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    margin: 7em auto;
+
+    h1 {
+        padding: 0;
+    }
+    .loader {
+        width: 200px;
+        height: 200px;
+    }
+}

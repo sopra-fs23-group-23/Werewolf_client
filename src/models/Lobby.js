@@ -6,6 +6,7 @@ class Lobby {
     this.id = null;
     this.admin = null;
     this.players = null;
+    this.closed = null;
     Object.assign(this, data);
   }
 }

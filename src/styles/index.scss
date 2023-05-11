@@ -2,11 +2,13 @@
 @import 'styles/theme';
 @import 'styles/components/button';
 @import 'styles/components/infoButton';
+@import 'styles/components/logButton';
 @import 'styles/components/columnContainer';
 @import 'styles/components/link';
 @import 'styles/ui/RoleInformation';
 @import 'styles/ui/RoleColumn';
 @import 'styles/ui/FormField';
+@import 'styles/ui/Profile';
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -55,6 +57,7 @@ a {
 }
 
 .background {
+  z-index: -2;
   height: 100vh;
   overflow-y: auto;
   &-light {
@@ -66,11 +69,25 @@ a {
     color: $color-text-light;
   }
   &-dark-image {
-    background-image: url('../../public/assets/images/bg-dark.png');
-    object-fit: cover;
+    background-color: $color-bg-dark;
+    background-image: url('../../public/static/media/cemetery-dark.png') !important;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: bottom;
     width: 100vw;
     height: 100vh;
-    color:white;
+    color:$color-text-light;
+  }
+  &-light-image {
+    background-color: $color-bg-light;
+    background-image: url('../../public/static/media/cemetery-light.png') !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: bottom;
+    width: 100vw;
+    height: 100vh;
+    color:$color-text-dark;
   }
 }
 

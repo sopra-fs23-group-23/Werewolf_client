@@ -2,17 +2,10 @@ import 'styles/views/Lobby.scss';
 import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
 import { api } from 'helpers/api';
+import Profile from 'components/ui/Profile';
+import {useHistory} from "react-router-dom";
+import StorageManager from 'helpers/StorageManager';
 
-
-const Profile = ({user}) => (
-  <div className="lobby-profile" id={`lobby-profile-${user.id}`}>
-      {/* <img
-        src={user.avatarUrl}
-        alt={user.name + ' Avatar'}
-      /> */}
-      <p>{user.name}</p>
-  </div>
-)
 
 const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
@@ -38,6 +31,8 @@ const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
 }
 
 const Lobby = () => {
+  const history = useHistory();
+  StorageManager.setIsMuted("false");
   function leave() {
     // TODO
     alert("Not implemented yet");
@@ -47,12 +42,18 @@ const Lobby = () => {
     api.post(`/games/${lobby.id}`);
   }
 
-  const {lobby, uid} = useLobby();
+  const {lobby, uid, intervalId} = useLobby();
+
+  if(lobby && lobby.closed) {
+    clearInterval(intervalId);
+
+    history.push(`/game`);
+  }
   
   let content = (
     <Spinner/>
   )
-
+  
   if (lobby) {
     content = (
       <div className="container lobby-body">
@@ -63,12 +64,12 @@ const Lobby = () => {
           </div>
           <div className='admin-wrapper'>
             <h5>admin</h5>
-            <Profile user={lobby.admin}/>
+            <Profile isDuplicate={true} user={lobby.admin}/>
           </div>
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
-            <Profile user={player} key={player.id}/>
+            <Profile user={player} key={player.id} />
           ))}
         </div>
         <div className='lobby-footerrow'>
@@ -77,9 +78,10 @@ const Lobby = () => {
       </div>
     )
   }
+  
 
   return (
-    <div className="background background-dark-image lobby">
+    <div className="background background-dark lobby">
       {content}
     </div>
   );
