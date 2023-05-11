@@ -14,11 +14,27 @@ const RolePopup = ({ show, handleClose, stage }) => {
   const [ownRoles, setOwnRoles] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const filterOutVillagers = (roleList) => {
+    for(const role of roleList) {
+      if(role.roleName !== "Villager") {
+        continue;
+      }
+      for(const innerRole of roleList) {
+        if((innerRole.roleName === "Hunter") || (innerRole.roleName === "Cupid" || (innerRole.roleName === "Seer") ||
+          (innerRole.roleName === "Witch"))) {
+          role.amount -= innerRole.amount;
+        }
+      }
+    }
+    return roleList;
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
         const responseAll = await api.get('/lobbies/' + lobbyId + "/roles");
-        setAllRoles(responseAll.data);
+        const filteredRoles = filterOutVillagers(responseAll.data);
+        setAllRoles(filteredRoles);
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
         allRoles.forEach((role, index) => {
