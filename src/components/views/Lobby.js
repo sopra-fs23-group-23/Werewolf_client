@@ -64,12 +64,12 @@ const Lobby = () => {
           </div>
           <div className='admin-wrapper'>
             <h5>admin</h5>
-            <Profile isDuplicate={true} user={lobby.admin}/>
+            <Profile isDuplicate={true} user={lobby.admin} key={lobby.admin}/>
           </div>
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
-            <Profile user={player} key={player.id} />
+            <Profile isDuplicate={false} user={player} key={player.id} />
           ))}
         </div>
         <div className='lobby-footerrow'>
