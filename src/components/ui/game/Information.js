@@ -18,7 +18,7 @@ export const Information = () => {
     async function fetchData() {
       try {
         const responseAll = await api.get('/lobbies/' + lobbyId + "/roles");
-        const tmp = responseAll.data.filter(role => role.roleName !== 'Mayor');   // remove mayor from information screen
+        const tmp = responseAll.data.filter(role => role.roleName !== 'Mayor' && role.roleName !== 'Lover');   // remove mayor from information screen
         setAllRoles(tmp);
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
