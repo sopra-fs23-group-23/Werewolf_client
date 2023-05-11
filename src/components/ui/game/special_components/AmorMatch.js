@@ -35,7 +35,7 @@ const AmorMatch = ({currentPoll}) => {
                 <div className="amormatch-lover">
                     { 1 <= currentPoll.voteArray.length ? (
                         <>
-                        <Profile user={new Player(currentPoll.voteArray[0][0])} mode="lover"/>
+                        <Profile user={new Player(currentPoll.voteArray[0][0])} isDuplicate={true} mode="lover"/>
                         <button
                             className="btn btn-dark"
                             onClick={() => removeLover(currentPoll.voteArray[0][0])}
@@ -49,7 +49,7 @@ const AmorMatch = ({currentPoll}) => {
                 <div className="amormatch-lover">
                     { 2 <= currentPoll.voteArray.length ? (
                         <>
-                        <Profile user={new Player(currentPoll.voteArray[0][1])} mode="lover"/>
+                        <Profile user={new Player(currentPoll.voteArray[0][1])} isDuplicate={true} mode="lover"/>
                         <button
                             className="btn btn-dark"
                             onClick={() => removeLover(currentPoll.voteArray[0][1])}
