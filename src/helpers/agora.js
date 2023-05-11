@@ -13,8 +13,6 @@ let channelParameters =
   remoteAudioTrack: null,
   // A variable to hold a local video track.
   localVideoTrack: null,
-
-  localVideoTrackDup: null,
   // A variable to hold a remote video track.
   remoteVideoTrack: null,
   // A variable to hold the remote user id.
@@ -66,7 +64,6 @@ export async function joinCall() {
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
   channelParameters.localVideoTrack.play(`profile-video-${StorageManager.getUserId()}`);
-  channelParameters.localVideoTrackDup.play(`profile-video-${StorageManager.getUserId()}-dup`);
 }
 
 export async function leaveCall(){

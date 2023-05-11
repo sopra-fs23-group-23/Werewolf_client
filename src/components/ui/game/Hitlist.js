@@ -50,23 +50,23 @@ const Hitlist = ({currentPoll}) => {
         <div className="hitlist">
             <div className="hitlist-left">
                 { 3 <= hitList.length ? (
-                <Profile user={new Player(hitList[2][0])} mode="hitlist" isDuplicate={true} votes={hitList[2][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                <Profile user={new Player(hitList[2][0])} mode="hitlist" votes={hitList[2][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
                 { 1 <= hitList.length ? (
-                <Profile user={new Player(hitList[0][0])} mode="hitlist" isDuplicate={true} votes={hitList[0][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                <Profile user={new Player(hitList[0][0])} mode="hitlist" votes={hitList[0][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
             </div>
             <div className="hitlist-leader">
                 {hitListLeaders.map(([player, supporters]) => (
-                    <Profile user={new Player(player)} mode="hitlist-leader" isDuplicate={true} votes={supporters.length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                    <Profile user={new Player(player)} mode="hitlist-leader" votes={supporters.length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ))}
             </div>
             <div className="hitlist-right">
                 { 2 <= hitList.length ? (
-                <Profile user={new Player(hitList[1][0])} mode="hitlist" isDuplicate={true} votes={hitList[1][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                <Profile user={new Player(hitList[1][0])} mode="hitlist" votes={hitList[1][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
                 { 4 <= hitList.length ? (
-                <Profile user={new Player(hitList[3][0])} mode="hitlist" isDuplicate={true} votes={hitList[3][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                <Profile user={new Player(hitList[3][0])} mode="hitlist" votes={hitList[3][1].length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
                 ) : null}
             </div>
         </div>

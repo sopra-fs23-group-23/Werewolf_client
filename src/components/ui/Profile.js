@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent, isDuplicate }) => {
+const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
 
   const handleClick = () => {
@@ -16,8 +16,8 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent, isDuplicate })
   };
 
   return (
-    <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}${isDuplicate ? '-dup' : ''}`} onClick={handleClick}>
-      <div className='profile video' id={`profile-video-${user.id}${isDuplicate ? '-dup' : ''}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}></div>
+    <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
+      <div className='profile video' id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}></div>
       <div className="profile-name">{user.name}</div>
       {votes && (
         <h2 className="profile-votes">
