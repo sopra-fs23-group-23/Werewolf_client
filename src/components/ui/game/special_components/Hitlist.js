@@ -29,10 +29,11 @@ const Hitlist = ({currentPoll}) => {
         let allPlayers = document.getElementsByClassName("profile-selection-small")
         if (hoveredPlayer !== null) {
             let [, supporterArray] = currentPoll.voteArray.find(([player, _]) => player.id === hoveredPlayer.id);
-            console.log("SupporterArray: " + supporterArray);
+            supporterArray = supporterArray.map(supporter => parseInt(supporter));
             for (let i = 0; i < allPlayers.length; i++) {           
                 let playerId = parseInt(allPlayers[i].id.substring(24));
-                console.log("PlayerId: " + playerId);
+                console.log("String, PlayerId: " + allPlayers[i].id + "  " +playerId);
+                console.log("SupporterArray", supporterArray);
                 if (!supporterArray.includes(playerId)){
                     allPlayers[i].classList.add("profile-selection-small-isNotVoter");
                 }
@@ -52,9 +53,9 @@ const Hitlist = ({currentPoll}) => {
     const hitListLeaders = [];
     const hitList = [];
 
-    if (currentPoll.voteArray.length > 0){
+    if (currentPoll && currentPoll.voteArray && currentPoll.voteArray.length > 0){
         let maxVotes = currentPoll.voteArray[0][1].length;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 5 && currentPoll.voteArray[i]; i++) {
             if (currentPoll.voteArray[i][1].length === maxVotes) {
                 hitListLeaders.push(currentPoll.voteArray[i]);
             } else {

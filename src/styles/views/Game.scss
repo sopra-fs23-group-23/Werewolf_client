@@ -32,7 +32,7 @@
       padding-bottom: 0;
     }
     p {
-      margin-top: 0.5em;
+      margin: 0.3em auto 0.3em auto;
       font-size: 1.2em;
     }
   }
@@ -66,9 +66,11 @@
     margin: 1em 0;
   }
   &-stage-counter {
-    z-index: 2;
-    margin-top: 1em;
-    display: flex;
+    z-index: 0;
+    position: absolute;
+    bottom: 90px; // fix
+    left: 50%;
+    transform: translateX(-50%) ;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -94,23 +96,21 @@
     height: 40vh;
     width: 100vw;
 
-    &-dark {
-      /* background-image: url('../../../public/assets/images/cemetery-dark.png') !important;
-      background-size: cover;
-      background-repeat: no-repeat; */
-    }
+    // &-dark {
+    //   /* background-image: url('../../../public/assets/images/cemetery-dark.png') !important;
+    //   background-size: cover;
+    //   background-repeat: no-repeat; */
+    // }
 
-    &-light {
-      /* background-image: url('../../../public/assets/images/cemetery-light.png') !important; */
-    }
-
+    // &-light {
+    //   /* background-image: url('../../../public/assets/images/cemetery-light.png') !important; */
+    // }
   
     &-players {
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      //margin-top: auto;
       max-width: $width-xl;
       background-color: rgba(170, 170, 170, 0.5);
       border-radius: 20px 20px 0 0;

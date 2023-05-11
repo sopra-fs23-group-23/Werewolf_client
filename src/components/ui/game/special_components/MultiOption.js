@@ -86,7 +86,7 @@ const MultiOption = ({currentPoll, stage}) => {
       content = (
         <>
         {selectionProfiles(pollOptions.filter(option => !voteParticipantIds.includes(option.player.id)))}
-        <h2>Your fellow werewolves:</h2>
+        <p>Your fellow werewolves:</p>
         {selectionProfiles(pollOptions.filter(option => voteParticipantIds.includes(option.player.id)))}
         </>
       );

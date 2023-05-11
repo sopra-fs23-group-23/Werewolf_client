@@ -6,24 +6,34 @@
     align-items: center;
     margin: .8em 1em;
     height: min-content;
-    img {
-        width: 100px;
-        height: 100px;
-        border-radius: 80px;
-        background-color: white;
+    &-name {
+        margin: 0.4em 0 0 0;
+    }
+    &-votes {
+        margin: 0.2em 0;
+        padding: 0;
+        font-family: $font-default;
+        font-weight: 600;
     }
     .video{
-        // width: 130px;
-        // height: 130px;
-        div{
-            background-color: transparent !important;
-        }
+        //background-color: transparent !important;
+        //width: 100px;
+        //height: 100px;
+        border-radius: 80px;
+        background-color: white;
         video{
             border-radius: 50%;
         }
     }
+    &-lobby{
+        &-video {
+            height: 90px;
+            width: 90px;
+            border-radius: 100px;
+        }
+    }
     &-hitlist{
-        img {
+        &-video {
             height: 100px;
             width: 100px;
             border-radius: 100px;
@@ -31,73 +41,80 @@
         }
     }
     &-lover, &-hitlist-leader {
-        img {
+        &-video {
             height: 150px;
             width: 150px;
             border-radius: 100px;
         }
     }
     &-hitlist-leader{
-        img {
+        &-video {
             border: 4px solid red;
         }
     }
     &-lover {
-        img {
+        &-video {
             border: 5px solid violet;
         }
     }
     &-selection-small  {
         margin: 0.5em 1em;
-        img {
+        &-video {
             height: 75px;
             width: 75px;
             border-radius: 50px;
             transition: all 0.2s ease-in-out;
         }
-        &-isVoter {
-            img {
-                opacity: 1 !important;
-            }
-        }
         &-isNotVoter {
-            img {
-                opacity: 0.3;
+            .video {
+                opacity: 0.3 !important;
                 transition: all 0.2s ease-in-out;
             }
             .profile-name{
-                opacity: 0.3;
+                opacity: 0.3 !important;
                 transition: all 0.2s ease-in-out;
             }
         }
     }
     &-selection-big  {
-        img {
+        .video {
             height: 100px;
             width: 100px;
             border-radius: 50px;
             transition: all 0.2s ease-in-out;
         }
         &-kill {
-            img {
+            .video {
+                height: 100px;
+                width: 100px;
+                border-radius: 50px;
                 border: 5px solid red;
                 transition: all 0.2s ease-in-out;
             }            
         }
         &-save {
-            img {
+            .video {
+                height: 100px;
+                width: 100px;
+                border-radius: 50px;
                 border: 5px solid green;
                 transition: all 0.2s ease-in-out;
             }
         }
         &-select {
-            img {
+            .video {
+                height: 100px;
+                width: 100px;
+                border-radius: 50px;
                 border: 5px solid blue;
                 transition: all 0.2s ease-in-out;
             }
         }
         &-hidden {
-            img {
+            .video {
+                height: 100px;
+                width: 100px;
+                border-radius: 50px;
                 opacity: 0.3;
                 transition: all 0.2s ease-in-out;
             }
@@ -108,14 +125,14 @@
         }
     }
     &-singleOption {
-        img {
+        &-video {
             height: 150px;
             width: 150px;
             border-radius: 80px;
             transition: all 0.2s ease-in-out;
         }
         &-kill {
-            img {
+            &-video {
                 height: 150px;
                 width: 150px;
                 border-radius: 80px;
@@ -124,7 +141,7 @@
             }            
         }
         &-save {
-            img {
+            &-video {
                 height: 150px;
                 width: 150px;
                 border-radius: 80px;
@@ -134,17 +151,9 @@
         }
 
     }
-    &-lobby  {
-        margin: 0.5em 1em;
-        img {
-            height: 75px;
-            width: 75px;
-            border-radius: 50px;
-        }
-    }
     &-dead-player {
         margin: 0.5em 0.9em;
-        img {
+        &-video {
             height: 65px;
             width: 65px;
             border-radius: 50px;
@@ -155,14 +164,6 @@
         }
     }
     
-    &-name {
-        margin: 0.4em 0 0 0;
-    }
-    &-votes {
-        margin: 0.2em 0;
-        padding: 0;
-        font-family: $font-default;
-        font-weight: 600;
-    }
+    
     
 }

@@ -17,8 +17,8 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
-      {/* <div className='profile video' id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}></div> */}
-      <img className='profile image video' id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} />
+      {/* <div className={`profile-${mode}-video`} id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}></div> */}
+      <img className={`video profile-${mode}-video`} id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} />
       <div className="profile-name">{user.name}</div>
       {votes && (
         <h2 className="profile-votes">

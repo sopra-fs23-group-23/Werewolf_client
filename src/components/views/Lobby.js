@@ -64,13 +64,13 @@ const Lobby = () => {
           </div>
           <div className='admin-wrapper'>
             <h5>admin</h5>
-            <Profile isDuplicate={true} user={lobby.admin} key={lobby.admin.id}/>
+            <Profile mode="lobby" user={lobby.admin} key={lobby.admin.id}/>
           </div>
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
             player.id !== lobby.admin.id ? (
-              <Profile user={player} key={player.id} />
+              <Profile user={player} mode="lobby" key={player.id} />
             ) : null
           ))}
         </div>
