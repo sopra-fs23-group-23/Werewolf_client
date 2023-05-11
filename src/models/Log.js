@@ -40,49 +40,58 @@ class Log {
     return returnString;
   }
 
-  async addActions (actions) {
-    for(const action of actions) {
-      let newAction = new Action(action);
+  async transformAndAddAction(action) {
+    let newAction = new Action(action);
 
-      switch (newAction.type) {
-        case "PrivateAddPlayerToRolePollCommand":
-          continue;
-        case "AddPlayerToRolePollCommand":
-          newAction.setRepresentationDark(
+    switch (newAction.type) {
+      case "PrivateAddPlayerToRolePollCommand":
+        return;
+      case "AddPlayerToRolePollCommand":
+        newAction.setRepresentationDark(
           <div className={"mayor-event"}>
             <h3>{newAction.message}</h3>
             <img className={"hat"} src={`/static/media/hat.png`} alt={"mayor representation"}/>
             <img className={"bow-tie"} src={`/static/media/bow-tie.png`} alt={"mayor representation"}/>
             <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
           </div>);
-          break;
-        case "WitchKillPlayerPollCommand":
-        case "KillPlayerPollCommand":
-          await this.fetchRole(newAction);
-          newAction.setRepresentationDark(
-            <div className={"death-event"}>
-              <h3>{newAction.message}</h3>
-              <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
-              <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
-              <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-dark.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
-            </div>)
-          newAction.setRepresentationLight(
-            <div className={"death-event"}>
-              <h3>{newAction.message}</h3>
-              <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
-              <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
-              <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-light.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
-            </div>)
-          break;
-        default:
-          newAction.setRepresentationDark(
-            <div className={""}>
-              <h3>{newAction.message}</h3>
-            </div>)
-      }
+        break;
+      case "WitchKillPlayerPollCommand":
+      case "KillPlayerPollCommand":
+        await this.fetchRole(newAction);
+        newAction.setRepresentationDark(
+          <div className={"death-event"}>
+            <h3>{newAction.message}</h3>
+            <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
+            <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
+            <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-dark.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
+          </div>)
+        newAction.setRepresentationLight(
+          <div className={"death-event"}>
+            <h3>{newAction.message}</h3>
+            <Profile user={new Player(newAction.affectedPlayer)} mode="dead-player" />
+            <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
+            <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-light.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
+          </div>)
+        break;
+      default:
+        newAction.setRepresentationDark(
+          <div className={""}>
+            <h3>{newAction.message}</h3>
+          </div>)
+    }
+    this.actions.push(newAction);
+    this.amount++;
+  }
 
-      this.actions.push(newAction);
-      this.amount++;
+  async addActions (actions) {
+    if(actions.length === this.amount) {
+      return;
+    }
+    actions.sort(function(action1, action2){
+      return new Date(action1.executionTime) - new Date(action2.executionTime);
+    });
+    for(let i = this.amount; i < actions.length; i++) {
+      await this.transformAndAddAction(actions[i]);
     }
   }
 
