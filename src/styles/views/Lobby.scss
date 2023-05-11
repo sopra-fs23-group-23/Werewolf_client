@@ -44,11 +44,6 @@
         // https://stackoverflow.com/questions/14962468/how-can-i-combine-flexbox-and-vertical-scroll-in-a-full-height-app
         height: 0;
         overflow-y: auto;
-        .lobby-profile {
-            margin-left: 1em;
-            margin-right: 1em;
-        }
-
     }
     &-footerrow{
         display: flex;

@@ -64,7 +64,7 @@ const Lobby = () => {
           </div>
           <div className='admin-wrapper'>
             <h5>admin</h5>
-            <Profile user={lobby.admin}/>
+            <Profile isDuplicate={true} user={lobby.admin} key={lobby.admin}/>
           </div>
         </div>
         <div className="lobby-userrow">

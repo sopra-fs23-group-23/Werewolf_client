@@ -11,9 +11,16 @@ let channelParameters =
   localAudioTrack: null,
   // A variable to hold a remote audio track.
   remoteAudioTrack: null,
+  // A variable to hold a local video track.
+  localVideoTrack: null,
+
+  localVideoTrackDup: null,
+  // A variable to hold a remote video track.
+  remoteVideoTrack: null,
   // A variable to hold the remote user id.
   remoteUid: null,
 };
+
 
 export function startBasicCall() {
   // Create an instance of the Agora Engine
@@ -24,6 +31,18 @@ export function startBasicCall() {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
     await agoraEngine.subscribe(user, mediaType);
     console.log("subscribe success");
+    // Subscribe and play the remote video in the container If the remote user publishes a video track.
+    if (mediaType === "video") {
+      console.log("Starting video conference");
+      // Retrieve the remote video track.
+      channelParameters.remoteVideoTrack = user.videoTrack;
+      // Retrieve the remote audio track.
+      channelParameters.remoteAudioTrack = user.audioTrack;
+      // Save the remote user id for reuse.
+      channelParameters.remoteUid = user.uid.toString();
+      // Play the remote video track.
+      channelParameters.remoteVideoTrack.play(`profile-video-${channelParameters.remoteUid}`);
+    }
     // Subscribe and play the remote audio track.
     if (mediaType === "audio") {
       channelParameters.remoteUid = user.uid;
@@ -41,8 +60,13 @@ export async function joinCall() {
   await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), parseInt(StorageManager.getUserId()));
   // Create a local audio track from the microphone audio.
   channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+  // Create a local video track from the video captured by a camera.
+  channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+  channelParameters.localVideoTrackDup = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
-  await agoraEngine.publish(channelParameters.localAudioTrack);
+  await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
+  channelParameters.localVideoTrack.play(`profile-video-${StorageManager.getUserId()}`);
+  channelParameters.localVideoTrackDup.play(`profile-video-${StorageManager.getUserId()}-dup`);
 }
 
 export async function leaveCall(){

@@ -12,6 +12,17 @@
         border-radius: 80px;
         background-color: white;
     }
+    .video{
+        width: 130px;
+        height: 130px;
+        div{
+            background-color: transparent !important;
+        }
+        video{
+            border-radius: 50%;
+            
+        }
+    }
     &-hitlist{
         img {
             height: 100px;

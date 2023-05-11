@@ -56,6 +56,7 @@ export const useGame = () => {
   const performStageChange = (newGame) => {
     if (newGame.stage.type === "Day"){
       joinCall();
+      StorageManager.setIsMuted(false);
     }
   }
 
