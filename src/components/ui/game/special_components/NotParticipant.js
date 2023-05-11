@@ -1,5 +1,5 @@
 import React from 'react';
-import 'styles/ui/SweetDreams.scss';
+import 'styles/ui/NotParticipant.scss';
 
 
 
@@ -7,16 +7,15 @@ import 'styles/ui/SweetDreams.scss';
 const NotParticipant = ({currentPoll, stage}) => {
 
     let content = null;
-    
+    let roleMsg = (currentPoll.role === currentPoll.getRolePlural()) ? currentPoll.role + " is" : currentPoll.getRolePlural() + " are";
     if (stage === "Day"){
         content = (
             <>
                 <h1>Stay tight</h1>
-                <h2>Currently the {currentPoll.role} is deciding on a vote.</h2>
+                <h2>Currently the {roleMsg} deciding on a vote.</h2>
             </>
         )
     } else {
-        let roleMsg = (currentPoll.role === currentPoll.getRolePlural()) ? currentPoll.role + " is" : currentPoll.getRolePlural() + " are";
         content = (
             <>
                 <h1>Sweet Dreams</h1>
@@ -25,7 +24,7 @@ const NotParticipant = ({currentPoll, stage}) => {
         )
     }
     return (
-        <div className="sweetDreams">
+        <div className="notParticipant">
                 {content}
         </div>
         

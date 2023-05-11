@@ -19,9 +19,6 @@ const CupidMatch = ({currentPoll}) => {
         }
     };
 
-    
-
-
     return (
         <div className="cupidmatch">
                 <div className="cupidmatch-lover">
@@ -29,7 +26,7 @@ const CupidMatch = ({currentPoll}) => {
                         <>
                         <Profile user={new Player(currentPoll.voteArray[0][0])} mode="lover"/>
                         <button
-                            className="btn btn-dark"
+                            className="btn btn-light"
                             onClick={() => removeLover(currentPoll.voteArray[0][0])}
                         >
                             remove Lover
@@ -43,7 +40,7 @@ const CupidMatch = ({currentPoll}) => {
                         <>
                         <Profile user={new Player(currentPoll.voteArray[1][0])} mode="lover"/>
                         <button
-                            className="btn btn-dark"
+                            className="btn btn-light"
                             onClick={() => removeLover(currentPoll.voteArray[1][0])}
                         >
                             remove Lover

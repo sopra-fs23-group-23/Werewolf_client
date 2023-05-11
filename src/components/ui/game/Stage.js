@@ -2,45 +2,43 @@
 import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
-import Selection from '../game/Selection';
-import Hitlist from './Hitlist';
+import MultiOption from './special_components/MultiOption';
+import SingleOption from './special_components/SingleOption';
+import Hitlist from './special_components/Hitlist';
 import Spinner from '../Spinner';
 import CupidMatch from './special_components/CupidMatch';
-import WitchElixir from './special_components/WitchElixir';
 import NotParticipant from './special_components/NotParticipant';
 
 const Stage = ({ currentPoll, lobby, stage}) => {
 
   let backgroundTheme = stage === "Day" ? "light" : "dark";
-  
-  // if (currentPoll.role === "Witch"){
-  //   currentPoll.role = (question !== "Select a player to kill with your poison potion.") ? "Witch-Kill" : "Witch-Heal";
-  // }
+
+  let voteType = currentPoll.role;
+  if (currentPoll.role === "Witch") {
+    voteType = (currentPoll.question === "Select a player to kill with your poison potion.") ? "Witch-Kill" : "Witch-Heal";
+  }
+
   let HitlistType = null;
-  switch (currentPoll.role) {
+  switch (voteType) {
     case "Cupid":
       HitlistType = <CupidMatch currentPoll={currentPoll} />
       break;
-    case "Seer":
-      HitlistType = <Hitlist currentPoll={currentPoll} /> // TODO: Add Seer Hitlist
-      break;
     case "Werewolf":
     case "Villager":
-    case "Mayor":
       HitlistType = <Hitlist currentPoll={currentPoll} />
       break;
-    default: //Witch, Hunter, Seer
+    default: //Hunter, Seer, Mayor, etc.
       HitlistType = null; // No Hitlist required, because only one person is allowed to vote
       break;
   }
   
   let SelectionType = null;
-  switch (currentPoll.votingParty) {
+  switch (voteType) {
     case "Witch-Heal":
-      SelectionType = <WitchElixir currentPoll={currentPoll} />
+      SelectionType = <SingleOption currentPoll={currentPoll} stage={stage} />
       break;
     default: //Hunter, Seer, Mayor, etc. //Witch also which implicitly is Witch-Kill
-      SelectionType = <Selection currentPoll={currentPoll} />
+      SelectionType = <MultiOption currentPoll={currentPoll} stage={stage} />
       break;
   }
 
@@ -51,9 +49,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
   if (currentPoll.isVoteParticipant){
     content = (
       <>
-        <div className="game-hitlist">
-          {HitlistType}
-        </div>
+        {HitlistType}
         {SelectionType}
       </>
     )
