@@ -1,7 +1,10 @@
 @import 'styles/theme';
 
 .home {
-    
+    h1 {
+        line-height: 1.2;
+        margin-bottom: 20px;
+    }
     button {
         height: 50px;
         width: 180px;
