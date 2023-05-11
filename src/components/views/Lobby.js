@@ -62,10 +62,6 @@ const Lobby = () => {
             <h1 className="left-align">Lobby</h1>
             <h5>Code to join: {lobby.id}</h5>
           </div>
-          <div className='admin-wrapper'>
-            <h5>admin</h5>
-            <Profile isDuplicate={true} user={lobby.admin} key={lobby.admin}/>
-          </div>
         </div>
         <div className="lobby-userrow">
           {lobby.players.map(player => (
