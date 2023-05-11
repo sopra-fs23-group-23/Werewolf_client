@@ -77,7 +77,7 @@ const Edit = () => {
   }
 
   return (
-    <div className="background background-dark">
+    <div className="background background-dark background-dark-image-small background-dark-image-small-left">
       <div className="container">
         <div className="edit">
           <button

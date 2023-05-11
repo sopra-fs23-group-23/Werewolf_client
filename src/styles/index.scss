@@ -89,6 +89,18 @@ a {
     height: 100vh;
     color:$color-text-dark;
   }
+  &-dark-image-small {
+    &-right {
+      background-image: url('../../public/static/media/cemetery-dark-small-right.png') !important;
+    }
+    &-left {
+      background-image: url('../../public/static/media/cemetery-dark-small-left.png') !important;
+    }
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 40% auto;
+    background-position: bottom right;
+  }
 }
 
 .container {
