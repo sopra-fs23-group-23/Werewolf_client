@@ -12,7 +12,7 @@ const periodicFunctionCaller = () => {
   periodicFunctionToBeCalled();
 }
 
-const logger = new Log();
+let logger = new Log();
 
 let gameShouldBeFetchedAgain = false;
 
@@ -123,6 +123,7 @@ export const useGame = () => {
 
     useEffect(() => {
       setTimeout(async () => {
+        logger = new Log();
         await fetchGame();
         await fetchPoll();
         setStarted(true);
