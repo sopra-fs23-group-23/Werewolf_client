@@ -63,7 +63,7 @@ const Edit = () => {
           type="password"
           onChange={(n) => setPassword(n)}
         />
-        <button className="btn btn-light"
+        <button className="btn btn-light edit-savebutton"
                 disabled={!username || !password}
                 onClick={() => updateUser()}
         >
@@ -77,16 +77,13 @@ const Edit = () => {
     <div className="background background-dark">
       <div className="container">
         <div className="edit">
-          <div className="column-container">
-            <h1>Edit User</h1>
-            {content}
-            <button
-              className="btn btn-light"
-              onClick={() => history.push('/user/' + id)}
-            >
+          <button
+            className="btn btn-light edit-backbutton"
+            onClick={() => history.push('/user/' + id)}>
               Back to User
             </button>
-          </div>
+          <h1>Edit User</h1>
+          {content}
         </div>
       </div>
     </div>

@@ -1,16 +1,26 @@
 @import 'styles/theme';
 
 .edit {
-  display: grid;
-  grid-template-columns: 300px auto;
-
-  button{
-    margin-top: 20px;
-    margin-bottom: 0;
-    min-width: 180px;
+  h1 {
+    display: block;
+    padding-bottom: 20px;
   }
 
-  h1{
-    margin-bottom: -30px;
+  form {
+    width: 280px;
+    text-align: center;
+  }
+
+  .form-field {
+    margin-top: 20px;
+  }
+
+  &-backbutton {
+    margin-top: 2em;
+  }
+
+  &-savebutton {
+    width: 100%;
+    margin-top: 50px;
   }
 }
