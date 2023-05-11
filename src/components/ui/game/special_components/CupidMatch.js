@@ -19,18 +19,26 @@ const CupidMatch = ({currentPoll}) => {
         }
     };
 
+    const getLover = (lover) => {
+        return (
+            <>
+                <Profile user={new Player(lover)} mode="lover"/>
+                <button
+                    className="btn btn-light"
+                    onClick={() => removeLover(lover)}
+                >
+                    remove Lover
+                </button>
+            </>
+        );
+    }
+
     return (
         <div className="cupidmatch">
                 <div className="cupidmatch-lover">
                     { 1 <= currentPoll.voteArray.length ? (
                         <>
-                        <Profile user={new Player(currentPoll.voteArray[0][0])} mode="lover"/>
-                        <button
-                            className="btn btn-light"
-                            onClick={() => removeLover(currentPoll.voteArray[0][0])}
-                        >
-                            remove Lover
-                        </button>
+                        {getLover(currentPoll.voteArray[0][0])}
                         </>
                     ) : <div className='cupidmatch-lover-placeholder'><h3>Romeo still missing</h3></div>}
                 </div>
@@ -38,13 +46,7 @@ const CupidMatch = ({currentPoll}) => {
                 <div className="cupidmatch-lover">
                     { 2 <= currentPoll.voteArray.length ? (
                         <>
-                        <Profile user={new Player(currentPoll.voteArray[1][0])} mode="lover"/>
-                        <button
-                            className="btn btn-light"
-                            onClick={() => removeLover(currentPoll.voteArray[1][0])}
-                        >
-                            remove Lover
-                        </button>
+                        {getLover(currentPoll.voteArray[1][0])}
                         </>
                     ) : <div className='cupidmatch-lover-placeholder'><h3>Juliet still missing</h3></div>}
                     

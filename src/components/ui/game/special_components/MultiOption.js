@@ -76,18 +76,22 @@ const MultiOption = ({currentPoll, stage}) => {
   );
 
   let content;
- 
+
+  // Filter this to only the top 5
+  let hitListMembers = currentPoll.voteArray.slice(0, 5).map(option => option[0].id);
+  let pollOptions = currentPoll.pollOptions.filter(option => !hitListMembers.includes(option.player.id));
+
   switch (currentPoll.role) {
     case 'Werewolf':
       content = (
         <>
-        {selectionProfiles(currentPoll.pollOptions.filter(option => !voteParticipantIds.includes(option.player.id)))}
+        {selectionProfiles(pollOptions.filter(option => !voteParticipantIds.includes(option.player.id)))}
         <h2>Your fellow werewolves:</h2>
-        {selectionProfiles(currentPoll.pollOptions.filter(option => voteParticipantIds.includes(option.player.id)))}
+        {selectionProfiles(pollOptions.filter(option => voteParticipantIds.includes(option.player.id)))}
         </>
       );
       break;
-    
+    // Single Voters
     case 'Witch':
     case 'Hunter':
     case 'Seer':
@@ -99,11 +103,8 @@ const MultiOption = ({currentPoll, stage}) => {
         </>
       );
       break;
-    case 'Villager':
-      content = selectionProfiles(currentPoll.pollOptions);
-      break;
-    default:
-      content = selectionProfiles(currentPoll.pollOptions);
+    default: // Villager etc.
+      content = selectionProfiles(pollOptions);
       break;
   }
 
