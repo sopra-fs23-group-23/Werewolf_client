@@ -10,6 +10,7 @@ const Edit = () => {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -30,16 +31,18 @@ const Edit = () => {
     fetchData();
   }, [history, id]);
 
-  function updateUser() {
+  function updateUser(e) {
+    e.preventDefault();
     async function putData() {
       try {
         await api.put('/users/' + id, {
           username,
           password
         });
-        history.push('/user/' + id);
+        setShowSuccessMessage(true);
       } catch (error) {
         alert(error.response.data?.message || 'Update failed.');
+        setShowSuccessMessage(false);
       }
     }
     putData();
@@ -84,6 +87,9 @@ const Edit = () => {
             </button>
           <h1>Edit User</h1>
           {content}
+          {showSuccessMessage && (
+            <div className='edit-successmessage'>User updated successfully.</div>
+          )}
         </div>
       </div>
     </div>
