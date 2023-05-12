@@ -34,8 +34,8 @@ const Lobby = () => {
   const history = useHistory();
   StorageManager.setIsMuted("false");
   function leave() {
-    // TODO
-    alert("Not implemented yet");
+    api.delete(`/lobbies/${lobby.id}`);
+    history.goBack();
   }
 
   async function startGame () {
