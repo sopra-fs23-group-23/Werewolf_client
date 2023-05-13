@@ -8,6 +8,7 @@ export const useLobby = () => {
   const lobbyId = StorageManager.getLobbyId();
   const uid = StorageManager.getUserId();
   const [lobby, setLobby] = useState(null);
+  const [error, setError] = useState(null);
   const [intervalId, setIntervalId] = useState(null);
 
   const fetchLobby = useCallback(async () => {
@@ -17,6 +18,7 @@ export const useLobby = () => {
       setLobby(new LobbyModel(response.data));
     } catch (error) {
       console.error("Details:", error);
+      setError(error);
     }
   },
     // eslint-disable-next-line
@@ -46,5 +48,5 @@ export const useLobby = () => {
   // eslint-disable-next-line
   [lobbyId]);
 
-  return { lobby, uid, intervalId};
+  return { lobby, error, uid, intervalId};
 };

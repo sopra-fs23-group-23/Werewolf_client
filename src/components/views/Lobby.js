@@ -42,12 +42,18 @@ const Lobby = () => {
     api.post(`/games/${lobby.id}`);
   }
 
-  const {lobby, uid, intervalId} = useLobby();
+  const {lobby, error, uid, intervalId} = useLobby();
 
   if(lobby && lobby.closed) {
     clearInterval(intervalId);
 
     history.push(`/game`);
+  }
+
+  if(error && error.response.status === 404) {
+    // TODO MIRO close agora channel
+    clearInterval(intervalId);
+    history.goBack();
   }
   
   let content = (
