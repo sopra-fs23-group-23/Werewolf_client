@@ -5,12 +5,15 @@ import { useEffect, useState } from 'react';
 import Spinner from 'components/ui/Spinner';
 import { leaveCall } from 'helpers/agora';
 import StorageManager from 'helpers/StorageManager';
+import { api } from 'helpers/api';
 
 const Endscreen = ({ endData, lobby, stage}) => {
   const history = useHistory();
+  const userId = StorageManager.getUserId();
 
   const [winnerArray, setWinnerArray] = useState([]);
   const [looserArray, setLooserArray] = useState([]);
+  const [leaveText, setLeaveText] = useState("Leave lobby");
 
   var buttonTheme;
   if(stage === "Day") {
@@ -22,11 +25,11 @@ const Endscreen = ({ endData, lobby, stage}) => {
   function leaveLobby() {
     leaveCall();
     StorageManager.removeChannelToken();
+    api.delete(`/lobbies/${lobby.id}`);
     history.push(`/home`);
   }
   function rematch() {
-    // TODO
-    //alert("Not implemented yet");
+    history.push(`/lobby`);
   }
 
   let content = (
@@ -44,21 +47,25 @@ const Endscreen = ({ endData, lobby, stage}) => {
       setWinnerArray(lobby.players.filter(player => winnerIds.includes(player.id)));
   
       setLooserArray(lobby.players.filter(player => loserIds.includes(player.id)));
+
+      if (userId === lobby.admin.id) {
+        setLeaveText("Dissolve lobby");
+      }
     }
-  }, [endData, lobby])
+  }, [endData, lobby, userId])
 
   return (
     //eslint-disable-next-line
     content = (
       <div className='container endscreen'>
         <div className='endscreen-headerrow'>
-          <button className={`btn btn-${buttonTheme}`} onClick={leaveLobby} id='leaveLobby'>leave lobby</button>
+          <button className={`btn btn-${buttonTheme}`} onClick={leaveLobby} id='leaveLobby'>{leaveText}</button>
           <div className="endscreen-headerrow-role">
             <h2>The</h2>
             <h1>{endData.winner}s</h1>
             <h2>have won the game</h2>
           </div>
-          <button className={`btn btn-${buttonTheme}`} disabled={true} onClick={rematch}>play again</button>
+          <button className={`btn btn-${buttonTheme}`} onClick={rematch}>Play again</button>
         </div>
 
         <div className='endscreen-winner'>
