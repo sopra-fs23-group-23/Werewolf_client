@@ -14,39 +14,30 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
       return () => onHoverEvent(hoveredPlayer);
     }
   };
-  // var image = document.createElement("img");
-  // image.className = `video profile-${mode}-video`;
-  // image.id = `profile-video-${user.id}`;
-  // image.onMouseEnter = handleHover(user);
-  // image.onMouseLeave = handleHover(null);
-  // image.src = user.avatarUrl;
-  // image.alt = 'avatar';
+
+  function updateImageDisplay() {
+    var video = document.getElementById(`profile-video-${user.id}`);
+    var image = document.getElementById(`profile-image-${user.id}`);
+    if (video && image) {
+      if (StorageManager.getIsVideoEnabled() === 'true') {
+        image.setAttribute('hidden', 'true');
+        video.removeAttribute('hidden');
+      } else {
+        image.removeAttribute('hidden');
+        video.setAttribute('hidden', 'true');
+      }
+    }
+  }
+  
 
 
-
-  // function updateImageDisplay() {
-  //   var video = document.getElementById(`profile-video-${user.id}`);
-  //   var image = document.getElementById(`profile-image-${user.id}`);
-  //   console.log("storage manager",StorageManager.getIsVideoEnabled());
-  //   console.log("image", image); 
-  //   console.log("video", video); 
-  //   if (StorageManager.getIsVideoEnabled() && image) {
-  //     image.setAttribute('hidden', 'true');
-  //     video.setAttribute('hidden', 'false');  
-  //   } else if(video) {
-  //     image.setAttribute('hidden', 'false');
-  //     video.setAttribute('hidden', 'true');
-  //   }
-  // }
-
-
-  // updateImageDisplay();
-  // setInterval(updateImageDisplay, 1000);
+  updateImageDisplay();
+  setInterval(updateImageDisplay, 5000);
 
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
       <div className={`video profile-${mode}-video`} id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}></div>
-      <img className={`video profile-${mode}-image`} id={`profile-image-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/>
+      <img className={`image profile-${mode}-image`} id={`profile-image-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/>
       <div className="profile-name">{user.name}</div>
       {votes && (
         <h2 className="profile-votes">
