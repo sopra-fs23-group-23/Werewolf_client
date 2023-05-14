@@ -5,6 +5,7 @@ import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
+import { leaveCall } from 'helpers/agora';
 
 
 const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
@@ -35,6 +36,8 @@ const Lobby = () => {
   StorageManager.setIsMuted("false");
   function leave() {
     api.delete(`/lobbies/${lobby.id}`);
+    leaveCall();
+    StorageManager.removeChannelToken();
     history.goBack();
   }
 
@@ -51,7 +54,8 @@ const Lobby = () => {
   }
 
   if(error && error.response.status === 404) {
-    // TODO MIRO close agora channel
+    leaveCall();
+    StorageManager.removeChannelToken();
     clearInterval(intervalId);
     history.goBack();
   }
