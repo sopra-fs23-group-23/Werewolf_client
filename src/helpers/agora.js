@@ -60,8 +60,6 @@ export async function joinCall() {
   channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
   // Create a local video track from the video captured by a camera.
   channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-  // TODO: Dave bruchts de ez eig? han en uskommentiert 
-  //channelParameters.localVideoTrackDup = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
   channelParameters.localVideoTrack.play(document.querySelector(`#profile-video-${StorageManager.getUserId()}`));
