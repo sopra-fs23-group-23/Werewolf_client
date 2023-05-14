@@ -10,7 +10,7 @@ import { leaveCall } from 'helpers/agora';
 
 const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
-    const requiredNrOfPlayers = 3;
+    const requiredNrOfPlayers = 5;
     return (
       <div>
         <button className="btn btn-light" onClick={leaveFunction}>

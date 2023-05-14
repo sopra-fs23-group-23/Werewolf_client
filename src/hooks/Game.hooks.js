@@ -5,6 +5,7 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { joinCall } from "helpers/agora";
+import { useHistory } from 'react-router-dom';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -24,6 +25,7 @@ export const useGame = () => {
   const [endData, setEndData] = useState(null);
   const [currentPoll, setCurrentPoll] = useState(null);
   const [pollActive, setPollActive] = useState(false);
+  const history = useHistory();
 
   const isPollActive = (newPoll) => {
     if (newPoll) {
@@ -120,8 +122,30 @@ export const useGame = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lobbyId]);
 
-    useEffect(() => {
+  // checks if the game is already running so that the information screen is not shown after reload
+  const showInfoScreen = async () => {
+    try{
+      const response = await api.get(`/games/${lobbyId}`);
+      return false; // game has already started --> don't show info screen
+    } catch (error) {
+      if(error.response.status === 404) {
+        alert("There exists no game with this lobby ID.");
+        history.push("/home");
+      }
+      if(error.response.status === 403) { // maybe use some other indicator than 403 for unstarted game?
+        return true; // game has not yet started --> show info screen
+      }
+      console.error(error);
+    }
+  };
+
+    useEffect(async () => {
       intervalKeeper = null;
+      let timeoutDuration = 0;
+      if(await showInfoScreen()) {
+        timeoutDuration = 16000;
+      }
+      console.log("Timeout duration: ", timeoutDuration)
       setTimeout(async () => {
         logger = new Log();
         await fetchGame();
@@ -129,7 +153,7 @@ export const useGame = () => {
         setStarted(true);
         periodicFunctionToBeCalled = fetchPoll;
         intervalKeeper = setInterval(periodicFunctionCaller, 1000);
-      }, 16000);
+      }, timeoutDuration);
       return () => {
         if(intervalKeeper) {
           setStarted(false);
