@@ -8,15 +8,21 @@ import StorageManager from 'helpers/StorageManager';
 import { leaveCall } from 'helpers/agora';
 
 
-const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
+const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
+    const requiredNrOfPlayers = 3;
     return (
       <div>
         <button className="btn btn-light" onClick={leaveFunction}>
           Dissolve Lobby
         </button>
-        <button className="btn btn-light" onClick={startGameFunction}>
-          Start Game
+        <button className={"btn btn-light"} onClick={startGameFunction} disabled={nrOfPlayers < requiredNrOfPlayers}>
+          {(() => {
+              if (nrOfPlayers < requiredNrOfPlayers){
+                  return `${nrOfPlayers}/${requiredNrOfPlayers} Players`;
+              }
+              return "Start Game";
+            })()}
         </button>
       </div>
     )
@@ -85,7 +91,7 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} leaveFunction={leave} startGameFunction={startGame}/>
+          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} nrOfPlayers={lobby.players.length} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
       </div>
     )
