@@ -59,6 +59,9 @@ export function startBasicCall() {
     };
     document.body.append(btn);
   };
+  channelParameters.localAudioTrack.on("track-ended", () => {
+    //TODO eggg
+  });
 }
 
 export async function joinCall() {
