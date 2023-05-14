@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import StorageManager from 'helpers/StorageManager';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -21,15 +22,24 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   // image.src = user.avatarUrl;
   // image.alt = 'avatar';
 
+
+
   function updateImageDisplay() {
     var video = document.getElementById(`profile-video-${user.id}`);
     var image = document.getElementById(`profile-image-${user.id}`);
-    if (StorageManager.getIsVideoEnabled()) {
+    console.log("storage manager",StorageManager.getIsVideoEnabled());
+    console.log("image", image); 
+    console.log("video", video); 
+    if (StorageManager.getIsVideoEnabled() && image) {
       image.setAttribute('hidden', 'true');
-    } else {
+      video.setAttribute('hidden', 'false');  
+    } else if(video) {
+      image.setAttribute('hidden', 'false');
       video.setAttribute('hidden', 'true');
     }
   }
+
+
   updateImageDisplay();
   setInterval(updateImageDisplay, 1000);
 
