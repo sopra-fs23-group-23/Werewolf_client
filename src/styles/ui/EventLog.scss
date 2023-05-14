@@ -14,7 +14,7 @@
   }
 
   &-container {
-    padding: 10px 5px 25px 45px;
+    padding: 10px 5px 25px 42px;
     min-width: 200px;
     min-height: 300px;
     border: 2px solid black;
@@ -34,6 +34,7 @@
   }
 
   &-close {
+    -webkit-transition: filter 3s ease;
     position: sticky;
     float: right;
     width: 20px;
@@ -52,7 +53,8 @@
   }
 
   &-action-container {
-    margin-right: 25px;
+    -webkit-transition: background-color 3s ease;
+    margin-right: 27px;
     min-height: 60px;
     margin-bottom: 10px;
     border-radius: 20px;
@@ -151,21 +153,19 @@
 }
 
 .log-popup-container::-webkit-scrollbar {
-  width: 11px;
+  width: 7px;
 }
 
 .log-popup-container-light::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: $color-text-dark;
-  border: solid 2px $color-bg-light;
 }
 
 .log-popup-container-dark::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: $color-text-light;
-  border: solid 2px $color-bg-dark;
 }
 
 .log-popup-container::-webkit-scrollbar-thumb:hover {
-  background-color: #777;
+  background-color: #666666;
 }

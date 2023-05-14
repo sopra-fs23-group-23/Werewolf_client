@@ -12,6 +12,7 @@
   user-select: none;
   border-style: solid;
   border-width: 2px;
+  -webkit-transition: color 3s ease, border 3s ease;
   &-light {
     border-style: solid;
     color: $color-text-light;

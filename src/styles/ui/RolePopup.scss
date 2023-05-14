@@ -25,6 +25,7 @@
     margin-right: auto;
     &.background-light {
       img:not(.role-popup-item-image) {
+        -webkit-transition: filter 3s ease;
         filter: brightness(0.1);
       }
     }
