@@ -7,14 +7,13 @@ import Log from "../models/Log";
 import { joinCall } from "helpers/agora";
 
 let periodicFunctionToBeCalled = () => {};
+let logger = new Log();
+let gameShouldBeFetchedAgain = false;
+let intervalKeeper = null;
 
 const periodicFunctionCaller = () => {
   periodicFunctionToBeCalled();
 }
-
-let logger = new Log();
-
-let gameShouldBeFetchedAgain = false;
 
 export const useGame = () => {
   const lobbyId = StorageManager.getLobbyId();
@@ -25,7 +24,6 @@ export const useGame = () => {
   const [endData, setEndData] = useState(null);
   const [currentPoll, setCurrentPoll] = useState(null);
   const [pollActive, setPollActive] = useState(false);
-  const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
 
   const isPollActive = (newPoll) => {
     if (newPoll) {
@@ -115,26 +113,29 @@ export const useGame = () => {
       console.log("Game ended: ", response.data);
       setStarted(false);
       setFinished(true);
-      clearInterval(intervalFetchPoll);
+      clearInterval(intervalKeeper);
     } catch (error) {
       console.error("Details Fetch End Data Error: ", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lobbyId, game]);
+  }, [lobbyId]);
 
     useEffect(() => {
+      intervalKeeper = null;
       setTimeout(async () => {
         logger = new Log();
         await fetchGame();
         await fetchPoll();
         setStarted(true);
         periodicFunctionToBeCalled = fetchPoll;
-        const pollIntervalId = setInterval(periodicFunctionCaller, 1000);
-        setIntervalFetchPoll(pollIntervalId);
-        return () => {
-          clearInterval(pollIntervalId);
-        };
+        intervalKeeper = setInterval(periodicFunctionCaller, 1000);
       }, 16000);
+      return () => {
+        if(intervalKeeper) {
+          setStarted(false);
+          clearInterval(intervalKeeper);
+        }
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
