@@ -127,6 +127,19 @@
       }
     }
 
+    .lover-event {
+      position: relative;
+      background-image: url('../../../public/static/media/heart.png');
+      background-repeat: no-repeat;
+      background-size: 230px auto;
+      background-position: top 50px center;
+
+      .profile {
+        margin-top: 50px;
+        margin-bottom: 60px;
+      }
+    }
+
     .role-image {
       height: 250px;
       width: 158px;

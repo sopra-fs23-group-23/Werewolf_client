@@ -21,6 +21,21 @@ class Log {
     }
   }
 
+  async fetchRoleDescription (requestedRole) {
+    try {
+      const roles = await api.get('/lobbies/' + StorageManager.getLobbyId() + "/roles");
+      for(const role of roles.data) {
+        if(role.roleName === requestedRole) {
+          return role.description;
+        }
+      }
+      return "";
+    } catch (error) {
+      alert('Could not fetch role information' + error.response.data?.message);
+      console.error(error);
+    }
+  }
+
   getRoleListFormatted (roleList) {
     if (parseInt(roleList.length) === 1) {
       return roleList[0].roleName;
@@ -81,6 +96,15 @@ class Log {
             <Profile user={new Player(newAction.affectedPlayer)} mode="game-log" />
             <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
             <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-light.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
+          </div>);
+        break;
+
+      case "PrivateLoverNotificationPollCommand":
+        newAction.setRepresentationDark(
+          <div className={"lover-event"}>
+            <h3>{newAction.message}</h3>
+            <Profile user={new Player(newAction.affectedPlayer)} mode="game-log" />
+            <p>{await this.fetchRoleDescription("Lover")}</p>
           </div>);
         break;
 
