@@ -5,6 +5,7 @@ import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
+import { disableVideo, muteAudio } from 'helpers/agora';
 
 
 const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
@@ -29,10 +30,13 @@ const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
     )
   }
 }
+StorageManager.setIsMuted("false");
+StorageManager.setIsVideoEnabled("true");
+let microphone = (StorageManager.getIsMuted() === "true") ? "microphone-disabled.svg" : "microphone-enabled.svg";
+let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg" : "video-disabled.svg";
 
 const Lobby = () => {
   const history = useHistory();
-  StorageManager.setIsMuted("false");
   function leave() {
     // TODO
     alert("Not implemented yet");
@@ -76,6 +80,11 @@ const Lobby = () => {
         </div>
         <div className='lobby-footerrow'>
           <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} leaveFunction={leave} startGameFunction={startGame}/>
+        </div>
+        {/* TODO: delete this */}
+        <div className={`game-controls-agora game-controls-agora-dark`}>
+            <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
+            <img id='disableVideo' src={`/static/media/${video}`} onClick={disableVideo} alt='video' />
         </div>
       </div>
     )

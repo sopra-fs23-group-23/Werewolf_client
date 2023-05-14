@@ -7,7 +7,7 @@ import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
 import StorageManager from 'helpers/StorageManager';
-import { muteAudio } from 'helpers/agora';
+import { disableVideo, muteAudio } from 'helpers/agora';
 import EventLog from "../ui/game/EventLog";
 
 const Game = () => {
@@ -46,6 +46,7 @@ const Game = () => {
   let textTheme = (game?.stage.type === "Day") ? "dark" : "light";
 
   let microphone = (StorageManager.getIsMuted() === "true") ? "microphone-disabled.svg" : "microphone-enabled.svg";
+  let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg" : "video-disabled.svg";
 
 
   var content = Information();
@@ -80,6 +81,7 @@ const Game = () => {
         </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
             <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
+            <img id='disableVideo' src={`/static/media/${video}`} onClick={disableVideo} alt='video' />
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />

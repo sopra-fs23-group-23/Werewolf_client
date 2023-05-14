@@ -39,7 +39,7 @@ export function startBasicCall() {
       // Save the remote user id for reuse.
       channelParameters.remoteUid = user.uid.toString();
       // Play the remote video track.
-      channelParameters.remoteVideoTrack.play(`profile-video-${channelParameters.remoteUid}`);
+      channelParameters.remoteVideoTrack.play(document.querySelector(`#profile-video-${channelParameters.remoteUid}`));
     }
     // Subscribe and play the remote audio track.
     if (mediaType === "audio") {
@@ -60,43 +60,34 @@ export async function joinCall() {
   channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
   // Create a local video track from the video captured by a camera.
   channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-  channelParameters.localVideoTrackDup = await AgoraRTC.createCameraVideoTrack();
+  // TODO: Dave bruchts de ez eig? han en uskommentiert 
+  //channelParameters.localVideoTrackDup = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
-  channelParameters.localVideoTrack.play(`profile-video-${StorageManager.getUserId()}`);
+  channelParameters.localVideoTrack.play(document.querySelector(`#profile-video-${StorageManager.getUserId()}`));
 }
 
 export async function leaveCall(){
   const agoraEngine = StorageManager.getAgoraEngine();
+  StorageManager.removeChannelToken();
+  StorageManager.removeIsMuted();
+  StorageManager.removeIsVideoEnabled();
   channelParameters.localAudioTrack.close();
+  channelParameters.localVideoTrack.close();
   await agoraEngine.leave();
 }
 
-
-// export async function checkIfUserIsInCall() {
-//   const agoraEngine = StorageManager.getAgoraEngine();
-//   const remoteUsers = agoraEngine.remoteUsers;
-//   console.log("remoteUsers", remoteUsers);
-//   if (remoteUsers.length > 0) {
-//     console.log("You are in a call");
-//     return true;
-//   } else {
-//     console.log("You are not in a call");
-//     return false;
-//   }
-// }
-
-// export function changeMicrophone() {
-//   var microphoneTracks = AgoraRTC.getMicrophones();
-//   console.log("microphoneTracks", microphoneTracks);
-
-// var microphoneTracks = await AgoraRTC.getMicrophones();
-// var playbackDevices = await AgoraRTC.getPlaybackDevices();
-
-// console.log("microphoneTracks", microphoneTracks);
-// console.log("playbackDevices", playbackDevices);
-
-// }
+export async function disableVideo() {
+  if (StorageManager.getIsVideoEnabled() === "true") {
+    channelParameters.localVideoTrack.setEnabled(false);
+    document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
+    StorageManager.setIsVideoEnabled("false");
+  }else{
+    channelParameters.localVideoTrack.setEnabled(true);
+    document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
+    StorageManager.setIsVideoEnabled("true");
+  }
+}
 
 export async function muteAudio() {
   if (StorageManager.getIsMuted() === "false") {

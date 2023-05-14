@@ -31,6 +31,12 @@
             width: 90px;
             border-radius: 100px;
         }
+        video{
+            border-radius: 50%;
+        }
+        div{
+            background-color: transparent !important;
+        }
     }
     &-hitlist{
         &-video {

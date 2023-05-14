@@ -27,6 +27,10 @@ class StorageManager {
         return sessionStorage.getItem("isMuted")
     }
 
+    static getIsVideoEnabled() {
+        return sessionStorage.getItem("isVideoEnabled")
+    }
+
     static setUserToken(token) {
         sessionStorage.setItem("token", token)
     }
@@ -47,6 +51,10 @@ class StorageManager {
         sessionStorage.setItem("isMuted", isMuted)
     }
 
+    static setIsVideoEnabled(isVideoEnabled) {
+        sessionStorage.setItem("isVideoEnabled", isVideoEnabled)
+    }
+
     static removeUserToken() {
         sessionStorage.removeItem('token');
     }
@@ -65,6 +73,10 @@ class StorageManager {
 
     static removeIsMuted() {
         sessionStorage.removeItem('isMuted');
+    }
+
+    static removeIsVideoEnabled() {
+        sessionStorage.removeItem('isVideoEnabled');
     }
 
     static removeAgoraEngine() {

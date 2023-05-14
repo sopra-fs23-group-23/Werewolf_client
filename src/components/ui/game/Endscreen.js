@@ -3,7 +3,7 @@ import 'styles/ui/Endscreen.scss';
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import Spinner from 'components/ui/Spinner';
-import { leaveCall } from 'helpers/agora';
+import { leaveCall, joinCall } from 'helpers/agora';
 import StorageManager from 'helpers/StorageManager';
 
 const Endscreen = ({ endData, lobby, stage}) => {
@@ -34,7 +34,6 @@ const Endscreen = ({ endData, lobby, stage}) => {
   );
 
   useEffect(() => {
-
     if (endData && lobby) {
   
       let winnerIds = lobby.players.filter(player => endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
@@ -45,6 +44,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
   
       setLooserArray(lobby.players.filter(player => loserIds.includes(player.id)));
     }
+    joinCall();
   }, [endData, lobby])
 
   return (

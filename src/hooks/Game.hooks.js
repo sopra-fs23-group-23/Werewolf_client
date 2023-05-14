@@ -57,6 +57,7 @@ export const useGame = () => {
     if (newGame.stage.type === "Day"){
       joinCall();
       StorageManager.setIsMuted(false);
+      StorageManager.setIsVideoEnabled(true);
     }
   }
 
