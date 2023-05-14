@@ -80,16 +80,18 @@ const Edit = () => {
     <div className="background background-dark background-dark-image-small background-dark-image-small-left">
       <div className="container">
         <div className="edit">
-          <button
-            className="btn btn-light edit-backbutton"
-            onClick={() => history.push('/user/' + id)}>
-              Back to User
-            </button>
-          <h1>Edit User</h1>
-          {content}
-          {showSuccessMessage && (
-            <div className='edit-successmessage'>User updated successfully.</div>
-          )}
+          <div className="column-container">
+            <button
+              className="btn btn-light edit-backbutton"
+              onClick={() => history.push('/user/' + id)}>
+                Back to User
+              </button>
+            <h1>Edit User</h1>
+            {content}
+            {showSuccessMessage && (
+              <div className='edit-successmessage'>User updated successfully.</div>
+            )}
+          </div>
         </div>
       </div>
     </div>
