@@ -3,7 +3,7 @@ import StorageManager from "./StorageManager";
 
 
 const appId = '348d6a205d75436e916896366c5e315c';
-
+AgoraRTC.setLogLevel(2);
 
 let channelParameters =
 {
@@ -23,7 +23,7 @@ let channelParameters =
 export function startBasicCall() {
   // Create an instance of the Agora Engine
   const agoraEngine = StorageManager.getAgoraEngine();
-  AgoraRTC.setLogLevel(2);
+
   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
@@ -50,6 +50,15 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack.play();
     };
   });
+  // TODO: dont just append this button to the body
+  AgoraRTC.onAutoplayFailed = () => {
+    const btn = document.createElement("button");
+    btn.innerText = "Click me to resume the audio playback";
+    btn.onClick = () => {
+      btn.remove();
+    };
+    document.body.append(btn);
+  };
 }
 
 export async function joinCall() {
@@ -60,8 +69,6 @@ export async function joinCall() {
   channelParameters.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
   // Create a local video track from the video captured by a camera.
   channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-  // TODO: Dave bruchts de ez eig? han en uskommentiert 
-  //channelParameters.localVideoTrackDup = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
   channelParameters.localVideoTrack.play(document.querySelector(`#profile-video-${StorageManager.getUserId()}`));
@@ -78,7 +85,7 @@ export async function leaveCall(){
 }
 
 export async function disableVideo() {
-  if (StorageManager.getIsVideoEnabled() === "true") {
+  if (channelParameters.localVideoTrack.enabled) {
     channelParameters.localVideoTrack.setEnabled(false);
     document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
     StorageManager.setIsVideoEnabled("false");
@@ -90,7 +97,7 @@ export async function disableVideo() {
 }
 
 export async function muteAudio() {
-  if (StorageManager.getIsMuted() === "false") {
+  if (channelParameters.localAudioTrack.enabled) {
     channelParameters.localAudioTrack.setEnabled(false);
     document.getElementById("muteAudio").src = "/static/media/microphone-disabled.svg";
     StorageManager.setIsMuted("true");
