@@ -6,26 +6,24 @@ import FormField from 'components/ui/FormField';
 import 'styles/views/Auth.scss';
 import StorageManager from 'helpers/StorageManager';
 
-const Register = (props) => {
+const Authentication = (props) => {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
-  const doRegister = async (e) => {
+  const authenticate = async (e, type) => {
     e.preventDefault();
     try {
       const requestBody = JSON.stringify({ username, password });
-      const response = await api.post('/users', requestBody);
+      const response = (type === "login") ? await api.post('/login', requestBody) : await api.post('/users', requestBody);
 
       const user = new User(response.data);
-      console.log("User: ", user);
 
       StorageManager.setUserToken(user.token);
       StorageManager.setUserId(user.id);
-
       history.push(`/home`);
     } catch (error) {
-      alert(error.response.data?.message || 'Registration failed.');
+      alert(error.response.data?.message || 'Authentication failed.');
     }
   };
 
@@ -34,8 +32,8 @@ const Register = (props) => {
       <div className="container">
         <div className="auth">
           <div className="column-container">
-            <h1>Register</h1>
-            <form onSubmit={(e) => doRegister(e)}>
+            <h1>Authentication</h1>
+            <form onSubmit={(e) => authenticate(e, "register")}>
               <FormField
                 label="Username"
                 value={username}
@@ -48,16 +46,19 @@ const Register = (props) => {
                 onChange={(n) => setPassword(n)}
               />
               <button
-                className="btn"
+                className="btn auth-btn-register"
                 disabled={!username || !password}
-                onClick={(e) => doRegister(e)}
+                onClick={(e) => authenticate(e, "register")}
               >
                 Register
               </button>
-              <Link to="/login" className="link"
+              <button
+                className="btn auth-btn-login"
+                disabled={!username || !password}
+                onClick={(e) => authenticate(e, "login")}
               >
-                Go to Login
-              </Link>
+                Login
+              </button>
             </form>
           </div>
         </div>
@@ -66,4 +67,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default Authentication;

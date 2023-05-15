@@ -24,7 +24,7 @@ const Countdown = ({finishTime}) => {
 
     return (
         <div className="countdown">
-            <h3>remaining time</h3>
+            <h3>Remaining Time</h3>
             <h2>{remainingMinutes}:{remainingSeconds}</h2>
         </div>
     );       

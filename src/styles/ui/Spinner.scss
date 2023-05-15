@@ -11,6 +11,7 @@
 }
 
 .loader-inner {
+  -webkit-transition: color 3s ease;
   bottom: 0;
   height: 60px;
   left: 0;
@@ -43,6 +44,7 @@
 }
 
 .loader-line {
+  -webkit-transition: border 3s ease;
   border: 4px solid $color-text-dark;
   border-radius: 100%;
   box-sizing: border-box;

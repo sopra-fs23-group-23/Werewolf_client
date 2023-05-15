@@ -4,6 +4,7 @@ class Action {
     this.message=null;
     this.type = null;
     this.role = null;
+    this.id = null;
     this.representationDark = null;
     this.representationLight = null;
     Object.assign(this, data);
@@ -11,6 +12,10 @@ class Action {
 
   setRole(role) {
     this.role = role;
+  }
+
+  setId(id) {
+    this.id = id;
   }
 
   setRepresentationDark (representation) {

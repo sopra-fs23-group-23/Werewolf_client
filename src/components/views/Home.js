@@ -60,23 +60,23 @@ const Home = () => {
   };
 
   return (
-    <div className="background background-dark home">
+    <div className="background background-dark background-dark-image-small background-dark-image-small-right home">
       <div className="container">
         
         <button className="btn btn-light home-logout" onClick={(e) => logout(e)}>
-          logout
+          Logout
         </button>
 
         <div className="home-user_wrapper">
           <h1>Hey,<br/> {user.username} </h1>
           <Link to={`./edit/${id}`}>
-            <h5>edit profile</h5>
+            <h5>Edit Profile</h5>
           </Link>
         </div>
         
         <div className='home-create-lobby'>
           <button className="btn btn-light" onClick={(e) => createLobby(e)}>
-            create lobby
+            Create Lobby
           </button>
         </div>
         <h5>or</h5>
@@ -88,7 +88,7 @@ const Home = () => {
           >
           </FormField>
           <button className="btn btn-light" onClick={(e) => joinLobby(e)} disabled = {lobbyId.length < 6}>
-            join lobby
+            Join Lobby
           </button>
         </div>
         

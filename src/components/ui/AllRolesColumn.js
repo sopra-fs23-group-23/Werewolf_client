@@ -13,7 +13,8 @@ const AllRolesColumn = ({roles}) => {
   }
   return (
     <div className= {`roles-column`}>
-      {roles.map(role => (createIndividualRole(role)))}
+      {roles.map(role =>
+        (role.amount ? createIndividualRole(role) : ""))}
     </div>
   );
 };

@@ -6,17 +6,24 @@ import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
 import { disableVideo, muteAudio } from 'helpers/agora';
+import { leaveCall } from 'helpers/agora';
 
 
-const ButtonMenu = ({isAdmin, leaveFunction, startGameFunction}) => {
+const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) => {
   if (isAdmin) {
+    const requiredNrOfPlayers = 5;
     return (
       <div>
         <button className="btn btn-light" onClick={leaveFunction}>
           Dissolve Lobby
         </button>
-        <button className="btn btn-light" onClick={startGameFunction}>
-          Start Game
+        <button className={"btn btn-light"} onClick={startGameFunction} disabled={nrOfPlayers < requiredNrOfPlayers}>
+          {(() => {
+              if (nrOfPlayers < requiredNrOfPlayers){
+                  return `${nrOfPlayers}/${requiredNrOfPlayers} Players`;
+              }
+              return "Start Game";
+            })()}
         </button>
       </div>
     )
@@ -38,20 +45,29 @@ let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg
 const Lobby = () => {
   const history = useHistory();
   function leave() {
-    // TODO
-    alert("Not implemented yet");
+    api.delete(`/lobbies/${lobby.id}`);
+    leaveCall();
+    StorageManager.removeChannelToken();
+    history.goBack();
   }
 
   async function startGame () {
     api.post(`/games/${lobby.id}`);
   }
 
-  const {lobby, uid, intervalId} = useLobby();
+  const {lobby, error, uid, intervalId} = useLobby();
 
   if(lobby && lobby.closed) {
     clearInterval(intervalId);
 
     history.push(`/game`);
+  }
+
+  if(error && error.response.status === 404) {
+    leaveCall();
+    StorageManager.removeChannelToken();
+    clearInterval(intervalId);
+    history.goBack();
   }
   
   let content = (
@@ -79,7 +95,7 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} leaveFunction={leave} startGameFunction={startGame}/>
+          <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} nrOfPlayers={lobby.players.length} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
         {/* TODO: delete this */}
         <div className={`game-controls-agora game-controls-agora-dark`}>

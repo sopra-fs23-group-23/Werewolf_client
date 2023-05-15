@@ -5,16 +5,17 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { joinCall } from "helpers/agora";
+import { useHistory } from 'react-router-dom';
+import { leaveCall } from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
+let logger = new Log();
+let gameShouldBeFetchedAgain = false;
+let intervalKeeper = null;
 
 const periodicFunctionCaller = () => {
   periodicFunctionToBeCalled();
 }
-
-let logger = new Log();
-
-let gameShouldBeFetchedAgain = false;
 
 export const useGame = () => {
   const lobbyId = StorageManager.getLobbyId();
@@ -25,7 +26,7 @@ export const useGame = () => {
   const [endData, setEndData] = useState(null);
   const [currentPoll, setCurrentPoll] = useState(null);
   const [pollActive, setPollActive] = useState(false);
-  const [intervalFetchPoll, setIntervalFetchPoll] = useState(null);
+  const history = useHistory();
 
   const isPollActive = (newPoll) => {
     if (newPoll) {
@@ -116,26 +117,59 @@ export const useGame = () => {
       console.log("Game ended: ", response.data);
       setStarted(false);
       setFinished(true);
-      clearInterval(intervalFetchPoll);
+      clearInterval(intervalKeeper);
     } catch (error) {
       console.error("Details Fetch End Data Error: ", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lobbyId, game]);
+  }, [lobbyId]);
+
+  // checks if the game is already running so that the information screen is not shown after reload
+  const showInfoScreen = async () => {
+    try{
+      await api.get(`/games/${lobbyId}`);
+      return false; // game has already started --> don't show info screen
+    } catch (error) {
+      if(error.response.status === 404) {
+        alert("There exists no game with this lobby ID.");
+        leaveCall();
+        StorageManager.removeChannelToken();
+        history.push("/home");
+        return "redirect";
+      }
+      if(error.response.status === 403) { // maybe use some other indicator than 403 for unstarted game?
+        return true; // game has not yet started --> show info screen
+      }
+      console.error(error);
+    }
+  };
 
     useEffect(() => {
-      setTimeout(async () => {
-        logger = new Log();
-        await fetchGame();
-        await fetchPoll();
-        setStarted(true);
-        periodicFunctionToBeCalled = fetchPoll;
-        const pollIntervalId = setInterval(periodicFunctionCaller, 1000);
-        setIntervalFetchPoll(pollIntervalId);
-        return () => {
-          clearInterval(pollIntervalId);
-        };
-      }, 16000);
+      async function init() {
+        intervalKeeper = null;
+        let timeoutDuration = 0;
+        const showInfoScreenOrLeave = await showInfoScreen();
+        if(showInfoScreenOrLeave !== "redirect") {  // when the game doesn't exist anymore after reload --> don't set interval
+          if(showInfoScreenOrLeave === true) {
+            timeoutDuration = 16000;
+          }
+          setTimeout(async () => {
+            logger = new Log();
+            await fetchGame();
+            await fetchPoll();
+            setStarted(true);
+            periodicFunctionToBeCalled = fetchPoll;
+            intervalKeeper = setInterval(periodicFunctionCaller, 1000);
+          }, timeoutDuration);
+        }
+      }
+      init();
+      return () => {
+        if(intervalKeeper) {
+          setStarted(false);
+          clearInterval(intervalKeeper);
+        }
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lobbyId, token]);
 
