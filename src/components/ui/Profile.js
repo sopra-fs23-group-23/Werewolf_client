@@ -28,11 +28,9 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
       }
     }
   }
-  
-
 
   updateImageDisplay();
-  setInterval(updateImageDisplay, 5000);
+  // // setInterval(updateImageDisplay, 5000);
 
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
