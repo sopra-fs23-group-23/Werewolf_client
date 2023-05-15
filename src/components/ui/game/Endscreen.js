@@ -13,7 +13,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
 
   const [winnerArray, setWinnerArray] = useState([]);
   const [looserArray, setLooserArray] = useState([]);
-  const [leaveText, setLeaveText] = useState("Leave lobby");
+  const [leaveText, setLeaveText] = useState("Leave Lobby");
 
   var buttonTheme;
   if(stage === "Day") {
@@ -65,7 +65,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
             <h1>{endData.winner}s</h1>
             <h2>have won the game</h2>
           </div>
-          <button className={`btn btn-${buttonTheme}`} onClick={rematch}>Play again</button>
+          <button className={`btn btn-${buttonTheme}`} onClick={rematch}>Play Again</button>
         </div>
 
         <div className='endscreen-winner'>

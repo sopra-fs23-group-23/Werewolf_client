@@ -71,7 +71,7 @@ const MultiOption = ({currentPoll, stage}) => {
         className= {buttonTheme}
         onClick={removeVote}
     >
-        remove Vote
+        Remove Vote
     </button>
   );
 
