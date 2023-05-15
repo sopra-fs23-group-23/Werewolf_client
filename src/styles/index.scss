@@ -57,14 +57,17 @@ a {
 }
 
 .background {
+  -webkit-transition: background-image 4.5s ease, color 3s ease, background-color 4s ease;
   z-index: -2;
   height: 100vh;
   overflow-y: auto;
   &-light {
+    -webkit-transition: color 3s ease, background-color 4s ease;
     background-color: $color-bg-light;
     color: $color-text-dark;
   }
   &-dark {
+    -webkit-transition: color 3s ease, background-color 4s ease;
     background-color: $color-bg-dark;
     color: $color-text-light;
   }
@@ -81,7 +84,6 @@ a {
   &-light-image {
     background-color: $color-bg-light;
     background-image: url('../../public/static/media/cemetery-light.png') !important;
-    background-size: cover;
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: bottom;
