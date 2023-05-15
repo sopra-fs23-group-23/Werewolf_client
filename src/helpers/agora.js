@@ -3,7 +3,7 @@ import StorageManager from "./StorageManager";
 
 
 const appId = '348d6a205d75436e916896366c5e315c';
-AgoraRTC.setLogLevel(2);
+//AgoraRTC.setLogLevel(2);
 
 let channelParameters =
 {
@@ -28,8 +28,13 @@ export function startBasicCall() {
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
     await agoraEngine.subscribe(user, mediaType);
+    console.log(user.uid, mediaType);
     // Subscribe and play the remote video in the container If the remote user publishes a video track.
     if (mediaType === "video") {
+      if(document.getElementById(`profile-image-${user.uid}`)) {
+        document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
+        document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
+      }
       // Retrieve the remote video track.
       channelParameters.remoteVideoTrack = user.videoTrack;
       // Retrieve the remote audio track.
@@ -40,7 +45,8 @@ export function startBasicCall() {
       channelParameters.remoteVideoTrack.play(document.querySelector(`#profile-video-${channelParameters.remoteUid}`));
     }
     // Subscribe and play the remote audio track.
-    if (mediaType === "audio") {
+    else if (mediaType === "audio") {
+      document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
       channelParameters.remoteUid = user.uid;
       // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
       channelParameters.remoteAudioTrack = user.audioTrack;
@@ -48,19 +54,11 @@ export function startBasicCall() {
       channelParameters.remoteAudioTrack.play();
     };
   });
-  // TODO: dont just append this button to the body
-  AgoraRTC.onAutoplayFailed = () => {
-    const btn = document.createElement("button");
-    btn.innerText = "Click me to resume the audio playback";
-    btn.onClick = () => {
-      btn.remove();
-    };
-    document.body.append(btn);
-  };
-  agoraEngine.on("user-unpublished", (user) => {
-    console.log("user-unpublished", user.uid);
-
-    // theoretisch chönt mer alli uids wo da drinne sind in e liste speichere und bi dene denn eif de avatar zeige?
+  agoraEngine.on("user-unpublished", (user, mediaType) => {
+    if(mediaType === "video"){
+      document.getElementById(`profile-video-${user.uid}`).setAttribute('hidden', 'true');
+      document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
+    }
   });
 }
 
@@ -92,18 +90,14 @@ export async function disableVideo() {
     channelParameters.localVideoTrack.setEnabled(false);
     document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
     StorageManager.setIsVideoEnabled("false");
-    var image = document.getElementById(`profile-image-${StorageManager.getUserId()}`);
-    var video = document.getElementById(`profile-video-${StorageManager.getUserId()}`);
-    image.setAttribute('hidden', 'false');
-    video.setAttribute('hidden', 'true');
+    document.getElementById(`profile-video-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-image-${StorageManager.getUserId()}`).removeAttribute('hidden');
   }else{
     channelParameters.localVideoTrack.setEnabled(true);
     document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
     StorageManager.setIsVideoEnabled("true");
-    var image = document.getElementById(`profile-image-${StorageManager.getUserId()}`);
-    var video = document.getElementById(`profile-video-${StorageManager.getUserId()}`);
-    image.setAttribute('hidden', 'true');
-    video.setAttribute('hidden', 'false');
+    document.getElementById(`profile-video-${StorageManager.getUserId()}`).removeAttribute('hidden');
+    document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'hidden');
   }
 }
 
