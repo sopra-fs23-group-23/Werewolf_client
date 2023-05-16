@@ -5,12 +5,14 @@ import 'styles/views/Home.scss';
 import FormField from 'components/ui/FormField';
 import Lobby from 'models/Lobby';
 import StorageManager from 'helpers/StorageManager';
+import RejoinLobby from 'components/ui/RejoinLobby';
 
 const Home = () => {
   const id = StorageManager.getUserId();
   const history = useHistory();
   const [lobbyId, setLobbyId] = useState('');
   const [user, setUser] = useState('');
+  const [oldLobby, setOldLobby] = useState();
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +24,14 @@ const Home = () => {
         alert('Could not fetch user with ID ' + id);
         sessionStorage.clear();
         history.push('/login');
+      }
+      try {
+        const response = await api.get('/users/' + id + '/lobby');
+        setOldLobby(response.data);
+        console.log(response.data);
+      }
+      catch(error) {
+        console.error(error);
       }
     }
     fetchData();
@@ -74,24 +84,31 @@ const Home = () => {
           </Link>
         </div>
         
-        <div className='home-create-lobby'>
-          <button className="btn btn-light" onClick={(e) => createLobby(e)}>
-            Create Lobby
-          </button>
-        </div>
-        <h5>or</h5>
-        <div className='home-join-lobby'>
-          <FormField
-            theme="light"
-            placeholder = "123 456"
-            onChange={(e) => setLobbyId(e)}
-          >
-          </FormField>
-          <button className="btn btn-light" onClick={(e) => joinLobby(e)} disabled = {lobbyId.length < 6}>
-            Join Lobby
-          </button>
-        </div>
-        
+
+        {oldLobby && (
+          <RejoinLobby oldLobby={oldLobby} user={user} />
+        )}
+        {!oldLobby && (
+          <div>
+            <div className='home-create-lobby'>
+              <button className="btn btn-light" onClick={(e) => createLobby(e)}>
+                Create Lobby
+              </button>
+            </div>
+            <h5>or</h5>
+            <div className='home-join-lobby'>
+              <FormField
+                theme="light"
+                placeholder = "123 456"
+                onChange={(e) => setLobbyId(e)}
+              >
+              </FormField>
+              <button className="btn btn-light" onClick={(e) => joinLobby(e)} disabled = {lobbyId.length < 6}>
+                Join Lobby
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
