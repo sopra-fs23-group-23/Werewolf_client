@@ -28,20 +28,20 @@
     padding-bottom: 5px;
     user-select: none;
     border: solid 2px white;
-    background-image: url('../../../public/static/media/scroll.svg');
     background-repeat: no-repeat;
     background-size: 70% auto;
     background-position: center;
-    -webkit-transition: filter 3s ease, border 3s ease;
-    &-light {
-      filter: brightness(0) invert(1);
-    }
-    &-dark {
-      border-color: $color-text-dark;
-    }
+    transition: border 3s ease;
     &:hover {
       cursor: pointer;
       background-color: rgba(0,0,0,0.4);
+    }
+    &-light {
+      background-image: url('../../../public/static/media/scroll-white.svg');
+    }
+    &-dark {
+      background-image: url('../../../public/static/media/scroll-black.svg');
+      border-color: $color-text-dark;
     }
   }
 }
