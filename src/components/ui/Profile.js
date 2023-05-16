@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import StorageManager from 'helpers/StorageManager';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -17,7 +16,7 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
-      <div className={`video profile-${mode}-video`} id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} visibility='visible'></div>
+      <div className={`video profile-${mode}-video`} id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}></div>
       <img className={`image profile-${mode}-image`} id={`profile-image-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar' hidden/>
       <div className="profile-name">{user.name}</div>
       {votes && (

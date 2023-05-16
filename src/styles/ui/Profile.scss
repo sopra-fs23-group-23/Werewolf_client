@@ -6,9 +6,14 @@
     align-items: center;
     margin: .8em 1em;
     height: min-content;
+    video {
+        border-radius: 50% !important;
+    }
+
     &-name {
         margin: 0.4em 0 0 0;
     }
+
     &-votes {
         margin: 0.2em 0;
         padding: 0;
@@ -16,12 +21,10 @@
         font-family: $font-default;
         font-weight: 600;
     }
+
     .video{
         div {
             background-color: transparent !important;
-        }
-        video {
-            border-radius: 50% !important;
         }
     }
     
@@ -29,7 +32,6 @@
         background-color: white;
         border-radius: 50% !important;
     }
-
 
     &-lobby{
         &-video, &-image {

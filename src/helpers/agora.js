@@ -3,7 +3,7 @@ import StorageManager from "./StorageManager";
 
 
 const appId = '348d6a205d75436e916896366c5e315c';
-//AgoraRTC.setLogLevel(2);
+AgoraRTC.setLogLevel(2);
 
 let channelParameters =
 {
@@ -19,48 +19,83 @@ let channelParameters =
   remoteUid: null,
 };
 
+const agoraEngine = StorageManager.getAgoraEngine();
 
-export function startBasicCall() {
-  // Create an instance of the Agora Engine
-  const agoraEngine = StorageManager.getAgoraEngine();
+agoraEngine.on("user-published", async (user, mediaType) => {
+  // Subscribe to the remote user when the SDK triggers the "user-published" event.
+  await agoraEngine.subscribe(user, mediaType);
+  // Subscribe and play the remote video in the container If the remote user publishes a video track.
+  if (mediaType === "video") {
+    // Retrieve the remote video track.
+    channelParameters.remoteVideoTrack = user.videoTrack;
+    // Retrieve the remote audio track.
+    channelParameters.remoteAudioTrack = user.audioTrack;
+    // Save the remote user id for reuse.
+    channelParameters.remoteUid = user.uid.toString();
+    // Play the remote video track.
+    channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
+  
+    if (document.getElementById(`profile-image-${user.uid}`).hasAttribute('hidden')){
+      document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
+    } else{
+      document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
+      document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
+    }
+  }
+  // Subscribe and play the remote audio track.
+  else if (mediaType === "audio") {
+    channelParameters.remoteUid = user.uid;
+    // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
+    channelParameters.remoteAudioTrack = user.audioTrack;
+    // Play the remote audio track. 
+    channelParameters.remoteAudioTrack.play();
+  };
+});
 
-  // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
-  agoraEngine.on("user-published", async (user, mediaType) => {
-    // Subscribe to the remote user when the SDK triggers the "user-published" event.
-    await agoraEngine.subscribe(user, mediaType);
-    console.log(user.uid, mediaType);
-    // Subscribe and play the remote video in the container If the remote user publishes a video track.
-    if (mediaType === "video") {
-      if(document.getElementById(`profile-image-${user.uid}`)) {
-        document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
-        document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
-      }
-      // Retrieve the remote video track.
-      channelParameters.remoteVideoTrack = user.videoTrack;
-      // Retrieve the remote audio track.
-      channelParameters.remoteAudioTrack = user.audioTrack;
-      // Save the remote user id for reuse.
-      channelParameters.remoteUid = user.uid.toString();
-      // Play the remote video track.
-      channelParameters.remoteVideoTrack.play(document.querySelector(`#profile-video-${channelParameters.remoteUid}`));
-    }
-    // Subscribe and play the remote audio track.
-    else if (mediaType === "audio") {
-      document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
-      channelParameters.remoteUid = user.uid;
-      // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
-      channelParameters.remoteAudioTrack = user.audioTrack;
-      // Play the remote audio track. 
-      channelParameters.remoteAudioTrack.play();
-    };
-  });
-  agoraEngine.on("user-unpublished", (user, mediaType) => {
-    if(mediaType === "video"){
-      document.getElementById(`profile-video-${user.uid}`).setAttribute('hidden', 'true');
-      document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
-    }
-  });
-}
+agoraEngine.on("user-unpublished", (user, mediaType) => {
+  if (mediaType === "video") {
+    document.getElementById(`profile-video-${user.uid}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
+  }
+});
+
+// TODO delete 
+// export function startBasicCall() {
+//   // Create an instance of the Agora Engine
+//   const agoraEngine = StorageManager.getAgoraEngine();
+
+//   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
+//   agoraEngine.on("user-published", async (user, mediaType) => {
+//     // Subscribe to the remote user when the SDK triggers the "user-published" event.
+//     await agoraEngine.subscribe(user, mediaType);
+//     // Subscribe and play the remote video in the container If the remote user publishes a video track.
+//     if (mediaType === "video") {
+//       // Retrieve the remote video track.
+//       channelParameters.remoteVideoTrack = user.videoTrack;
+//       // Retrieve the remote audio track.
+//       channelParameters.remoteAudioTrack = user.audioTrack;
+//       // Save the remote user id for reuse.
+//       channelParameters.remoteUid = user.uid.toString();
+//       // Play the remote video track.
+//       await channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
+//     }
+//     // Subscribe and play the remote audio track.
+//     else if (mediaType === "audio") {
+//       channelParameters.remoteUid = user.uid;
+//       // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
+//       channelParameters.remoteAudioTrack = user.audioTrack;
+//       // Play the remote audio track. 
+//       channelParameters.remoteAudioTrack.play();
+//     };
+//   });
+//   agoraEngine.on("user-unpublished", (user, mediaType) => {
+//     if(mediaType === "video"){
+//       //toggleHiddenAttribute(user.uid);
+//       document.getElementById(`profile-video-${user.uid}`).setAttribute('hidden', 'true');
+//       document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
+//     }
+//   });
+// }
 
 export async function joinCall() {
   const agoraEngine = StorageManager.getAgoraEngine();
@@ -72,10 +107,11 @@ export async function joinCall() {
   channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
-  channelParameters.localVideoTrack.play(document.querySelector(`#profile-video-${StorageManager.getUserId()}`));
+  document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
+  await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
 }
 
-export async function leaveCall(){
+export async function leaveCall() {
   const agoraEngine = StorageManager.getAgoraEngine();
   StorageManager.removeChannelToken();
   StorageManager.removeIsMuted();
@@ -90,14 +126,12 @@ export async function disableVideo() {
     channelParameters.localVideoTrack.setEnabled(false);
     document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
     StorageManager.setIsVideoEnabled("false");
-    document.getElementById(`profile-video-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
-    document.getElementById(`profile-image-${StorageManager.getUserId()}`).removeAttribute('hidden');
-  }else{
+    toggleHiddenAttribute(StorageManager.getUserId());
+  } else {
     channelParameters.localVideoTrack.setEnabled(true);
     document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
     StorageManager.setIsVideoEnabled("true");
-    document.getElementById(`profile-video-${StorageManager.getUserId()}`).removeAttribute('hidden');
-    document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'hidden');
+    toggleHiddenAttribute(StorageManager.getUserId());
   }
 }
 
@@ -106,9 +140,19 @@ export async function muteAudio() {
     channelParameters.localAudioTrack.setEnabled(false);
     document.getElementById("muteAudio").src = "/static/media/microphone-disabled.svg";
     StorageManager.setIsMuted("true");
-  }else{
+  } else {
     channelParameters.localAudioTrack.setEnabled(true);
     document.getElementById("muteAudio").src = "/static/media/microphone-enabled.svg";
     StorageManager.setIsMuted("false");
+  }
+}
+
+function toggleHiddenAttribute(uid) {
+  if (document.getElementById(`profile-image-${uid}`).hasAttribute('hidden')) {
+    document.getElementById(`profile-image-${uid}`).removeAttribute('hidden');
+    document.getElementById(`profile-video-${uid}`).setAttribute('hidden', 'true');
+  } else {
+    document.getElementById(`profile-image-${uid}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-video-${uid}`).removeAttribute('hidden');
   }
 }
