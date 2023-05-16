@@ -29,7 +29,7 @@ const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) =>
     )
   } else {
     return (
-      <div>
+      <div className='button-menu-noadmin'>
         <button className="btn btn-light" onClick={leaveFunction}>
           Leave Lobby
         </button>
@@ -92,7 +92,9 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
-          <DurationSelection />
+          {(parseInt(lobby.admin.id) === parseInt(uid)) && (
+            <DurationSelection />
+          )}
           <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} nrOfPlayers={lobby.players.length} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
       </div>
