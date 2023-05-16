@@ -69,6 +69,10 @@ const Home = () => {
     }
   };
 
+  const handleLeaveLobby = () => {
+    setOldLobby(null);
+  }
+
   return (
     <div className="background background-dark background-dark-image-small background-dark-image-small-right home">
       <div className="container">
@@ -79,14 +83,14 @@ const Home = () => {
 
         <div className="home-user_wrapper">
           <h1>Hey,<br/> {user.username} </h1>
-          <Link to={`./edit/${id}`}>
+          <Link to={`/edit/${id}`}>
             <h5>Edit Profile</h5>
           </Link>
         </div>
         
 
         {oldLobby && (
-          <RejoinLobby oldLobby={oldLobby} user={user} />
+          <RejoinLobby oldLobby={oldLobby} user={user} handleLeaveLobby={handleLeaveLobby} />
         )}
         {!oldLobby && (
           <div>

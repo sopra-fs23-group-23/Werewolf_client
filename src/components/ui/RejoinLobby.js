@@ -1,18 +1,24 @@
 import { useHistory } from "react-router-dom";
+import { api } from 'helpers/api';
+import StorageManager from 'helpers/StorageManager';
 
-const RejoinLobby = ({oldLobby, user}) => {
+const RejoinLobby = ({oldLobby, user, handleLeaveLobby}) => {
   const history = useHistory();
 
   const rejoinLobby = async (e) => {
+    StorageManager.setLobbyId(oldLobby.id);
     history.push('/lobby');
   }
 
   const leaveLobby = async (e) => {
-    console.log('leave lobby');
-  }
-
-  const dissolveLobby = async (e) => {
-    console.log('dissolve lobby');
+    try {
+      await api.delete(`/lobbies/${oldLobby.id}`);
+      handleLeaveLobby();
+    } catch(e) {
+      alert("Cannot leave lobby.");
+      console.error(e);
+    }
+    history.push('/home');
   }
 
   let rejoinLobbyButton = null;
@@ -25,7 +31,7 @@ const RejoinLobby = ({oldLobby, user}) => {
     );
     if(oldLobby.admin.id === user.id) {
       leaveLobbyButton = (
-        <button className="btn btn-light home-old-lobby-leave" onClick={dissolveLobby}>
+        <button className="btn btn-light home-old-lobby-leave" onClick={leaveLobby}>
           Dissolve Lobby
         </button>
       );
@@ -47,7 +53,7 @@ const RejoinLobby = ({oldLobby, user}) => {
   return (
     <div className="home-old-lobby">
       <div>
-        You are already in a lobby with lobby ID <strong>{oldLobby.id}</strong>.
+        You are already <strong>{oldLobby.admin.id === user.id && 'admin'}</strong> in a lobby with lobby ID <strong>{oldLobby.id}</strong>.
       </div>
       <div className="home-old-lobby-buttons">
         {rejoinLobbyButton}
