@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { api } from 'helpers/api';
 import User from 'models/User';
 import FormField from 'components/ui/FormField';
