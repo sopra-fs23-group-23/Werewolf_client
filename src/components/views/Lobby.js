@@ -6,6 +6,7 @@ import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
 import { leaveCall } from 'helpers/agora';
+import DurationSelection from 'components/ui/DurationSelection';
 
 
 const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) => {
@@ -28,7 +29,7 @@ const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) =>
     )
   } else {
     return (
-      <div>
+      <div className='button-menu-noadmin'>
         <button className="btn btn-light" onClick={leaveFunction}>
           Leave Lobby
         </button>
@@ -75,11 +76,11 @@ const Lobby = () => {
       <div className="container lobby-body">
         <div className="lobby-headerrow">
           <div className='details-wrapper'>
-            <h1 className="left-align">Lobby</h1>
-            <h5>Code to join: {lobby.id}</h5>
+              <h1 className="left-align">Lobby</h1>
+              <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
           </div>
           <div className='admin-wrapper'>
-            <h5>admin</h5>
+            <h5>Admin</h5>
             <Profile mode="lobby" user={lobby.admin} key={lobby.admin.id}/>
           </div>
         </div>
@@ -91,6 +92,9 @@ const Lobby = () => {
           ))}
         </div>
         <div className='lobby-footerrow'>
+          {(parseInt(lobby.admin.id) === parseInt(uid)) && (
+            <DurationSelection />
+          )}
           <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} nrOfPlayers={lobby.players.length} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
       </div>

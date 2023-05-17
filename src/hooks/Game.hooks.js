@@ -6,6 +6,7 @@ import Poll from "models/Poll";
 import Log from "../models/Log";
 import { joinCall } from "helpers/agora";
 import { useHistory } from 'react-router-dom';
+import { leaveCall } from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -125,12 +126,15 @@ export const useGame = () => {
   // checks if the game is already running so that the information screen is not shown after reload
   const showInfoScreen = async () => {
     try{
-      const response = await api.get(`/games/${lobbyId}`);
+      await api.get(`/games/${lobbyId}`);
       return false; // game has already started --> don't show info screen
     } catch (error) {
       if(error.response.status === 404) {
         alert("There exists no game with this lobby ID.");
+        leaveCall();
+        StorageManager.removeChannelToken();
         history.push("/home");
+        return "redirect";
       }
       if(error.response.status === 403) { // maybe use some other indicator than 403 for unstarted game?
         return true; // game has not yet started --> show info screen
@@ -139,21 +143,26 @@ export const useGame = () => {
     }
   };
 
-    useEffect(async () => {
-      intervalKeeper = null;
-      let timeoutDuration = 0;
-      if(await showInfoScreen()) {
-        timeoutDuration = 16000;
+    useEffect(() => {
+      async function init() {
+        intervalKeeper = null;
+        let timeoutDuration = 0;
+        const showInfoScreenOrLeave = await showInfoScreen();
+        if(showInfoScreenOrLeave !== "redirect") {  // when the game doesn't exist anymore after reload --> don't set interval
+          if(showInfoScreenOrLeave === true) {
+            timeoutDuration = 16000;
+          }
+          setTimeout(async () => {
+            logger = new Log();
+            await fetchGame();
+            await fetchPoll();
+            setStarted(true);
+            periodicFunctionToBeCalled = fetchPoll;
+            intervalKeeper = setInterval(periodicFunctionCaller, 1000);
+          }, timeoutDuration);
+        }
       }
-      console.log("Timeout duration: ", timeoutDuration)
-      setTimeout(async () => {
-        logger = new Log();
-        await fetchGame();
-        await fetchPoll();
-        setStarted(true);
-        periodicFunctionToBeCalled = fetchPoll;
-        intervalKeeper = setInterval(periodicFunctionCaller, 1000);
-      }, timeoutDuration);
+      init();
       return () => {
         if(intervalKeeper) {
           setStarted(false);

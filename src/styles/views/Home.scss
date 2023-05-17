@@ -25,6 +25,15 @@
             padding-bottom: 5px;
         }
     }
+    &-old-lobby {
+        margin-top: 6em;
+        &-buttons {
+            margin-top: 20px;
+        }
+        &-leave {
+            margin-left: 10px;
+        }
+    }
     &-create-lobby{
         margin-top: 6em;
     }
