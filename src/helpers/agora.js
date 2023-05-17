@@ -3,7 +3,8 @@ import StorageManager from "./StorageManager";
 
 
 const appId = '348d6a205d75436e916896366c5e315c';
-
+AgoraRTC.setLogLevel(2);
+const agoraEngine = StorageManager.getAgoraEngine();
 
 let channelParameters =
 {
@@ -14,8 +15,6 @@ let channelParameters =
   // A variable to hold the remote user id.
   remoteUid: null,
 };
-AgoraRTC.setLogLevel(2);
-const agoraEngine = StorageManager.getAgoraEngine();
 
 agoraEngine.on("user-published", async (user, mediaType) => {
   // Subscribe to the remote user when the SDK triggers the "user-published" event.
