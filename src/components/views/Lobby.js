@@ -45,7 +45,7 @@ const Lobby = () => {
     api.delete(`/lobbies/${lobby.id}`);
     leaveCall();
     StorageManager.removeChannelToken();
-    history.goBack();
+    history.replace('/home');
   }
 
   async function startGame () {
