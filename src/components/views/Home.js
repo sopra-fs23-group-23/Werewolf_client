@@ -104,7 +104,9 @@ const Home = () => {
               <FormField
                 theme="light"
                 placeholder = "123 456"
-                onChange={(e) => setLobbyId(e)}
+                onChange={(e) => setLobbyId(e.replace(/\s/g, ''))}
+                value = {lobbyId.substring(0, 3) + (lobbyId.substring(3) ? " " + lobbyId.substring(3) : "")}
+
               >
               </FormField>
               <button className="btn btn-light" onClick={(e) => joinLobby(e)} disabled = {lobbyId.length < 6}>

@@ -77,7 +77,7 @@ const Lobby = () => {
         <div className="lobby-headerrow">
           <div className='details-wrapper'>
               <h1 className="left-align">Lobby</h1>
-              <h5>Code To Join: {lobby.id}</h5>
+              <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
           </div>
           <div className='admin-wrapper'>
             <h5>Admin</h5>
