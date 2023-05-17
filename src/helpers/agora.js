@@ -34,9 +34,6 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     channelParameters.remoteUid = user.uid.toString();
     // Play the remote video track.
     channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
-  
-    document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
-    document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
   }
   // Subscribe and play the remote audio track.
   else if (mediaType === "audio") {
@@ -46,6 +43,10 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     // Play the remote audio track. 
     channelParameters.remoteAudioTrack.play();
   };
+  if (document.getElementById(`profile-video-${user.uid}`).hasAttribute('hidden')) {
+    document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
+  }
 });
 
 agoraEngine.on("user-unpublished", (user, mediaType) => {
@@ -54,44 +55,6 @@ agoraEngine.on("user-unpublished", (user, mediaType) => {
     document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
   }
 });
-
-// TODO delete 
-// export function startBasicCall() {
-//   // Create an instance of the Agora Engine
-//   const agoraEngine = StorageManager.getAgoraEngine();
-
-//   // Listen for the "user-published" event to retrieve an AgoraRTCRemoteUser object.
-//   agoraEngine.on("user-published", async (user, mediaType) => {
-//     // Subscribe to the remote user when the SDK triggers the "user-published" event.
-//     await agoraEngine.subscribe(user, mediaType);
-//     // Subscribe and play the remote video in the container If the remote user publishes a video track.
-//     if (mediaType === "video") {
-//       // Retrieve the remote video track.
-//       channelParameters.remoteVideoTrack = user.videoTrack;
-//       // Retrieve the remote audio track.
-//       channelParameters.remoteAudioTrack = user.audioTrack;
-//       // Save the remote user id for reuse.
-//       channelParameters.remoteUid = user.uid.toString();
-//       // Play the remote video track.
-//       await channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
-//     }
-//     // Subscribe and play the remote audio track.
-//     else if (mediaType === "audio") {
-//       channelParameters.remoteUid = user.uid;
-//       // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
-//       channelParameters.remoteAudioTrack = user.audioTrack;
-//       // Play the remote audio track. 
-//       channelParameters.remoteAudioTrack.play();
-//     };
-//   });
-//   agoraEngine.on("user-unpublished", (user, mediaType) => {
-//     if(mediaType === "video"){
-//       //toggleHiddenAttribute(user.uid);
-//       document.getElementById(`profile-video-${user.uid}`).setAttribute('hidden', 'true');
-//       document.getElementById(`profile-image-${user.uid}`).removeAttribute('hidden');
-//     }
-//   });
-// }
 
 export async function joinCall() {
   const agoraEngine = StorageManager.getAgoraEngine();
@@ -104,6 +67,8 @@ export async function joinCall() {
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
   await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
+  document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
+  document.getElementById(`profile-video-${StorageManager.getUserId()}`).removeAttribute('hidden');
 }
 
 export async function leaveCall() {
@@ -142,7 +107,7 @@ export async function muteAudio() {
   }
 }
 
-function toggleHiddenAttribute(uid) {
+export function toggleHiddenAttribute(uid) {
   if (document.getElementById(`profile-image-${uid}`).hasAttribute('hidden')) {
     document.getElementById(`profile-image-${uid}`).removeAttribute('hidden');
     document.getElementById(`profile-video-${uid}`).setAttribute('hidden', 'true');
