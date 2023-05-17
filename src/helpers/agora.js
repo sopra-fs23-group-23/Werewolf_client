@@ -35,12 +35,8 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     // Play the remote video track.
     channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
   
-    if (document.getElementById(`profile-image-${user.uid}`).hasAttribute('hidden')){
-      document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
-    } else{
-      document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
-      document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
-    }
+    document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
   }
   // Subscribe and play the remote audio track.
   else if (mediaType === "audio") {
@@ -107,7 +103,6 @@ export async function joinCall() {
   channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
-  document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
   await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
 }
 
