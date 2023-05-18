@@ -122,26 +122,19 @@ export async function renderVideo(userId) {
   if (userId.toString() === StorageManager.getUserId()) {
     console.log("Render own video");
     await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
+    
   } else {
     console.log("Render other video");
-
-    let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
-    if (user) {
-      try {
-        let domVideoUser = document.getElementById(`profile-video-${userId}`);
-        await user.videoTrack.play(domVideoUser);
-        domVideoUser.removeAttribute('hidden');
-        document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
-      } catch (e) {
-        console.log(e);
-        setTimeout(function () {
-          renderVideo(userId);
-        }, 2000);
-      }
-    } else {
-      console.log("User not found");
+    try {
+      let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+      let domVideoUser = document.getElementById(`profile-video-${userId}`);
+      await user.videoTrack.play(domVideoUser);
+    } catch (e) {
+      console.log("User has no published video / is not found");
     }
   }
+  document.getElementById(`profile-video-${userId}`).removeAttribute('hidden');
+  document.getElementById(`profile-image-${userId}`).setAttribute('hidden', 'true');
 }
 
 
