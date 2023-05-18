@@ -110,5 +110,4 @@ We appreciate your contributions and will review your pull request as soon as po
 
 ## License
 
-The application is free-to-use for private usage and open for contribution.
-Selling the application or using it for commercial purposes without proper authorization is prohibited.
+This project is licensed under the GNU GPLv3 License - see the [LICENSE.md](License.md) file for details
