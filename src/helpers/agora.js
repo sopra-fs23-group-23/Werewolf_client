@@ -130,6 +130,15 @@ export async function disableVideo() {
   }
 }
 
+export async function renderVideo(userId) {
+
+  if (userId === StorageManager.getUserId()) {
+    await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${userId}`));
+  } else {
+    channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${userId}`));
+  }
+}
+
 export async function muteAudio() {
   if (channelParameters.localAudioTrack.enabled) {
     channelParameters.localAudioTrack.setEnabled(false);

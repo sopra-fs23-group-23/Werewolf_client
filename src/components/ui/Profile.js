@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { renderVideo } from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -14,6 +16,20 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
       return () => onHoverEvent(hoveredPlayer);
     }
   };
+
+  //OnMount video raufsetzen
+
+  useEffect(() => {
+    // ComponentDidMount equivalent
+    renderVideo(user.id);
+
+    // Cleanup function (equivalent to componentWillUnmount)
+    return () => {
+      console.log('Component will unmount');
+      // Perform any necessary cleanup or teardown operations here
+    };
+  }, []);
+
 
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
