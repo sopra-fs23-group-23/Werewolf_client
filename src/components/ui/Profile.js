@@ -28,6 +28,7 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
     // Cleanup function (equivalent to componentWillUnmount)
     return () => {
       console.log('-- Started Unmounting of Profile' + user.name + " with id: " + user.id);
+      renderVideo(user.id);
       // Perform any necessary cleanup or teardown operations here
     };
   }, []);
