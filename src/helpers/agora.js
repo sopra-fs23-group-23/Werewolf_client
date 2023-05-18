@@ -2,8 +2,10 @@ import AgoraRTC from "agora-rtc-sdk-ng"
 import StorageManager from "./StorageManager";
 
 
+
 const appId = '348d6a205d75436e916896366c5e315c';
 AgoraRTC.setLogLevel(2);
+var users = [];
 
 let channelParameters =
 {
@@ -31,6 +33,8 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     // Play the remote audio track.
     channelParameters.remoteAudioTrack.play();
   } else if (mediaType === "video") {
+    users.push(user);
+    console.log(users);
     try {
       subscribeToRemoteVideoTrack(user);
     } catch (e) {
