@@ -2,8 +2,10 @@ import AgoraRTC from "agora-rtc-sdk-ng"
 import StorageManager from "./StorageManager";
 
 
+
 const appId = '348d6a205d75436e916896366c5e315c';
 AgoraRTC.setLogLevel(2);
+var users = [];
 
 let channelParameters =
 {
@@ -19,6 +21,8 @@ let channelParameters =
   remoteUid: null,
 };
 
+
+
 const agoraEngine = StorageManager.getAgoraEngine();
 
 agoraEngine.on("user-published", async (user, mediaType) => {
@@ -31,6 +35,8 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     // Play the remote audio track.
     channelParameters.remoteAudioTrack.play();
   } else if (mediaType === "video") {
+    users.push(user);
+    console.log(users);
     try {
       subscribeToRemoteVideoTrack(user);
     } catch (e) {
@@ -110,7 +116,6 @@ export function enableVideoMorning() {
     channelParameters.localVideoTrack.setEnabled(true);
   }
 }
-
  */
 
 export async function disableVideo() {
@@ -127,15 +132,6 @@ export async function disableVideo() {
     await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
     document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
     document.getElementById(`profile-video-${StorageManager.getUserId()}`).removeAttribute('hidden');
-  }
-}
-
-export async function renderVideo(userId) {
-
-  if (userId === StorageManager.getUserId()) {
-    await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${userId}`));
-  } else {
-    channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${userId}`));
   }
 }
 

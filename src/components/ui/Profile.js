@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
-import { renderVideo } from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -19,16 +17,17 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   //OnMount video raufsetzen
 
-  useEffect(() => {
-    // ComponentDidMount equivalent
-    renderVideo(user.id);
+  // useEffect(() => {
+  //   // ComponentDidMount equivalent
+  //   async function renderVideo();
+  //   console.log('Component did mount');
 
-    // Cleanup function (equivalent to componentWillUnmount)
-    return () => {
-      console.log('Component will unmount');
-      // Perform any necessary cleanup or teardown operations here
-    };
-  }, []);
+  //   // Cleanup function (equivalent to componentWillUnmount)
+  //   return () => {
+  //     console.log('Component will unmount');
+  //     // Perform any necessary cleanup or teardown operations here
+  //   };
+  // }, []);
 
 
   return (
