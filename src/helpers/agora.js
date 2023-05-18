@@ -1,8 +1,6 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
 import StorageManager from "./StorageManager";
 
-
-
 const appId = '348d6a205d75436e916896366c5e315c';
 AgoraRTC.setLogLevel(2);
 var users = [];
@@ -117,6 +115,19 @@ export function enableVideoMorning() {
 
  */
 
+export async function renderVideo(userId){
+  console.log("Rerender Video of " + userId);
+  console.log(users);
+  if (userId.toString() === StorageManager.getUserId()) {
+    console.log("render own video");
+    await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
+  } else {
+    console.log("render other video");
+    await channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${userId}`));
+  }
+}
+
+
 export async function toggleOwnVideo() {
   if (channelParameters.localVideoTrack.enabled) {
     await channelParameters.localVideoTrack.setEnabled(false);
@@ -134,10 +145,10 @@ export async function toggleOwnVideo() {
   }
 }
 
-export async function renderVideo(userId) {
-  await toggleOwnVideo();
-  await toggleOwnVideo();
-}
+// export async function renderVideo(userId) {
+//   await toggleOwnVideo();
+//   await toggleOwnVideo();
+// }
 
 export async function muteAudio() {
   if (channelParameters.localAudioTrack.enabled) {
