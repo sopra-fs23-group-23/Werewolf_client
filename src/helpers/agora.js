@@ -32,16 +32,17 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     channelParameters.remoteAudioTrack.play();
   } else if (mediaType === "video") {
     try {
-      subscribeToRemoteTrack(user);
+      subscribeToRemoteVideoTrack(user);
     } catch (e) {
       //TODO remove this error, only logged for development purposes
       console.error(e);
-      setTimeout(function() {subscribeToRemoteTrack(user)}, 2000);
+      setTimeout(function() {subscribeToRemoteVideoTrack(user)}, 2000);
     }
   }
 });
 
-const subscribeToRemoteTrack = (user) => {
+
+export function subscribeToRemoteVideoTrack (user) {
   // Subscribe and play the remote video in the container If the remote user publishes a video track.
   // Retrieve the remote video track.
   channelParameters.remoteVideoTrack = user.videoTrack;
@@ -90,14 +91,36 @@ export async function leaveCall() {
   await agoraEngine.leave();
 }
 
+/*
+Try one, probably delete
+export function disableVideoNight() {
+  try {
+    if (channelParameters.localVideoTrack.enabled) {
+      channelParameters.localVideoTrack.setEnabled(false);
+      toggleHiddenAttribute(StorageManager.getUserId());
+    }
+  } catch (e) {
+    console.log("Error probably occured because you aren't a werewolf.")
+    console.error(e);
+  }
+}
+
+export function enableVideoMorning() {
+  if(StorageManager.getIsVideoEnabled() === "true" && channelParameters.localVideoTrack.disabled) {
+    channelParameters.localVideoTrack.setEnabled(true);
+  }
+}
+
+ */
+
 export async function disableVideo() {
   if (channelParameters.localVideoTrack.enabled) {
-    channelParameters.localVideoTrack.setEnabled(false);
+    await channelParameters.localVideoTrack.setEnabled(false);
     document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
     StorageManager.setIsVideoEnabled("false");
     toggleHiddenAttribute(StorageManager.getUserId());
   } else {
-    channelParameters.localVideoTrack.setEnabled(true);
+    await channelParameters.localVideoTrack.setEnabled(true);
     document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
     StorageManager.setIsVideoEnabled("true");
     toggleHiddenAttribute(StorageManager.getUserId());

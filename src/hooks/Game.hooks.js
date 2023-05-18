@@ -4,9 +4,8 @@ import GameModel from "models/Game";
 import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
-import { joinCall } from "helpers/agora";
 import { useHistory } from 'react-router-dom';
-import { leaveCall } from 'helpers/agora';
+import {disableVideo, joinCall, leaveCall} from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -54,11 +53,21 @@ export const useGame = () => {
     return (game && (newGame.stage.type !== game.stage.type));
   }
 
-  const performStageChange = (newGame) => {
+  const performStageChange = async (newGame) => {
     if (newGame.stage.type === "Day"){
-      joinCall();
-      StorageManager.setIsMuted(false);
-      StorageManager.setIsVideoEnabled(true);
+      try {
+        await joinCall();
+        StorageManager.setIsMuted(false);
+        StorageManager.setIsVideoEnabled(true);
+      } catch (e) {
+        await disableVideo();
+      }
+    } else {
+      try {
+        await disableVideo();
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 
@@ -158,6 +167,7 @@ export const useGame = () => {
             await fetchGame();
             await fetchPoll();
             setStarted(true);
+            await disableVideo();
             periodicFunctionToBeCalled = fetchPoll;
             intervalKeeper = setInterval(periodicFunctionCaller, 1000);
           }, timeoutDuration);
