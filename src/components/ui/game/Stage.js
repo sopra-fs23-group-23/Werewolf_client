@@ -2,11 +2,11 @@
 import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
-import MultiOption from './special_components/MultiOption';
-import SingleOption from './special_components/SingleOption';
-import Hitlist from './special_components/Hitlist';
+import MultiOption from './selection/MultiOption';
+import SingleOption from './selection/SingleOption';
+import Hitlist from './display/Hitlist';
+import CupidMatch from './display/CupidMatch';
 import Spinner from '../Spinner';
-import CupidMatch from './special_components/CupidMatch';
 import NotParticipant from './special_components/NotParticipant';
 
 const Stage = ({ currentPoll, lobby, stage}) => {
@@ -34,10 +34,10 @@ const Stage = ({ currentPoll, lobby, stage}) => {
   
   let SelectionType = null;
   switch (voteType) {
-    case "Witch-Heal":
+    case "Witch-Heal": //For Polls where one participant can vote for one pollOption (1 Participant : 1 Option)
       SelectionType = <SingleOption currentPoll={currentPoll} stage={stage} />
       break;
-    default: //Hunter, Seer, Mayor, etc. //Witch also which implicitly is Witch-Kill
+    default: //For Polls where one or multiple participant can vote for multiple pollOptions (1 Participant : n Options), (n Participants : n Options)
       SelectionType = <MultiOption currentPoll={currentPoll} stage={stage} />
       break;
   }

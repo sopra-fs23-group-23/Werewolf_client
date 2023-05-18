@@ -42,11 +42,11 @@ In the stage.js component the poll is displayed to the participanting user. Depe
 In Selection Components (MultiOption.js and SingleOption.js) users can be clicked on to vote for them.
 In Display Components (Hitlist.js, CupidMatch.js) the currently casted votes are displayed to indicate the likely outcome of the poll. 
 
-- MultiOption.js (src/components/ui/game/special_components/MultiOption.js)
+- MultiOption.js (src/components/ui/game/selection/MultiOption.js)
 If multiple Users can be selected in a poll the MultiOption.js component is displayed. 
 It renders the Profiles of the players that can be voted for. If only one player participates in the vote (Witch, Hunter, Seer etc.) the voted for player is additionally highlighted. 
 
-- Hitlist.js (src/components/ui/game/special_components/Hitlist.js)
+- Hitlist.js (src/components/ui/game/display/Hitlist.js)
 The hitlist.js components renders above the selection component and displays the profile of the users that received the most votes.
 The player(s) that received the most votes (hitlist leader) is displayed larger and in the center since that player is likely to be killed when the poll ends.
 
