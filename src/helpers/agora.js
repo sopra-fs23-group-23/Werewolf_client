@@ -24,30 +24,39 @@ const agoraEngine = StorageManager.getAgoraEngine();
 agoraEngine.on("user-published", async (user, mediaType) => {
   // Subscribe to the remote user when the SDK triggers the "user-published" event.
   await agoraEngine.subscribe(user, mediaType);
-  // Subscribe and play the remote video in the container If the remote user publishes a video track.
-  if (mediaType === "video") {
-    // Retrieve the remote video track.
-    channelParameters.remoteVideoTrack = user.videoTrack;
-    // Retrieve the remote audio track.
-    channelParameters.remoteAudioTrack = user.audioTrack;
-    // Save the remote user id for reuse.
-    channelParameters.remoteUid = user.uid.toString();
-    // Play the remote video track.
-    channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
-  }
-  // Subscribe and play the remote audio track.
-  else if (mediaType === "audio") {
+  if (mediaType === "audio") {
     channelParameters.remoteUid = user.uid;
     // Get the RemoteAudioTrack object from the AgoraRTCRemoteUser object.
     channelParameters.remoteAudioTrack = user.audioTrack;
-    // Play the remote audio track. 
+    // Play the remote audio track.
     channelParameters.remoteAudioTrack.play();
-  };
+  } else if (mediaType === "video") {
+    try {
+      subscribeToRemoteTrack(user);
+    } catch (e) {
+      //TODO remove this error, only logged for development purposes
+      console.error(e);
+      setTimeout(function() {subscribeToRemoteTrack(user)}, 2000);
+    }
+  }
+});
+
+const subscribeToRemoteTrack = (user) => {
+  // Subscribe and play the remote video in the container If the remote user publishes a video track.
+  // Retrieve the remote video track.
+  channelParameters.remoteVideoTrack = user.videoTrack;
+  // Retrieve the remote audio track.
+  channelParameters.remoteAudioTrack = user.audioTrack;
+  // Save the remote user id for reuse.
+  channelParameters.remoteUid = user.uid.toString();
+  // Play the remote video track.
+  channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
+  // Subscribe and play the remote audio track.
   if (document.getElementById(`profile-video-${user.uid}`).hasAttribute('hidden')) {
     document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
     document.getElementById(`profile-video-${user.uid}`).removeAttribute('hidden');
   }
-});
+}
 
 agoraEngine.on("user-unpublished", (user, mediaType) => {
   if (mediaType === "video") {
