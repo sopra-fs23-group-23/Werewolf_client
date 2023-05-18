@@ -57,7 +57,7 @@ a {
 }
 
 .background {
-  -webkit-transition: background-image 4.5s ease, color 3s ease, background-color 4s ease;
+  -webkit-transition: background-image 4s ease, color 3s ease, background-color 4s ease;
   z-index: -2;
   height: 100vh;
   overflow-y: auto;
@@ -73,23 +73,26 @@ a {
   }
   &-dark-image {
     background-color: $color-bg-dark;
-    background-image: url('../../public/static/media/cemetery-dark.png') !important;
-    background-repeat: no-repeat;
+    background-image:  url('../../public/static/media/cemetery-dark.png'), url('../../public/static/media/bg-dark.png') !important;
+    background-repeat: no-repeat, repeat;
     background-size: 100% auto;
-    background-position: bottom;
+    background-position: bottom, top;
     width: 100vw;
     height: 100vh;
     color:$color-text-light;
   }
   &-light-image {
     background-color: $color-bg-light;
-    background-image: url('../../public/static/media/cemetery-light.png') !important;
-    background-repeat: no-repeat;
+    background-image: url('../../public/static/media/cemetery-light.png'), url('../../public/static/media/bg-light.png') !important;
+    background-repeat: no-repeat, repeat-y;
     background-size: 100% auto;
-    background-position: bottom;
+    background-position: bottom, top;
     width: 100vw;
     height: 100vh;
     color:$color-text-dark;
+    h1,h2,h3,h4,h5,p {
+      //text-shadow: 0 0 4px lightgray;
+    }
   }
   &-dark-image-small {
     &-right {
