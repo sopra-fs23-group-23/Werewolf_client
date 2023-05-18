@@ -124,6 +124,9 @@ export async function disableVideo() {
     document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
     StorageManager.setIsVideoEnabled("true");
     toggleHiddenAttribute(StorageManager.getUserId());
+    await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
+    document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-video-${StorageManager.getUserId()}`).removeAttribute('hidden');
   }
 }
 
