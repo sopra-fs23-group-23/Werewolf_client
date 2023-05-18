@@ -35,9 +35,9 @@ export const useLobby = () => {
 
   useEffect(() => {
     async function fetchData() {
-      //await fetchLobby();
-      //await fetchChannelToken();
-      //await joinCall();
+      await fetchLobby();
+      await fetchChannelToken();
+      await joinCall();
     }
     fetchData().then();
     const intervalId = setInterval(fetchLobby, 1000);
