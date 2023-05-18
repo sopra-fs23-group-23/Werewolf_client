@@ -12,9 +12,9 @@ Frontend:
 - HTML, SCSS
 
 Backend:
-- Spring
+- Gradle
 - Java
-- REST Api
+- REST Interface
 - SonarQube (rather used externally? delete if unnecessary)
 - H2 in-memory db
 
@@ -76,6 +76,8 @@ Storing Game Statistics for every user would provide interesting insights into t
 ### 3. Lobby Join System
 
 Currently users are only able to play a game, if they have a group of friends that are currently online and exchange the join lobby code. To allow users to play the game with strangers it would make sense to develop an open lobby listing feature, where users can view and select from available lobbies. This can be implemented by providing a user interface that displays the open lobbies along with relevant details such as lobby name, number of players, and game settings. Players can then select a lobby from the list and join directly.
+
+Additionally users that are in a lobby should be able to invite users (by their username or similar) to join the game.
 
 
 ## Authors and acknowledgment
