@@ -20,39 +20,21 @@ Backend:
 
 Agora (Agora.io) is used for the voicechat
 
-## High-level components
+## High-level components and Illustrations
 
-- agora.js (src/helpers/agora.js)
-In the agora.js file the voicechat functionality is handled. By joining a Lobby the user joins the lobby's group call.
-To do this, the user's microphone is turned on after entering the Lobby and the users local audio stream is published to the agora plattform.
-The user also receives the external audio stream of the lobby mates in order to hear them.
+- In the [agora.js](src/helpers/agora.js) file, the voice chat functionality is handled. By joining a Lobby, the user joins the lobby's group call.To do this, the user's microphone is turned on after entering the Lobby, and the user's local audio stream is published to the Agora platform.The user also receives the external audio stream of the lobby mates to hear them.
 
-- Game.hook.js (src/hooks/Game.hooks.js)
-In the Game.hook.js file informations about the current Game and Poll are fetched for the use in the Game.js component. 
-Since the planned SSE (Server Sent Events) approach did not work out, we rely on sending get-requests in a interval.
-The fetched JSON data from the backend is then translated into Game and Poll objects.
+- In the [Game.hook.js](src/hooks/Game.hooks.js) file, information about the current Game and Poll is fetched for use in the Game.js component.Since the planned SSE (Server Sent Events) approach did not work out, we rely on sending GET requests in an interval.The fetched JSON data from the backend is then translated into Game and Poll objects.
 
-- Game.js (src/components/views/Game.js)
-In the Game.js component the game and poll data from the Game.hook.js is used to display the relevant view to the user as well as providing controls to the user for muting etc.
-If the game has ended, an endscreen shows the winning party and allows the players to then leave the game.
-If the game is still ongoing the poll object is checked to see if the user takes part in the poll and therefore displays the Stage. If the player is not part of the Poll a waiting-screen is shown.
+- In the [Game.js](src/components/views/Game.js) component, the game and poll data from the Game.hook.js is used to display the relevant view to the user, as well as providing controls for muting, etc.If the game has ended, an endscreen shows the winning party and allows the players to leave the game.If the game is still ongoing, the poll object is checked to see if the user takes part in the poll and therefore displays the Stage. If the player is not part of the Poll, a waiting screen is shown.
 
-- Stage.js (src/components/ui/game/Stage.js)
-In the stage.js component the poll is displayed to the participanting user. Depending on the active role two differnt kinds of subcomponents are shown.
-In Selection Components (MultiOption.js and SingleOption.js) users can be clicked on to vote for them.
-In Display Components (Hitlist.js, CupidMatch.js) the currently casted votes are displayed to indicate the likely outcome of the poll. 
+- In the [Stage.js](src/components/ui/game/Stage.js) component, the poll is displayed to the participating user. Depending on the active role, two different kinds of subcomponents are shown.In Selection Components (MultiOption.js and SingleOption.js), users can be clicked on to vote for them. In Display Components (Hitlist.js, CupidMatch.js), the currently casted votes are displayed to indicate the likely outcome of the poll. 
 
-- MultiOption.js (src/components/ui/game/selection/MultiOption.js)
-If multiple Users can be selected in a poll the MultiOption.js component is displayed. 
-It renders the Profiles of the players that can be voted for. If only one player participates in the vote (Witch, Hunter, Seer etc.) the voted for player is additionally highlighted. 
+- If multiple Users can be selected in a poll, the [MultiOption.js](src/components/ui/game/selection/MultiOption.js) component is displayed. It renders the Profiles of the players that can be voted for. If only one player participates in the vote (Witch, Hunter, Seer, etc.), the voted for player is additionally highlighted. 
 
-- Hitlist.js (src/components/ui/game/display/Hitlist.js)
-The hitlist.js components renders above the selection component and displays the profile of the users that received the most votes.
-The player(s) that received the most votes (hitlist leader) is displayed larger and in the center since that player is likely to be killed when the poll ends.
+- The [Hitlist.js](src/components/ui/game/display/Hitlist.js) component renders above the selection component and displays the profile of the users that received the most votes. The player(s) that received the most votes (hitlist leader) is displayed larger and in the center since that player is likely to be killed when the poll ends.
 
 ## Launch & Deployment
-
-
 
 Make sure you have Node.js installed on your machine before continuing. To install the needed dependencies (React, Agora etc.) run:
 
