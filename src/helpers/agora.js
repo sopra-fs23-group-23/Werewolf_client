@@ -58,6 +58,9 @@ export function subscribeToRemoteVideoTrack (user) {
   channelParameters.remoteUid = user.uid.toString();
   // Play the remote video track.
   channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
+  console.log("First Video");
+  channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video2-${user.uid}`));
+  console.log("Second Video")
   // Subscribe and play the remote audio track.
   if (document.getElementById(`profile-video-${user.uid}`).hasAttribute('hidden')) {
     document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
