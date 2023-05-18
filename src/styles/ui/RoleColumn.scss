@@ -3,6 +3,14 @@
   width: 100%;
   justify-content: space-evenly;
 
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  h5 {
+    margin-top: 20px;
+  }
+
   .individual-role {
     @include center;
     flex-direction: column;
