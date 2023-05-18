@@ -115,17 +115,35 @@ export function enableVideoMorning() {
 
  */
 
-export async function renderVideo(userId){
+export async function renderVideo(userId) {
   console.log("Rerender Video of " + userId);
   console.log(users);
+  
   if (userId.toString() === StorageManager.getUserId()) {
-    console.log("render own video");
+    console.log("Render own video");
     await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
   } else {
-    console.log("render other video");
-    await channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${userId}`));
+    console.log("Render other video");
+
+    let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+    if (user) {
+      try {
+        let domVideoUser = document.getElementById(`profile-video-${userId}`);
+        await user.videoTrack.play(domVideoUser);
+        domVideoUser.removeAttribute('hidden');
+        document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
+      } catch (e) {
+        console.log(e);
+        setTimeout(function () {
+          renderVideo(userId);
+        }, 2000);
+      }
+    } else {
+      console.log("User not found");
+    }
   }
 }
+
 
 
 export async function toggleOwnVideo() {
