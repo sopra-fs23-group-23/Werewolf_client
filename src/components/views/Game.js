@@ -7,7 +7,7 @@ import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
 import StorageManager from 'helpers/StorageManager';
-import { disableVideo, muteAudio } from 'helpers/agora';
+import { toggleOwnVideo, muteAudio } from 'helpers/agora';
 import EventLog from "../ui/game/EventLog";
 
 const Game = () => {
@@ -81,7 +81,7 @@ const Game = () => {
         </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
             <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
-            <img id='disableVideo' src={`/static/media/${video}`} onClick={disableVideo} alt='video' />
+            <img id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { disableVideo } from 'helpers/agora';
+import {toggleOwnVideo, renderVideo} from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -19,15 +19,13 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   //OnMount video raufsetzen
 
-  useEffect(() => {
+  useEffect( () => {
     // ComponentDidMount equivalent
-    renderVideo(user.id);
-    console.log('Component did mount');
-
+    console.log("hey");
     // Cleanup function (equivalent to componentWillUnmount)
-    return () => {
+    return async () => {
       console.log('Component will unmount');
-      // Perform any necessary cleanup or teardown operations here
+      await renderVideo();
     };
   }, []);
 
@@ -35,7 +33,6 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
       <div className={`video profile-${mode}-video`} id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} hidden/>
-      <div className={`video profile-${mode}-video`} id={`profile-video2-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} hidden/>
       <img className={`image profile-${mode}-image`} id={`profile-image-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/>
       <div className="profile-name">{user.name}</div>
       {votes && (

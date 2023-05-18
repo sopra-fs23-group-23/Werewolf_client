@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { api } from "helpers/api";
 import LobbyModel from "models/Lobby";
 import StorageManager from "helpers/StorageManager";
-import {disableVideo, joinCall, leaveCall} from "helpers/agora";
+import {toggleOwnVideo, joinCall, leaveCall} from "helpers/agora";
 
 export const useLobby = () => {
   const lobbyId = StorageManager.getLobbyId();
@@ -44,7 +44,7 @@ export const useLobby = () => {
     setIntervalId(intervalId);
     return async () => {
       clearInterval(intervalId)
-      await disableVideo()};
+      await toggleOwnVideo()};
   },
   // eslint-disable-next-line
   [lobbyId]);

@@ -5,7 +5,7 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { useHistory } from 'react-router-dom';
-import {disableVideo, joinCall, leaveCall} from 'helpers/agora';
+import {toggleOwnVideo, joinCall, leaveCall} from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -60,11 +60,11 @@ export const useGame = () => {
         StorageManager.setIsMuted(false);
         StorageManager.setIsVideoEnabled(true);
       } catch (e) {
-        await disableVideo();
+        await toggleOwnVideo();
       }
     } else {
       try {
-        await disableVideo();
+        await toggleOwnVideo();
       } catch (e) {
         console.log(e);
       }
@@ -167,7 +167,7 @@ export const useGame = () => {
             await fetchGame();
             await fetchPoll();
             setStarted(true);
-            await disableVideo();
+            await toggleOwnVideo();
             periodicFunctionToBeCalled = fetchPoll;
             intervalKeeper = setInterval(periodicFunctionCaller, 1000);
           }, timeoutDuration);

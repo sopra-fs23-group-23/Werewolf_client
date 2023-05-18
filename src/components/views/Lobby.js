@@ -5,7 +5,7 @@ import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
-import { disableVideo, muteAudio, toggleHiddenAttribute } from 'helpers/agora';
+import { toggleOwnVideo, muteAudio, toggleHiddenAttribute } from 'helpers/agora';
 import { leaveCall } from 'helpers/agora';
 import DurationSelection from 'components/ui/DurationSelection';
 
@@ -105,7 +105,7 @@ const Lobby = () => {
         {/* TODO: delete this */}
         <div className={`game-controls-agora game-controls-agora-dark`}>
             <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
-            <img id='disableVideo' src={`/static/media/${video}`} onClick={disableVideo} alt='video' />
+            <img id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
         </div>
       </div>
     )
