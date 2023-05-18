@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { renderVideo } from 'helpers/agora';
+import { disableVideo } from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -22,6 +22,7 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   useEffect(() => {
     // ComponentDidMount equivalent
     renderVideo(user.id);
+    console.log('Component did mount');
 
     // Cleanup function (equivalent to componentWillUnmount)
     return () => {
@@ -34,6 +35,7 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
       <div className={`video profile-${mode}-video`} id={`profile-video-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} hidden/>
+      <div className={`video profile-${mode}-video`} id={`profile-video2-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} hidden/>
       <img className={`image profile-${mode}-image`} id={`profile-image-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/>
       <div className="profile-name">{user.name}</div>
       {votes && (

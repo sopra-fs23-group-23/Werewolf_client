@@ -52,6 +52,9 @@ export function subscribeToRemoteVideoTrack (user) {
   channelParameters.remoteUid = user.uid.toString();
   // Play the remote video track.
   channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${user.uid}`));
+  console.log("First Video");
+  channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video2-${user.uid}`));
+  console.log("Second Video")
   // Subscribe and play the remote audio track.
   if (document.getElementById(`profile-video-${user.uid}`).hasAttribute('hidden')) {
     document.getElementById(`profile-image-${user.uid}`).setAttribute('hidden', 'true');
@@ -131,13 +134,14 @@ export async function disableVideo() {
 }
 
 export async function renderVideo(userId) {
-
   if (userId === StorageManager.getUserId()) {
     await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${userId}`));
   } else {
     channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video-${userId}`));
   }
 }
+
+
 
 export async function muteAudio() {
   if (channelParameters.localAudioTrack.enabled) {
