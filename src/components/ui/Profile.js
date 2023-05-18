@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
+
   const handleClick = () => {
     if (onClickEvent) {
       onClickEvent(user.id);

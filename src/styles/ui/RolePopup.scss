@@ -29,6 +29,12 @@
         filter: brightness(0.1);
       }
     }
+    &.background-dark {
+      img:not(.role-popup-item-image) {
+        -webkit-transition: filter 3s ease;
+        filter: brightness(1);
+      }
+    }
   }
 
   &-close {

@@ -7,11 +7,11 @@ const MultiOption = ({currentPoll, stage}) => {
 
   let voteParticipantIds = currentPoll.participants.map(p => p.player.id);
 
-  const singleVoters = ["Witch", "Hunter", "Seer", "Mayor"];
+  const singleVoters = ["Witch", "Hunter", "Seer", "Mayor", "Mayor-Death"];
   const singleKillVoters = ["Witch", "Hunter", "Seer", "Mayor"];
   const singleSelectVoters = ["Seer", "Mayor-Death"];
 
-  const roleType = (currentPoll.question === "Who should become the mayor?") ? "Mayor-Death": currentPoll.role;
+  const roleType = (currentPoll.question === "Who should become the mayor?" && currentPoll.role === "Mayor") ? "Mayor-Death": currentPoll.role;
 
   const getSelectionMode = (player) => {
     let selectionMode = "selection-small";
@@ -91,11 +91,11 @@ const MultiOption = ({currentPoll, stage}) => {
         </>
       );
       break;
-    // Single Voters
+    // Single Role Voters
     case 'Witch':
     case 'Hunter':
     case 'Seer':
-    case 'Mayor':
+    case 'Mayor': //Solve Tie and Death
       content = (
         <>
           {selectionProfiles(currentPoll.pollOptions)}

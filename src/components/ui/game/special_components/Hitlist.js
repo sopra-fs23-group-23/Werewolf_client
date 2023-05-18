@@ -77,7 +77,7 @@ const Hitlist = ({currentPoll}) => {
                 </div>
                 <div className="hitlist-leader">
                     {hitListLeaders.map(([player, supporters]) => (
-                        <Profile user={new Player(player)} mode="hitlist-leader" votes={supporters.length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote}/>
+                        <Profile user={new Player(player)} mode="hitlist-leader" votes={supporters.length} onHoverEvent={updateHoveredPlayer} onClickEvent={castVote} key={player}/>
                     ))}
                 </div>
                 <div className="hitlist-right">

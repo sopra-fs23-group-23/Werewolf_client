@@ -9,7 +9,7 @@ import { api } from 'helpers/api';
 
 const Endscreen = ({ endData, lobby, stage}) => {
   const history = useHistory();
-  const userId = StorageManager.getUserId();
+  const userId = parseInt(StorageManager.getUserId());
 
   const [winnerArray, setWinnerArray] = useState([]);
   const [looserArray, setLooserArray] = useState([]);
