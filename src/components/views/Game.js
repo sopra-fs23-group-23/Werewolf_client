@@ -5,7 +5,7 @@ import 'styles/views/Game.scss';
 import { Information } from '../ui/game/Information';
 import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
-import WaitingScreen from '../ui/game/WaitingScreen';
+import WaitingScreen from '../ui/game/special_components/WaitingScreen';
 import StorageManager from 'helpers/StorageManager';
 import { toggleOwnVideo, toggleAudio } from 'helpers/agora';
 import EventLog from "../ui/game/EventLog";

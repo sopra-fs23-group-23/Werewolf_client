@@ -88,7 +88,8 @@
       background-position: top right, bottom left;
 
       .profile {
-        margin-bottom: 25px;
+        margin-top: 5px;
+        margin-bottom: 30px;
       }
     }
 
@@ -143,11 +144,10 @@
     }
 
     .role-image {
-      height: 250px;
-      width: 158px;
+      height: 280px;
+      width: 280px;
       border-radius: 25px;
       margin-bottom: 15px;
-      border: 1px solid grey;
     }
   }
 }
