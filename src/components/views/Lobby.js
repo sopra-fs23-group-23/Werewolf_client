@@ -5,9 +5,10 @@ import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
-import { toggleOwnVideo, muteAudio, toggleHiddenAttribute } from 'helpers/agora';
+import { toggleOwnVideo, toggleAudio, toggleHiddenAttribute } from 'helpers/agora';
 import { leaveCall } from 'helpers/agora';
 import DurationSelection from 'components/ui/DurationSelection';
+import 'styles/views/Game.scss';
 
 
 const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) => {
@@ -83,6 +84,10 @@ const Lobby = () => {
           <div className='details-wrapper'>
               <h1 className="left-align">Lobby</h1>
               <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
+              <div className={`game-controls-agora game-controls-agora-light`}>
+                <img className='info-button' id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
+                <img className='info-button' id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
+              </div>
           </div>
           <div className='admin-wrapper'>
             <h5>Admin</h5>
@@ -103,10 +108,7 @@ const Lobby = () => {
           <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} nrOfPlayers={lobby.players.length} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
         {/* TODO: delete this */}
-        <div className={`game-controls-agora game-controls-agora-dark`}>
-            <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
-            <img id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
-        </div>
+
       </div>
     )
   }

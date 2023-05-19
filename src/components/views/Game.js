@@ -7,7 +7,7 @@ import Endscreen from '../ui/game/Endscreen';
 import Stage from '../ui/game/Stage';
 import WaitingScreen from '../ui/game/WaitingScreen';
 import StorageManager from 'helpers/StorageManager';
-import { toggleOwnVideo, muteAudio } from 'helpers/agora';
+import { toggleOwnVideo, toggleAudio } from 'helpers/agora';
 import EventLog from "../ui/game/EventLog";
 
 const Game = () => {
@@ -51,6 +51,15 @@ const Game = () => {
 
   var content = Information();
 
+  const agoraVideoButton = document.getElementById(`disableVideo`);
+  if (game?.stage.type === "Night" && agoraVideoButton) {
+    agoraVideoButton.setAttribute('hidden', 'true');
+  }else{
+    if (agoraVideoButton) {
+      agoraVideoButton.removeAttribute('hidden');
+    }
+  }
+
   if (started && !pollActive) {
     const theme = game?.stage.type === "Day" ? "dark" : "light";
     content = (
@@ -80,8 +89,8 @@ const Game = () => {
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
-            <img id='muteAudio' src={`/static/media/${microphone}`} onClick={muteAudio} alt='microphone'/>
-            <img id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
+            <img className={`info-button info-button-${textTheme}`} id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
+            <img className={`info-button info-button-${textTheme}`} id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />

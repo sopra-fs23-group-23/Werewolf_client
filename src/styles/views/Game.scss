@@ -1,5 +1,10 @@
 @import 'styles/theme';
 
+#muteAudio{
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+
 .game {
   display: flex;
   flex-direction: column;
@@ -14,17 +19,32 @@
     margin-left: 30px;
 
     &-agora{
-      margin-top: 30px;
       &-light{
         img{
           -webkit-transition: filter 3s ease;
           filter: brightness(0) invert(1);
+          border-style: solid;
+          color: $color-text-light;
+          border-color: $color-text-light;
+          border-radius: 50%;
+        }
+        :hover{
+          cursor: pointer;
+          background-color: rgba(0,0,0,0.4);
         }
       }
       &-dark{
         img{
           -webkit-transition: filter 3s ease;
           filter: brightness(1);
+          border-style: solid;
+          border-color: $color-text-dark;
+          color: $color-text-dark;
+          border-radius: 50%;
+        }
+        :hover{
+          cursor: pointer;
+          background-color: rgba(0,0,0,0.4);
         }
       }
     }
