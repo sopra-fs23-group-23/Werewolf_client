@@ -41,8 +41,7 @@ const MultiOption = ({currentPoll, stage}) => {
         await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
       }
     } catch (error) {
-      console.error(error);
-      alert(error.response.data?.message || 'Vote failed');
+
     }
   };
 

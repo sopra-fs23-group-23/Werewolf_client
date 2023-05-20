@@ -34,7 +34,7 @@
     }
 
     .inHitlist {
-        background-color: red;
+        background-color: #ff2222;
     }
 
     &-lobby{
@@ -94,7 +94,7 @@
             &-video, &-image {
                 height: 100px;
                 width: 100px;
-                border: 5px solid #ff5555;
+                border: 5px solid #ff000;
                 transition: all 0.2s ease-in-out;
             }            
         }

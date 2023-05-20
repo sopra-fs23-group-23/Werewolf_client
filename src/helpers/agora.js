@@ -121,6 +121,7 @@ export async function moveVideo(userId, renderDisplay) {
 }
 
 export function showVideo(enableVideo, isDisplay, uid) {
+  console.log("showVideo start: " + enableVideo + isDisplay + uid)
   if (isDisplay === null){
     isDisplay = (document.getElementById(`profile-image-display-${uid}`) ? "-display" : "");
     console.log("isDisplay was null now is: ", isDisplay)
@@ -131,7 +132,7 @@ export function showVideo(enableVideo, isDisplay, uid) {
 
   }
   if (enableVideo) {
-    document.getElementById(`profile-video${isDisplay}-${uid}`).innerHTML = ""; // remove again?
+    document.getElementById(`profile-video${isDisplay}-${uid}`).innerHTML = "";
     document.getElementById(`profile-image${isDisplay}-${uid}`).setAttribute('hidden', 'true');
     document.getElementById(`profile-video${isDisplay}-${uid}`).removeAttribute('hidden');
   } else {
@@ -168,24 +169,19 @@ export async function toggleAudio() {
   }
 }
 
-
-
-export async function disableVideoNight(){
-  console.log("Disable Video Night for these users (should be all)", users);
-  // disable all remote videos
-  users.forEach(user => {
-    showVideo(false, null, user.uid);
-  });
-  // disable own video
-  showVideo(false, null, StorageManager.getUserId());
-}
-
-export async function enableVideoMorning(){
-  console.log("Enable Video Morning for these users", users);
+export async function showAvailableVideos(videoEnabled){
+  console.log("showAvailableVideos" + videoEnabled)
   // enable all remote videos
   users.forEach(user => {
-    showVideo(true, null, user.uid);
+    showVideo(videoEnabled, null, user.uid);
+    console.log("users for each" + user.uid + videoEnabled)
   });
   // enable own video
-  showVideo(true, null, StorageManager.getUserId());
+  //setTimeout of 1 second to wait for the video to be rendered
+  setTimeout(() => {
+    if (StorageManager.getIsVideoEnabled()) {
+      console.log("own Video" + StorageManager.getUserId() + videoEnabled)
+      showVideo(videoEnabled, null, StorageManager.getUserId());
+    }
+  }, 1000);
 }
