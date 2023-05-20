@@ -73,7 +73,7 @@ a {
   }
   &-dark-image {
     background-color: $color-bg-dark;
-    background-image:  url('../../public/static/media/cemetery-dark2.png'), url('../../public/static/media/bg-dark.png') !important;
+    background-image:  url('../../public/static/media/cemetery-dark2.webp'), url('../../public/static/media/bg-dark.webp') !important;
     background-repeat: no-repeat, repeat;
     background-size: 100% auto;
     background-position: bottom, top;
@@ -83,7 +83,7 @@ a {
   }
   &-light-image {
     background-color: $color-bg-light;
-    background-image: url('../../public/static/media/cemetery-light.png'), url('../../public/static/media/bg-light.png') !important;
+    background-image: url('../../public/static/media/cemetery-light.webp'), url('../../public/static/media/bg-light.webp') !important;
     background-repeat: no-repeat, repeat-y;
     background-size: 100% auto;
     background-position: bottom, top;
@@ -96,10 +96,10 @@ a {
   }
   &-dark-image-small {
     &-right {
-      background-image: url('../../public/static/media/cemetery-dark-small-right.png') !important;
+      background-image: url('../../public/static/media/cemetery-dark-small-right.webp') !important;
     }
     &-left {
-      background-image: url('../../public/static/media/cemetery-dark-small-left.png') !important;
+      background-image: url('../../public/static/media/cemetery-dark-small-left.webp') !important;
     }
     background-size: cover;
     background-repeat: no-repeat;

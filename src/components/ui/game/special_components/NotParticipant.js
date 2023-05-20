@@ -27,7 +27,7 @@ const NotParticipant = ({currentPoll, stage}) => {
         <div className="notParticipant">
             {content}
           <img className={"role-image"} src={`/static/media/${currentPoll.role}-${
-            stage === "Day" ? "light" : "dark"}.png`} alt={"Picture of a " + currentPoll.role}/>
+            stage === "Day" ? "light" : "dark"}.webp`} alt={"Picture of a " + currentPoll.role}/>
         </div>
         
     );
