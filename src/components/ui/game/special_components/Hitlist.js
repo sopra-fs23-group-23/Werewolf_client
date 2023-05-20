@@ -25,7 +25,7 @@ const Hitlist = ({currentPoll}) => {
             // Remove the class after 4 seconds
             setTimeout(() => {
                 updateHoveredPlayer(null);
-            }, 4000);      
+            }, 8000);      
 
         } else {
             for (let i = 0; i < allPlayers.length; i++) {

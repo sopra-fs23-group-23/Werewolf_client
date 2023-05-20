@@ -116,54 +116,64 @@ export async function leaveCall() {
 //   }
 // }
 
-export async function renderVideo(userId) {
-  console.log("Rerender Video of " + userId);
-  console.log(users);
-  
-  let videoTrack = null;
-  if (userId.toString() === StorageManager.getUserId()) {
-    console.log("Render own video");
-    videoTrack = channelParameters.localVideoTrack;
-  } else {
-    console.log("Render other video");
-    try {
-      let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
-      videoTrack = user.videoTrack;
-    } catch (e) {
-      console.log("User has no published video / is not found");
+export async function renderVideo(userId, renderDisplay) {
+    console.log("Rerender Video of " + userId + " in mode ");
+    
+    let videoTrack = null;
+    if (userId.toString() === StorageManager.getUserId()) {
+      videoTrack = channelParameters.localVideoTrack;
+    } else {
+      try {
+        let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+        videoTrack = user.videoTrack;
+      } catch (e) {
+        console.log("User has no published video / is not found");
+        return;
+      }
+    }
+    let DOMElement = null;
+    if (renderDisplay && document.getElementById(`profile-video-display-${userId}`)) {
+      // If the user is displayed in Hitlist or CupidMatch
+      console.log("render display");
+      DOMElement = document.getElementById(`profile-video-display-${userId}`);
+
+      //document.getElementById(`profile-video-display-${userId}`).removeChild();
+      document.getElementById(`profile-video-display-${userId}`).removeAttribute('hidden');
+      document.getElementById(`profile-video-display-${userId}`).innerHTML = "";
+      document.getElementById(`profile-image-display-${userId}`).setAttribute('hidden', 'true');
+
+      document.getElementById(`profile-video-${userId}`).setAttribute('hidden', 'true');
+      document.getElementById(`profile-image-${userId}`).removeAttribute('hidden');
+
+    } else if (!renderDisplay && document.getElementById(`profile-video-${userId}`)) {
+      // User is in selection
+      console.log("render selection");
+      DOMElement = document.getElementById(`profile-video-${userId}`);
+      //document.getElementById(`profile-video-${userId}`).removeChild();
+      document.getElementById(`profile-video-${userId}`).innerHTML = "";
+      document.getElementById(`profile-video-${userId}`).removeAttribute('hidden');
+      document.getElementById(`profile-image-${userId}`).setAttribute('hidden', 'true');
+    } else {
       return;
     }
-  }
-
-  let DOMElement = null;
-  if (document.getElementById(`profile-video-hitlist-${StorageManager.getUserId()}`)) {
-    DOMElement = document.getElementById(`profile-video-hitlist-${userId}`);
-  } else if (document.getElementById(`profile-video-lover-${StorageManager.getUserId()}`)) {
-    DOMElement = document.getElementById(`profile-video-lover-${userId}`);
-  } else {
-    DOMElement = document.getElementById(`profile-video-selection-${userId}`);
-  }
-  await videoTrack.play(DOMElement);
-
-  document.getElementById(`profile-video-${userId}`).removeAttribute('hidden');
-  document.getElementById(`profile-image-${userId}`).setAttribute('hidden', 'true');
+    await videoTrack.play(DOMElement);  
 }
 
 
 export async function toggleOwnVideo() {
-  if (channelParameters.localVideoTrack.enabled) {
+  if (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
     await channelParameters.localVideoTrack.setEnabled(false);
     document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
     StorageManager.setIsVideoEnabled("false");
     toggleHiddenAttribute(StorageManager.getUserId());
-  } else {
+  } else if (channelParameters.localVideoTrack){
     await channelParameters.localVideoTrack.setEnabled(true);
     document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
     StorageManager.setIsVideoEnabled("true");
     toggleHiddenAttribute(StorageManager.getUserId());
-    // await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
-    // document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
-    // document.getElementById(`profile-video-${StorageManager.getUserId()}`).removeAttribute('hidden');
+    await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
+    document.getElementById(`profile-image-${StorageManager.getUserId()}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-video-${StorageManager.getUserId()}`).removeAttribute('hidden');
   }
 }
 
@@ -180,12 +190,14 @@ export async function toggleAudio() {
 }
 
 export function toggleHiddenAttribute(uid) {
-  if (document.getElementById(`profile-image-${uid}`).hasAttribute('hidden')) {
-    document.getElementById(`profile-image-${uid}`).removeAttribute('hidden');
-    document.getElementById(`profile-video-${uid}`).setAttribute('hidden', 'true');
+  let isDisplay = (document.getElementById(`profile-image-display-${uid}`) ? "display" : "");
+  if (document.getElementById(`profile-image${isDisplay}-${uid}`).hasAttribute('hidden')) {
+    document.getElementById(`profile-image${isDisplay}-${uid}`).removeAttribute('hidden');
+    document.getElementById(`profile-video${isDisplay}-${uid}`).setAttribute('hidden', 'true');
   } else {
-    document.getElementById(`profile-image-${uid}`).setAttribute('hidden', 'true');
-    document.getElementById(`profile-video-${uid}`).removeAttribute('hidden');
+    document.getElementById(`profile-image${isDisplay}-${uid}`).setAttribute('hidden', 'true');
+    document.getElementById(`profile-video${isDisplay}-${uid}`).removeAttribute('hidden');
+    document.getElementById(`profile-video${isDisplay}-${uid}`).innerHTML = ""; // remove again?
   }
 }
 
