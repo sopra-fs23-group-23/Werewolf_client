@@ -25,7 +25,9 @@ const NotParticipant = ({currentPoll, stage}) => {
     }
     return (
         <div className="notParticipant">
-                {content}
+            {content}
+          <img className={"role-image"} src={`/static/media/${currentPoll.role}-${
+            stage === "Day" ? "light" : "dark"}.png`} alt={"Picture of a " + currentPoll.role}/>
         </div>
         
     );

@@ -1,5 +1,5 @@
 import 'styles/ui/WaitingScreen.scss';
-import Spinner from '../Spinner';
+import Spinner from '../../Spinner';
 import PropTypes from 'prop-types';
 
 const WaitingScreen = ({theme}) => {

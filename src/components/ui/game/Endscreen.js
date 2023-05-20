@@ -73,7 +73,6 @@ const Endscreen = ({ endData, lobby, stage}) => {
         </div>
         <h5>Winners</h5>
         <div className='endscreen-winner-players'>
-          
           {winnerArray.map(player => (
             <Profile user={player} mode="dead-player" key={player.id}/>
           ))}        
