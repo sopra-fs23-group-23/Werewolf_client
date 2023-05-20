@@ -59,7 +59,7 @@ const MultiOption = ({currentPoll, stage}) => {
     return (
       <div className="game-player-selection-wrapper">
         {playerCollection.map(option => (
-          <Profile user={new Player(option.player)} mode={getSelectionMode(option.player)} onClickEvent={castVote} key={option.player.id} />
+          <Profile user={new Player(option.player)} mode={getSelectionMode(option.player)} onClickEvent={castVote} key={`${option.player.id}-selection`} />
         ))}
       </div>
     );
@@ -77,9 +77,9 @@ const MultiOption = ({currentPoll, stage}) => {
 
   let content;
 
-  // Filter this to only the top 5
-  let hitListMembers = currentPoll.voteArray.slice(0, 5).map(option => option[0].id);
-  let pollOptions = currentPoll.pollOptions.filter(option => !hitListMembers.includes(option.player.id));
+  // Filter this to not contain top 5 of hitlist
+  // let hitListMembers = currentPoll.voteArray.slice(0, 5).map(option => option[0].id);
+  // let pollOptions = currentPoll.pollOptions.filter(option => !hitListMembers.includes(option.player.id));
 
   switch (currentPoll.role) {
     case 'Werewolf':
@@ -104,7 +104,7 @@ const MultiOption = ({currentPoll, stage}) => {
       );
       break;
     default: // Villager etc.
-      content = selectionProfiles(pollOptions);
+      content = selectionProfiles(currentPoll.pollOptions);
       break;
   }
 

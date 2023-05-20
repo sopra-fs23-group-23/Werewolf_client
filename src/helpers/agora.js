@@ -93,28 +93,62 @@ export async function leaveCall() {
   await agoraEngine.leave();
 }
 
-export async function renderVideo(userId) {
+// export async function renderVideo(userId) {
 
-  if(document.getElementById(`profile-video-${userId}`).hasChildNodes()){
-    console.log("Rerender Video of " + userId);
-    if (userId.toString() === StorageManager.getUserId()) {
-      console.log("Render own video");
-      await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
+//   if(document.getElementById(`profile-video-${userId}`).hasChildNodes()){
+//     console.log("Rerender Video of " + userId);
+//     if (userId.toString() === StorageManager.getUserId()) {
+//       console.log("Render own video");
+//       await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
       
-    } else {
-      console.log("Render other video");
-      try {
-        let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
-        let domVideoUser = document.getElementById(`profile-video-${userId}`);
-        await user.videoTrack.play(domVideoUser);
-      } catch (e) {
-        console.log("User has no published video / is not found");
-      }
+//     } else {
+//       console.log("Render other video");
+//       try {
+//         let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+//         let domVideoUser = document.getElementById(`profile-video-${userId}`);
+//         await user.videoTrack.play(domVideoUser);
+//       } catch (e) {
+//         console.log("User has no published video / is not found");
+//       }
+//     }
+//     document.getElementById(`profile-video-${userId}`).removeAttribute('hidden');
+//     document.getElementById(`profile-image-${userId}`).setAttribute('hidden', 'true');
+//   }
+// }
+
+export async function renderVideo(userId) {
+  console.log("Rerender Video of " + userId);
+  console.log(users);
+  
+  let videoTrack = null;
+  if (userId.toString() === StorageManager.getUserId()) {
+    console.log("Render own video");
+    videoTrack = channelParameters.localVideoTrack;
+  } else {
+    console.log("Render other video");
+    try {
+      let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+      videoTrack = user.videoTrack;
+    } catch (e) {
+      console.log("User has no published video / is not found");
+      return;
     }
-    document.getElementById(`profile-video-${userId}`).removeAttribute('hidden');
-    document.getElementById(`profile-image-${userId}`).setAttribute('hidden', 'true');
   }
+
+  let DOMElement = null;
+  if (document.getElementById(`profile-video-hitlist-${StorageManager.getUserId()}`)) {
+    DOMElement = document.getElementById(`profile-video-hitlist-${userId}`);
+  } else if (document.getElementById(`profile-video-lover-${StorageManager.getUserId()}`)) {
+    DOMElement = document.getElementById(`profile-video-lover-${userId}`);
+  } else {
+    DOMElement = document.getElementById(`profile-video-selection-${userId}`);
+  }
+  await videoTrack.play(DOMElement);
+
+  document.getElementById(`profile-video-${userId}`).removeAttribute('hidden');
+  document.getElementById(`profile-image-${userId}`).setAttribute('hidden', 'true');
 }
+
 
 export async function toggleOwnVideo() {
   if (channelParameters.localVideoTrack.enabled) {
