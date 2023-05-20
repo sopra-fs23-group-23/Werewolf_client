@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import {toggleOwnVideo, renderVideo} from 'helpers/agora';
+import {toggleOwnVideo, moveVideo} from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -21,17 +21,15 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   useEffect(() => {
     // ComponentDidMount equivalent
-    console.log('++ Started Mounting of Profile' + user.name + " with id: " + user.id);
-    let renderDisplay = (mode === "hitlist" || mode === "hitlist-leader" || mode === "lover") ? true : false;
-    renderVideo(user.id, renderDisplay);
-    
+    if((mode === "hitlist" || mode === "hitlist-leader" || mode === "lover")) {
+      moveVideo(user.id, true);
 
-    // Cleanup function (equivalent to componentWillUnmount)
-    return () => {
-      console.log('-- Started Unmounting of Profile' + user.name + " with id: " + user.id);
-      renderVideo(user.id, !renderDisplay);
-      // Perform any necessary cleanup or teardown operations here
-    };
+      // Cleanup function (equivalent to componentWillUnmount)
+      return () => {
+        moveVideo(user.id, false);
+        // Perform any necessary cleanup or teardown operations here
+      };
+    }
   }, []);
 
   let isDisplay = (mode === "hitlist" || mode === "hitlist-leader" || mode === "lover") ? "-display" : "";
