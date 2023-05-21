@@ -1,9 +1,6 @@
 @import 'styles/theme';
 
 .auth {
-  display: grid;
-  grid-template-columns: 300px auto;
-
   &-btn {
     &-register {
       margin: 0.6em 0 !important;
