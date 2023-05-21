@@ -53,16 +53,20 @@ export const useGame = () => {
     return (game && (newGame.stage.type !== game.stage.type));
   }
 
+  const safeJoinCall = async () => {
+    await joinCall();
+    if(StorageManager.getIsVideoEnabled() === "false") {
+      await toggleOwnVideo();
+    }
+    if(StorageManager.getIsMuted() === "true") {
+      await toggleAudio();
+    }
+  }
+
   const performStageChange = async (newGame) => {
     if (newGame.stage.type === "Day"){
       try {
-        await joinCall();
-        if(StorageManager.getIsVideoEnabled() === "false") {
-          await toggleOwnVideo();
-        }
-        if(StorageManager.getIsMuted() === "true") {
-          await toggleAudio();
-        }
+        await safeJoinCall();
       } catch (e) {
         console.log(e);
       }
@@ -86,10 +90,14 @@ export const useGame = () => {
       let newPoll = new Poll(response.data);
       newPoll.printPoll();
       if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !isPollActive(newPoll)) {
-        if (newPoll.role === "Werewolf" && newPoll.isVoteParticipant) {
-          await joinCall();
-        }
         await fetchGame();
+        try {
+          if (newPoll.role === "Werewolf" && newPoll.isVoteParticipant && pollDidChange(newPoll)) {
+            await safeJoinCall();
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
       setCurrentPoll(newPoll);
     } catch (error) {
