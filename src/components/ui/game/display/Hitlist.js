@@ -1,7 +1,6 @@
 import React from 'react';
 import 'styles/ui/Hitlist.scss';
 import Player from 'models/Player';
-
 import Profile from '../../Profile';
 
 
