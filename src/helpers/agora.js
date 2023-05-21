@@ -107,6 +107,23 @@ export async function toggleOwnVideo() {
   }
 }
 
+export async function forceVideoDisable() {
+  if (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
+    await channelParameters.localVideoTrack.setEnabled(false);
+    let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
+    document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`).innerHTML = "";
+  }
+}
+
+export async function tryVideoEnable() {
+  if(channelParameters.localVideoTrack && StorageManager.getIsVideoEnabled() === "true") {
+    await channelParameters.localVideoTrack.setEnabled(true);
+    let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
+    document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`).innerHTML = "";
+    await channelParameters.localVideoTrack.play(document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`));
+  }
+}
+
 export async function toggleAudio() {
   if (channelParameters.localAudioTrack.enabled) {
     channelParameters.localAudioTrack.setEnabled(false);
