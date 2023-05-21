@@ -3,17 +3,24 @@
   width: 100%;
   justify-content: space-evenly;
 
+  h2 {
+    margin-top: 10px;
+  }
+
+  p {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+
   .individual-role {
     @include center;
     flex-direction: column;
 
     img {
-      height: 240px;
-      width: 150px;
+      height: 180px;
+      width: 180px;
       border-radius: 20px;
-      margin-top: -10px;
-      margin-bottom: -20px;
-      border: 1px solid grey;
+      margin: -10px 2px -20px;
     }
   }
 }

@@ -29,6 +29,12 @@
         filter: brightness(0.1);
       }
     }
+    &.background-dark {
+      img:not(.role-popup-item-image) {
+        -webkit-transition: filter 3s ease;
+        filter: brightness(1);
+      }
+    }
   }
 
   &-close {
@@ -64,10 +70,9 @@
       padding-bottom: 20px;
     }
     &-image {
-      height: 350px;
-      width: 220px;
+      height: 320px;
+      width: 320px;
       border-radius: 30px;
-      border: 1px solid grey;
     }
     &-description {
       margin-top: 20px;

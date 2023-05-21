@@ -148,12 +148,12 @@ export const useGame = () => {
         intervalKeeper = null;
         let timeoutDuration = 0;
         const showInfoScreenOrLeave = await showInfoScreen();
+        logger = new Log();
         if(showInfoScreenOrLeave !== "redirect") {  // when the game doesn't exist anymore after reload --> don't set interval
           if(showInfoScreenOrLeave === true) {
             timeoutDuration = 16000;
           }
           setTimeout(async () => {
-            logger = new Log();
             await fetchGame();
             await fetchPoll();
             setStarted(true);

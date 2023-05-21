@@ -9,7 +9,7 @@ import { api } from 'helpers/api';
 
 const Endscreen = ({ endData, lobby, stage}) => {
   const history = useHistory();
-  const userId = StorageManager.getUserId();
+  const userId = parseInt(StorageManager.getUserId());
 
   const [winnerArray, setWinnerArray] = useState([]);
   const [looserArray, setLooserArray] = useState([]);
@@ -69,11 +69,10 @@ const Endscreen = ({ endData, lobby, stage}) => {
         </div>
 
         <div className='endscreen-winner'>
-          <img src={`/static/media/${endData.winner}-${(stage === 'Day' ? "light" : "dark")}.png`} alt='Winning Team'></img>
+          <img src={`/static/media/${endData.winner}-${(stage === 'Day' ? "light" : "dark")}.webp`} alt='Winning Team'></img>
         </div>
         <h5>Winners</h5>
         <div className='endscreen-winner-players'>
-          
           {winnerArray.map(player => (
             <Profile user={player} mode="dead-player" key={player.id}/>
           ))}        
