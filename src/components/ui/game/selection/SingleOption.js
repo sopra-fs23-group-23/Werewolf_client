@@ -9,7 +9,6 @@ const SingleOption = ({currentPoll, stage}) => {
   const addVote = async () => {
     try {
         await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.pollOptions[0].player.id);
-        console.log("Added Single Vote")
     } catch (error) {
         console.error(error);
         alert(error.response.data?.message || 'Vote failed');
@@ -19,7 +18,6 @@ const SingleOption = ({currentPoll, stage}) => {
   const removeVote = async () => {
         try {
             await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.pollOptions[0].player.id);
-            console.log("Removed Single Vote");
         } catch (error) {
             console.error(error);
             alert(error.response.data?.message || 'Vote failed');

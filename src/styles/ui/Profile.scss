@@ -6,8 +6,9 @@
     align-items: center;
     margin: .8em 1em;
     height: min-content;
-    video {
+    video, .video {
         border-radius: 50% !important;
+        background-color: white;
     }
 
     &-name {
@@ -31,6 +32,10 @@
     .image{
         background-color: white;
         border-radius: 50% !important;
+    }
+
+    .inHitlist {
+        background-color: #ff2222 !important;
     }
 
     &-lobby{
@@ -70,7 +75,7 @@
             transition: all 0.2s ease-in-out;
         }
         &-isNotVoter {
-            .video {
+            .video, .image {
                 opacity: 0.3 !important;
                 transition: all 0.2s ease-in-out;
             }
@@ -90,7 +95,7 @@
             &-video, &-image {
                 height: 100px;
                 width: 100px;
-                border: 5px solid red;
+                border: 5px solid #ff0000;
                 transition: all 0.2s ease-in-out;
             }            
         }
@@ -166,6 +171,10 @@
         border-radius: 60px;
         margin-left: auto;
         margin-right: auto;
+        img{
+            background-color: white;
+            border-radius: 50% !important;
+        }
         .profile-name {
             opacity: 0;
         }

@@ -3,7 +3,6 @@ import 'styles/ui/Hitlist.scss';
 import Player from 'models/Player';
 import Profile from '../../Profile';
 
-
 const Hitlist = ({currentPoll}) => {
 
     const updateHoveredPlayer = (hoveredPlayer) => {
@@ -20,7 +19,7 @@ const Hitlist = ({currentPoll}) => {
             // Remove the class after 4 seconds
             setTimeout(() => {
                 updateHoveredPlayer(null);
-            }, 4000);      
+            }, 8000);      
 
         } else {
             for (let i = 0; i < allPlayers.length; i++) {

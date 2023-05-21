@@ -5,7 +5,7 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { useHistory } from 'react-router-dom';
-import {toggleOwnVideo, joinCall, leaveCall, enableVideoMorning, disableVideoNight} from 'helpers/agora';
+import {toggleOwnVideo, joinCall, leaveCall, tryVideoEnable, toggleAudio} from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -53,20 +53,20 @@ export const useGame = () => {
     return (game && (newGame.stage.type !== game.stage.type));
   }
 
+  const safeJoinCall = async () => {
+    await joinCall();
+    if(StorageManager.getIsVideoEnabled() === "false") {
+      await toggleOwnVideo();
+    }
+    if(StorageManager.getIsMuted() === "true") {
+      await toggleAudio();
+    }
+  }
+
   const performStageChange = async (newGame) => {
     if (newGame.stage.type === "Day"){
       try {
-        await joinCall();
-        await enableVideoMorning();
-        StorageManager.setIsMuted(false);
-        StorageManager.setIsVideoEnabled(true);
-      } catch (e) {
-        console.log(e);
-        await enableVideoMorning();
-      }
-    } else {
-      try {
-        await disableVideoNight();
+        await safeJoinCall();
       } catch (e) {
         console.log(e);
       }
@@ -91,6 +91,13 @@ export const useGame = () => {
       newPoll.printPoll();
       if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !isPollActive(newPoll)) {
         await fetchGame();
+        try {
+          if (newPoll.role === "Werewolf" && newPoll.isVoteParticipant && pollDidChange(newPoll)) {
+            await safeJoinCall();
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
       setCurrentPoll(newPoll);
     } catch (error) {
@@ -169,7 +176,7 @@ export const useGame = () => {
             await fetchGame();
             await fetchPoll();
             setStarted(true);
-            await toggleOwnVideo();
+            await tryVideoEnable();
             periodicFunctionToBeCalled = fetchPoll;
             intervalKeeper = setInterval(periodicFunctionCaller, 1000);
           }, timeoutDuration);

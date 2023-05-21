@@ -5,7 +5,7 @@ import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
-import { toggleOwnVideo, toggleAudio, toggleHiddenAttribute } from 'helpers/agora';
+import { toggleOwnVideo, toggleAudio } from 'helpers/agora';
 import { leaveCall } from 'helpers/agora';
 import DurationSelection from 'components/ui/DurationSelection';
 import 'styles/views/Game.scss';
@@ -55,7 +55,6 @@ const Lobby = () => {
 
   async function startGame () {
     api.post(`/games/${lobby.id}`);
-    toggleHiddenAttribute(StorageManager.getUserId());
   }
 
   const {lobby, error, uid, intervalId} = useLobby();
