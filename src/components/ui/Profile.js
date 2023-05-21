@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import {toggleOwnVideo, moveVideo, setVideoIfStream} from 'helpers/agora';
+import {moveVideo, renderVideo} from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -18,22 +18,23 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   };
 
   useEffect(() => {
+    renderVideo(user.id, null);
     
     if((mode === "hitlist" || mode === "hitlist-leader" || mode === "lover")) {
-      moveVideo(user.id, true);
+      renderVideo(user.id, true);
 
       return () => {
-        moveVideo(user.id, false);
+        renderVideo(user.id, false);
       };
     }
-    setTimeout(() => {
-      setVideoIfStream(true, user.id);
-      return () => {
-        setVideoIfStream(false, user.id);
-      }
-    }, 1000);
+    // setTimeout(() => {
+    //   setVideoIfStream(true, user.id);
+    //   return () => {
+    //     setVideoIfStream(false, user.id);
+    //   }
+    // }, 1000);
 
-  }, []);
+  }, [mode, user.id]);
 
   let isDisplay = (mode === "hitlist" || mode === "hitlist-leader" || mode === "lover") ? "-display" : "";
   let isLog = (mode === "game-log") ? "-log" : "";
@@ -41,8 +42,8 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
-        <div className={`video profile-${mode}-video`} id={`profile-video${isDisplay}${isLog}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} hidden/>
-        <img className={`image profile-${mode}-image ${inHitlist}`} id={`profile-image${isDisplay}${isLog}-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/>
+        <div className={`video profile-${mode}-video ${inHitlist}`} id={`profile-video${isDisplay}${isLog}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}/>
+        {/* <img className={`image profile-${mode}-image ${inHitlist}`} id={`profile-image${isDisplay}${isLog}-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/> */}
 
       <div className="profile-name">{user.name}</div>
       {votes && (
