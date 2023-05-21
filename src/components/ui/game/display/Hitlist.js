@@ -16,8 +16,6 @@ const Hitlist = ({currentPoll}) => {
             supporterArray = supporterArray.map(supporter => parseInt(supporter));
             for (let i = 0; i < allPlayers.length; i++) {           
                 let playerId = parseInt(allPlayers[i].id.substring(24));
-                console.log("String, PlayerId: " + allPlayers[i].id + "  " +playerId);
-                console.log("SupporterArray", supporterArray);
                 if (!supporterArray.includes(playerId)){
                     allPlayers[i].classList.add("profile-selection-small-isNotVoter");
                 }

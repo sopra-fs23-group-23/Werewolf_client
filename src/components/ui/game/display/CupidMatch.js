@@ -10,7 +10,6 @@ const CupidMatch = ({currentPoll}) => {
 
     
     const removeLover = async (lover) => {
-        console.log("I removed lover: " + lover.id);
         try {
             await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + lover.id);
         } catch (error) {

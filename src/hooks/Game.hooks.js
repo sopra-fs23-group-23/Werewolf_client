@@ -57,16 +57,16 @@ export const useGame = () => {
     if (newGame.stage.type === "Day"){
       try {
         await joinCall();
-        await showAvailableVideos(true);
+        //await showAvailableVideos(true);
         StorageManager.setIsMuted(false);
         StorageManager.setIsVideoEnabled(true);
       } catch (e) {
         console.log(e);
-        await showAvailableVideos(true);
+        //await showAvailableVideos(true);
       }
     } else {
       try {
-        await showAvailableVideos(false);
+        //await showAvailableVideos(false);
       } catch (e) {
         console.log(e);
       }

@@ -62,7 +62,9 @@ agoraEngine.on("user-unpublished", (user, mediaType) => {
   if (mediaType === "video") {
     showVideo(false, null, user.uid);
   }
+  console.log("All remote users before removing:", users);
   users = users.filter(u => u.uid !== user.uid);
+  console.log("All remote users after removing:", users);
 });
 
 export async function joinCall() {
@@ -90,20 +92,16 @@ export async function leaveCall() {
   await agoraEngine.leave();
 }
 
-export async function moveVideo(userId, renderDisplay) {
-    console.log("Rerender Video of " + userId);
-    
+export async function moveVideo(userId, renderDisplay) {   
     let videoTrack = null;
-    if (userId.toString() === StorageManager.getUserId()) {
+    if (userId.toString() === StorageManager.getUserId() && channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
       videoTrack = channelParameters.localVideoTrack;
+    } else if (users.find(user => user && user.uid && user.uid.toString() === userId.toString())){
+      let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+      videoTrack = user.videoTrack;
     } else {
-      try {
-        let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
-        videoTrack = user.videoTrack;
-      } catch (e) {
-        console.log("User has no published video / is not found");
-        return;
-      }
+      console.log("User has no published video / is not found");
+      return;
     }
 
     let DOMElement = null;
@@ -121,23 +119,27 @@ export async function moveVideo(userId, renderDisplay) {
 }
 
 export function showVideo(enableVideo, isDisplay, uid) {
-  console.log("showVideo start: " + enableVideo + isDisplay + uid)
+  console.log("showVideo start: " + enableVideo + " " + isDisplay + " " + uid)
   if (isDisplay === null){
     isDisplay = (document.getElementById(`profile-image-display-${uid}`) ? "-display" : "");
-    console.log("isDisplay was null now is: ", isDisplay)
   } else {
-    console.log("isDisplay was" + isDisplay)
     isDisplay = (isDisplay) ? "-display" : "";
-    console.log(" now is: ", isDisplay)
-
   }
-  if (enableVideo) {
-    document.getElementById(`profile-video${isDisplay}-${uid}`).innerHTML = "";
-    document.getElementById(`profile-image${isDisplay}-${uid}`).setAttribute('hidden', 'true');
-    document.getElementById(`profile-video${isDisplay}-${uid}`).removeAttribute('hidden');
+  if (document.getElementById(`profile-video${isDisplay}-${uid}`) && document.getElementById(`profile-image${isDisplay}-${uid}`)) {
+    if (enableVideo) {
+      document.getElementById(`profile-video${isDisplay}-${uid}`).innerHTML = "";
+      document.getElementById(`profile-image${isDisplay}-${uid}`).setAttribute('hidden', 'true');
+      if (document.getElementById(`profile-video${isDisplay}-${uid}`).hasAttribute('hidden')) {
+        document.getElementById(`profile-video${isDisplay}-${uid}`).removeAttribute('hidden');
+      }
+    } else {
+      if (document.getElementById(`profile-image${isDisplay}-${uid}`).hasAttribute('hidden')) {
+        document.getElementById(`profile-image${isDisplay}-${uid}`).removeAttribute('hidden');
+      }
+      document.getElementById(`profile-video${isDisplay}-${uid}`).setAttribute('hidden', 'true');
+    }
   } else {
-    document.getElementById(`profile-image${isDisplay}-${uid}`).removeAttribute('hidden');
-    document.getElementById(`profile-video${isDisplay}-${uid}`).setAttribute('hidden', 'true');
+    console.log("showVideo: Element not found");
   }
 }
 
@@ -169,26 +171,32 @@ export async function toggleAudio() {
   }
 }
 
-export async function showVideoIfStream(userId) {
+export async function setVideoIfStream(isEnabled, userId) {
   let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
   let ownVideo = (userId.toString() === StorageManager.getUserId() && (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled));
-  if (user || ownVideo) {
+  if ((user || ownVideo) && isEnabled) {
+    console.log("setVideoIfStream " + isEnabled + " " + userId)
     showVideo(true, null, userId);
+
+  } else if (user || ownVideo) {
+    console.log("setVideoIfStream " + isEnabled + " " + userId)
+    showVideo(false, null, userId);
   }
+
 }
 
 
-export async function showAvailableVideos(videoEnabled){
-  console.log("showAvailableVideos " + videoEnabled)
-  // enable all remote videos
-  users.forEach(user => {
-    showVideo(videoEnabled, null, user.uid);
-    console.log("users for each" + user.uid + videoEnabled)
-  });
-  // enable own video
+// export async function showAvailableVideos(videoEnabled){
+//   console.log("showAvailableVideos " + videoEnabled)
+//   // enable all remote videos
+//   users.forEach(user => {
+//     showVideo(videoEnabled, null, user.uid);
+//     console.log("users for each" + user.uid + videoEnabled)
+//   });
+//   // enable own video
   
-  if (StorageManager.getIsVideoEnabled()) {
-    console.log("own Video" + StorageManager.getUserId() + videoEnabled)
-    showVideo(videoEnabled, null, StorageManager.getUserId());
-  }
-}
+//   if (StorageManager.getIsVideoEnabled()) {
+//     console.log("own Video" + StorageManager.getUserId() + videoEnabled)
+//     showVideo(videoEnabled, null, StorageManager.getUserId());
+//   }
+// }
