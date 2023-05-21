@@ -37,14 +37,17 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   }, [mode, user.id]);
 
   let isDisplay = (mode === "hitlist" || mode === "hitlist-leader" || mode === "lover") ? "-display" : "";
-  let isLog = (mode === "game-log") ? "-log" : "";
   let inHitlist = (mode === "selection-small" && document.getElementById(`profile-image-display-${user.id}`)) ? "inHitlist" : "";
+  if(mode === "game-log") {
+    return (<div className={`profile profile-${mode}`} onClick={handleClick}>
+      <img src={user.avatarUrl} alt={"image of user"}/>
+    </div>);
+  }
 
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
-        <div className={`video profile-${mode}-video ${inHitlist}`} id={`profile-video${isDisplay}${isLog}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}/>
+        <div className={`video profile-${mode}-video ${inHitlist}`} id={`profile-video${isDisplay}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}/>
         {/* <img className={`image profile-${mode}-image ${inHitlist}`} id={`profile-image${isDisplay}${isLog}-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/> */}
-
       <div className="profile-name">{user.name}</div>
       {votes && (
         <h2 className="profile-votes">
