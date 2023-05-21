@@ -1,6 +1,19 @@
 @import 'styles/theme';
 
 .home {
+    .container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    &-logout-container {
+        height: 120px;
+    }
+    &-content-container {
+        display: grid;
+        align-items: center;
+        flex: 1 1 auto;
+    }
     h1 {
         line-height: 1.2;
         margin-bottom: 20px;
@@ -14,6 +27,7 @@
         width: 120px !important;
     }
     &-user_wrapper{
+        width: 100%;
         a {
             text-decoration: underline 2px solid white;
             h5 {
@@ -36,13 +50,16 @@
     }
     &-create-lobby{
         margin-top: 6em;
+        .btn {
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
     &-join-lobby{
         display: flex;
-        flex-direction: row;
-        align-items: top;
+        align-items: center;
         button {
-            margin: 10px 0 0 40px;
+            margin-left: 30px;
         }
     }
 }

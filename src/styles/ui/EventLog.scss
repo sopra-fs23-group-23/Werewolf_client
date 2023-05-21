@@ -82,7 +82,7 @@
     }
 
     .death-event {
-      background-image: url('../../../public/static/media/blood.png'), url('../../../public/static/media/blood2.png');
+      background-image: url('../../../public/static/media/blood.webp'), url('../../../public/static/media/blood2.webp');
       background-repeat: no-repeat, no-repeat;
       background-size: 10% auto, 10% auto;
       background-position: top right, bottom left;
@@ -132,7 +132,7 @@
 
     .lover-event {
       position: relative;
-      background-image: url('../../../public/static/media/heart.png');
+      background-image: url('../../../public/static/media/heart.webp');
       background-repeat: no-repeat;
       background-size: 230px auto;
       background-position: top 50px center;

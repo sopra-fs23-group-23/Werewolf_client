@@ -76,45 +76,45 @@ const Home = () => {
   return (
     <div className="background background-dark background-dark-image-small background-dark-image-small-right home">
       <div className="container">
-        
-        <button className="btn btn-light home-logout" onClick={(e) => logout(e)}>
-          Logout
-        </button>
-
-        <div className="home-user_wrapper">
-          <h1>Hey,<br/> {user.username} </h1>
-          <Link to={`/edit/${id}`}>
-            <h5>Edit Profile</h5>
-          </Link>
+        <div className="home-logout-container">
+          <button className="btn btn-light home-logout" onClick={(e) => logout(e)}>
+            Logout
+          </button>
         </div>
-        
-
-        {oldLobby && (
-          <RejoinLobby oldLobby={oldLobby} user={user} handleLeaveLobby={handleLeaveLobby} />
-        )}
-        {!oldLobby && (
+        <div className='home-content-container'>
           <div>
-            <div className='home-create-lobby'>
-              <button className="btn btn-light" onClick={(e) => createLobby(e)}>
-                Create Lobby
-              </button>
+            <div className="home-user_wrapper">
+              <h1>Hey,<br/> {user.username} </h1>
+              <Link to={`/edit/${id}`}>
+                <h5>Edit Profile</h5>
+              </Link>
             </div>
-            <h5>or</h5>
-            <div className='home-join-lobby'>
-              <FormField
-                theme="light"
-                placeholder = "123 456"
-                onChange={(e) => setLobbyId(e.replace(/\s/g, ''))}
-                value = {lobbyId.substring(0, 3) + (lobbyId.substring(3) ? " " + lobbyId.substring(3) : "")}
-
-              >
-              </FormField>
-              <button className="btn btn-light" onClick={(e) => joinLobby(e)} disabled = {lobbyId.length < 6}>
-                Join Lobby
-              </button>
-            </div>
+            {oldLobby && (
+              <RejoinLobby oldLobby={oldLobby} user={user} handleLeaveLobby={handleLeaveLobby} />
+            )}
+            {!oldLobby && (
+              <div>
+                <div className='home-create-lobby'>
+                  <button className="btn btn-light" onClick={(e) => createLobby(e)}>
+                    Create Lobby
+                  </button>
+                </div>
+                <h5>or</h5>
+                <div className='home-join-lobby'>
+                  <FormField
+                    theme="light"
+                    placeholder = "123 456"
+                    onChange={(e) => setLobbyId(e.replace(/\s/g, ''))}
+                    value = {lobbyId.substring(0, 3) + (lobbyId.substring(3) ? " " + lobbyId.substring(3) : "")}
+                  />
+                  <button className="btn btn-light" onClick={(e) => joinLobby(e)} disabled = {lobbyId.length < 6}>
+                    Join Lobby
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -37,8 +37,9 @@ const RolePopup = ({ show, handleClose, stage }) => {
         setAllRoles(filteredRoles);
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
-        allRoles.forEach((role, index) => {
-          if(role.roleName === ownRoles[0].roleName) {
+        filteredRoles.forEach((role, index) => {
+          if(role.roleName === responseOwn.data[0].roleName) {
+            console.log(role.roleName, index)
             setActiveIndex(index);  // show own role first when opening popup
           }
         });
@@ -50,7 +51,7 @@ const RolePopup = ({ show, handleClose, stage }) => {
     }
     fetchData();
     //eslint-disable-next-line
-  }, [id, lobbyId]);
+  }, []);
 
   const nextRole = () => {
     setActiveIndex((activeIndex + 1) % allRoles.length);
@@ -79,7 +80,7 @@ const RolePopup = ({ show, handleClose, stage }) => {
             <div className={'role-popup-item ' + (index === activeIndex ? 'active' : '')} key={index}>
               <div className={'role-popup-item-indicator ' + (role.roleName === ownRoles[0].roleName ? 'active' : '')}>Your Role:</div>
               <h2 className='role-popup-item-title'>{ role.roleName }</h2>
-              <img className='role-popup-item-image' src={`/static/media/${role.roleName}-${(stage === 'Day' ? "light" : "dark")}.png`}
+              <img className='role-popup-item-image' src={`/static/media/${role.roleName}-${(stage === 'Day' ? "light" : "dark")}.webp`}
                    alt={"Picture of a " + role.roleName}/>
               <div className='role-popup-item-description'>{ role.description }</div>
               <div className='role-popup-item-amount'>Players with this role at game start: { role.amount }</div>
