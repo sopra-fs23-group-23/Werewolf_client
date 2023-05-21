@@ -1,6 +1,19 @@
 @import 'styles/theme';
 
 .home {
+    .container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    &-logout-container {
+        height: 120px;
+    }
+    &-content-container {
+        display: grid;
+        align-items: center;
+        flex: 1 1 auto;
+    }
     h1 {
         line-height: 1.2;
         margin-bottom: 20px;
