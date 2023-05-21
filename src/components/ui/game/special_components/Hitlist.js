@@ -1,11 +1,7 @@
 import React from 'react';
 import 'styles/ui/Hitlist.scss';
 import Player from 'models/Player';
-
 import Profile from '../../Profile';
-import {api} from "../../../../helpers/api";
-import storageManager from "../../../../helpers/StorageManager";
-
 
 const Hitlist = ({currentPoll}) => {
 

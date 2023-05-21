@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import {moveVideo, renderVideo} from 'helpers/agora';
+import {renderVideo} from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -41,13 +41,12 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
   if(mode === "game-log") {
     return (<div className={`profile profile-${mode}`} onClick={handleClick}>
-      <img src={user.avatarUrl} alt={"image of user"}/>
+      <img src={user.avatarUrl} alt={"user profile"}/>
     </div>);
   }
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
         <div className={`video profile-${mode}-video ${inHitlist}`} id={`profile-video${isDisplay}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}/>
-        {/* <img className={`image profile-${mode}-image ${inHitlist}`} id={`profile-image${isDisplay}${isLog}-${user.id}`} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)} src={user.avatarUrl} alt='avatar'/> */}
       <div className="profile-name">{user.name}</div>
       {votes && (
         <h2 className="profile-votes">
