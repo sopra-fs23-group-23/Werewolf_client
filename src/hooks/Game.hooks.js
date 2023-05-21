@@ -86,7 +86,7 @@ export const useGame = () => {
       let newPoll = new Poll(response.data);
       newPoll.printPoll();
       if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !isPollActive(newPoll)) {
-        if (newPoll.role === "Werewolf") {
+        if (newPoll.role === "Werewolf" && newPoll.isVoteParticipant) {
           await joinCall();
         }
         await fetchGame();
