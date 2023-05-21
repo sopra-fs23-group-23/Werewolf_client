@@ -5,7 +5,7 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { useHistory } from 'react-router-dom';
-import {toggleOwnVideo, joinCall, leaveCall, showAvailableVideos, tryVideoEnable} from 'helpers/agora';
+import {joinCall, leaveCall, tryVideoEnable} from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
