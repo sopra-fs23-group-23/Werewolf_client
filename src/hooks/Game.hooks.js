@@ -169,7 +169,6 @@ export const useGame = () => {
             await fetchGame();
             await fetchPoll();
             setStarted(true);
-            await toggleOwnVideo();
             periodicFunctionToBeCalled = fetchPoll;
             intervalKeeper = setInterval(periodicFunctionCaller, 1000);
           }, timeoutDuration);

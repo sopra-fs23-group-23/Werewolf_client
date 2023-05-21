@@ -43,8 +43,7 @@ export const useLobby = () => {
     const intervalId = setInterval(fetchLobby, 1000);
     setIntervalId(intervalId);
     return async () => {
-      clearInterval(intervalId)
-      await toggleOwnVideo()};
+      clearInterval(intervalId)};
   },
   // eslint-disable-next-line
   [lobbyId]);
