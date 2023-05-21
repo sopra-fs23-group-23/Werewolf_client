@@ -57,10 +57,9 @@
     }
     &-join-lobby{
         display: flex;
-        flex-direction: row;
-        align-items: top;
-        /* button {
-            margin: 10px 0 0 40px;
-        } */
+        align-items: center;
+        button {
+            margin-left: 30px;
+        }
     }
 }
