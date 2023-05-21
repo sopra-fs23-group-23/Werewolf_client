@@ -74,12 +74,14 @@ const Edit = () => {
   }
 
   return (
-    <div className="background background-dark background-dark-image-small background-dark-image-small-left">
+    <div className="background background-dark background-dark-image-small background-dark-image-small-left edit">
       <div className="container">
-        <button className="btn btn-light edit-backbutton" onClick={() => history.push('/user/' + id)}>
-          Back to Home
-        </button>
-        <div className="edit">
+        <div className='edit-back-container'>
+          <button className="btn btn-light edit-backbutton" onClick={() => history.push('/user/' + id)}>
+            Back to Home
+          </button>
+        </div>
+        <div className="edit-content-container">
           <div className="column-container">
             <h1>Edit User</h1>
             {content}
