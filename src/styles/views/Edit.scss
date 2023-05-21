@@ -13,6 +13,7 @@
 
   .form-field {
     margin-top: 20px;
+    width: calc(100% - 7px);
   }
 
   &-backbutton {
@@ -20,8 +21,9 @@
   }
 
   &-savebutton {
+    display: block;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 40px !important;
   }
 
   &-successmessage {

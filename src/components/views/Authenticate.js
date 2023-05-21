@@ -29,9 +29,9 @@ const Authentication = (props) => {
 
   return (
     <div className="background background-light">
-      <div className="container">
-        <div className="auth">
-          <div className="column-container">
+      <div className="auth">
+        <div className='auth-container'>
+          <div className='auth-container-inner'>
             <h1>Authentication</h1>
             <form onSubmit={(e) => authenticate(e, "register")}>
               <FormField
