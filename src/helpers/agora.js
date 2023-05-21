@@ -74,7 +74,7 @@ export async function joinCall() {
   channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
-  //showVideo(true, false, StorageManager.getUserId());
+  document.getElementById(`profile-video-${StorageManager.getUserId()}`).innerHTML = "";
   await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
 }
 
@@ -87,22 +87,6 @@ export async function leaveCall() {
   channelParameters.localVideoTrack.close();
   await agoraEngine.leave();
 }
-
-// export async function moveVideo(userId, renderDisplay) {   
-//     let videoTrack = null;
-//     if (userId.toString() === StorageManager.getUserId() && channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
-//       videoTrack = channelParameters.localVideoTrack;
-//     } else if (users.find(user => user && user.uid && user.uid.toString() === userId.toString())){
-//       let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
-//       videoTrack = user.videoTrack;
-//     } else {
-//       console.log("User has no published video / is not found");
-//       return;
-//     }
-//     let isDisplay = (renderDisplay) ? "-display" : "";
-//     document.getElementById(`profile-video${isDisplay}-${userId}`).innerHTML = "";
-//     await videoTrack.play(document.getElementById(`profile-video${isDisplay}-${userId}`));
-// }
 
 export async function toggleOwnVideo() {
   if (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
@@ -139,7 +123,7 @@ export async function renderVideo(userId, moveDisplay) {
   let renderedTrack = null;
   if (userId.toString() === StorageManager.getUserId() && channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
     renderedTrack = channelParameters.localVideoTrack;
-  } else if (users.find(user => user && user.uid && user.uid.toString() === userId.toString())){
+  } else if (users.find(user => user && user.uid && user.uid.toString() === userId.toString() && user.videoTrack && user.videoTrack.enabled)){
     let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
     renderedTrack = user.videoTrack;
   }
@@ -152,7 +136,6 @@ export async function renderVideo(userId, moveDisplay) {
   }
 
   if (renderedTrack) {
-    let isDisplay = (document.getElementById(`profile-video-display-${userId}`) ? "-display" : "");
     document.getElementById(`profile-video${isDisplay}-${userId}`).innerHTML = "";
     await renderedTrack.play(document.getElementById(`profile-video${isDisplay}-${userId}`));
   }

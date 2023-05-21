@@ -55,7 +55,6 @@ const Lobby = () => {
 
   async function startGame () {
     api.post(`/games/${lobby.id}`);
-    //showVideo(false, false, StorageManager.getUserId());
   }
 
   const {lobby, error, uid, intervalId} = useLobby();

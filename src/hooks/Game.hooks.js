@@ -57,16 +57,13 @@ export const useGame = () => {
     if (newGame.stage.type === "Day"){
       try {
         await joinCall();
-        //await showAvailableVideos(true);
         StorageManager.setIsMuted(false);
         StorageManager.setIsVideoEnabled(true);
       } catch (e) {
         console.log(e);
-        //await showAvailableVideos(true);
       }
     } else {
       try {
-        //await showAvailableVideos(false);
       } catch (e) {
         console.log(e);
       }
@@ -90,6 +87,9 @@ export const useGame = () => {
       let newPoll = new Poll(response.data);
       newPoll.printPoll();
       if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !isPollActive(newPoll)) {
+        if (newPoll.role === "Werewolf") {
+          await joinCall();
+        }
         await fetchGame();
       }
       setCurrentPoll(newPoll);
