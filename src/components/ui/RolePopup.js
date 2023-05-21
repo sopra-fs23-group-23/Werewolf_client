@@ -37,8 +37,9 @@ const RolePopup = ({ show, handleClose, stage }) => {
         setAllRoles(filteredRoles);
         const responseOwn = await api.get('/lobbies/' + lobbyId + "/roles/" + id);
         setOwnRoles(responseOwn.data);
-        allRoles.forEach((role, index) => {
-          if(role.roleName === ownRoles[0].roleName) {
+        filteredRoles.forEach((role, index) => {
+          if(role.roleName === responseOwn.data[0].roleName) {
+            console.log(role.roleName, index)
             setActiveIndex(index);  // show own role first when opening popup
           }
         });
@@ -50,7 +51,7 @@ const RolePopup = ({ show, handleClose, stage }) => {
     }
     fetchData();
     //eslint-disable-next-line
-  }, [id, lobbyId]);
+  }, []);
 
   const nextRole = () => {
     setActiveIndex((activeIndex + 1) % allRoles.length);
