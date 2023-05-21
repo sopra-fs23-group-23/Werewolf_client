@@ -5,7 +5,7 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { useHistory } from 'react-router-dom';
-import {toggleOwnVideo, joinCall, leaveCall, showAvailableVideos, tryVideoEnable} from 'helpers/agora';
+import {toggleOwnVideo, joinCall, leaveCall, showAvailableVideos, tryVideoEnable, toggleAudio} from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -57,13 +57,12 @@ export const useGame = () => {
     if (newGame.stage.type === "Day"){
       try {
         await joinCall();
-        StorageManager.setIsMuted(false);
-        StorageManager.setIsVideoEnabled(true);
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      try {
+        if(StorageManager.getIsVideoEnabled() === "false") {
+          await toggleOwnVideo();
+        }
+        if(StorageManager.getIsMuted() === "true") {
+          await toggleAudio();
+        }
       } catch (e) {
         console.log(e);
       }
