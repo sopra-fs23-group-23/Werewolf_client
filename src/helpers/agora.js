@@ -169,19 +169,26 @@ export async function toggleAudio() {
   }
 }
 
+export async function showVideoIfStream(userId) {
+  let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+  let ownVideo = (userId.toString() === StorageManager.getUserId() && (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled));
+  if (user || ownVideo) {
+    showVideo(true, null, userId);
+  }
+}
+
+
 export async function showAvailableVideos(videoEnabled){
-  console.log("showAvailableVideos" + videoEnabled)
+  console.log("showAvailableVideos " + videoEnabled)
   // enable all remote videos
   users.forEach(user => {
     showVideo(videoEnabled, null, user.uid);
     console.log("users for each" + user.uid + videoEnabled)
   });
   // enable own video
-  //setTimeout of 1 second to wait for the video to be rendered
-  setTimeout(() => {
-    if (StorageManager.getIsVideoEnabled()) {
-      console.log("own Video" + StorageManager.getUserId() + videoEnabled)
-      showVideo(videoEnabled, null, StorageManager.getUserId());
-    }
-  }, 1000);
+  
+  if (StorageManager.getIsVideoEnabled()) {
+    console.log("own Video" + StorageManager.getUserId() + videoEnabled)
+    showVideo(videoEnabled, null, StorageManager.getUserId());
+  }
 }

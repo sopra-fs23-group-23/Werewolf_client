@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import {toggleOwnVideo, moveVideo} from 'helpers/agora';
+import {toggleOwnVideo, moveVideo, showVideoIfStream} from 'helpers/agora';
 
 const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
 
@@ -17,23 +17,19 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
     }
   };
 
-  //OnMount video raufsetzen
-
   useEffect(() => {
-    // ComponentDidMount equivalent
+    //showVideoIfStream(user.id);
     if((mode === "hitlist" || mode === "hitlist-leader" || mode === "lover")) {
       moveVideo(user.id, true);
 
-      // Cleanup function (equivalent to componentWillUnmount)
       return () => {
         moveVideo(user.id, false);
-        // Perform any necessary cleanup or teardown operations here
       };
     }
+
   }, []);
 
   let isDisplay = (mode === "hitlist" || mode === "hitlist-leader" || mode === "lover") ? "-display" : "";
-
   let inHitlist = (mode === "selection-small" && document.getElementById(`profile-image-display-${user.id}`)) ? "inHitlist" : "";
 
   return (
