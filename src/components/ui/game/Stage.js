@@ -81,7 +81,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
 
         {content}
         <div className="game-stage-counter">
-          {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} /> : ""}
+          {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} stage={stage} /> : ""}
         </div>
         <div className={`game-dead game-dead-${backgroundTheme}`}>
           {deadPlayers}

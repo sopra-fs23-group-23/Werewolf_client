@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 
-const Countdown = ({finishTime}) => {
+const Countdown = ({finishTime, stage}) => {
 
 
     const [remainingMinutes, setRemainingMinutes] = useState("");
@@ -23,7 +23,7 @@ const Countdown = ({finishTime}) => {
     } */
 
     return (
-        <div className="countdown">
+        <div className={"countdown " + stage}>
             <h3>Remaining Time</h3>
             <h2>{remainingMinutes}:{remainingSeconds}</h2>
         </div>
