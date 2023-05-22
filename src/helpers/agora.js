@@ -67,7 +67,6 @@ agoraEngine.on("user-unpublished", (user, mediaType) => {
 });
 
 export async function joinCall() {
-  const agoraEngine = StorageManager.getAgoraEngine();
   // Join a channel.
   await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), parseInt(StorageManager.getUserId()));
   // Create a local audio track from the microphone audio.
@@ -81,7 +80,6 @@ export async function joinCall() {
 }
 
 export async function leaveCall() {
-  const agoraEngine = StorageManager.getAgoraEngine();
   StorageManager.removeChannelToken();
   StorageManager.removeIsMuted();
   StorageManager.removeIsVideoEnabled();
@@ -177,4 +175,12 @@ export async function renderVideo(userId, moveDisplay) {
     removeInnerHTML(`profile-video${isDisplay}-${userId}`);
     await renderedTrack.play(document.getElementById(`profile-video${isDisplay}-${userId}`));
   }
+}
+
+export async function checkConnectionState(){
+  if(agoraEngine.connectionState === "DISCONNECTED"){
+    return true;
+  }else{
+      return false;
+    }
 }

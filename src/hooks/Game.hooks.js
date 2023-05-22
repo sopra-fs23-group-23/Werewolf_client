@@ -11,8 +11,8 @@ import {
   leaveCall,
   toggleAudio,
   disableVideoNight,
-  republish,
-  enableVideoAutomatic
+  enableVideoAutomatic,
+  checkConnectionState
 } from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
@@ -62,12 +62,14 @@ export const useGame = () => {
   }
 
   const safeJoinCall = async () => {
-    await joinCall();
-    if(StorageManager.getIsVideoEnabled() === "false") {
-      await toggleOwnVideo();
-    }
-    if(StorageManager.getIsMuted() === "true") {
-      await toggleAudio();
+    if(checkConnectionState()){
+      await joinCall();
+      if(StorageManager.getIsVideoEnabled() === "false") {
+        await toggleOwnVideo();
+      }
+      if(StorageManager.getIsMuted() === "true") {
+        await toggleAudio();
+      }
     }
   }
 
@@ -188,6 +190,7 @@ export const useGame = () => {
             await fetchGame();
             await fetchPoll();
             setStarted(true);
+            await enableVideoAutomatic();
             periodicFunctionToBeCalled = fetchPoll;
             intervalKeeper = setInterval(periodicFunctionCaller, 1000);
           }, timeoutDuration);
