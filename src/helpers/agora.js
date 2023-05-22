@@ -33,12 +33,11 @@ agoraEngine.on("user-published", async (user, mediaType) => {
   } else if (mediaType === "video") {
     users = users.filter(u => u.uid !== user.uid);
     users.push(user);
-    console.log("All remote users:", users);
     try {
       subscribeToRemoteVideoTrack(user);
     } catch (e) {
       //TODO remove this error, only logged for development purposes
-      console.error(e);
+      console.error("error in user-published event", e);
       setTimeout(function() {subscribeToRemoteVideoTrack(user)}, 2000);
     }
   }
@@ -184,4 +183,20 @@ export async function checkConnectionState(){
   }else{
       return false;
     }
+}
+
+export async function safeJoinCall() {
+  setTimeout(async () => {
+    if (await checkConnectionState()) {
+      await joinCall();
+      if (StorageManager.getIsVideoEnabled() === "false") {
+        await toggleOwnVideo();
+      }
+      if (StorageManager.getIsMuted() === "true") {
+        await toggleAudio();
+      }
+    } else {
+      await enableVideoAutomatic();
+    }
+  }, 1200)
 }
