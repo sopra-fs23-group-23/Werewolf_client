@@ -178,6 +178,7 @@ export async function renderVideo(userId, moveDisplay) {
 }
 
 export async function checkConnectionState(){
+  console.log(agoraEngine.connectionState);
   if(agoraEngine.connectionState === "DISCONNECTED"){
     return true;
   }else{

@@ -61,8 +61,9 @@ export const useGame = () => {
     return (game && (newGame.stage.type !== game.stage.type));
   }
 
-  const safeJoinCall = async () => {
-    if(checkConnectionState()){
+  const morningJoinCall = async () => {
+    setTimeout(async () =>  {
+      if(await checkConnectionState()){
       await joinCall();
       if(StorageManager.getIsVideoEnabled() === "false") {
         await toggleOwnVideo();
@@ -70,13 +71,16 @@ export const useGame = () => {
       if(StorageManager.getIsMuted() === "true") {
         await toggleAudio();
       }
+    } else {
+      await enableVideoAutomatic();
     }
+    }, 1200)
   }
 
   const performStageChange = async (newGame) => {
     if (newGame.stage.type === "Day"){
       try {
-        await safeJoinCall();
+        await morningJoinCall();
       } catch (e) {
         console.error(e);
       }
@@ -103,15 +107,6 @@ export const useGame = () => {
       newPoll.printPoll();
       if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !(await isPollActive(newPoll))) {
         await fetchGame();
-        try {
-          if (pollDidChange(newPoll) && ((newPoll.role === "Werewolf" && newPoll.isVoteParticipant)
-              || (newPoll.role === "Villager" && !(newPoll.isVoteParticipant)))) {
-            console.log("I was here ****************************");
-            await enableVideoAutomatic();
-          }
-        } catch (e) {
-          console.error(e);
-        }
       }
       setCurrentPoll(newPoll);
     } catch (error) {
