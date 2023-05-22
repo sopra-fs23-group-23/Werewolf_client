@@ -9,7 +9,7 @@ import {
   leaveCall,
   safeJoinCall,
   disableVideoNight,
-  enableVideoAutomatic,
+  enableVideoAutomatic
 } from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => { };
