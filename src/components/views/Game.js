@@ -90,7 +90,7 @@ const Game = () => {
         </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
             <img className={`info-button info-button-${textTheme}`} id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
-          {(game?.stage.type === "Day" ? <img className={`info-button info-button-${textTheme}`} id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' /> : "")}
+          {((game?.stage.type === "Day" || finished)? <img className={`info-button info-button-${textTheme}`} id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' /> : "")}
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />
