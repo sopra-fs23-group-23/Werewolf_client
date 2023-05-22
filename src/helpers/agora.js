@@ -140,7 +140,7 @@ export async function disableVideoNight(){
   }
 }
 
-export async function enableVideoWerewolf() {
+export async function enableVideoAutomatic() {
     if(StorageManager.getIsVideoEnabled() === "true" && channelParameters.localVideoTrack) {
       await channelParameters.localVideoTrack.setEnabled(true);
       let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");

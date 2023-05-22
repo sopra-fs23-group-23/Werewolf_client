@@ -12,7 +12,7 @@ import {
   toggleAudio,
   disableVideoNight,
   republish,
-  enableVideoWerewolf
+  enableVideoAutomatic
 } from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
@@ -76,7 +76,7 @@ export const useGame = () => {
       try {
         await safeJoinCall();
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     } else {
       await disableVideoNight();
@@ -102,8 +102,10 @@ export const useGame = () => {
       if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !(await isPollActive(newPoll))) {
         await fetchGame();
         try {
-          if (newPoll.role === "Werewolf" && newPoll.isVoteParticipant && pollDidChange(newPoll)) {
-            await enableVideoWerewolf();
+          if (pollDidChange(newPoll) && ((newPoll.role === "Werewolf" && newPoll.isVoteParticipant)
+              || (newPoll.role === "Villager" && !(newPoll.isVoteParticipant)))) {
+            console.log("I was here ****************************");
+            await enableVideoAutomatic();
           }
         } catch (e) {
           console.error(e);
