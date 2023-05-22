@@ -36,7 +36,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
     <Spinner />
   );
 
-  useEffect(async () => {
+  useEffect(() => {
     if (endData && lobby) {
   
       let winnerIds = lobby.players.filter(player => endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
@@ -51,7 +51,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
         setLeaveText("Dissolve lobby");
       }
     }
-    await safeJoinCall();
+    safeJoinCall();
 
   }, [endData, lobby, userId])
 

@@ -166,7 +166,9 @@ export const useGame = () => {
           await fetchGame();
           await fetchPoll();
           setStarted(true);
-          await enableVideoAutomatic();
+          setTimeout(async () => {
+            await enableVideoAutomatic();
+          }, 1200);
           periodicFunctionToBeCalled = fetchPoll;
           intervalKeeper = setInterval(periodicFunctionCaller, 1000);
         }, timeoutDuration);
