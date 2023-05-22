@@ -127,6 +127,28 @@ function removeInnerHTML(elementId) {
   }
 }
 
+export async function disableVideoNight(){
+  users = [];
+  try {
+    if(channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
+      await channelParameters.localVideoTrack.setEnabled(false);
+      let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
+      removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function enableVideoWerewolf() {
+    if(StorageManager.getIsVideoEnabled() === "true" && channelParameters.localVideoTrack) {
+      await channelParameters.localVideoTrack.setEnabled(true);
+      let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
+      removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
+      await channelParameters.localVideoTrack.play(document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`));
+    }
+}
+
 export async function renderVideo(userId, moveDisplay) {
   console.log("renderVideo", userId, " " , moveDisplay);
   let renderedTrack = null;
@@ -155,5 +177,4 @@ export async function renderVideo(userId, moveDisplay) {
     removeInnerHTML(`profile-video${isDisplay}-${userId}`);
     await renderedTrack.play(document.getElementById(`profile-video${isDisplay}-${userId}`));
   }
-  
 }

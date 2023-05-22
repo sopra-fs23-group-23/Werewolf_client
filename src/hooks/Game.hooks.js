@@ -5,7 +5,15 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { useHistory } from 'react-router-dom';
-import {toggleOwnVideo, joinCall, leaveCall, toggleAudio} from 'helpers/agora';
+import {
+  toggleOwnVideo,
+  joinCall,
+  leaveCall,
+  toggleAudio,
+  disableVideoNight,
+  republish,
+  enableVideoWerewolf
+} from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -27,7 +35,7 @@ export const useGame = () => {
   const [pollActive, setPollActive] = useState(false);
   const history = useHistory();
 
-  const isPollActive = (newPoll) => {
+  const isPollActive = async (newPoll) => {
     if (newPoll) {
       const now = new Date();
       const timeLeft = Math.ceil((newPoll.scheduledFinish - now) / 1000);
@@ -70,6 +78,8 @@ export const useGame = () => {
       } catch (e) {
         console.log(e);
       }
+    } else {
+      await disableVideoNight();
     }
   }
 
@@ -89,14 +99,14 @@ export const useGame = () => {
       const response = await api.get(`/games/${lobbyId}/polls`);
       let newPoll = new Poll(response.data);
       newPoll.printPoll();
-      if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !isPollActive(newPoll)) {
+      if(pollDidChange(newPoll) || gameShouldBeFetchedAgain || !(await isPollActive(newPoll))) {
         await fetchGame();
         try {
           if (newPoll.role === "Werewolf" && newPoll.isVoteParticipant && pollDidChange(newPoll)) {
-            await safeJoinCall();
+            await enableVideoWerewolf();
           }
         } catch (e) {
-          console.log(e);
+          console.error(e);
         }
       }
       setCurrentPoll(newPoll);
