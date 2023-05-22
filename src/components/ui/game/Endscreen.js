@@ -52,7 +52,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
       }
     }
     try {
-      joinCall();
+      await joinCall();
       if(StorageManager.getIsVideoEnabled() === "false") {
         await toggleOwnVideo();
       }
