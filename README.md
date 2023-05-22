@@ -88,11 +88,11 @@ Additionally users that are in a lobby should be able to invite users (by their 
 
 The application was developed for the SOPRA 23 course by:
 
-- Jan Lüthy
-- Michel Sabbatini
-- Marvin Wiedenkeller
-- Miro Vannini
-- David Scherrer
+- Jan Lüthi ([@Dev-Lj](https://github.com/Dev-Lj))
+- Michel Sabbatini ([@Atomis14](https://github.com/Atomis14))
+- Marvin Wiedenkeller ([@ChlineSaurus](https://github.com/ChlineSaurus))
+- Miro Vannini ([@mirovv](https://github.com/mirovv))
+- David Scherrer ([@djscherrer](https://github.com/djscherrer))
 
 A special thank you to our TA Jerome Maier for supporting us during the project.
 
