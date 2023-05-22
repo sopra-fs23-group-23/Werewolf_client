@@ -3,7 +3,7 @@ import 'styles/ui/Endscreen.scss';
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import Spinner from 'components/ui/Spinner';
-import { leaveCall, joinCall } from 'helpers/agora';
+import {leaveCall, safeJoinCall} from 'helpers/agora';
 import StorageManager from 'helpers/StorageManager';
 import { api } from 'helpers/api';
 
@@ -51,7 +51,8 @@ const Endscreen = ({ endData, lobby, stage}) => {
         setLeaveText("Dissolve lobby");
       }
     }
-    joinCall();
+    safeJoinCall();
+
   }, [endData, lobby, userId])
 
   return (

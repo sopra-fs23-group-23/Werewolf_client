@@ -18,21 +18,16 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   };
 
   useEffect(() => {
-    renderVideo(user.id, null);
-    
     if((mode === "hitlist" || mode === "hitlist-leader" || mode === "lover")) {
+      
       renderVideo(user.id, true);
 
       return () => {
         renderVideo(user.id, false);
       };
+    } else {
+      renderVideo(user.id, null);
     }
-    // setTimeout(() => {
-    //   setVideoIfStream(true, user.id);
-    //   return () => {
-    //     setVideoIfStream(false, user.id);
-    //   }
-    // }, 1000);
 
   }, [mode, user.id]);
 
