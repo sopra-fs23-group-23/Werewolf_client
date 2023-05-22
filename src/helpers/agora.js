@@ -1,8 +1,8 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
 import StorageManager from "./StorageManager";
 
-const appId = '348d6a205d75436e916896366c5e315c';
-AgoraRTC.setLogLevel(2);
+const appId = '2d64cdbec0324225b28f83ed19f75397';
+AgoraRTC.setLogLevel(4);
 var users = [];
 
 let channelParameters =
