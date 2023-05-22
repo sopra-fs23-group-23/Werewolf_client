@@ -1,9 +1,26 @@
 @import 'styles/theme';
 
 .edit {
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  &-back-container {
+    height: 120px;
+  }
+
+  &-content-container {
+    display: grid;
+    align-items: center;
+    flex: 1 1 auto;
+  }
+
   h1 {
     display: block;
     padding-bottom: 20px;
+    padding-top: 0;
   }
 
   form {
@@ -13,6 +30,7 @@
 
   .form-field {
     margin-top: 20px;
+    width: calc(100% - 7px);
   }
 
   &-backbutton {
@@ -20,8 +38,9 @@
   }
 
   &-savebutton {
+    display: block;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 40px !important;
   }
 
   &-successmessage {

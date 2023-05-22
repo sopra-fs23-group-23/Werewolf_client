@@ -5,6 +5,9 @@
     flex-direction: column;
     align-items: center;
     justify-items: center;
+    &.Day {
+        text-shadow: rgba(255, 255, 255, 0.7) 0 0 6px;
+    }
     h3 {
         font-family: $font-default;
         margin: 0 0 0.2em 0;

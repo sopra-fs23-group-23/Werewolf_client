@@ -74,8 +74,8 @@ class Log {
         newAction.setRepresentationDark(
           <div className={"mayor-event"}>
             <h3>{newAction.message}</h3>
-            <img className={"hat"} src={`/static/media/hat.png`} alt={"mayor representation"}/>
-            <img className={"bow-tie"} src={`/static/media/bow-tie.png`} alt={"mayor representation"}/>
+            <img className={"hat"} src={`/static/media/hat.webp`} alt={"mayor representation"}/>
+            <img className={"bow-tie"} src={`/static/media/bow-tie.webp`} alt={"mayor representation"}/>
             <Profile user={new Player(newAction.affectedPlayer)} mode="game-log" />
           </div>);
         break;
@@ -88,14 +88,14 @@ class Log {
             <h3>{newAction.message}</h3>
             <Profile user={new Player(newAction.affectedPlayer)} mode="game-log" />
             <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
-            <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-dark.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
+            <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-dark.webp`} alt={"Picture of a " + newAction.role[0].roleName}/>
           </div>);
         newAction.setRepresentationLight(
           <div className={"death-event"}>
             <h3>{newAction.message}</h3>
             <Profile user={new Player(newAction.affectedPlayer)} mode="game-log" />
             <p>{newAction.affectedPlayer.name + " was a " + this.getRoleListFormatted(newAction.role) + "."}</p>
-            <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-light.png`} alt={"Picture of a " + newAction.role[0].roleName}/>
+            <img className={"role-image"} src={`/static/media/${newAction.role[0].roleName}-light.webp`} alt={"Picture of a " + newAction.role[0].roleName}/>
           </div>);
         break;
 
@@ -114,17 +114,17 @@ class Log {
         newAction.setRepresentationDark(
           <div className={"seer-vision"}>
             <h3>{newAction.affectedPlayer.name + " is a " + roles[0] + "."}</h3>
-            <img className={"sphere"} src={`/static/media/sphere.png`} alt={"sphere"}/>
+            <img className={"sphere"} src={`/static/media/sphere.webp`} alt={"sphere"}/>
             <Profile user={new Player(newAction.affectedPlayer)} mode="game-log" />
-            <img className={"role-image"} src={`/static/media/${roles[0]}-dark.png`}
+            <img className={"role-image"} src={`/static/media/${roles[0]}-dark.webp`}
                  alt={"Picture of a " + roles[0]}/>
           </div>);
         newAction.setRepresentationLight(
           <div className={"seer-vision"}>
             <h3>{newAction.affectedPlayer.name + " is a " + roles[0] + "."}</h3>
-            <img className={"sphere"} src={`/static/media/sphere.png`} alt={"sphere"}/>
+            <img className={"sphere"} src={`/static/media/sphere.webp`} alt={"sphere"}/>
             <Profile user={new Player(newAction.affectedPlayer)} mode="game-log" />
-            <img className={"role-image"} src={`/static/media/${roles[0]}-light.png`}
+            <img className={"role-image"} src={`/static/media/${roles[0]}-light.webp`}
                  alt={"Picture of a " + roles[0]}/>
           </div>);
         break;
