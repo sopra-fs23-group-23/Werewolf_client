@@ -3,7 +3,7 @@ import 'styles/ui/Endscreen.scss';
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import Spinner from 'components/ui/Spinner';
-import { leaveCall, joinCall } from 'helpers/agora';
+import {leaveCall, joinCall, toggleOwnVideo, toggleAudio} from 'helpers/agora';
 import StorageManager from 'helpers/StorageManager';
 import { api } from 'helpers/api';
 
@@ -36,7 +36,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
     <Spinner />
   );
 
-  useEffect(() => {
+  useEffect(async () => {
     if (endData && lobby) {
   
       let winnerIds = lobby.players.filter(player => endData.players.some(winnerPlayer => winnerPlayer.id === player.id)).map(player => player.id);
@@ -51,7 +51,18 @@ const Endscreen = ({ endData, lobby, stage}) => {
         setLeaveText("Dissolve lobby");
       }
     }
-    joinCall();
+    try {
+      await joinCall();
+      if(StorageManager.getIsVideoEnabled() === "false") {
+        await toggleOwnVideo();
+      }
+      if(StorageManager.getIsMuted() === "true") {
+        await toggleAudio();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
   }, [endData, lobby, userId])
 
   return (

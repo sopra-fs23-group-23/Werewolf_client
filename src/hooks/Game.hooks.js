@@ -5,7 +5,7 @@ import { api } from "helpers/api";
 import Poll from "models/Poll";
 import Log from "../models/Log";
 import { useHistory } from 'react-router-dom';
-import {toggleOwnVideo, joinCall, leaveCall, tryVideoEnable, toggleAudio} from 'helpers/agora';
+import {toggleOwnVideo, joinCall, leaveCall, toggleAudio} from 'helpers/agora';
 
 let periodicFunctionToBeCalled = () => {};
 let logger = new Log();
@@ -176,7 +176,6 @@ export const useGame = () => {
             await fetchGame();
             await fetchPoll();
             setStarted(true);
-            await tryVideoEnable();
             periodicFunctionToBeCalled = fetchPoll;
             intervalKeeper = setInterval(periodicFunctionCaller, 1000);
           }, timeoutDuration);
