@@ -15,7 +15,7 @@ export const HomeGuard = (props) => {
   if (StorageManager.getUserToken()) {
     return props.children;
   }
-  return <Redirect to="/authenticate" />;
+  return <Redirect to="/login" />;
 };
 
 HomeGuard.propTypes = {

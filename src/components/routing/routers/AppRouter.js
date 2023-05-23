@@ -1,7 +1,8 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { HomeGuard } from '../routeProtectors/HomeGuard';
 import { LoginGuard } from 'components/routing/routeProtectors/LoginGuard';
-import Authenticate from 'components/views/Authenticate';
+import Login from 'components/views/Login';
+import Register from 'components/views/Register';
 import Lobby from 'components/views/Lobby';
 import Game from 'components/views/Game';
 import Edit from 'components/views/Edit';
@@ -11,9 +12,14 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/authenticate">
+        <Route exact path="/register">
           <LoginGuard>
-            <Authenticate />
+            <Register />
+          </LoginGuard>
+        </Route>
+        <Route exact path="/login">
+          <LoginGuard>
+            <Login />
           </LoginGuard>
         </Route>
         <Route exact path="/lobby">
