@@ -48,7 +48,7 @@ const Endscreen = ({ endData, lobby, stage}) => {
       setLooserArray(lobby.players.filter(player => loserIds.includes(player.id)));
 
       if (userId === lobby.admin.id) {
-        setLeaveText("Dissolve lobby");
+        setLeaveText("Dissolve Lobby");
       }
     }
     safeJoinCall();

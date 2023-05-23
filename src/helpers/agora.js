@@ -87,13 +87,26 @@ export async function leaveCall() {
 export async function toggleOwnVideo() {
   if (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
     await channelParameters.localVideoTrack.setEnabled(false);
+    
+    document.getElementById("disableVideo").style.transition = "none";
     document.getElementById("disableVideo").classList.remove("enabled");
+    setTimeout(() => {
+      document.getElementById("disableVideo").style.transition = "background-image 3s ease, border 3s";
+    }, 100);
+
     StorageManager.setIsVideoEnabled("false");
+    
     let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
     removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
   } else if (channelParameters.localVideoTrack){
     await channelParameters.localVideoTrack.setEnabled(true);
+
+    document.getElementById("disableVideo").style.transition = "none";
     document.getElementById("disableVideo").classList.add("enabled");
+    setTimeout(() => {
+      document.getElementById("disableVideo").style.transition = "background-image 3s ease, border 3s";
+    }, 100);
+    
     StorageManager.setIsVideoEnabled("true");
 
     //render video
@@ -106,11 +119,23 @@ export async function toggleOwnVideo() {
 export async function toggleAudio() {
   if (channelParameters.localAudioTrack.enabled) {
     channelParameters.localAudioTrack.setEnabled(false);
+    
+    document.getElementById("muteAudio").style.transition = "none";
     document.getElementById("muteAudio").classList.remove("enabled");
+    setTimeout(() => {
+      document.getElementById("muteAudio").style.transition = "background-image 3s ease, border 3s";
+    }, 100);
+    
     StorageManager.setIsMuted("true");
   } else {
     channelParameters.localAudioTrack.setEnabled(true);
+    
+    document.getElementById("muteAudio").style.transition = "none";
     document.getElementById("muteAudio").classList.add("enabled");
+    setTimeout(() => {
+      document.getElementById("muteAudio").style.transition = "background-image 3s ease, border 3s";
+    }, 100);
+
     StorageManager.setIsMuted("false");
   }
 }

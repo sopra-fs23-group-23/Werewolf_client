@@ -54,7 +54,7 @@ const Game = () => {
   const agoraVideoButton = document.getElementById(`disableVideo`);
   if (game?.stage.type === "Night" && agoraVideoButton) {
     agoraVideoButton.setAttribute('hidden', 'true');
-  }else{
+  } else {
     if (agoraVideoButton) {
       agoraVideoButton.removeAttribute('hidden');
     }
@@ -89,8 +89,14 @@ const Game = () => {
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
         <div>
-          <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-${textTheme} ${isMuted}`}></div>
-          {((game?.stage.type === "Day" || finished)? <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-${textTheme} ${videoEnabled}`}></div> : "")}
+          <div
+            id='muteAudio'
+            onClick={toggleAudio}
+            alt='microphone'
+            className={`agora-button agora-button-audio-${textTheme} ${isMuted}`}
+            style={{transition: "background-image 3s ease, border 3s"}}
+          ></div>
+          {((game?.stage.type === "Day" || finished) ? <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-${textTheme} ${videoEnabled}`}></div> : "")}
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />
