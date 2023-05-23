@@ -17,28 +17,6 @@
     position: absolute;
     margin-top: 30px;
     margin-left: 30px;
-    &-agora {
-      img {
-        padding: 5px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-bottom: 5px;
-        user-select: none;
-        border: solid 2px white;
-        background-repeat: no-repeat;
-        background-size: 70% auto;
-        background-position: center;
-        transition: background-image 3s ease, border 3s;
-        &:hover {
-          cursor: pointer;
-          background-color: rgba(0,0,0,0.4);
-        }
-      }
-    }
   }
   
   &-stage-info {

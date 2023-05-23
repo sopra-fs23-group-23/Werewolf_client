@@ -1,0 +1,37 @@
+.agora-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid 2px white;
+  background-repeat: no-repeat;
+  background-size: 70% auto;
+  background-position: center;
+  transition: background-image 3s ease, border 3s;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.4);
+  }
+  &-audio {
+    &-dark {
+      &.enabled {
+        background-image: url('../../../public/static/media/microphone-enabled-black.svg');
+      }
+      &.disabled {
+        background-image: url('../../../public/static/media/microphone-disabled-black.svg');
+      }
+    }
+    &-light {
+      &.enabled {
+        background-image: url('../../../public/static/media/microphone-enabled-white.svg');
+      }
+      &.disabled {
+        background-image: url('../../../public/static/media/microphone-disabled-white.svg');
+      }
+    }
+  }
+  &-video {
+  }
+}
