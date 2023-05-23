@@ -82,9 +82,9 @@ const Lobby = () => {
           <div className='details-wrapper'>
               <h1 className="left-align">Lobby</h1>
               <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
-              <div className={`game-controls-agora game-controls-agora-light`}>
-                <img className='info-button' id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
-                <img className='info-button' id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
+              <div className="game-controls-agora game-controls-agora-light">
+                <img id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
+                <img id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
               </div>
           </div>
           <div className='admin-wrapper'>
