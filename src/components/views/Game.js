@@ -16,20 +16,6 @@ const Game = () => {
   const [popupActive, setPopupActive] = useState(false);
   const [eventLogActive, setEventLogActive] = useState(false);
   const [amountEventsRead, setAmountEventsRead] = useState(0);
-
-  // only used to show the correct icon
-  const [isMuted, setIsMuted] = useState(false);
-  const [isVideoEnabled, setIsVideoEnabled] = useState(false);
-
-  const toggleAudioControl = () => {
-    setIsMuted(!isMuted);
-    toggleAudio();
-  }
-
-  const toggleVideoControl = () => {
-    setIsVideoEnabled(!isVideoEnabled);
-    toggleOwnVideo();
-  }
  
   const togglePopup = () => {
     setPopupActive(!popupActive);
@@ -103,8 +89,8 @@ const Game = () => {
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
         <div>
-          <div id='muteAudio' onClick={toggleAudioControl} alt='microphone' className={`agora-button agora-button-audio-${textTheme} ${(isMuted ? '' : 'enabled')}`}></div>
-          {((game?.stage.type === "Day" || finished)? <div id='disableVideo' onClick={toggleVideoControl} alt='video' className={`agora-button agora-button-video-${textTheme} ${(isVideoEnabled ? '' : 'enabled')}`}></div> : "")}
+          <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-${textTheme} enabled`}></div>
+          {((game?.stage.type === "Day" || finished)? <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-${textTheme} enabled`}></div> : "")}
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />

@@ -87,13 +87,13 @@ export async function leaveCall() {
 export async function toggleOwnVideo() {
   if (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
     await channelParameters.localVideoTrack.setEnabled(false);
-    document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
+    document.getElementById("disableVideo").classList.remove("enabled");
     StorageManager.setIsVideoEnabled("false");
     let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
     removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
   } else if (channelParameters.localVideoTrack){
     await channelParameters.localVideoTrack.setEnabled(true);
-    document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
+    document.getElementById("disableVideo").classList.add("enabled");
     StorageManager.setIsVideoEnabled("true");
 
     //render video
@@ -106,9 +106,11 @@ export async function toggleOwnVideo() {
 export async function toggleAudio() {
   if (channelParameters.localAudioTrack.enabled) {
     channelParameters.localAudioTrack.setEnabled(false);
+    document.getElementById("muteAudio").classList.remove("enabled");
     StorageManager.setIsMuted("true");
   } else {
     channelParameters.localAudioTrack.setEnabled(true);
+    document.getElementById("muteAudio").classList.add("enabled");
     StorageManager.setIsMuted("false");
   }
 }
