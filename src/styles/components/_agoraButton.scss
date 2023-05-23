@@ -17,6 +17,7 @@
   &-audio {
     &-dark {
       background-image: url('../../../public/static/media/microphone-disabled-black.svg');
+      border-color: $color-text-dark;
       &.enabled {
         background-image: url('../../../public/static/media/microphone-enabled-black.svg');
       }
@@ -29,5 +30,18 @@
     }
   }
   &-video {
+    &-dark {
+      background-image: url('../../../public/static/media/video-disabled-black.svg');
+      border-color: $color-text-dark;
+      &.enabled {
+        background-image: url('../../../public/static/media/video-enabled-black.svg');
+      }
+    }
+    &-light {
+      background-image: url('../../../public/static/media/video-disabled-white.svg');
+      &.enabled {
+        background-image: url('../../../public/static/media/video-enabled-white.svg');
+      }
+    }
   }
 }

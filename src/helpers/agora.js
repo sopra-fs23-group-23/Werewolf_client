@@ -106,11 +106,9 @@ export async function toggleOwnVideo() {
 export async function toggleAudio() {
   if (channelParameters.localAudioTrack.enabled) {
     channelParameters.localAudioTrack.setEnabled(false);
-    document.getElementById("muteAudio").src = "/static/media/microphone-disabled.svg";
     StorageManager.setIsMuted("true");
   } else {
     channelParameters.localAudioTrack.setEnabled(true);
-    document.getElementById("muteAudio").src = "/static/media/microphone-enabled.svg";
     StorageManager.setIsMuted("false");
   }
 }
