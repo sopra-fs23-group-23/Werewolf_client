@@ -3,6 +3,7 @@ import Spinner from 'components/ui/Spinner';
 import { useLobby } from 'hooks/Lobby.hooks';
 import { api } from 'helpers/api';
 import Profile from 'components/ui/Profile';
+import { useState } from 'react';
 import {useHistory} from "react-router-dom";
 import StorageManager from 'helpers/StorageManager';
 import { toggleOwnVideo, toggleAudio } from 'helpers/agora';
@@ -46,6 +47,21 @@ let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg
 
 const Lobby = () => {
   const history = useHistory();
+
+  // only used to show the correct icon
+  const [isMuted, setIsMuted] = useState(false);
+  const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+
+  const toggleAudioControl = () => {
+    setIsMuted(!isMuted);
+    toggleAudio();
+  }
+
+  const toggleVideoControl = () => {
+    setIsVideoEnabled(!isVideoEnabled);
+    toggleOwnVideo();
+  }
+
   function leave() {
     api.delete(`/lobbies/${lobby.id}`);
     leaveCall();
@@ -83,10 +99,8 @@ const Lobby = () => {
               <h1 className="left-align">Lobby</h1>
               <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
               <div>
-                <div id='muteAudio' onClick={toggleAudio} alt='microphone' className='agora-button agora-button-audio-light enabled'></div>
-                <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className='agora-button agora-button-video-light enabled'></div>
-                {/* <img  src={`/static/media/${microphone}`}  /> */}
-                {/* <img id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' /> */}
+                <div id='muteAudio' onClick={toggleAudioControl} alt='microphone' className={`agora-button agora-button-audio-light  ${(isMuted ? '' : 'enabled')}`}></div>
+                <div id='disableVideo' onClick={toggleVideoControl} alt='video' className={`agora-button agora-button-video-light ${(isVideoEnabled ? '' : 'enabled')}`}></div>
               </div>
           </div>
           <div className='admin-wrapper'>
