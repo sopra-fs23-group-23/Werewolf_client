@@ -80,7 +80,7 @@ const Game = () => {
   }
 
   return (
-    <div className={`background background-${backgroundTheme}-image game`}>
+    <div className={`background background-${backgroundTheme} background-${backgroundTheme}-image game`}>
       {content}
       <div className='game-controls'>
         <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>

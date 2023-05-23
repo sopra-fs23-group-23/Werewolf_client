@@ -28,9 +28,9 @@ Agora (Agora.io) is used for the voicechat
 
 - In the [Game.js](src/components/views/Game.js) component, the game and poll data from the Game.hook.js is used to display the relevant view to the user, as well as providing controls for muting, etc.If the game has ended, an endscreen shows the winning party and allows the players to leave the game.If the game is still ongoing, the poll object is checked to see if the user takes part in the poll and therefore displays the Stage. If the player is not part of the Poll, a waiting screen is shown.
 
-- In the [Stage.js](src/components/ui/game/Stage.js) component, the poll is displayed to the participating user. Depending on the active role, two different kinds of subcomponents are shown.In Selection Components (MultiOption.js and SingleOption.js), users can be clicked on to vote for them. In Display Components (Hitlist.js, CupidMatch.js), the currently casted votes are displayed to indicate the likely outcome of the poll. 
+- In the [Stage.js](src/components/ui/game/Stage.js) component, the poll is displayed to the participating user. Depending on the active role, two different kinds of subcomponents are shown. In the MultiOption component users can be clicked on to vote for them. In Display Components (Hitlist.js, CupidMatch.js), the currently casted votes are displayed to indicate the likely outcome of the poll. 
 
-- If multiple Users can be selected in a poll, the [MultiOption.js](src/components/ui/game/selection/MultiOption.js) component is displayed. It renders the Profiles of the players that can be voted for. If only one player participates in the vote (Witch, Hunter, Seer, etc.), the voted for player is additionally highlighted. 
+- The [MultiOption.js](src/components/ui/game/selection/MultiOption.js) component is displayed to render the Profiles of the players that can be voted for. If only one player participates in the vote (Witch, Hunter, Seer, etc.), the player that is voted for is additionally highlighted. 
 
 - The [Hitlist.js](src/components/ui/game/display/Hitlist.js) component renders above the selection component and displays the profile of the users that received the most votes. The player(s) that received the most votes (hitlist leader) is displayed larger and in the center since that player is likely to be killed when the poll ends.
 
@@ -94,7 +94,10 @@ The application was developed for the SOPRA 23 course by:
 - Miro Vannini ([@mirovv](https://github.com/mirovv))
 - David Scherrer ([@djscherrer](https://github.com/djscherrer))
 
-A special thank you to our TA Jerome Maier for supporting us during the project.
+
+We would like to thank the following people for their contributions during the project:
+- Jerome Maier, for his support as our TA.
+- Milo Ranft, for the many drawings of the roles and landscapes.
 
 ## Contributing
 

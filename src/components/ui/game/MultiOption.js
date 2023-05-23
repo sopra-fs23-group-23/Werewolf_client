@@ -1,17 +1,28 @@
-import Profile from '../../Profile';
+import Profile from '../Profile';
 import Player from 'models/Player';
-import {api} from "../../../../helpers/api";
-import storageManager from "../../../../helpers/StorageManager";
+import {api} from "../../../helpers/api";
+import storageManager from "../../../helpers/StorageManager";
 
 const MultiOption = ({currentPoll, stage}) => {
 
   let voteParticipantIds = currentPoll.participants.map(p => p.player.id);
 
-  const singleVoters = ["Witch", "Hunter", "Seer", "Mayor", "Mayor-Death"];
-  const singleKillVoters = ["Witch", "Hunter", "Seer", "Mayor"];
+  const singleVoters = ["Witch-Kill", "Witch-Heal", "Hunter", "Seer", "Mayor-Kill", "Mayor-Death"];
+  const singleKillVoters = ["Witch-Kill", "Hunter", "Seer", "Mayor-Kill"];
   const singleSelectVoters = ["Seer", "Mayor-Death"];
+  const singleSaveVoters = ["Witch-Heal"];
 
-  const roleType = (currentPoll.question === "Who should become the mayor?" && currentPoll.role === "Mayor") ? "Mayor-Death": currentPoll.role;
+  let roleType = currentPoll.role;
+
+  if (currentPoll.role === "Mayor" && currentPoll.question === "Who should become the mayor?") {
+    roleType = "Mayor-Death";
+  } else if (currentPoll.role === "Mayor" && currentPoll.question === "Who do you suspect to be a werewolf?") {
+    roleType = "Mayor-Kill";
+  } else if (currentPoll.role === "Witch" && currentPoll.question === "Select a player to kill with your poison potion.") {
+    roleType = "Witch-Kill";
+  } else if (currentPoll.role === "Witch" && currentPoll.question === "Save this player from dying with your heal potion.") {
+    roleType = "Witch-Heal";
+  }
 
   const getSelectionMode = (player) => {
     let selectionMode = "selection-small";
@@ -22,6 +33,8 @@ const MultiOption = ({currentPoll, stage}) => {
           selectionMode += "-kill";
         } else if (singleSelectVoters.includes(roleType)) {
           selectionMode += "-select";
+        } else if (singleSaveVoters.includes(roleType)) {
+          selectionMode += "-save";
         }
       } else if (currentPoll.ownVote) {
         selectionMode += "-hidden";
@@ -50,7 +63,6 @@ const MultiOption = ({currentPoll, stage}) => {
       await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.ownVote.id);
     } catch (error) {
       console.error(error);
-      alert(error.response.data?.message || 'Vote failed');
     }
   };
 
@@ -70,16 +82,11 @@ const MultiOption = ({currentPoll, stage}) => {
         className= {buttonTheme}
         onClick={removeVote}
     >
-        Remove Vote
+        remove Vote
     </button>
   );
 
   let content;
-
-  // Filter this to not contain top 5 of hitlist
-  // let hitListMembers = currentPoll.voteArray.slice(0, 5).map(option => option[0].id);
-  // let pollOptions = currentPoll.pollOptions.filter(option => !hitListMembers.includes(option.player.id));
-
   switch (currentPoll.role) {
     case 'Werewolf':
       content = (
@@ -91,10 +98,10 @@ const MultiOption = ({currentPoll, stage}) => {
       );
       break;
     // Single Role Voters
-    case 'Witch':
+    case 'Witch': // Witch-Kill, Witch-Heal
     case 'Hunter':
     case 'Seer':
-    case 'Mayor': //Solve Tie and Death
+    case 'Mayor': // Mayor-Kill, Mayor-Death
       content = (
         <>
           {selectionProfiles(currentPoll.pollOptions)}
