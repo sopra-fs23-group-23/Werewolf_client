@@ -1,8 +1,8 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
 import StorageManager from "./StorageManager";
 
-const appId = '348d6a205d75436e916896366c5e315c';
-AgoraRTC.setLogLevel(2);
+const appId = '2d64cdbec0324225b28f83ed19f75397';
+AgoraRTC.setLogLevel(4);
 var users = [];
 
 let channelParameters =
@@ -31,13 +31,13 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     // Play the remote audio track.
     channelParameters.remoteAudioTrack.play();
   } else if (mediaType === "video") {
+    users = users.filter(u => u.uid !== user.uid);
     users.push(user);
-    console.log("All remote users:", users);
     try {
       subscribeToRemoteVideoTrack(user);
     } catch (e) {
       //TODO remove this error, only logged for development purposes
-      console.error(e);
+      console.error("error in user-published event", e);
       setTimeout(function() {subscribeToRemoteVideoTrack(user)}, 2000);
     }
   }
@@ -53,19 +53,19 @@ export function subscribeToRemoteVideoTrack (user) {
   channelParameters.remoteUid = user.uid.toString();
   // Play the remote video track.
   let isDisplay = (document.getElementById(`profile-video-display-${user.uid}`) ? "-display" : "");
-  document.getElementById(`profile-video${isDisplay}-${user.uid}`).innerHTML = "";
+  removeInnerHTML(`profile-video${isDisplay}-${user.uid}`);
   channelParameters.remoteVideoTrack.play(document.getElementById(`profile-video${isDisplay}-${user.uid}`));
   // Subscribe and play the remote video track.
 }
 
 agoraEngine.on("user-unpublished", (user, mediaType) => {
+  console.log("user-unpublished", user, mediaType);
   users = users.filter(u => u.uid !== user.uid);
   let isDisplay = (document.getElementById(`profile-image-display-${user.uid}`) ? "-display" : "");
-  document.getElementById(`profile-video${isDisplay}-${user}`).innerHTML = "";
+  removeInnerHTML(`profile-video${isDisplay}-${user}`);
 });
 
 export async function joinCall() {
-  const agoraEngine = StorageManager.getAgoraEngine();
   // Join a channel.
   await agoraEngine.join(appId, StorageManager.getLobbyId(), StorageManager.getChannelToken(), parseInt(StorageManager.getUserId()));
   // Create a local audio track from the microphone audio.
@@ -74,12 +74,11 @@ export async function joinCall() {
   channelParameters.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
   // Publish the local audio track in the channel.
   await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
-  document.getElementById(`profile-video-${StorageManager.getUserId()}`).innerHTML = "";
+  removeInnerHTML(`profile-video-${StorageManager.getUserId()}`);
   await channelParameters.localVideoTrack.play(document.getElementById(`profile-video-${StorageManager.getUserId()}`));
 }
 
 export async function leaveCall() {
-  const agoraEngine = StorageManager.getAgoraEngine();
   StorageManager.removeChannelToken();
   StorageManager.removeIsMuted();
   StorageManager.removeIsVideoEnabled();
@@ -94,7 +93,7 @@ export async function toggleOwnVideo() {
     document.getElementById("disableVideo").src = "/static/media/video-disabled.svg";
     StorageManager.setIsVideoEnabled("false");
     let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
-    document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`).innerHTML = "";
+    removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
   } else if (channelParameters.localVideoTrack){
     await channelParameters.localVideoTrack.setEnabled(true);
     document.getElementById("disableVideo").src = "/static/media/video-enabled.svg";
@@ -102,24 +101,7 @@ export async function toggleOwnVideo() {
 
     //render video
     let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
-    document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`).innerHTML = "";
-    await channelParameters.localVideoTrack.play(document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`));
-  }
-}
-
-export async function forceVideoDisable() {
-  if (channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
-    await channelParameters.localVideoTrack.setEnabled(false);
-    let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
-    document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`).innerHTML = "";
-  }
-}
-
-export async function tryVideoEnable() {
-  if(channelParameters.localVideoTrack && StorageManager.getIsVideoEnabled() === "true") {
-    await channelParameters.localVideoTrack.setEnabled(true);
-    let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
-    document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`).innerHTML = "";
+    removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
     await channelParameters.localVideoTrack.play(document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`));
   }
 }
@@ -136,14 +118,46 @@ export async function toggleAudio() {
   }
 }
 
+function removeInnerHTML(elementId) {
+  if (document.getElementById(elementId)){
+    document.getElementById(elementId).innerHTML = "";
+  }
+}
+
+export async function disableVideoNight(){
+  users = [];
+  try {
+    if(channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
+      await channelParameters.localVideoTrack.setEnabled(false);
+      let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
+      removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function enableVideoAutomatic() {
+    if(StorageManager.getIsVideoEnabled() === "true" && channelParameters.localVideoTrack) {
+      await channelParameters.localVideoTrack.setEnabled(true);
+      let isDisplay = (document.getElementById(`profile-video-display-${StorageManager.getUserId()}`) ? "-display" : "");
+      removeInnerHTML(`profile-video${isDisplay}-${StorageManager.getUserId()}`);
+      await channelParameters.localVideoTrack.play(document.getElementById(`profile-video${isDisplay}-${StorageManager.getUserId()}`));
+    }
+}
+
 export async function renderVideo(userId, moveDisplay) {
+  console.log("renderVideo", userId, " " , moveDisplay);
   let renderedTrack = null;
   if (userId.toString() === StorageManager.getUserId() && channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
     renderedTrack = channelParameters.localVideoTrack;
-  } else if (users.find(user => user && user.uid && user.uid.toString() === userId.toString() && user.videoTrack && user.videoTrack.enabled)){
+  } else if (users.find(user => user && user.uid && user.uid.toString() === userId.toString() && user.videoTrack)){ //(user.videoTrack && user.videoTrack.enabled) || moveDisplay !== null)
     let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
+    console.log("renderVideo", user.videoTrack, " " , user.videoTrack.enabled)
     renderedTrack = user.videoTrack;
+    console.log("renderedTrack", renderedTrack);
   }
+  console.log("renderedTrack", renderedTrack);
 
   let isDisplay;
   if (moveDisplay == null){
@@ -151,12 +165,38 @@ export async function renderVideo(userId, moveDisplay) {
   } else {
     isDisplay = (moveDisplay) ? "-display" : "";
   }
-
+  if (moveDisplay){
+    console.log("removeInnerHTML ", `profile-video${isDisplay}-${userId}`);
+    removeInnerHTML(`profile-video-${userId}`);
+  }
   if (renderedTrack) {
-    document.getElementById(`profile-video${isDisplay}-${userId}`).innerHTML = "";
+    console.log("removeInnerHTML and play", `profile-video${isDisplay}-${userId}`);
+    removeInnerHTML(`profile-video${isDisplay}-${userId}`);
     await renderedTrack.play(document.getElementById(`profile-video${isDisplay}-${userId}`));
   }
-  if (moveDisplay){
-    document.getElementById(`profile-video-${userId}`).innerHTML = "";
-  }
+}
+
+export async function checkConnectionState(){
+  console.log(agoraEngine.connectionState);
+  if(agoraEngine.connectionState === "DISCONNECTED"){
+    return true;
+  }else{
+      return false;
+    }
+}
+
+export async function safeJoinCall() {
+  setTimeout(async () => {
+    if (await checkConnectionState()) {
+      await joinCall();
+      if (StorageManager.getIsVideoEnabled() === "false") {
+        await toggleOwnVideo();
+      }
+      if (StorageManager.getIsMuted() === "true") {
+        await toggleAudio();
+      }
+    } else {
+      await enableVideoAutomatic();
+    }
+  }, 1200)
 }

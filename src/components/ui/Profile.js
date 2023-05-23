@@ -18,21 +18,16 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   };
 
   useEffect(() => {
-    renderVideo(user.id, null);
-    
     if((mode === "hitlist" || mode === "hitlist-leader" || mode === "lover")) {
+      
       renderVideo(user.id, true);
 
       return () => {
         renderVideo(user.id, false);
       };
+    } else {
+      renderVideo(user.id, null);
     }
-    // setTimeout(() => {
-    //   setVideoIfStream(true, user.id);
-    //   return () => {
-    //     setVideoIfStream(false, user.id);
-    //   }
-    // }, 1000);
 
   }, [mode, user.id]);
 
@@ -47,7 +42,7 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
         <div className={`video profile-${mode}-video ${inHitlist}`} id={`profile-video${isDisplay}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}/>
-      <div className="profile-name">{user.name}</div>
+      <div className="profile-name"><p>{user.name}</p></div>
       {votes && (
         <h2 className="profile-votes">
           {votes} {votes === 1 ? 'vote' : 'votes'}

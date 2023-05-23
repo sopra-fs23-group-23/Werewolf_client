@@ -2,8 +2,7 @@
 import Profile from '../Profile';
 import Player from 'models/Player';
 import Countdown from '../Countdown';
-import MultiOption from './selection/MultiOption';
-import SingleOption from './selection/SingleOption';
+import MultiOption from './MultiOption';
 import Hitlist from './display/Hitlist';
 import CupidMatch from './display/CupidMatch';
 import Spinner from '../Spinner';
@@ -13,13 +12,8 @@ const Stage = ({ currentPoll, lobby, stage}) => {
 
   let backgroundTheme = stage === "Day" ? "light" : "dark";
 
-  let voteType = currentPoll.role;
-  if (currentPoll.role === "Witch") {
-    voteType = (currentPoll.question === "Select a player to kill with your poison potion.") ? "Witch-Kill" : "Witch-Heal";
-  }
-
   let HitlistType = null;
-  switch (voteType) {
+  switch (currentPoll.role) {
     case "Cupid":
       HitlistType = <CupidMatch currentPoll={currentPoll} />
       break;
@@ -31,16 +25,6 @@ const Stage = ({ currentPoll, lobby, stage}) => {
       HitlistType = null; // No Hitlist required, because only one person is allowed to vote
       break;
   }
-  
-  let SelectionType = null;
-  switch (voteType) {
-    case "Witch-Heal": //For Polls where one participant can vote for one pollOption (1 Participant : 1 Option)
-      SelectionType = <SingleOption currentPoll={currentPoll} stage={stage} />
-      break;
-    default: //For Polls where one or multiple participant can vote for multiple pollOptions (1 Participant : n Options), (n Participants : n Options)
-      SelectionType = <MultiOption currentPoll={currentPoll} stage={stage} />
-      break;
-  }
 
   let content = (
     <Spinner theme={backgroundTheme} />
@@ -50,7 +34,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
     content = (
       <>
         {HitlistType}
-        {SelectionType}
+        <MultiOption currentPoll={currentPoll} stage={stage} />
       </>
     )
   } else {

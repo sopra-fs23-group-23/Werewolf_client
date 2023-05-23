@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Labrada:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Labrada:wght@300;400;500;600;700;800&display=swap');
 @import 'styles/theme';
 @import 'styles/components/button';
 @import 'styles/components/infoButton';
@@ -56,6 +56,13 @@ a {
   text-decoration: none;
 }
 
+p {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+
 .background {
   transition: background-image 4s ease, color 3s ease, background-color 4s ease;
   z-index: -2;
@@ -65,11 +72,16 @@ a {
     transition: color 3s ease, background-color 4s ease;
     background-color: $color-bg-light;
     color: $color-text-dark;
+    p, h2, h5 {
+      text-shadow: rgba(255, 255, 255, 1) 0 0 6px;
+    }
+    
   }
   &-dark {
     transition: color 3s ease, background-color 4s ease;
     background-color: $color-bg-dark;
     color: $color-text-light;
+    
   }
   &-dark-image {
     background-color: $color-bg-dark;

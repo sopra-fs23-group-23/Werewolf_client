@@ -80,17 +80,17 @@ const Game = () => {
   }
 
   return (
-    <div className={`background background-${backgroundTheme}-image game`}>
+    <div className={`background background-${backgroundTheme} background-${backgroundTheme}-image game`}>
       {content}
       <div className='game-controls'>
         <div className={`info-button info-button-${textTheme}`} onClick={togglePopup}>i</div>
         <div className={`log-container`}>
-          <div className={`update ${!(getUpdateAmount() === 0) ? "update-active" : "update-not-active"}`}>{getUpdateAmount()}</div>
+          <div className={`update ${getUpdateAmount() !== 0 ? "update-active" : "update-not-active"}`}>{getUpdateAmount()}</div>
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
         <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
             <img className={`info-button info-button-${textTheme}`} id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
-            <img className={`info-button info-button-${textTheme}`} id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
+          {((game?.stage.type === "Day" || finished)? <img className={`info-button info-button-${textTheme} video-button-delayed`} id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' /> : "")}
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />
