@@ -132,6 +132,11 @@ export const useGame = () => {
   const showInfoScreen = async () => {
     try {
       await api.get(`/games/${lobbyId}`);
+      try {
+        setTimeout(safeJoinCall, 1200);
+      } catch (e)  {
+        console.error(e);
+      }
       return false; // game has already started --> don't show info screen
     } catch (error) {
       if (error.response.status === 404) {
