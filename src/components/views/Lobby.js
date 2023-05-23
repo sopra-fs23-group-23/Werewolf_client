@@ -47,8 +47,8 @@ let videoEnabled = (StorageManager.getIsVideoEnabled() === "true") ? "enabled" :
 const Lobby = () => {
   const history = useHistory();
 
-  function leave() {
-    api.delete(`/lobbies/${lobby.id}`);
+  async function leave() {
+    await api.delete(`/lobbies/${lobby.id}`);
     leaveCall();
     StorageManager.removeChannelToken();
     history.replace('/home');
