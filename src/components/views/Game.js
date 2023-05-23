@@ -45,8 +45,8 @@ const Game = () => {
   let backgroundTheme = (game?.stage.type === "Day") ? "light" : "dark";
   let textTheme = (game?.stage.type === "Day") ? "dark" : "light";
 
-  let microphone = (StorageManager.getIsMuted() === "true") ? "microphone-disabled.svg" : "microphone-enabled.svg";
-  let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg" : "video-disabled.svg";
+  let isMuted = (StorageManager.getIsMuted() === "true") ? "" : "enabled";
+  let videoEnabled = (StorageManager.getIsVideoEnabled() === "true") ? "enabled" : "";
 
 
   var content = Information();
@@ -89,8 +89,8 @@ const Game = () => {
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
         <div>
-          <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-${textTheme}`}></div>
-          {((game?.stage.type === "Day" || finished)? <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-${textTheme}`}></div> : "")}
+          <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-${textTheme} ${isMuted}`}></div>
+          {((game?.stage.type === "Day" || finished)? <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-${textTheme} ${videoEnabled}`}></div> : "")}
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />

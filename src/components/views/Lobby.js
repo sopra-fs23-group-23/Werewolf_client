@@ -41,8 +41,8 @@ const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) =>
 }
 StorageManager.setIsMuted("false");
 StorageManager.setIsVideoEnabled("true");
-let microphone = (StorageManager.getIsMuted() === "true") ? "microphone-disabled.svg" : "microphone-enabled.svg";
-let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg" : "video-disabled.svg";
+let isMuted = (StorageManager.getIsMuted() === "true") ? "" : "enabled";
+let videoEnabled = (StorageManager.getIsVideoEnabled() === "true") ? "enabled" : "";
 
 const Lobby = () => {
   const history = useHistory();
@@ -84,8 +84,8 @@ const Lobby = () => {
               <h1 className="left-align">Lobby</h1>
               <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
               <div>
-                <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-light enabled`}></div>
-                <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-light enabled`}></div>
+                <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-light ${isMuted}`}></div>
+                <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-light ${videoEnabled}`}></div>
               </div>
           </div>
           <div className='admin-wrapper'>
