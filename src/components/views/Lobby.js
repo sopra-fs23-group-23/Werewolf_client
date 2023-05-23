@@ -61,7 +61,6 @@ const Lobby = () => {
 
   if(lobby && lobby.closed) {
     clearInterval(intervalId);
-
     history.push(`/game`);
   }
 

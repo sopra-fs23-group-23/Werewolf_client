@@ -36,8 +36,6 @@ agoraEngine.on("user-published", async (user, mediaType) => {
     try {
       subscribeToRemoteVideoTrack(user);
     } catch (e) {
-      //TODO remove this error, only logged for development purposes
-      console.error("error in user-published event", e);
       setTimeout(function() {subscribeToRemoteVideoTrack(user)}, 2000);
     }
   }
@@ -59,7 +57,6 @@ export function subscribeToRemoteVideoTrack (user) {
 }
 
 agoraEngine.on("user-unpublished", (user, mediaType) => {
-  console.log("user-unpublished", user, mediaType);
   users = users.filter(u => u.uid !== user.uid);
   let isDisplay = (document.getElementById(`profile-image-display-${user.uid}`) ? "-display" : "");
   removeInnerHTML(`profile-video${isDisplay}-${user}`);
@@ -147,17 +144,13 @@ export async function enableVideoAutomatic() {
 }
 
 export async function renderVideo(userId, moveDisplay) {
-  console.log("renderVideo", userId, " " , moveDisplay);
   let renderedTrack = null;
   if (userId.toString() === StorageManager.getUserId() && channelParameters.localVideoTrack && channelParameters.localVideoTrack.enabled) {
     renderedTrack = channelParameters.localVideoTrack;
   } else if (users.find(user => user && user.uid && user.uid.toString() === userId.toString() && user.videoTrack)){ //(user.videoTrack && user.videoTrack.enabled) || moveDisplay !== null)
     let user = users.find(user => user && user.uid && user.uid.toString() === userId.toString());
-    console.log("renderVideo", user.videoTrack, " " , user.videoTrack.enabled)
     renderedTrack = user.videoTrack;
-    console.log("renderedTrack", renderedTrack);
   }
-  console.log("renderedTrack", renderedTrack);
 
   let isDisplay;
   if (moveDisplay == null){
@@ -166,18 +159,15 @@ export async function renderVideo(userId, moveDisplay) {
     isDisplay = (moveDisplay) ? "-display" : "";
   }
   if (moveDisplay){
-    console.log("removeInnerHTML ", `profile-video${isDisplay}-${userId}`);
     removeInnerHTML(`profile-video-${userId}`);
   }
   if (renderedTrack) {
-    console.log("removeInnerHTML and play", `profile-video${isDisplay}-${userId}`);
     removeInnerHTML(`profile-video${isDisplay}-${userId}`);
     await renderedTrack.play(document.getElementById(`profile-video${isDisplay}-${userId}`));
   }
 }
 
 export async function checkConnectionState(){
-  console.log(agoraEngine.connectionState);
   if(agoraEngine.connectionState === "DISCONNECTED"){
     return true;
   }else{

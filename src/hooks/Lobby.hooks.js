@@ -14,10 +14,9 @@ export const useLobby = () => {
   const fetchLobby = useCallback(async () => {
     try {
       const response = await api.get(`/lobbies/${lobbyId}`);
-      console.log(response)
       setLobby(new LobbyModel(response.data));
     } catch (error) {
-      console.error("Details:", error);
+      console.error("Something went wrong while fetching the lobby: ", error);
       setError(error);
     }
   },
@@ -29,7 +28,7 @@ export const useLobby = () => {
       const response = await api.get(`agora/${lobbyId}/token`);
       StorageManager.setChannelToken(response.data);
     } catch (error) {
-      console.error("Details: ", error);
+      console.error("Something went wrong while fetching the agora channel access token: ", error);
     }
   }, [lobbyId]);
 

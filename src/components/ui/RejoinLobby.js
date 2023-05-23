@@ -15,7 +15,7 @@ const RejoinLobby = ({oldLobby, user, handleLeaveLobby}) => {
       await api.delete(`/lobbies/${oldLobby.id}`);
       handleLeaveLobby();
     } catch(e) {
-      alert("Cannot leave lobby.");
+      alert("Failed to leave lobby. Please try again.");
       console.error(e);
     }
     history.push('/home');

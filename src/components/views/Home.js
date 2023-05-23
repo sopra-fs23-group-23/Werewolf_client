@@ -20,15 +20,14 @@ const Home = () => {
         const response = await api.get('/users/' + id);
         setUser(response.data);
       } catch (error) {
-        console.error(error);
         alert('Could not fetch user with ID ' + id);
+        console.error(error);
         sessionStorage.clear();
         history.push('/login');
       }
       try {
         const response = await api.get('/users/' + id + '/lobby');
         setOldLobby(response.data);
-        console.log(response.data);
       }
       catch(error) {
         console.error(error);

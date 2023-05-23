@@ -54,7 +54,7 @@ const MultiOption = ({currentPoll, stage}) => {
         await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
       }
     } catch (error) {
-
+      console.error("could not cast vote:", error);
     }
   };
 
@@ -62,7 +62,7 @@ const MultiOption = ({currentPoll, stage}) => {
     try {
       await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.ownVote.id);
     } catch (error) {
-      console.error(error);
+      console.error("could not remove vote:", error);
     }
   };
 
