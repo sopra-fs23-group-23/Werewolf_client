@@ -58,10 +58,6 @@ class Poll {
       }
     }
   }
-
-  printPoll(){
-    console.log("Poll: ", this);
-  }
 }
 
 export default Poll;

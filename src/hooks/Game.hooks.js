@@ -85,7 +85,6 @@ export const useGame = () => {
     try {
       const response = await api.get(`/games/${lobbyId}/polls`);
       let newPoll = new Poll(response.data);
-      newPoll.printPoll();
       if (pollDidChange(newPoll) || gameShouldBeFetchedAgain || !(await isPollActive(newPoll))) {
         await fetchGame();
       }
