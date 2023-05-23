@@ -88,9 +88,9 @@ const Game = () => {
           <div className={`update ${getUpdateAmount() !== 0 ? "update-active" : "update-not-active"}`}>{getUpdateAmount()}</div>
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
-        <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
-            <img className={`info-button info-button-${textTheme}`} id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
-          {((game?.stage.type === "Day" || finished)? <img className={`info-button info-button-${textTheme} video-button-delayed`} id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' /> : "")}
+        <div>
+          <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-${textTheme} enabled`}></div>
+          {((game?.stage.type === "Day" || finished)? <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className='agora-button agora-button-video-light enabled'></div> : "")}
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />

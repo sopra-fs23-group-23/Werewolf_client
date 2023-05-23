@@ -16,19 +16,15 @@
   }
   &-audio {
     &-dark {
+      background-image: url('../../../public/static/media/microphone-disabled-black.svg');
       &.enabled {
         background-image: url('../../../public/static/media/microphone-enabled-black.svg');
       }
-      &.disabled {
-        background-image: url('../../../public/static/media/microphone-disabled-black.svg');
-      }
     }
     &-light {
+      background-image: url('../../../public/static/media/microphone-disabled-white.svg');
       &.enabled {
         background-image: url('../../../public/static/media/microphone-enabled-white.svg');
-      }
-      &.disabled {
-        background-image: url('../../../public/static/media/microphone-disabled-white.svg');
       }
     }
   }
