@@ -5,6 +5,10 @@
   margin-top: 30px;
 }
 
+#disableVideo {
+  margin-top: 30px;
+}
+
 .game {
   display: flex;
   flex-direction: column;
@@ -88,17 +92,6 @@
     background-position: center;
     height: 40vh;
     width: 100vw;
-
-    // &-dark {
-    //   /* background-image: url('../../../public/assets/images/cemetery-dark.png') !important;
-    //   background-size: cover;
-    //   background-repeat: no-repeat; */
-    // }
-
-    // &-light {
-    //   /* background-image: url('../../../public/assets/images/cemetery-light.png') !important; */
-    // }
-  
     &-players {
       position: absolute;
       bottom: 0;
@@ -115,7 +108,6 @@
       max-height: 80px;
       overflow: hidden;
       transition: all 0.5s ease-in-out;
-      
       &-light {
         background-color: rgba(34, 139, 34, 0.5);
       }
