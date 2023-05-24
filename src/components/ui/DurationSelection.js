@@ -14,7 +14,6 @@ const DurationSelection = () => {
       });
       setSingleVoteDuration(duration);
     } catch(e) {
-      alert('Could not update vote duration.');
       console.error(e);
     }
   }
@@ -26,7 +25,6 @@ const DurationSelection = () => {
       });
       setPartyVoteDuration(duration);
     } catch(e) {
-      alert('Could not update vote duration.');
       console.error(e);
     }
   }
@@ -39,7 +37,6 @@ const DurationSelection = () => {
         setSingleVoteDuration(response.data.singleVoteDurationSeconds);
         setPartyVoteDuration(response.data.partyVoteDurationSeconds);
       } catch(e) {
-        alert('Could not fetch lobby durations.');
         console.error(e);
       }
     }

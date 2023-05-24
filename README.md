@@ -1,6 +1,6 @@
 # Werewolves
 
-The popular game werewolves now becomes digital. In this social deduction game, different fractions (werewolves, villagers etc.) try to seize control of the village through an interactive voting system. During the night the werewolves awake and kill one of the sleeping unknowing villagers. Furthermore hidden magical creatures like the witch, cupid or seer act in their secrative manner. During the day the villagers try to free their town by again voting who's the most suspicious and killing them.
+The popular game werewolves now becomes digital. In this social deduction game, different fractions (werewolves, villagers etc.) try to seize control of the village through an interactive voting system. During the night the werewolves awake and kill one of the sleeping unknowing villagers. Furthermore hidden magical creatures like the witch, cupid or seer act in their secretive manner. During the day the villagers try to free their town by again voting who's the most suspicious and killing them.
 
 An integrated voicechat allows the crucial discussions during the voting phases to take place.
 
@@ -64,7 +64,6 @@ Implementing further roles could make the Game more interesting. E.g.
 - "Blinzelmädchen" /-"bübchen"
 - Vampire
 - Guard
-- Prostitute ("Dirne")
 
 Also see https://werwolf.fandom.com/de/wiki/Werwolf-Rollen-Sammlung for further roles.
 
@@ -97,7 +96,7 @@ The application was developed for the SOPRA 23 course by:
 
 We would like to thank the following people for their contributions during the project:
 - Jerome Maier, for his support as our TA.
-- Milo Ranft, for the many drawings of the roles and landscapes.
+- [Milo Ranft](https://linktr.ee/uusgfloge), for the many drawings of the roles and landscapes.
 
 ## Contributing
 

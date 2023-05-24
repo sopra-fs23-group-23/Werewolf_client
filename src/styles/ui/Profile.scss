@@ -16,7 +16,7 @@
     }
 
     &-votes {
-        margin: 0.2em 0;
+        margin: 0;
         padding: 0;
 
         font-family: $font-default;
@@ -40,15 +40,19 @@
 
     &-lobby{
         &-video, &-image {
-            height: 90px;
-            width: 90px;
+            height: 85px;
+            width: 85px;
         }
+        margin-bottom: 0;
     }
     &-hitlist{
         &-video, &-image {
             height: 100px;
             width: 100px;
             border: 2px solid red;
+        }
+        .profile-name p {
+            margin-bottom: 0;
         }
     }
     &-lover, &-hitlist-leader {
@@ -61,6 +65,9 @@
         &-video, &-image {
             border: 4px solid red;
         }
+        .profile-name p {
+            margin-bottom: 0;
+        }
     }
     &-lover {
         &-video, &-image {
@@ -68,7 +75,7 @@
         }
     }
     &-selection-small  {
-        margin: 0.5em 1em;
+        margin: 0.2em 1em;
         &-video, &-image {
             height: 75px;
             width: 75px;
@@ -154,10 +161,10 @@
 
     }
     &-dead-player {
-        margin: 0.5em 0.9em;
+        margin: 0.6em 0.6em 0em 0.6em;
         &-video, &-image {
-            height: 65px;
-            width: 65px;
+            height: 62px;
+            width: 62px;
         }
         .profile-name {
             opacity: 0;

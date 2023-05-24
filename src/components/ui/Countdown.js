@@ -3,9 +3,7 @@ import 'styles/ui/Countdown.scss';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
-
 const Countdown = ({finishTime, stage}) => {
-
 
     const [remainingMinutes, setRemainingMinutes] = useState("");
     const [remainingSeconds, setRemainingSeconds] = useState("");
@@ -18,10 +16,6 @@ const Countdown = ({finishTime, stage}) => {
         setRemainingSeconds(remainingSecondsString);
     }, [finishTime]);
 
-    /* if (remainingMinutes <= 0 && remainingSeconds <= 0) {
-        return null;
-    } */
-
     return (
         <div className={"countdown " + stage}>
             <h3>Remaining Time</h3>
@@ -30,7 +24,6 @@ const Countdown = ({finishTime, stage}) => {
     );       
     
 }
-    
 
 Countdown.propTypes = {
     finishTime: PropTypes.instanceOf(Date).isRequired

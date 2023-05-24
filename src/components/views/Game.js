@@ -16,7 +16,7 @@ const Game = () => {
   const [popupActive, setPopupActive] = useState(false);
   const [eventLogActive, setEventLogActive] = useState(false);
   const [amountEventsRead, setAmountEventsRead] = useState(0);
-
+ 
   const togglePopup = () => {
     setPopupActive(!popupActive);
   }
@@ -45,8 +45,8 @@ const Game = () => {
   let backgroundTheme = (game?.stage.type === "Day") ? "light" : "dark";
   let textTheme = (game?.stage.type === "Day") ? "dark" : "light";
 
-  let microphone = (StorageManager.getIsMuted() === "true") ? "microphone-disabled.svg" : "microphone-enabled.svg";
-  let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg" : "video-disabled.svg";
+  let isMuted = (StorageManager.getIsMuted() === "true") ? "" : "enabled";
+  let videoEnabled = (StorageManager.getIsVideoEnabled() === "true") ? "enabled" : "";
 
 
   var content = Information();
@@ -54,7 +54,7 @@ const Game = () => {
   const agoraVideoButton = document.getElementById(`disableVideo`);
   if (game?.stage.type === "Night" && agoraVideoButton) {
     agoraVideoButton.setAttribute('hidden', 'true');
-  }else{
+  } else {
     if (agoraVideoButton) {
       agoraVideoButton.removeAttribute('hidden');
     }
@@ -88,9 +88,15 @@ const Game = () => {
           <div className={`update ${getUpdateAmount() !== 0 ? "update-active" : "update-not-active"}`}>{getUpdateAmount()}</div>
           <div className={`log-button log-button-${textTheme}`} onClick={toggleEventLog}></div>
         </div>
-        <div className={`game-controls-agora game-controls-agora-${textTheme}`}>
-            <img className={`info-button info-button-${textTheme}`} id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
-          {((game?.stage.type === "Day" || finished)? <img className={`info-button info-button-${textTheme} video-button-delayed`} id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' /> : "")}
+        <div>
+          <div
+            id='muteAudio'
+            onClick={toggleAudio}
+            alt='microphone'
+            className={`agora-button agora-button-audio-${textTheme} ${isMuted}`}
+            style={{transition: "background-image 3s ease, border 3s"}}
+          ></div>
+          {((game?.stage.type === "Day" || finished) ? <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-${textTheme} ${videoEnabled}`}></div> : "")}
         </div>
       </div>
       <RolePopup show={popupActive} handleClose={togglePopup} stage={game?.stage.type} />

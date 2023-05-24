@@ -41,13 +41,14 @@ const ButtonMenu = ({isAdmin, nrOfPlayers, leaveFunction, startGameFunction}) =>
 }
 StorageManager.setIsMuted("false");
 StorageManager.setIsVideoEnabled("true");
-let microphone = (StorageManager.getIsMuted() === "true") ? "microphone-disabled.svg" : "microphone-enabled.svg";
-let video = (StorageManager.getIsVideoEnabled() === "true") ? "video-enabled.svg" : "video-disabled.svg";
+let isMuted = (StorageManager.getIsMuted() === "true") ? "" : "enabled";
+let videoEnabled = (StorageManager.getIsVideoEnabled() === "true") ? "enabled" : "";
 
 const Lobby = () => {
   const history = useHistory();
-  function leave() {
-    api.delete(`/lobbies/${lobby.id}`);
+
+  async function leave() {
+    await api.delete(`/lobbies/${lobby.id}`);
     leaveCall();
     StorageManager.removeChannelToken();
     history.replace('/home');
@@ -61,7 +62,6 @@ const Lobby = () => {
 
   if(lobby && lobby.closed) {
     clearInterval(intervalId);
-
     history.push(`/game`);
   }
 
@@ -83,9 +83,9 @@ const Lobby = () => {
           <div className='details-wrapper'>
               <h1 className="left-align">Lobby</h1>
               <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
-              <div className={`game-controls-agora game-controls-agora-light`}>
-                <img className='info-button' id='muteAudio' src={`/static/media/${microphone}`} onClick={toggleAudio} alt='microphone'/>
-                <img className='info-button' id='disableVideo' src={`/static/media/${video}`} onClick={toggleOwnVideo} alt='video' />
+              <div className="lobby-controls">
+                <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-light ${isMuted}`}></div>
+                <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-light ${videoEnabled}`}></div>
               </div>
           </div>
           <div className='admin-wrapper'>
@@ -99,6 +99,11 @@ const Lobby = () => {
               <Profile user={player} mode="lobby" key={player.id} />
             ) : null
           ))}
+          {lobby.players.map(player => (
+            player.id === lobby.admin.id ? (
+              <Profile user={player} mode="lobby" key={player.id} />
+            ) : null
+          ))}
         </div>
         <div className='lobby-footerrow'>
           {(parseInt(lobby.admin.id) === parseInt(uid)) && (
@@ -106,8 +111,6 @@ const Lobby = () => {
           )}
           <ButtonMenu isAdmin={parseInt(lobby.admin.id) === parseInt(uid)} nrOfPlayers={lobby.players.length} leaveFunction={leave} startGameFunction={startGame}/>
         </div>
-        {/* TODO: delete this */}
-
       </div>
     )
   }

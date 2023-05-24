@@ -2,7 +2,11 @@
 
 #muteAudio{
   margin-bottom: 10px;
-  margin-top: 30px;
+  margin-top: 10px;
+}
+
+#disableVideo {
+  margin-top: 15px;
 }
 
 .game {
@@ -17,39 +21,6 @@
     position: absolute;
     margin-top: 30px;
     margin-left: 30px;
-    &-agora{
-      .video-button-delayed {
-        animation: fadeIn 3s ease-in;
-      }
-      &-light{
-        img{
-          -webkit-transition: filter 3s ease;
-          filter: brightness(0) invert(1);
-          border-style: solid;
-          color: $color-text-light;
-          border-color: $color-text-light;
-          border-radius: 50%;
-        }
-        :hover{
-          cursor: pointer;
-          background-color: rgba(0,0,0,0.4);
-        }
-      }
-      &-dark{
-        img{
-          -webkit-transition: filter 3s ease;
-          filter: brightness(1);
-          border-style: solid;
-          border-color: $color-text-dark;
-          color: $color-text-dark;
-          border-radius: 50%;
-        }
-        :hover{
-          cursor: pointer;
-          background-color: rgba(0,0,0,0.4);
-        }
-      }
-    }
   }
   
   &-stage-info {
@@ -112,7 +83,7 @@
     }
   }
   &-dead {
-    z-index: 1;
+    z-index: 5;
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -121,24 +92,13 @@
     background-position: center;
     height: 40vh;
     width: 100vw;
-
-    // &-dark {
-    //   /* background-image: url('../../../public/assets/images/cemetery-dark.png') !important;
-    //   background-size: cover;
-    //   background-repeat: no-repeat; */
-    // }
-
-    // &-light {
-    //   /* background-image: url('../../../public/assets/images/cemetery-light.png') !important; */
-    // }
-  
     &-players {
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      max-width: $width-xl;
-      background-color: rgba(170, 170, 170, 0.5);
+      max-width: max-width;
+      background-color: rgba(170, 170, 170, 0.7);
       border-radius: 20px 20px 0 0;
       display: flex;
       flex-direction: row;
@@ -148,10 +108,6 @@
       max-height: 80px;
       overflow: hidden;
       transition: all 0.5s ease-in-out;
-      
-      &-light {
-        background-color: rgba(34, 139, 34, 0.5);
-      }
       &:hover {
         max-height: 250px;
         transition: all 0.5s ease-in-out;

@@ -85,13 +85,12 @@ export const useGame = () => {
     try {
       const response = await api.get(`/games/${lobbyId}/polls`);
       let newPoll = new Poll(response.data);
-      newPoll.printPoll();
       if (pollDidChange(newPoll) || gameShouldBeFetchedAgain || !(await isPollActive(newPoll))) {
         await fetchGame();
       }
       setCurrentPoll(newPoll);
     } catch (error) {
-      console.error("Details Fetch Poll Error: ", error);
+      console.error("Something went wrong while fetching the poll data: ", error);
     }
   };
 
@@ -99,12 +98,10 @@ export const useGame = () => {
     try {
       const response = await api.get(`/games/${lobbyId}`);
       if (response.data.finished) {
-        console.log("The game has ended, calling fetchEndData now");
         await logger.addActions(response.data.actions);
         await fetchEndData();
       } else {
         let newGame = new GameModel(response.data);
-        console.log(newGame);
         if (gameFetchCheck(newGame)) {
           if (stageDidChange(newGame)) {
             performStageChange(newGame);
@@ -114,7 +111,7 @@ export const useGame = () => {
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error("Something went wrong while fetching the game data: ",error);
     }
   };
 
@@ -122,12 +119,11 @@ export const useGame = () => {
     try {
       const response = await api.get(`/games/${lobbyId}/winner`);
       setEndData(response.data);
-      console.log("Game ended: ", response.data);
       setStarted(false);
       setFinished(true);
       clearInterval(intervalKeeper);
     } catch (error) {
-      console.error("Details Fetch End Data Error: ", error);
+      console.error("Something went wrong while fetching the end data: ", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lobbyId]);
@@ -136,6 +132,11 @@ export const useGame = () => {
   const showInfoScreen = async () => {
     try {
       await api.get(`/games/${lobbyId}`);
+      try {
+        setTimeout(safeJoinCall, 1200);
+      } catch (e)  {
+        console.error(e);
+      }
       return false; // game has already started --> don't show info screen
     } catch (error) {
       if (error.response.status === 404) {

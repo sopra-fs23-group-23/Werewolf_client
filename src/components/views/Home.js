@@ -20,15 +20,14 @@ const Home = () => {
         const response = await api.get('/users/' + id);
         setUser(response.data);
       } catch (error) {
-        console.error(error);
         alert('Could not fetch user with ID ' + id);
+        console.error(error);
         sessionStorage.clear();
         history.push('/login');
       }
       try {
         const response = await api.get('/users/' + id + '/lobby');
         setOldLobby(response.data);
-        console.log(response.data);
       }
       catch(error) {
         console.error(error);
@@ -74,7 +73,7 @@ const Home = () => {
   }
 
   return (
-    <div className="background background-dark background-dark-image-small background-dark-image-small-right home">
+    <div className="background background-dark home">
       <div className="container">
         <div className="home-logout-container">
           <button className="btn btn-light home-logout" onClick={(e) => logout(e)}>

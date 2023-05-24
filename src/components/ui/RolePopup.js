@@ -39,14 +39,11 @@ const RolePopup = ({ show, handleClose, stage }) => {
         setOwnRoles(responseOwn.data);
         filteredRoles.forEach((role, index) => {
           if(role.roleName === responseOwn.data[0].roleName) {
-            console.log(role.roleName, index)
             setActiveIndex(index);  // show own role first when opening popup
           }
         });
       } catch (error) {
-        console.log(error)
-        alert('Could not fetch role information' + error.response.data?.message);
-        console.error(error);
+        console.error("Could not fetch role information:", error);
       }
     }
     fetchData();

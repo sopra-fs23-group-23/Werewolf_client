@@ -3,6 +3,7 @@
 @import 'styles/components/button';
 @import 'styles/components/infoButton';
 @import 'styles/components/logButton';
+@import 'styles/components/agoraButton';
 @import 'styles/components/columnContainer';
 @import 'styles/components/link';
 @import 'styles/ui/RoleInformation';
@@ -62,7 +63,6 @@ p {
 }
 
 
-
 .background {
   transition: background-image 4s ease, color 3s ease, background-color 4s ease;
   z-index: -2;
@@ -81,14 +81,13 @@ p {
     transition: color 3s ease, background-color 4s ease;
     background-color: $color-bg-dark;
     color: $color-text-light;
-    
   }
   &-dark-image {
     background-color: $color-bg-dark;
-    background-image:  url('../../public/static/media/cemetery-dark2.webp'), url('../../public/static/media/bg-dark.webp') !important;
+    background-image:  url('../../public/static/media/cemetery-dark.webp'), url('../../public/static/media/bg-dark.webp') !important;
     background-repeat: no-repeat, repeat;
     background-size: 100% auto;
-    background-position: bottom, top;
+    background-position: center bottom, center;
     width: 100vw;
     height: 100vh;
     color:$color-text-light;
@@ -103,19 +102,16 @@ p {
     height: 100vh;
     color:$color-text-dark;
   }
-  &-dark-image-small {
-    &-right {
-      background-image: url('../../public/static/media/cemetery-dark-small-right.webp') !important;
-    }
-    &-left {
-      background-image: url('../../public/static/media/cemetery-dark-small-left.webp') !important;
-    }
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-size: 40% auto;
-    background-position: bottom right;
-  }
 }
+
+
+.home, .login, .register, .lobby {
+  background-image: url('../../public/static/media/cemetery-dark.webp'), url('../../public/static/media/bg-dark.webp');
+  background-size: cover;
+  background-position: center bottom, center;
+  background-repeat: no-repeat;
+}
+
 
 .container {
   max-width: $width-xl;

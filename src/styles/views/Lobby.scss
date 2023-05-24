@@ -7,6 +7,16 @@
         height: 100%;
         overflow-y: hidden;
     }
+    &-controls {
+        display: flex;
+        flex-direction: row;
+    }
+    #muteAudio {
+        margin: 0 10px;
+    }
+    #disableVideo {
+        margin: 0 10px;
+    }
     &-headerrow{
         display: flex;
         flex-direction: row;
@@ -31,11 +41,10 @@
         }
     }
     &-userrow{
-        margin-top: 3em;
+        margin-top: 1em;
         display: flex;
         flex-direction: row;
         justify-content: center;
-        padding-top: 1em;
         width: 100%;
         flex-wrap: wrap;
         flex: 1 0 auto;

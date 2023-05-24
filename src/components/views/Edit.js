@@ -19,7 +19,7 @@ const Edit = () => {
         const response = await api.get('/users/' + id);
         // check if is current logged in user
         if (response.data.id !== parseInt(StorageManager.getUserId())) {
-          alert('Cannot enter edit page for other user.');
+          alert('You are not allowed to edit this user.');
           history.push('/home');
         }
         setUsername(response.data.username);
