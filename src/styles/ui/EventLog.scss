@@ -25,6 +25,9 @@
     position: relative;
     margin: auto auto;
     overflow-y: scroll;
+    p, h2, h5 {
+      text-shadow: #000 0 0 0;
+    }
   }
 
   &-title {
