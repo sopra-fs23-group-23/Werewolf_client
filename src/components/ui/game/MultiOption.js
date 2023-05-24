@@ -8,7 +8,7 @@ const MultiOption = ({currentPoll, stage}) => {
   let voteParticipantIds = currentPoll.participants.map(p => p.player.id);
 
   const singleVoters = ["Witch-Kill", "Witch-Heal", "Hunter", "Seer", "Mayor-Kill", "Mayor-Death"];
-  const singleKillVoters = ["Witch-Kill", "Hunter", "Seer", "Mayor-Kill"];
+  const singleKillVoters = ["Witch-Kill", "Hunter", "Mayor-Kill"];
   const singleSelectVoters = ["Seer", "Mayor-Death"];
   const singleSaveVoters = ["Witch-Heal"];
 
