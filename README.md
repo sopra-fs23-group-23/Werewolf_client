@@ -48,8 +48,26 @@ The application can now be viewed in the browser (http://localhost:3000). Port m
 
 The application can be build for production to the build folder by running:
 
-`npm run build` 
+`npm run build`
 
+## Illustrations
+Choose a Username and a password and click on register to create an account.
+![Register View](./public/static/illustrations/register.png)
+
+Either create a new lobby or join an existing one by entering the lobby code.
+![Home View](./public/static/illustrations/home.png)
+
+After the admin started the game, you are assigned a role for the game.
+![my role View](./public/static/illustrations/myRole.png)
+
+During the game you can click on players in the selection row below to vote for them. The players with the most votes are displayed in the hitlist above.
+![Mayor Vote](./public/static/illustrations/mayorVote.png)
+
+In the game log (scroll symbol) you can access the history of the outcomes of past Votes.
+![Game Log](./public/static/illustrations/gameLog.png)
+
+Once a party has won, the winning party is displayed in the endscreen. One can either leave the lobby or join for a new game.
+![Endscreen](./public/static/illustrations/endscreen.png)
 ## Roadmap
 
 The application was built in a modular approach to easily allow extending it.
