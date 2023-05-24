@@ -22,10 +22,10 @@ const Endscreen = ({ endData, lobby, stage}) => {
     buttonTheme = "light";
   }
 
-  function leaveLobby() {
+  async function leaveLobby() {
     leaveCall();
     StorageManager.removeChannelToken();
-    api.delete(`/lobbies/${lobby.id}`);
+    await api.delete(`/lobbies/${lobby.id}`);
     history.push(`/home`);
   }
   function rematch() {
