@@ -99,11 +99,6 @@ const Lobby = () => {
               <Profile user={player} mode="lobby" key={player.id} />
             ) : null
           ))}
-          {lobby.players.map(player => (
-            player.id === lobby.admin.id ? (
-              <Profile user={player} mode="lobby" key={player.id} />
-            ) : null
-          ))}
         </div>
         <div className='lobby-footerrow'>
           {(parseInt(lobby.admin.id) === parseInt(uid)) && (
