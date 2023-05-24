@@ -40,15 +40,19 @@
 
     &-lobby{
         &-video, &-image {
-            height: 90px;
-            width: 90px;
+            height: 85px;
+            width: 85px;
         }
+        margin-bottom: 0;
     }
     &-hitlist{
         &-video, &-image {
             height: 100px;
             width: 100px;
             border: 2px solid red;
+        }
+        .profile-name p {
+            margin-bottom: 0;
         }
     }
     &-lover, &-hitlist-leader {
@@ -61,6 +65,9 @@
         &-video, &-image {
             border: 4px solid red;
         }
+        .profile-name p {
+            margin-bottom: 0;
+        }
     }
     &-lover {
         &-video, &-image {
@@ -68,7 +75,7 @@
         }
     }
     &-selection-small  {
-        margin: 0.4em 1em;
+        margin: 0.2em 1em;
         &-video, &-image {
             height: 75px;
             width: 75px;

@@ -83,7 +83,7 @@ const Lobby = () => {
           <div className='details-wrapper'>
               <h1 className="left-align">Lobby</h1>
               <h5>Code to join: {lobby.id.toString().substring(0, 3)} {lobby.id.toString().substring(3)}</h5>
-              <div>
+              <div className="lobby-controls">
                 <div id='muteAudio' onClick={toggleAudio} alt='microphone' className={`agora-button agora-button-audio-light ${isMuted}`}></div>
                 <div id='disableVideo' onClick={toggleOwnVideo} alt='video' className={`agora-button agora-button-video-light ${videoEnabled}`}></div>
               </div>
@@ -96,6 +96,11 @@ const Lobby = () => {
         <div className="lobby-userrow">
           {lobby.players.map(player => (
             player.id !== lobby.admin.id ? (
+              <Profile user={player} mode="lobby" key={player.id} />
+            ) : null
+          ))}
+          {lobby.players.map(player => (
+            player.id === lobby.admin.id ? (
               <Profile user={player} mode="lobby" key={player.id} />
             ) : null
           ))}
