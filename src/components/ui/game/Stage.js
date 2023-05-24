@@ -52,6 +52,7 @@ const Stage = ({ currentPoll, lobby, stage}) => {
             <Profile user={new Player(player)} mode="dead-player" key={player.id} />
           )
         ))}
+
       </div>
     );
   }

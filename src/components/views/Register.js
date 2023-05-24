@@ -28,7 +28,7 @@ const Register = (props) => {
   };
 
   return (
-    <div className="background background-light">
+    <div className="background background-dark register">
       <div className="container">
         <div className="auth">
           <div className='auth-container'>
@@ -39,15 +39,17 @@ const Register = (props) => {
                   label="Username"
                   value={username}
                   onChange={(un) => setUsername(un)}
+                  theme="light"
                 />
                 <FormField
                   label="Password"
                   value={password}
                   type="password"
                   onChange={(n) => setPassword(n)}
+                  theme="light"
                 />
                 <button
-                  className="btn auth-btn-register"
+                  className="btn btn-light auth-btn-register"
                   disabled={!username || !password}
                   onClick={(e) => authenticate(e)}
                 >
