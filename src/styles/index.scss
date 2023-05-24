@@ -82,6 +82,7 @@ p {
     color: $color-text-light;
   }
   &-dark-image {
+    transition: background-image 4s ease, color 3s ease, background-color 4s ease;
     background-color: $color-bg-dark;
     background-image:  url('../../public/static/media/cemetery-dark.webp'), url('../../public/static/media/bg-dark.webp') !important;
     background-repeat: no-repeat, repeat-y;
@@ -92,6 +93,7 @@ p {
     color:$color-text-light;
   }
   &-light-image {
+    transition: background-image 4s ease, color 3s ease, background-color 4s ease, text-shadow 3s ease;
     background-color: $color-bg-light;
     background-image: url('../../public/static/media/cemetery-light.webp'), url('../../public/static/media/bg-light.webp') !important;
     background-repeat: no-repeat, repeat-y;
