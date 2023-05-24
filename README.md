@@ -96,7 +96,7 @@ The application was developed for the SOPRA 23 course by:
 
 We would like to thank the following people for their contributions during the project:
 - Jerome Maier, for his support as our TA.
-- Milo Ranft, for the many drawings of the roles and landscapes.
+- [Milo Ranft](https://linktr.ee/uusgfloge), for the many drawings of the roles and landscapes.
 
 ## Contributing
 
