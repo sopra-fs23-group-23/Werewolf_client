@@ -84,9 +84,9 @@ p {
   &-dark-image {
     background-color: $color-bg-dark;
     background-image:  url('../../public/static/media/cemetery-dark.webp'), url('../../public/static/media/bg-dark.webp') !important;
-    background-repeat: no-repeat, repeat;
+    background-repeat: no-repeat, repeat-y;
     background-size: 100% auto;
-    background-position: center bottom, center;
+    background-position: bottom, top;
     width: 100vw;
     height: 100vh;
     color:$color-text-light;
@@ -106,9 +106,11 @@ p {
 
 .home, .login, .register, .lobby, .edit {
   background-image: url('../../public/static/media/cemetery-dark.webp'), url('../../public/static/media/bg-dark.webp');
-  background-size: cover;
-  background-position: center bottom, center;
-  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center bottom, top;
+  background-repeat: no-repeat, repeat-y;
+  width: 100vw;
+  height: 100vh;
 }
 
 
