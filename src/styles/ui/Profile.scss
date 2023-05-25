@@ -29,24 +29,20 @@
         }
     }
     
-    .image{
-        background-color: white;
-        border-radius: 50% !important;
-    }
 
     .inHitlist {
         background-color: #ff2222 !important;
     }
 
     &-lobby{
-        &-video, &-image {
+        &-video {
             height: 85px;
             width: 85px;
         }
         margin-bottom: 0;
     }
     &-hitlist{
-        &-video, &-image {
+        &-video {
             height: 100px;
             width: 100px;
             border: 2px solid red;
@@ -56,13 +52,13 @@
         }
     }
     &-lover, &-hitlist-leader {
-        &-video, &-image {
+        &-video {
             height: 150px;
             width: 150px;
         }
     }
     &-hitlist-leader{
-        &-video, &-image {
+        &-video {
             border: 4px solid red;
         }
         .profile-name p {
@@ -70,19 +66,19 @@
         }
     }
     &-lover {
-        &-video, &-image {
+        &-video {
             border: 5px solid violet;
         }
     }
     &-selection-small  {
         margin: 0.2em 1em;
-        &-video, &-image {
+        &-video {
             height: 75px;
             width: 75px;
             transition: all 0.2s ease-in-out;
         }
         &-isNotVoter {
-            .video, .image {
+            .video {
                 opacity: 0.3 !important;
                 transition: all 0.2s ease-in-out;
             }
@@ -99,7 +95,7 @@
             transition: all 0.2s ease-in-out;
         }
         &-kill {
-            &-video, &-image {
+            &-video {
                 height: 100px;
                 width: 100px;
                 border: 5px solid #ff0000;
@@ -107,7 +103,7 @@
             }            
         }
         &-save {
-            &-video, &-image {
+            &-video {
                 height: 100px;
                 width: 100px;
                 border: 5px solid green;
@@ -115,7 +111,7 @@
             }
         }
         &-select {
-            &-video, &-image {
+            &-video {
                 height: 100px;
                 width: 100px;
                 border: 5px solid blue;
@@ -123,7 +119,7 @@
             }
         }
         &-hidden {
-            &-video, &-image {
+            &-video {
                 height: 100px;
                 width: 100px;
                 opacity: 0.3;
@@ -136,13 +132,13 @@
         }
     }
     &-singleOption {
-        &-video, &-image {
+        &-video {
             height: 150px;
             width: 150px;
             transition: all 0.2s ease-in-out;
         }
         &-kill {
-            &-video, &-image {
+            &-video {
                 height: 150px;
                 width: 150px;
                 transition: all 0.2s ease-in-out;
@@ -150,7 +146,7 @@
             }            
         }
         &-save {
-            &-video, &-image {
+            &-video {
                 height: 150px;
                 width: 150px;
                 border-radius: 80px;
@@ -162,7 +158,7 @@
     }
     &-dead-player {
         margin: 0.6em 0.6em 0em 0.6em;
-        &-video, &-image {
+        &-video {
             height: 62px;
             width: 62px;
         }
@@ -175,7 +171,7 @@
     &-game-log {
         height: 100px;
         width: 100px;
-        border-radius: 60px;
+        border-radius: 50%;
         margin-left: auto;
         margin-right: auto;
         img{

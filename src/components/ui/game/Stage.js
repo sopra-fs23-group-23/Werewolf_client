@@ -52,7 +52,6 @@ const Stage = ({ currentPoll, lobby, stage}) => {
             <Profile user={new Player(player)} mode="dead-player" key={player.id} />
           )
         ))}
-
       </div>
     );
   }
@@ -63,14 +62,11 @@ const Stage = ({ currentPoll, lobby, stage}) => {
           <h1>{currentPoll.getRolePlural()}</h1>
           <p>{currentPoll.question}</p>
         </div>
-
         {content}
         <div className="game-stage-counter">
           {currentPoll.scheduledFinish ? <Countdown finishTime={currentPoll.scheduledFinish} stage={stage} /> : ""}
         </div>
-        <div className={`game-dead game-dead-${backgroundTheme}`}>
-          {deadPlayers}
-        </div>
+        {deadPlayers}
       </div>
   );
 }

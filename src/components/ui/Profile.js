@@ -35,13 +35,13 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   let inHitlist = (mode === "selection-small" && document.getElementById(`profile-video-display-${user.id}`)) ? "inHitlist" : "";
 
   if(mode === "game-log") {
-    return (<div className={`profile profile-${mode}`} onClick={handleClick}>
+    return (<div className={`profile profile-${mode}`}>
       <img src={user.avatarUrl} alt={"user profile"}/>
     </div>);
   }
   return (
     <div className={`profile profile-${mode}`} id={`profile-${mode}-${user.id}`} onClick={handleClick}>
-        <div className={`video profile-${mode}-video ${inHitlist}`} id={`profile-video${isDisplay}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}/>
+        <div className={`video profile-${mode}-video `} id={`profile-video${isDisplay}-${user.id}`} style={{ backgroundImage: `url(${user.avatarUrl})` }} onMouseEnter={handleHover(user)} onMouseLeave={handleHover(null)}/>
       <div className="profile-name"><p>{user.name}</p></div>
       {votes && (
         <h2 className="profile-votes">

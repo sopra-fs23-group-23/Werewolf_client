@@ -45,14 +45,10 @@ const MultiOption = ({currentPoll, stage}) => {
 
   const castVote = async (optionId) => {
     try {
-      if(currentPoll.ownVote == null) {
-        await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
-      } else {
-        if (currentPoll.getOwnRemainingVotes() === 0) {
-          await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.ownVote.id);
-        }
-        await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
+      if (currentPoll.getOwnRemainingVotes() === 0) {
+        await api.delete("/games/" + storageManager.getLobbyId() + "/votes/" + currentPoll.ownVote.id);
       }
+      await api.put("/games/" + storageManager.getLobbyId() + "/votes/" + optionId);
     } catch (error) {
       console.error("could not cast vote:", error);
     }
@@ -109,7 +105,7 @@ const MultiOption = ({currentPoll, stage}) => {
         </>
       );
       break;
-    default: // Villager etc.
+    default: // Villager, Cupid etc.
       content = selectionProfiles(currentPoll.pollOptions);
       break;
   }
