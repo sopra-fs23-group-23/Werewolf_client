@@ -32,7 +32,7 @@ const Profile = ({ user, mode, votes, onClickEvent, onHoverEvent }) => {
   }, [mode, user.id]);
 
   let isDisplay = (mode === "hitlist" || mode === "hitlist-leader" || mode === "lover") ? "-display" : "";
-  let inHitlist = (mode === "selection-small" && document.getElementById(`profile-video-display-${user.id}`)) ? "inHitlist" : "";
+  //let inHitlist = (mode === "selection-small" && document.getElementById(`profile-video-display-${user.id}`)) ? "inHitlist" : "";
 
   if(mode === "game-log") {
     return (<div className={`profile profile-${mode}`}>
