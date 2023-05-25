@@ -106,11 +106,20 @@ p {
 }
 
 
-.home, .login, .register, .lobby, .edit {
+.lobby {
   background-image: url('../../public/static/media/cemetery-dark.webp'), url('../../public/static/media/bg-dark.webp');
   background-size: 100% auto;
   background-position: center bottom, top;
   background-repeat: no-repeat, repeat-y;
+  width: 100vw;
+  height: 100vh;
+}
+
+.home, .login, .register, .edit {
+  background-image: url('../../public/static/media/Werewolf-background.webp'), url('../../public/static/media/cemetery-dark.webp'), url('../../public/static/media/bg-dark.webp');
+  background-size: auto 70%, 100% auto, 100% auto;
+  background-position: bottom right, center bottom, top;
+  background-repeat: no-repeat, no-repeat, repeat-y;
   width: 100vw;
   height: 100vh;
 }
