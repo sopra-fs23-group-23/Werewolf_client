@@ -25,7 +25,15 @@ const Endscreen = ({ endData, lobby, stage}) => {
   async function leaveLobby() {
     leaveCall();
     StorageManager.removeChannelToken();
-    await api.delete(`/lobbies/${lobby.id}`);
+    try {
+      await api.delete(`/lobbies/${lobby.id}`);
+    } catch(e) {
+      if (e.response.status === 404) {
+        history.push('/home');
+        return;
+      }
+      console.error(e);
+    }
     history.push(`/home`);
   }
   function rematch() {
